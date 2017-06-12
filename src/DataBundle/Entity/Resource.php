@@ -3,6 +3,9 @@
 namespace DataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use DataBundle\Entity\Entity;
 
 /**
  * Resource
@@ -22,6 +25,12 @@ class Resource
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Entity", inversedBy="resources")
+     * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
+     */
+    private $entity;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
@@ -34,6 +43,20 @@ class Resource
      * @ORM\Column(name="orderInWill", type="integer")
      */
     private $orderInWill;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
 
 
     /**
@@ -87,11 +110,82 @@ class Resource
     /**
      * Get orderInWill
      *
-     * @return int
+     * @return integer
      */
     public function getOrderInWill()
     {
         return $this->orderInWill;
     }
-}
 
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     *
+     * @return Resource
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param \DataBundle\Entity\Entity $entity
+     *
+     * @return Resource
+     */
+    public function setEntity(\DataBundle\Entity\Entity $entity = null)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return \DataBundle\Entity\Entity
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return Resource
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+}

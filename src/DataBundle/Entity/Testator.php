@@ -3,6 +3,9 @@
 namespace DataBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+use DataBundle\Entity\Will;
 
 /**
  * Testator
@@ -20,6 +23,12 @@ class Testator
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Will", mappedBy="testator")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $wills;
 
     /**
      * @var string
@@ -45,7 +54,7 @@ class Testator
     /**
      * @var string
      *
-     * @ORM\Column(name="profession", type="string", length=255)
+     * @ORM\Column(name="profession", type="string", length=255, nullable=true)
      */
     private $profession;
 
@@ -101,16 +110,30 @@ class Testator
     /**
      * @var string
      *
-     * @ORM\Column(name="regiment", type="string", length=255)
+     * @ORM\Column(name="regiment", type="string", length=255, nullable=true)
      */
     private $regiment;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rank", type="string", length=255)
+     * @ORM\Column(name="rank", type="string", length=255, nullable=true)
      */
     private $rank;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
 
 
     /**
@@ -121,6 +144,13 @@ class Testator
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->wills = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -434,5 +464,86 @@ class Testator
     {
         return $this->rank;
     }
-}
 
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     *
+     * @return Testator
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Add will
+     *
+     * @param \DataBundle\Entity\Will $will
+     *
+     * @return Testator
+     */
+    public function addWill(\DataBundle\Entity\Will $will)
+    {
+        $this->wills[] = $will;
+
+        return $this;
+    }
+
+    /**
+     * Remove will
+     *
+     * @param \DataBundle\Entity\Will $will
+     */
+    public function removeWill(\DataBundle\Entity\Will $will)
+    {
+        $this->wills->removeElement($will);
+    }
+
+    /**
+     * Get wills
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWills()
+    {
+        return $this->wills;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return Testator
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+}

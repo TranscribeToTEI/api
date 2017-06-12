@@ -1,10 +1,11 @@
+data:
+    resource: "@DataBundle/Controller/"
+    type:     annotation
+    prefix:   /data/
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
-
-data:
-    resource: "@DataBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /users/
 
 app:
     resource: '@AppBundle/Controller/'
