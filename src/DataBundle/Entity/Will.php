@@ -35,6 +35,14 @@ class Will
      * @var string
      * @Assert\NotBlank()
      *
+     * @ORM\Column(name="number", type="string", length=255)
+     */
+    private $number;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     *
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
@@ -286,5 +294,29 @@ class Will
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set number
+     *
+     * @param string $number
+     *
+     * @return Will
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Get number
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
     }
 }

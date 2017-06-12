@@ -125,3 +125,6 @@ fos_rest:
 #    view: { annotations: false }
 sensio_framework_extra:
     request: { converters: true }
+
+# API doc
+nelmio_api_doc: ~

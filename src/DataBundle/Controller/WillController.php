@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Nelmio\ApiDocBundle\Annotation as Doc;
 
 class WillController extends FOSRestController
 {
@@ -19,6 +20,23 @@ class WillController extends FOSRestController
      *     requirements = {"id"="\d+"}
      * )
      * @Rest\View(statusCode = 201)
+     * @Doc\ApiDoc(
+     *     section="Wills",
+     *     resource=true,
+     *     description="Return one will.",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirement"="\d+",
+     *             "description"="The will unique identifier.",
+     *         }
+     *     },
+     *     statusCodes={
+     *         201="Returned when created",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
      */
     public function showAction(Will $will)
     {
@@ -31,6 +49,15 @@ class WillController extends FOSRestController
      *    name = "data_will_list"
      * )
      * @Rest\View(StatusCode = 201)
+     * @Doc\ApiDoc(
+     *     section="Wills",
+     *     resource=true,
+     *     description="Get the list of all wills.",
+     *     statusCodes={
+     *         201="Returned when created",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
      */
     public function listAction()
     {
@@ -46,6 +73,53 @@ class WillController extends FOSRestController
      * )
      * @Rest\View(StatusCode = 201)
      * @ParamConverter("will", converter="fos_rest.request_body")
+     * @Doc\ApiDoc(
+     *     section="Wills",
+     *     resource=true,
+     *     description="Create a new will",
+     *     requirements={
+     *         {
+     *             "name"="title",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The title of the will, can be a concatenation of the will number and the testator."
+     *         },
+     *         {
+     *             "name"="number",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The number (cote) of the will."
+     *         },
+     *         {
+     *             "name"="minute_date",
+     *             "dataType"="date",
+     *             "requirement"="Date",
+     *             "description"="The date of the minute."
+     *         },
+     *         {
+     *             "name"="will_writing_date",
+     *             "dataType"="date",
+     *             "requirement"="Date",
+     *             "description"="The writing date of the will."
+     *         },
+     *         {
+     *             "name"="will_writing_place",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The writing place of the will."
+     *         },
+     *         {
+     *             "name"="testator",
+     *             "dataType"="integer",
+     *             "requirement"="\d+",
+     *             "description"="The writing place of the will."
+     *         }
+     *     },
+     *     statusCodes={
+     *         201="Returned when created",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
      */
     public function createAction(Will $will)
     {
