@@ -1,3 +1,8 @@
+transcript:
+    resource: "@TranscriptBundle/Controller/"
+    type:     annotation
+    prefix:   /transcript/
+
 data:
     resource: "@DataBundle/Controller/"
     type:     annotation

@@ -19,11 +19,11 @@ class WillController extends FOSRestController
      *     name = "data_will_show",
      *     requirements = {"id"="\d+"}
      * )
-     * @Rest\View(statusCode = 201)
+     * @Rest\View(statusCode = 200)
      * @Doc\ApiDoc(
      *     section="Wills",
      *     resource=true,
-     *     description="Return one will.",
+     *     description="Return one will",
      *     requirements={
      *         {
      *             "name"="id",
@@ -33,7 +33,7 @@ class WillController extends FOSRestController
      *         }
      *     },
      *     statusCodes={
-     *         201="Returned when created",
+     *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
@@ -48,13 +48,13 @@ class WillController extends FOSRestController
      *    path = "/wills",
      *    name = "data_will_list"
      * )
-     * @Rest\View(StatusCode = 201)
+     * @Rest\View(StatusCode = 200)
      * @Doc\ApiDoc(
      *     section="Wills",
      *     resource=true,
-     *     description="Get the list of all wills.",
+     *     description="Get the list of all wills",
      *     statusCodes={
-     *         201="Returned when created",
+     *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
@@ -129,5 +129,104 @@ class WillController extends FOSRestController
         $em->flush();
 
         return $this->view($will, Response::HTTP_CREATED, ['Location' => $this->generateUrl('data_will_show', ['id' => $will->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+    }
+
+    /**
+     * @Rest\Put(
+     *    path = "/wills/{id}",
+     *    name = "data_will_update",
+     *    requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(StatusCode = 200)
+     * @ParamConverter("newWill", converter="fos_rest.request_body")
+     * @Doc\ApiDoc(
+     *     section="Wills",
+     *     resource=true,
+     *     description="Update an existing will",
+     *     requirements={
+     *         {
+     *             "name"="title",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The title of the will, can be a concatenation of the will number and the testator."
+     *         },
+     *         {
+     *             "name"="number",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The number (cote) of the will."
+     *         },
+     *         {
+     *             "name"="minute_date",
+     *             "dataType"="date",
+     *             "requirement"="Date",
+     *             "description"="The date of the minute."
+     *         },
+     *         {
+     *             "name"="will_writing_date",
+     *             "dataType"="date",
+     *             "requirement"="Date",
+     *             "description"="The writing date of the will."
+     *         },
+     *         {
+     *             "name"="will_writing_place",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The writing place of the will."
+     *         },
+     *         {
+     *             "name"="testator",
+     *             "dataType"="integer",
+     *             "requirement"="\d+",
+     *             "description"="The writing place of the will."
+     *         }
+     *     },
+     *     statusCodes={
+     *         200="Returned when updated",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function updateAction(Will $will, Will $newWill)
+    {
+        $will->setTitle($newWill->getTitle());
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $will;
+    }
+
+    /**
+     * @Rest\Delete(
+     *     path = "/wills/{id}",
+     *     name = "data_will_delete",
+     *     requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(statusCode = 204)
+     * @Doc\ApiDoc(
+     *     section="Wills",
+     *     resource=true,
+     *     description="Remove a will",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirement"="\d+",
+     *             "description"="The will unique identifier.",
+     *         }
+     *     },
+     *     statusCodes={
+     *         204="Returned when deleted",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function deleteAction(Will $will)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($will);
+        $em->flush();
+
+        return;
     }
 }

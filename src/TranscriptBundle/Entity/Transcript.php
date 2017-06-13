@@ -1,21 +1,19 @@
 <?php
 
-namespace DataBundle\Entity;
+namespace TranscriptBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
-use DataBundle\Entity\Will;
-use DataBundle\Entity\Resource;
 
 /**
- * Entity
+ * Transcript
  *
- * @ORM\Table(name="entity")
- * @ORM\Entity(repositoryClass="DataBundle\Repository\EntityRepository")
+ * @ORM\Table(name="transcript")
+ * @ORM\Entity(repositoryClass="TranscriptBundle\Repository\TranscriptRepository")
  */
-class Entity
+class Transcript
 {
     /**
      * @Serializer\Since("1.0")
@@ -31,17 +29,19 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      *
-     * @ORM\OneToOne(targetEntity="Will", inversedBy="entity", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="will_id", referencedColumnName="id", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
-    private $will;
+    private $content;
 
     /**
      * @Serializer\Since("1.0")
      *
-     * @ORM\OneToMany(targetEntity="Resource", mappedBy="entity", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="DataBundle\Entity\Resource", mappedBy="transcript")
+     * @ORM\JoinColumn(name="resource_id", referencedColumnName="id")
      */
-    private $resources;
+    private $resource;
 
     /**
      * @Serializer\Since("1.0")
@@ -71,12 +71,29 @@ class Entity
     {
         return $this->id;
     }
+
     /**
-     * Constructor
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Transcript
      */
-    public function __construct()
+    public function setContent($content)
     {
-        $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -84,7 +101,7 @@ class Entity
      *
      * @param \DateTime $createDate
      *
-     * @return Entity
+     * @return Transcript
      */
     public function setCreateDate($createDate)
     {
@@ -104,61 +121,27 @@ class Entity
     }
 
     /**
-     * Set will
+     * Set resource
      *
-     * @param \DataBundle\Entity\Will $will
+     * @param \DataBundle\Entity\Resource $resource
      *
-     * @return Entity
+     * @return Transcript
      */
-    public function setWill(\DataBundle\Entity\Will $will = null)
+    public function setResource(\DataBundle\Entity\Resource $resource = null)
     {
-        $this->will = $will;
+        $this->resource = $resource;
 
         return $this;
     }
 
     /**
-     * Get will
+     * Get resource
      *
-     * @return \DataBundle\Entity\Will
+     * @return \DataBundle\Entity\Resource
      */
-    public function getWill()
+    public function getResource()
     {
-        return $this->will;
-    }
-
-    /**
-     * Add resource
-     *
-     * @param \DataBundle\Entity\Resource $resource
-     *
-     * @return Entity
-     */
-    public function addResource(\DataBundle\Entity\Resource $resource)
-    {
-        $this->resources[] = $resource;
-
-        return $this;
-    }
-
-    /**
-     * Remove resource
-     *
-     * @param \DataBundle\Entity\Resource $resource
-     */
-    public function removeResource(\DataBundle\Entity\Resource $resource)
-    {
-        $this->resources->removeElement($resource);
-    }
-
-    /**
-     * Get resources
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getResources()
-    {
-        return $this->resources;
+        return $this->resource;
     }
 
     /**
@@ -166,7 +149,7 @@ class Entity
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return Entity
+     * @return Transcript
      */
     public function setCreateUser(\UserBundle\Entity\User $createUser = null)
     {

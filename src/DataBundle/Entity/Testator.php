@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use DataBundle\Entity\Will;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Testator
@@ -16,6 +17,8 @@ use DataBundle\Entity\Will;
 class Testator
 {
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -25,12 +28,17 @@ class Testator
     private $id;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @ORM\OneToMany(targetEntity="Will", mappedBy="testator")
      * @ORM\JoinColumn(nullable=true)
      */
     private $wills;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="fullName", type="string", length=255)
@@ -38,6 +46,9 @@ class Testator
     private $fullName;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255)
@@ -45,6 +56,9 @@ class Testator
     private $surname;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="firstnames", type="string", length=255)
@@ -52,6 +66,8 @@ class Testator
     private $firstnames;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var string
      *
      * @ORM\Column(name="profession", type="string", length=255, nullable=true)
@@ -59,6 +75,9 @@ class Testator
     private $profession;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255)
@@ -66,6 +85,10 @@ class Testator
     private $address;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     *
      * @var \DateTime
      *
      * @ORM\Column(name="dateOfBirth", type="date")
@@ -73,6 +96,9 @@ class Testator
     private $dateOfBirth;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="placeOfBirth", type="string", length=255)
@@ -80,6 +106,10 @@ class Testator
     private $placeOfBirth;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     * @Assert\Date()
+     *
      * @var \DateTime
      *
      * @ORM\Column(name="dateOfDeath", type="date")
@@ -87,6 +117,9 @@ class Testator
     private $dateOfDeath;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="placeOfDeath", type="string", length=255)
@@ -94,6 +127,9 @@ class Testator
     private $placeOfDeath;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     *
      * @var string
      *
      * @ORM\Column(name="deathMention", type="string", length=255)
@@ -101,6 +137,10 @@ class Testator
     private $deathMention;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Assert\NotBlank()
+     * @Assert\Url()
+     *
      * @var string
      *
      * @ORM\Column(name="memoireDesHommes", type="string", length=255)

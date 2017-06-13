@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use DataBundle\Entity\Entity;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Resource
@@ -16,6 +17,8 @@ use DataBundle\Entity\Entity;
 class Resource
 {
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -25,12 +28,16 @@ class Resource
     private $id;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @ORM\ManyToOne(targetEntity="Entity", inversedBy="resources")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
      */
     private $entity;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=255)
@@ -38,6 +45,8 @@ class Resource
     private $type;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var int
      *
      * @ORM\Column(name="orderInWill", type="integer")
@@ -45,12 +54,23 @@ class Resource
     private $orderInWill;
 
     /**
+     * @Serializer\Since("1.0")
+     *
+     * @ORM\OneToOne(targetEntity="TranscriptBundle\Entity\Transcript", mappedBy="resource", cascade={"persist", "remove"})
+     */
+    private $transcript;
+
+    /**
+     * @Serializer\Since("1.0")
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
@@ -187,5 +207,29 @@ class Resource
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set transcript
+     *
+     * @param \TranscriptBundle\Entity\Transcript $transcript
+     *
+     * @return Resource
+     */
+    public function setTranscript(\TranscriptBundle\Entity\Transcript $transcript = null)
+    {
+        $this->transcript = $transcript;
+
+        return $this;
+    }
+
+    /**
+     * Get transcript
+     *
+     * @return \TranscriptBundle\Entity\Transcript
+     */
+    public function getTranscript()
+    {
+        return $this->transcript;
     }
 }

@@ -5,6 +5,7 @@ namespace DataBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 use DataBundle\Entity\Entity;
 use DataBundle\Entity\Testator;
 
@@ -17,6 +18,8 @@ use DataBundle\Entity\Testator;
 class Will
 {
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -26,12 +29,16 @@ class Will
     private $id;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @ORM\OneToOne(targetEntity="Entity", mappedBy="will")
      * @ORM\JoinColumn(nullable=true)
      */
     private $entity;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var string
      * @Assert\NotBlank()
      *
@@ -40,6 +47,8 @@ class Will
     private $number;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var string
      * @Assert\NotBlank()
      *
@@ -48,6 +57,8 @@ class Will
     private $title;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var \DateTime
      * @Assert\NotBlank()
      * @Assert\Date()
@@ -57,6 +68,8 @@ class Will
     private $minuteDate;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var \DateTime
      * @Assert\NotBlank()
      * @Assert\Date()
@@ -66,6 +79,8 @@ class Will
     private $willWritingDate;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @var string
      *
      * @ORM\Column(name="willWritingPlace", type="string", length=255, nullable=true)
@@ -73,20 +88,27 @@ class Will
     private $willWritingPlace;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="Testator", inversedBy="wills")
+     *
+     * @ORM\ManyToOne(targetEntity="Testator", inversedBy="wills", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="testator_id", referencedColumnName="id")
      */
     private $testator;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
 
     /**
-     * @var \DateTime
+     * @Serializer\Since("1.0")
+     *
+     * @var \Datetime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
