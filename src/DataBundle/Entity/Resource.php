@@ -5,6 +5,8 @@ namespace DataBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 use DataBundle\Entity\Entity;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -13,11 +15,59 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="resource")
  * @ORM\Entity(repositoryClass="DataBundle\Repository\ResourceRepository")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "get_resource",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "modify",
+ *      href = @Hateoas\Route(
+ *          "update_resource",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "patch",
+ *      href = @Hateoas\Route(
+ *          "patch_resource",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "remove_resource",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "entity",
+ *     embedded = @Hateoas\Embedded("expr(object.getEntity())")
+ * )
+ * @Hateoas\Relation(
+ *     "transcript",
+ *     embedded = @Hateoas\Embedded("expr(object.getTranscript())")
+ * )
+ * @Hateoas\Relation(
+ *     "createUser",
+ *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
+ * )
  */
 class Resource
 {
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var int
      *
@@ -37,6 +87,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var string
      *
@@ -46,6 +97,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var int
      *
@@ -70,6 +122,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var \DateTime
      *

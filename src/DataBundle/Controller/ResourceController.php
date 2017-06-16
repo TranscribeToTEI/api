@@ -3,23 +3,68 @@
 namespace DataBundle\Controller;
 
 use DataBundle\Entity\Resource;
+use DataBundle\Form\ResourceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
 
 class ResourceController extends FOSRestController
 {
     /**
-     * @Rest\Get(
-     *     path = "/resources/{id}",
-     *     name = "data_resource_show",
-     *     requirements = {"id"="\d+"}
+     * @Rest\Get("/resources")
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]",
+     *     nullable=true,
+     *     description="The keyword to search for."
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of items per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="The pagination offset"
+     * )
+     * @Rest\View()
+     *
+     * @Doc\ApiDoc(
+     *     section="Resources",
+     *     resource=true,
+     *     description="Get the list of all resources",
+     *     statusCodes={
+     *         200="Returned when fetched",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function getResourcesAction(Request $request)
+    {
+        $resources = $this->getDoctrine()->getManager()->getRepository('DataBundle:Resource')->findAll();
+        /* @var $resources Resource[] */
+
+        return $resources;
+    }
+
+    /**
+     * @Rest\Get("/resources/{id}")
+     * @Rest\View()
+     *
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,
@@ -38,41 +83,23 @@ class ResourceController extends FOSRestController
      *     }
      * )
      */
-    public function showAction(\DataBundle\Entity\Resource $resource)
+    public function getResourceAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $resource = $em->getRepository('DataBundle:Resource')->find($request->get('id'));
+        /* @var $resource Resource */
+
+        if (empty($resource)) {
+            return new JsonResponse(['message' => 'Resource not found'], Response::HTTP_NOT_FOUND);
+        }
+
         return $resource;
     }
 
     /**
-     * @Rest\Get(
-     *    path = "/resources",
-     *    name = "data_resource_list"
-     * )
-     * @Rest\View(StatusCode = 200)
-     * @Doc\ApiDoc(
-     *     section="Resources",
-     *     resource=true,
-     *     description="Get the list of all resources",
-     *     statusCodes={
-     *         200="Returned when fetched",
-     *         400="Returned when a violation is raised by validation"
-     *     }
-     * )
-     */
-    public function listAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        return $em->getRepository("DataBundle:Resource")->findAll();
-    }
-
-    /**
-     * @Rest\Post(
-     *    path = "/resources",
-     *    name = "data_resource_create"
-     * )
-     * @Rest\View(StatusCode = 201)
-     * @ParamConverter("resource", converter="fos_rest.request_body")
+     * @Rest\Post("/resources")
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * 
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,
@@ -109,24 +136,26 @@ class ResourceController extends FOSRestController
      *     }
      * )
      */
-    public function createAction(\DataBundle\Entity\Resource $resource)
+    public function postResourcesAction(Request $request)
     {
-        //dump($resource); die;
         $em = $this->getDoctrine()->getManager();
-        $em->persist($resource);
-        $em->flush();
 
-        return $this->view($resource, Response::HTTP_CREATED, ['Location' => $this->generateUrl('data_resource_show', ['id' => $resource->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+        $resource = new Resource();
+        $form = $this->createForm(ResourceType::class, $resource);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em->persist($resource);
+            $em->flush();
+            return $resource;
+        } else {
+            return $form;
+        }
     }
 
     /**
-     * @Rest\Put(
-     *    path = "/resources/{id}",
-     *    name = "data_resource_update",
-     *    requirements = {"id"="\d+"}
-     * )
-     * @Rest\View(StatusCode = 200)
-     * @ParamConverter("newResource", converter="fos_rest.request_body")
+     * @Rest\View()
+     * @Rest\Put("/resources/{id}")
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,
@@ -151,23 +180,67 @@ class ResourceController extends FOSRestController
      *     }
      * )
      */
-    public function updateAction(\DataBundle\Entity\Resource $resource, \DataBundle\Entity\Resource $newResource)
+    public function updateResourceAction(Request $request)
     {
-        $resource->setType($newResource->getType());
-        $resource->setOrderInWill($newResource->getOrderInWill());
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $resource;
+        return $this->updateResource($request, true);
     }
 
     /**
-     * @Rest\Delete(
-     *     path = "/resources/{id}",
-     *     name = "data_resource_delete",
-     *     requirements = {"id"="\d+"}
+     * @Rest\View()
+     * @Rest\Patch("/resources/{id}")
+     * @Doc\ApiDoc(
+     *     section="Resources",
+     *     resource=true,
+     *     description="Update an existing resource",
+     *     requirements={
+     *         {
+     *             "name"="type",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The type of resource (page, envelope)."
+     *         },
+     *         {
+     *             "name"="order_in_will",
+     *             "dataType"="integer",
+     *             "requirement"="\d+",
+     *             "description"="The position of the resource in the order of the resources of the will."
+     *         }
+     *     },
+     *     statusCodes={
+     *         200="Returned when updated",
+     *         400="Returned when a violation is raised by validation"
+     *     }
      * )
-     * @Rest\View(statusCode = 204)
+     */
+    public function patchResourceAction(Request $request)
+    {
+        return $this->updateResource($request, false);
+    }
+
+    private function updateResource(Request $request, $clearMissing)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $resource = $em->getRepository('DataBundle:Resource')
+            ->find($request->get('id'));
+        /* @var $resource \DataBundle\Entity\Resource */
+        if (empty($resource)) {
+            return new JsonResponse(['message' => 'Resource not found'], Response::HTTP_NOT_FOUND);
+        }
+        $form = $this->createForm(ResourceType::class, $resource);
+        $form->submit($request->request->all(), $clearMissing);
+        if ($form->isValid()) {
+            $em->persist($resource);
+            $em->flush();
+            return $resource;
+        } else {
+            return $form;
+        }
+    }
+
+    /**
+     * @Rest\Delete("/resources/{id}")
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     *
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,
@@ -186,12 +259,15 @@ class ResourceController extends FOSRestController
      *     }
      * )
      */
-    public function deleteAction(\DataBundle\Entity\Resource $resource)
+    public function removeResourceAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($resource);
-        $em->flush();
+        $resource = $em->getRepository('DataBundle:Resource')->find($request->get('id'));
+        /* @var $resource \DataBundle\Entity\Resource */
 
-        return;
+        if ($resource) {
+            $em->remove($resource);
+            $em->flush();
+        }
     }
 }

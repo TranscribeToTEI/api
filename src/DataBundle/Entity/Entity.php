@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 use DataBundle\Entity\Will;
 use DataBundle\Entity\Resource;
 
@@ -14,11 +16,59 @@ use DataBundle\Entity\Resource;
  *
  * @ORM\Table(name="entity")
  * @ORM\Entity(repositoryClass="DataBundle\Repository\EntityRepository")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "get_entity",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "modify",
+ *      href = @Hateoas\Route(
+ *          "update_entity",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "patch",
+ *      href = @Hateoas\Route(
+ *          "patch_entity",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "remove_entity",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "will",
+ *     embedded = @Hateoas\Embedded("expr(object.getWill())")
+ * )
+ * @Hateoas\Relation(
+ *     "resources",
+ *     embedded = @Hateoas\Embedded("expr(object.getResources())")
+ * )
+ * @Hateoas\Relation(
+ *     "createUser",
+ *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
+ * )
  */
 class Entity
 {
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var int
      *
@@ -53,6 +103,7 @@ class Entity
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var \DateTime
      *

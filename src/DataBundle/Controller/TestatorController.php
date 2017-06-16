@@ -3,23 +3,69 @@
 namespace DataBundle\Controller;
 
 use DataBundle\Entity\Testator;
+
+use DataBundle\Form\TestatorType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
 
 class TestatorController extends FOSRestController
 {
     /**
-     * @Rest\Get(
-     *     path = "/testators/{id}",
-     *     name = "data_testator_show",
-     *     requirements = {"id"="\d+"}
+     * @Rest\Get("/testators")
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]",
+     *     nullable=true,
+     *     description="The keyword to search for."
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of items per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="The pagination offset"
+     * )
+     * @Rest\View()
+     *
+     * @Doc\ApiDoc(
+     *     section="Testators",
+     *     resource=true,
+     *     description="Get the list of all testators",
+     *     statusCodes={
+     *         200="Returned when fetched",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function getTestatorsAction(Request $request)
+    {
+        $testators = $this->getDoctrine()->getManager()->getRepository('DataBundle:Testator')->findAll();
+        /* @var $testators Testator[] */
+
+        return $testators;
+    }
+
+    /**
+     * @Rest\Get("/testators/{id}")
+     * @Rest\View
+     *
      * @Doc\ApiDoc(
      *     section="Testators",
      *     resource=true,
@@ -38,41 +84,23 @@ class TestatorController extends FOSRestController
      *     }
      * )
      */
-    public function showAction(Testator $testator)
+    public function getTestatorAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $testator = $em->getRepository('DataBundle:Testator')->find($request->get('id'));
+        /* @var $testator Testator */
+
+        if (empty($testator)) {
+            return new JsonResponse(['message' => 'Testator not found'], Response::HTTP_NOT_FOUND);
+        }
+
         return $testator;
     }
 
     /**
-     * @Rest\Get(
-     *    path = "/testators",
-     *    name = "data_testator_list"
-     * )
-     * @Rest\View(StatusCode = 200)
-     * @Doc\ApiDoc(
-     *     section="Testators",
-     *     resource=true,
-     *     description="Get the list of all testators",
-     *     statusCodes={
-     *         200="Returned when fetched",
-     *         400="Returned when a violation is raised by validation"
-     *     }
-     * )
-     */
-    public function listAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        return $em->getRepository("DataBundle:Testator")->findAll();
-    }
-
-    /**
-     * @Rest\Post(
-     *    path = "/testators",
-     *    name = "data_testator_create"
-     * )
-     * @Rest\View(StatusCode = 201)
-     * @ParamConverter("testator", converter="fos_rest.request_body")
+     * @Rest\Post("/testators")
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     *
      * @Doc\ApiDoc(
      *     section="Testators",
      *     resource=true,
@@ -163,24 +191,26 @@ class TestatorController extends FOSRestController
      *     }
      * )
      */
-    public function createAction(Testator $testator)
+    public function postTestatorsAction(Request $request)
     {
-        //dump($testator); die;
         $em = $this->getDoctrine()->getManager();
-        $em->persist($testator);
-        $em->flush();
 
-        return $this->view($testator, Response::HTTP_CREATED, ['Location' => $this->generateUrl('data_testator_show', ['id' => $testator->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+        $testator = new Testator();
+        $form = $this->createForm(TestatorType::class, $testator);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em->persist($testator);
+            $em->flush();
+            return $testator;
+        } else {
+            return $form;
+        }
     }
 
     /**
-     * @Rest\Put(
-     *    path = "/testators/{id}",
-     *    name = "data_testator_update",
-     *    requirements = {"id"="\d+"}
-     * )
-     * @Rest\View(StatusCode = 200)
-     * @ParamConverter("newTestator", converter="fos_rest.request_body")
+     * @Rest\View()
+     * @Rest\Put("/testators/{id}")
      * @Doc\ApiDoc(
      *     section="Testators",
      *     resource=true,
@@ -271,33 +301,133 @@ class TestatorController extends FOSRestController
      *     }
      * )
      */
-    public function updateAction(Testator $testator, Testator $newTestator)
+    public function updateTestatorAction(Request $request)
     {
-        $testator->setFullName($newTestator->getFullName());
-        $testator->setSurname($newTestator->getSurname());
-        $testator->setFirstnames($newTestator->getFirstnames());
-        $testator->setProfession($newTestator->getProfession());
-        $testator->setDateOfBirth($newTestator->getDateOfBirth());
-        $testator->setPlaceOfBirth($newTestator->getPlaceOfBirth());
-        $testator->setDateOfDeath($newTestator->getDateOfDeath());
-        $testator->setPlaceOfDeath($newTestator->getPlaceOfDeath());
-        $testator->setDeathMention($newTestator->getDeathMention());
-        $testator->setMemoireDesHommes($newTestator->getMemoireDesHommes());
-        $testator->setRegiment($newTestator->getRegiment());
-        $testator->setRank($newTestator->getRank());
-
-        $this->getDoctrine()->getManager()->flush();
-
-        return $testator;
+        return $this->updateTestator($request, true);
     }
 
     /**
-     * @Rest\Delete(
-     *     path = "/testators/{id}",
-     *     name = "data_testator_delete",
-     *     requirements = {"id"="\d+"}
+     * @Rest\View()
+     * @Rest\Patch("/testators/{id}")
+     * @Doc\ApiDoc(
+     *     section="Testators",
+     *     resource=true,
+     *     description="Update an existing testator",
+     *     requirements={
+     *         {
+     *             "name"="full_name",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The name of the testator in natural language."
+     *         },
+     *         {
+     *             "name"="surname",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The surname of the testator. If the person is noble, reject the particle at the end of the name."
+     *         },
+     *         {
+     *             "name"="firstnames",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The list of the firstnames of the testator."
+     *         },
+     *         {
+     *             "name"="profession",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The profession of the testator."
+     *         },
+     *         {
+     *             "name"="address",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The address of the testator."
+     *         },
+     *         {
+     *             "name"="date_of_birth",
+     *             "dataType"="date",
+     *             "requirement"="",
+     *             "description"="The date of birth of the testator."
+     *         },
+     *         {
+     *             "name"="place_of_birth",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The place of birth of the testator."
+     *         },
+     *         {
+     *             "name"="date_of_death",
+     *             "dataType"="date",
+     *             "requirement"="",
+     *             "description"="The date of death of the testator."
+     *         },
+     *         {
+     *             "name"="place_of_death",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The place of death of the testator."
+     *         },
+     *         {
+     *             "name"="death_mention",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="Like 'Mort pour la France'."
+     *         },
+     *         {
+     *             "name"="memoire_des_hommes",
+     *             "dataType"="url",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
+     *         },
+     *         {
+     *             "name"="regiment",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The name of the regiment of the testator."
+     *         },
+     *         {
+     *             "name"="rank",
+     *             "dataType"="string",
+     *             "requirement"="\S{0,255}",
+     *             "description"="The rank in the army of the testator."
+     *         }
+     *     },
+     *     statusCodes={
+     *         200="Returned when updated",
+     *         400="Returned when a violation is raised by validation"
+     *     }
      * )
-     * @Rest\View(statusCode = 204)
+     */
+    public function patchTestatorAction(Request $request)
+    {
+        return $this->updateTestator($request, false);
+    }
+
+    private function updateTestator(Request $request, $clearMissing)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $testator = $em->getRepository('DataBundle:Testator')
+            ->find($request->get('id'));
+        /* @var $testator Testator */
+        if (empty($testator)) {
+            return new JsonResponse(['message' => 'Testator not found'], Response::HTTP_NOT_FOUND);
+        }
+        $form = $this->createForm(TestatorType::class, $testator);
+        $form->submit($request->request->all(), $clearMissing);
+        if ($form->isValid()) {
+            $em->persist($testator);
+            $em->flush();
+            return $testator;
+        } else {
+            return $form;
+        }
+    }
+
+    /**
+     * @Rest\Delete("/testators/{id}")
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     *
      * @Doc\ApiDoc(
      *     section="Testators",
      *     resource=true,
@@ -316,12 +446,15 @@ class TestatorController extends FOSRestController
      *     }
      * )
      */
-    public function deleteAction(Testator $testator)
+    public function removeTestatorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($testator);
-        $em->flush();
+        $testator = $em->getRepository('DataBundle:Testator')->find($request->get('id'));
+        /* @var $testator Testator */
 
-        return;
+        if ($testator) {
+            $em->remove($testator);
+            $em->flush();
+        }
     }
 }

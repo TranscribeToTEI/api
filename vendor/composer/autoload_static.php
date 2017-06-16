@@ -15,10 +15,17 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6a47392539ca2329373e0d33e1dba053' => __DIR__ . '/..' . '/symfony/polyfill-intl-icu/bootstrap.php',
         '32dcc8afd4335739640db7d200c1971d' => __DIR__ . '/..' . '/symfony/polyfill-apcu/bootstrap.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'd3d328d46ded7fe13db87a575e501112' => __DIR__ . '/..' . '/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'WhiteOctober\\PagerfantaBundle\\' => 30,
+        ),
         'T' => 
         array (
             'Twig\\' => 5,
@@ -50,6 +57,7 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
             'Psr\\Link\\' => 9,
+            'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
         ),
@@ -69,9 +77,16 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         array (
             'Incenteev\\ParameterHandler\\' => 27,
         ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
+            'GuzzleHttp\\Promise\\' => 19,
+            'GuzzleHttp\\' => 11,
+        ),
         'F' => 
         array (
             'Fig\\Link\\' => 9,
+            'FOS\\UserBundle\\' => 15,
             'FOS\\RestBundle\\' => 15,
         ),
         'D' => 
@@ -84,12 +99,21 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         ),
         'C' => 
         array (
+            'Csa\\Bundle\\GuzzleBundle\\' => 24,
             'CoreSphere\\ConsoleBundle\\' => 25,
             'Composer\\CaBundle\\' => 18,
+        ),
+        'B' => 
+        array (
+            'Bazinga\\Bundle\\HateoasBundle\\' => 29,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'WhiteOctober\\PagerfantaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/white-october/pagerfanta-bundle',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
@@ -182,6 +206,10 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         array (
             0 => __DIR__ . '/..' . '/psr/link/src',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
@@ -206,9 +234,25 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
         ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
+        ),
+        'GuzzleHttp\\Promise\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
+        ),
+        'GuzzleHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
         'Fig\\Link\\' => 
         array (
             0 => __DIR__ . '/..' . '/fig/link-util/src',
+        ),
+        'FOS\\UserBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/user-bundle',
         ),
         'FOS\\RestBundle\\' => 
         array (
@@ -234,6 +278,10 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-bundle',
         ),
+        'Csa\\Bundle\\GuzzleBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/csa/guzzle-bundle/src',
+        ),
         'CoreSphere\\ConsoleBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/coresphere/console-bundle',
@@ -241,6 +289,10 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         'Composer\\CaBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/ca-bundle/src',
+        ),
+        'Bazinga\\Bundle\\HateoasBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/willdurand/hateoas-bundle',
         ),
     );
 
@@ -272,6 +324,10 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
             'PhpCollection' => 
             array (
                 0 => __DIR__ . '/..' . '/phpcollection/phpcollection/src',
+            ),
+            'Pagerfanta\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/pagerfanta/pagerfanta/src',
             ),
         ),
         'N' => 
@@ -305,6 +361,13 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
             'JMS\\' => 
             array (
                 0 => __DIR__ . '/..' . '/jms/parser-lib/src',
+            ),
+        ),
+        'H' => 
+        array (
+            'Hateoas' => 
+            array (
+                0 => __DIR__ . '/..' . '/willdurand/hateoas/src',
             ),
         ),
         'G' => 

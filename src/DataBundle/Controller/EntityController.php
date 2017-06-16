@@ -3,23 +3,68 @@
 namespace DataBundle\Controller;
 
 use DataBundle\Entity\Entity;
+
+use DataBundle\Form\EntityType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
 
 class EntityController extends FOSRestController
 {
     /**
-     * @Rest\Get(
-     *     path = "/entities/{id}",
-     *     name = "data_entity_show",
-     *     requirements = {"id"="\d+"}
+     * @Rest\Get("/entities")
+     * @Rest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]",
+     *     nullable=true,
+     *     description="The keyword to search for."
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\QueryParam(
+     *     name="order",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="15",
+     *     description="Max number of items per page."
+     * )
+     * @Rest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="1",
+     *     description="The pagination offset"
+     * )
+     * @Rest\View()
+     *
+     * @Doc\ApiDoc(
+     *     section="Entities",
+     *     resource=true,
+     *     description="Get the list of all entities",
+     *     statusCodes={
+     *         200="Returned when fetched",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function getEntitiesAction(Request $request)
+    {
+        $entities = $this->getDoctrine()->getManager()->getRepository('DataBundle:Entity')->findAll();
+        /* @var $entities Entity[] */
+
+        return $entities;
+    }
+
+    /**
+     * @Rest\Get("/entities/{id}")
+     * @Rest\View
+     *
      * @Doc\ApiDoc(
      *     section="Entities",
      *     resource=true,
@@ -38,41 +83,23 @@ class EntityController extends FOSRestController
      *     }
      * )
      */
-    public function showAction(Entity $entity)
+    public function getEntityAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('DataBundle:Entity')->find($request->get('id'));
+        /* @var $entity Entity */
+
+        if (empty($entity)) {
+            return new JsonResponse(['message' => 'Entity not found'], Response::HTTP_NOT_FOUND);
+        }
+
         return $entity;
     }
 
     /**
-     * @Rest\Get(
-     *    path = "/entities",
-     *    name = "data_entity_list"
-     * )
-     * @Rest\View(StatusCode = 200)
-     * @Doc\ApiDoc(
-     *     section="Entities",
-     *     resource=true,
-     *     description="Get the list of all entities",
-     *     statusCodes={
-     *         200="Returned when fetched",
-     *         400="Returned when a violation is raised by validation"
-     *     }
-     * )
-     */
-    public function listAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        return $em->getRepository("DataBundle:Entity")->findAll();
-    }
-
-    /**
-     * @Rest\Post(
-     *    path = "/entities",
-     *    name = "data_entity_create"
-     * )
-     * @Rest\View(StatusCode = 201)
-     * @ParamConverter("entity", converter="fos_rest.request_body")
+     * @Rest\Post(path = "/entities")
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     *
      * @Doc\ApiDoc(
      *     section="Entities",
      *     resource=true,
@@ -97,24 +124,26 @@ class EntityController extends FOSRestController
      *     }
      * )
      */
-    public function createAction(Entity $entity)
+    public function postEntitiesAction(Request $request)
     {
-        //dump($entity); die;
         $em = $this->getDoctrine()->getManager();
-        $em->persist($entity);
-        $em->flush();
 
-        return $this->view($entity, Response::HTTP_CREATED, ['Location' => $this->generateUrl('data_entity_show', ['id' => $entity->getId(), UrlGeneratorInterface::ABSOLUTE_URL])]);
+        $entity = new Entity();
+        $form = $this->createForm(EntityType::class, $entity);
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            return $entity;
+        } else {
+            return $form;
+        }
     }
 
     /**
-     * @Rest\Put(
-     *    path = "/entities/{id}",
-     *    name = "data_entity_update",
-     *    requirements = {"id"="\d+"}
-     * )
-     * @Rest\View(StatusCode = 200)
-     * @ParamConverter("newEntity", converter="fos_rest.request_body")
+     * @Rest\View()
+     * @Rest\Put("/entities/{id}")
      * @Doc\ApiDoc(
      *     section="Entities",
      *     resource=true,
@@ -133,26 +162,60 @@ class EntityController extends FOSRestController
      *     }
      * )
      */
-    public function updateAction(Entity $entity, Entity $newEntity)
+    public function updateEntityAction(Request $request)
     {
-        foreach($entity->getResources() as $resource) {
-            $entity->removeResource($resource);
-        }
-        foreach($newEntity->getResources() as $newResource) {
-            $entity->addResource($newResource);
-        }
-        $this->getDoctrine()->getManager()->flush();
-
-        return $entity;
+        return $this->updateEntity($request, true);
     }
 
     /**
-     * @Rest\Delete(
-     *     path = "/entities/{id}",
-     *     name = "data_entity_delete",
-     *     requirements = {"id"="\d+"}
+     * @Rest\View()
+     * @Rest\Patch("/entities/{id}")
+     * @Doc\ApiDoc(
+     *     section="Entities",
+     *     resource=true,
+     *     description="Update an existing entity",
+     *     requirements={
+     *         {
+     *             "name"="resources",
+     *             "dataType"="array",
+     *             "requirement"="",
+     *             "description"="The list of resources of the entity."
+     *         }
+     *     },
+     *     statusCodes={
+     *         200="Returned when updated",
+     *         400="Returned when a violation is raised by validation"
+     *     }
      * )
-     * @Rest\View(statusCode = 204)
+     */
+    public function patchEntityAction(Request $request)
+    {
+        return $this->updateEntity($request, false);
+    }
+
+    private function updateEntity(Request $request, $clearMissing)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('DataBundle:Entity')
+            ->find($request->get('id'));
+        /* @var $entity Entity */
+        if (empty($entity)) {
+            return new JsonResponse(['message' => 'Entity not found'], Response::HTTP_NOT_FOUND);
+        }
+        $form = $this->createForm(EntityType::class, $entity);
+        $form->submit($request->request->all(), $clearMissing);
+        if ($form->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            return $entity;
+        } else {
+            return $form;
+        }
+    }
+
+    /**
+     * @Rest\Delete("/entities/{id}")
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Doc\ApiDoc(
      *     section="Entities",
      *     resource=true,
@@ -171,12 +234,15 @@ class EntityController extends FOSRestController
      *     }
      * )
      */
-    public function deleteAction(Entity $entity)
+    public function removeEntityAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($entity);
-        $em->flush();
+        $entity = $em->getRepository('DataBundle:Entity')->find($request->get('id'));
+        /* @var $entity Entity */
 
-        return;
+        if ($entity) {
+            $em->remove($entity);
+            $em->flush();
+        }
     }
 }

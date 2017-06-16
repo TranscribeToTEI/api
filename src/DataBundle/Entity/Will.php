@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 use DataBundle\Entity\Entity;
 use DataBundle\Entity\Testator;
 
@@ -14,11 +16,59 @@ use DataBundle\Entity\Testator;
  *
  * @ORM\Table(name="will")
  * @ORM\Entity(repositoryClass="DataBundle\Repository\WillRepository")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "get_will",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "modify",
+ *      href = @Hateoas\Route(
+ *          "update_will",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "patch",
+ *      href = @Hateoas\Route(
+ *          "patch_will",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "remove_will",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "testator",
+ *     embedded = @Hateoas\Embedded("expr(object.getTestator())")
+ * )
+ * @Hateoas\Relation(
+ *     "entity",
+ *     embedded = @Hateoas\Embedded("expr(object.getEntity())")
+ * )
+ * @Hateoas\Relation(
+ *     "createUser",
+ *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
+ * )
  */
 class Will
 {
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var int
      *
@@ -38,6 +88,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var string
      * @Assert\NotBlank()
@@ -48,6 +99,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var string
      * @Assert\NotBlank()
@@ -58,6 +110,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var \DateTime
      * @Assert\NotBlank()
@@ -69,6 +122,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var \DateTime
      * @Assert\NotBlank()
@@ -80,6 +134,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var string
      *
@@ -107,6 +162,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var \Datetime
      *

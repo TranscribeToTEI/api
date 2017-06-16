@@ -5,6 +5,8 @@ namespace DataBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 use DataBundle\Entity\Will;
 use JMS\Serializer\Annotation as Serializer;
 
@@ -13,11 +15,55 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * @ORM\Table(name="testator")
  * @ORM\Entity(repositoryClass="DataBundle\Repository\TestatorRepository")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "get_testator",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "modify",
+ *      href = @Hateoas\Route(
+ *          "update_testator",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "patch",
+ *      href = @Hateoas\Route(
+ *          "patch_testator",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "remove_testator",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *     "wills",
+ *     embedded = @Hateoas\Embedded("expr(object.getWills())")
+ * )
+ * @Hateoas\Relation(
+ *     "createUser",
+ *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
+ * )
  */
 class Testator
 {
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var int
      *
@@ -37,6 +83,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -47,6 +94,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -57,6 +105,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -67,6 +116,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var string
      *
@@ -76,6 +126,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -86,6 +137,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      * @Assert\Date()
      *
@@ -97,6 +149,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -107,6 +160,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      * @Assert\Date()
      *
@@ -118,6 +172,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -128,6 +183,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      *
      * @var string
@@ -138,6 +194,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Assert\NotBlank()
      * @Assert\Url()
      *
@@ -148,6 +205,9 @@ class Testator
     private $memoireDesHommes;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
      * @var string
      *
      * @ORM\Column(name="regiment", type="string", length=255, nullable=true)
@@ -155,6 +215,9 @@ class Testator
     private $regiment;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
      * @var string
      *
      * @ORM\Column(name="rank", type="string", length=255, nullable=true)
@@ -162,12 +225,17 @@ class Testator
     private $rank;
 
     /**
+     * @Serializer\Since("1.0")
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
      * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
