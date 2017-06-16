@@ -150,7 +150,6 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
-     * @Assert\NotBlank()
      *
      * @var string
      *

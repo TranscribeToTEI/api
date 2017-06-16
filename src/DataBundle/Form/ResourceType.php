@@ -3,6 +3,7 @@
 namespace DataBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,11 +15,11 @@ class ResourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type')
-            ->add('orderInWill')
-            ->add('entity')
-            ->add('transcript')
-            ->add('createUser');
+            ->add('type',       TextType::class, array("required" => true))
+            ->add('orderInWill',TextType::class, array("required" => true))
+            ->add('entity',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'DataBundle:Entity'))
+            ->add('transcript', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'TranscriptBundle:Transcript'))
+            ->add('createUser', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
     }
     
     /**
