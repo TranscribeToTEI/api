@@ -51,18 +51,6 @@ use DataBundle\Entity\Resource;
  *          absolute = true
  *      )
  * )
- * @Hateoas\Relation(
- *     "will",
- *     embedded = @Hateoas\Embedded("expr(object.getWill())")
- * )
- * @Hateoas\Relation(
- *     "resources",
- *     embedded = @Hateoas\Embedded("expr(object.getResources())")
- * )
- * @Hateoas\Relation(
- *     "createUser",
- *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
- * )
  */
 class Entity
 {
@@ -80,6 +68,7 @@ class Entity
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\OneToOne(targetEntity="Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="will_id", referencedColumnName="id", nullable=true)
@@ -88,6 +77,7 @@ class Entity
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\OneToMany(targetEntity="Resource", mappedBy="entity", cascade={"persist", "remove"})
      */
@@ -95,6 +85,7 @@ class Entity
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)

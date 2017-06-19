@@ -50,14 +50,6 @@ use JMS\Serializer\Annotation as Serializer;
  *          absolute = true
  *      )
  * )
- * @Hateoas\Relation(
- *     "wills",
- *     embedded = @Hateoas\Embedded("expr(object.getWills())")
- * )
- * @Hateoas\Relation(
- *     "createUser",
- *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
- * )
  */
 class Testator
 {
@@ -75,6 +67,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\OneToMany(targetEntity="Will", mappedBy="testator")
      * @ORM\JoinColumn(nullable=true)
@@ -225,6 +218,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)

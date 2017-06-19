@@ -51,18 +51,6 @@ use DataBundle\Entity\Testator;
  *          absolute = true
  *      )
  * )
- * @Hateoas\Relation(
- *     "testator",
- *     embedded = @Hateoas\Embedded("expr(object.getTestator())")
- * )
- * @Hateoas\Relation(
- *     "entity",
- *     embedded = @Hateoas\Embedded("expr(object.getEntity())")
- * )
- * @Hateoas\Relation(
- *     "createUser",
- *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
- * )
  */
 class Will
 {
@@ -80,6 +68,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\OneToOne(targetEntity="Entity", mappedBy="will")
      * @ORM\JoinColumn(nullable=true)
@@ -144,6 +133,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @Assert\NotBlank()
      *
@@ -154,6 +144,7 @@ class Will
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)

@@ -107,6 +107,7 @@ stof_doctrine_extensions:
 # FOS Rest
 fos_rest:
     routing_loader:
+        default_format: json
         include_format: false
     versioning:
         enabled: true
@@ -128,8 +129,9 @@ fos_rest:
     format_listener:
         rules:
             - { path: '^/', priorities: ['json'], fallback_format: 'json' }
-    param_fetcher_listener: force
     exception:
+        enabled: true
+    param_fetcher_listener:
         enabled: true
 
 # API doc

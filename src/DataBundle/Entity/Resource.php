@@ -50,18 +50,6 @@ use JMS\Serializer\Annotation as Serializer;
  *          absolute = true
  *      )
  * )
- * @Hateoas\Relation(
- *     "entity",
- *     embedded = @Hateoas\Embedded("expr(object.getEntity())")
- * )
- * @Hateoas\Relation(
- *     "transcript",
- *     embedded = @Hateoas\Embedded("expr(object.getTranscript())")
- * )
- * @Hateoas\Relation(
- *     "createUser",
- *     embedded = @Hateoas\Embedded("expr(object.getCreateUser())")
- * )
  */
 class Resource
 {
@@ -79,6 +67,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\ManyToOne(targetEntity="Entity", inversedBy="resources")
      * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
@@ -107,6 +96,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\OneToOne(targetEntity="TranscriptBundle\Entity\Transcript", mappedBy="resource", cascade={"persist", "remove"})
      */
@@ -114,6 +104,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)

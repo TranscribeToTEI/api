@@ -6,17 +6,54 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * Transcript
  *
  * @ORM\Table(name="transcript")
  * @ORM\Entity(repositoryClass="TranscriptBundle\Repository\TranscriptRepository")
+ *
+ * @Serializer\ExclusionPolicy("all")
+ *
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "get_transcript",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "modify",
+ *      href = @Hateoas\Route(
+ *          "update_transcript",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "patch",
+ *      href = @Hateoas\Route(
+ *          "patch_transcript",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
+ * @Hateoas\Relation(
+ *      "delete",
+ *      href = @Hateoas\Route(
+ *          "remove_transcript",
+ *          parameters = { "id" = "expr(object.getId())" },
+ *          absolute = true
+ *      )
+ * )
  */
 class Transcript
 {
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var int
      *
@@ -28,6 +65,7 @@ class Transcript
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var string
      *
@@ -37,6 +75,19 @@ class Transcript
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Assert\NotBlank()
+     * @Assert\Choice({"todo", "transcription", "validation", "validated"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\OneToOne(targetEntity="DataBundle\Entity\Resource", mappedBy="transcript")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id")
@@ -45,6 +96,7 @@ class Transcript
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
@@ -53,6 +105,7 @@ class Transcript
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      *
      * @var \DateTime
      *
@@ -166,5 +219,29 @@ class Transcript
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Transcript
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

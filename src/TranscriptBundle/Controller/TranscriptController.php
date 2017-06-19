@@ -2,6 +2,7 @@
 
 namespace TranscriptBundle\Controller;
 
+use Doctrine\ORM\EntityRepository;
 use TranscriptBundle\Entity\Transcript;
 
 use TranscriptBundle\Form\TranscriptType;
@@ -12,37 +13,18 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Request\ParamFetcher;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
 
 class TranscriptController extends FOSRestController
 {
     /**
      * @Rest\Get("/transcripts")
-     * @Rest\QueryParam(
-     *     name="keyword",
-     *     requirements="[a-zA-Z0-9]",
-     *     nullable=true,
-     *     description="The keyword to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="order",
-     *     requirements="asc|desc",
-     *     default="asc",
-     *     description="Sort order (asc or desc)"
-     * )
-     * @Rest\QueryParam(
-     *     name="limit",
-     *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of items per page."
-     * )
-     * @Rest\QueryParam(
-     *     name="offset",
-     *     requirements="\d+",
-     *     default="1",
-     *     description="The pagination offset"
-     * )
      * @Rest\View()
+     *
+     * @QueryParam(name="status", requirements="Status name", default="", description="Name of the status required")
      *
      * @Doc\ApiDoc(
      *     section="Transcripts",
@@ -54,9 +36,17 @@ class TranscriptController extends FOSRestController
      *     }
      * )
      */
-    public function getTranscriptsAction(Request $request)
+    public function getTranscriptsAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $transcripts = $this->getDoctrine()->getManager()->getRepository('TranscriptBundle:Transcript')->findAll();
+        $status = $paramFetcher->get('status');
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('TranscriptBundle:Transcript');
+        /* @var $repository EntityRepository */
+        if($status != "") {
+            $transcripts = $repository->findBy(array("status" =>$status));
+        } else {
+            $transcripts = $repository->findAll();
+        }
         /* @var $transcripts Transcript[] */
 
         return $transcripts;

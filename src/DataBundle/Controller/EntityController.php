@@ -97,7 +97,7 @@ class EntityController extends FOSRestController
     }
 
     /**
-     * @Rest\Post(path = "/entities")
+     * @Rest\Post("/entities")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      *
      * @Doc\ApiDoc(
