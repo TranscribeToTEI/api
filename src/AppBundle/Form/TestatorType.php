@@ -1,6 +1,6 @@
 <?php
 
-namespace DataBundle\Form;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -39,7 +39,7 @@ class TestatorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DataBundle\Entity\Testator',
+            'data_class' => 'AppBundle\Entity\Testator',
             'csrf_protection' => false
         ));
     }
@@ -49,7 +49,7 @@ class TestatorType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'databundle_testator';
+        return 'appbundle_testator';
     }
 
 

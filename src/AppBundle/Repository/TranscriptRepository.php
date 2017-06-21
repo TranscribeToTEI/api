@@ -1,6 +1,6 @@
 <?php
 
-namespace TranscriptBundle\Repository;
+namespace AppBundle\Repository;
 
 /**
  * TranscriptRepository

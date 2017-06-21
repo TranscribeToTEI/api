@@ -1,20 +1,11 @@
-transcript:
-    resource: "@TranscriptBundle/Controller/DefaultController.php"
-    type:     annotation
-    prefix:   /transcript/
-
-data:
-    resource: "@DataBundle/Controller/DefaultController.php"
-    type:     annotation
-    prefix:   /data/
-
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /users/
 
 app:
-    resource: '@AppBundle/Controller/'
+    resource: '@AppBundle/Controller/DefaultController.php'
     type: annotation
+    prefix:   /
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
@@ -25,20 +16,20 @@ fos_user:
 
 entities:
     type:     rest
-    resource: DataBundle\Controller\EntityController
+    resource: AppBundle\Controller\EntityController
 
 resources:
     type:     rest
-    resource: DataBundle\Controller\ResourceController
+    resource: AppBundle\Controller\ResourceController
 
 wills:
     type:     rest
-    resource: DataBundle\Controller\WillController
+    resource: AppBundle\Controller\WillController
 
 testators:
     type:     rest
-    resource: DataBundle\Controller\TestatorController
+    resource: AppBundle\Controller\TestatorController
 
 transcripts:
     type:     rest
-    resource: TranscriptBundle\Controller\TranscriptController
+    resource: AppBundle\Controller\TranscriptController

@@ -1,6 +1,6 @@
 <?php
 
-namespace TranscriptBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -8,18 +8,21 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
+use AppBundle\Entity\Will;
+use AppBundle\Entity\Resource;
+
 /**
- * Transcript
+ * Entity
  *
- * @ORM\Table(name="transcript")
- * @ORM\Entity(repositoryClass="TranscriptBundle\Repository\TranscriptRepository")
+ * @ORM\Table(name="entity")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EntityRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  *
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_transcript",
+ *          "get_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
@@ -27,7 +30,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_transcript",
+ *          "update_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
@@ -35,7 +38,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_transcript",
+ *          "patch_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
@@ -43,13 +46,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_transcript",
+ *          "remove_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
  * )
  */
-class Transcript
+class Entity
 {
     /**
      * @Serializer\Since("1.0")
@@ -67,32 +70,18 @@ class Transcript
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @var string
-     *
-     * @ORM\Column(name="content", type="text", nullable=true)
+     * @ORM\OneToOne(targetEntity="Will", inversedBy="entity", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="will_id", referencedColumnName="id", nullable=true)
      */
-    private $content;
-
-    /**
-     * @Serializer\Since("1.0")
-     * @Serializer\Expose
-     * @Assert\NotBlank()
-     * @Assert\Choice({"todo", "transcription", "validation", "validated"})
-     *
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=255)
-     */
-    private $status;
+    private $will;
 
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToOne(targetEntity="DataBundle\Entity\Resource", mappedBy="transcript")
-     * @ORM\JoinColumn(name="resource_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Resource", mappedBy="entity", cascade={"persist", "remove"})
      */
-    private $resource;
+    private $resources;
 
     /**
      * @Serializer\Since("1.0")
@@ -124,29 +113,12 @@ class Transcript
     {
         return $this->id;
     }
-
     /**
-     * Set content
-     *
-     * @param string $content
-     *
-     * @return Transcript
+     * Constructor
      */
-    public function setContent($content)
+    public function __construct()
     {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
+        $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -154,7 +126,7 @@ class Transcript
      *
      * @param \DateTime $createDate
      *
-     * @return Transcript
+     * @return Entity
      */
     public function setCreateDate($createDate)
     {
@@ -174,27 +146,61 @@ class Transcript
     }
 
     /**
-     * Set resource
+     * Set will
      *
-     * @param \DataBundle\Entity\Resource $resource
+     * @param \AppBundle\Entity\Will $will
      *
-     * @return Transcript
+     * @return Entity
      */
-    public function setResource(\DataBundle\Entity\Resource $resource = null)
+    public function setWill(\AppBundle\Entity\Will $will = null)
     {
-        $this->resource = $resource;
+        $this->will = $will;
 
         return $this;
     }
 
     /**
-     * Get resource
+     * Get will
      *
-     * @return \DataBundle\Entity\Resource
+     * @return \AppBundle\Entity\Will
      */
-    public function getResource()
+    public function getWill()
     {
-        return $this->resource;
+        return $this->will;
+    }
+
+    /**
+     * Add resource
+     *
+     * @param \AppBundle\Entity\Resource $resource
+     *
+     * @return Entity
+     */
+    public function addResource(\AppBundle\Entity\Resource $resource)
+    {
+        $this->resources[] = $resource;
+
+        return $this;
+    }
+
+    /**
+     * Remove resource
+     *
+     * @param \AppBundle\Entity\Resource $resource
+     */
+    public function removeResource(\AppBundle\Entity\Resource $resource)
+    {
+        $this->resources->removeElement($resource);
+    }
+
+    /**
+     * Get resources
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResources()
+    {
+        return $this->resources;
     }
 
     /**
@@ -202,7 +208,7 @@ class Transcript
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return Transcript
+     * @return Entity
      */
     public function setCreateUser(\UserBundle\Entity\User $createUser = null)
     {
@@ -219,29 +225,5 @@ class Transcript
     public function getCreateUser()
     {
         return $this->createUser;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return Transcript
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 }

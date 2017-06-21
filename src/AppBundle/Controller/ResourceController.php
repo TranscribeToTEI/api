@@ -1,9 +1,9 @@
 <?php
 
-namespace DataBundle\Controller;
+namespace AppBundle\Controller;
 
-use DataBundle\Entity\Resource;
-use DataBundle\Form\ResourceType;
+use AppBundle\Entity\Resource;
+use AppBundle\Form\ResourceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -55,7 +55,7 @@ class ResourceController extends FOSRestController
      */
     public function getResourcesAction(Request $request)
     {
-        $resources = $this->getDoctrine()->getManager()->getRepository('DataBundle:Resource')->findAll();
+        $resources = $this->getDoctrine()->getManager()->getRepository('AppBundle:Resource')->findAll();
         /* @var $resources Resource[] */
 
         return $resources;
@@ -86,7 +86,7 @@ class ResourceController extends FOSRestController
     public function getResourceAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $resource = $em->getRepository('DataBundle:Resource')->find($request->get('id'));
+        $resource = $em->getRepository('AppBundle:Resource')->find($request->get('id'));
         /* @var $resource Resource */
 
         if (empty($resource)) {
@@ -220,9 +220,9 @@ class ResourceController extends FOSRestController
     private function updateResource(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $resource = $em->getRepository('DataBundle:Resource')
+        $resource = $em->getRepository('AppBundle:Resource')
             ->find($request->get('id'));
-        /* @var $resource \DataBundle\Entity\Resource */
+        /* @var $resource \AppBundle\Entity\Resource */
         if (empty($resource)) {
             return new JsonResponse(['message' => 'Resource not found'], Response::HTTP_NOT_FOUND);
         }
@@ -262,8 +262,8 @@ class ResourceController extends FOSRestController
     public function removeResourceAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $resource = $em->getRepository('DataBundle:Resource')->find($request->get('id'));
-        /* @var $resource \DataBundle\Entity\Resource */
+        $resource = $em->getRepository('AppBundle:Resource')->find($request->get('id'));
+        /* @var $resource \AppBundle\Entity\Resource */
 
         if ($resource) {
             $em->remove($resource);

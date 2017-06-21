@@ -1,6 +1,6 @@
 <?php
 
-namespace DataBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -8,21 +8,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-use DataBundle\Entity\Will;
-use DataBundle\Entity\Resource;
-
 /**
- * Entity
+ * Transcript
  *
- * @ORM\Table(name="entity")
- * @ORM\Entity(repositoryClass="DataBundle\Repository\EntityRepository")
+ * @ORM\Table(name="transcript")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TranscriptRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  *
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_entity",
+ *          "get_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
@@ -30,7 +27,7 @@ use DataBundle\Entity\Resource;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_entity",
+ *          "update_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
@@ -38,7 +35,7 @@ use DataBundle\Entity\Resource;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_entity",
+ *          "patch_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
@@ -46,13 +43,13 @@ use DataBundle\Entity\Resource;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_entity",
+ *          "remove_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      )
  * )
  */
-class Entity
+class Transcript
 {
     /**
      * @Serializer\Since("1.0")
@@ -70,18 +67,32 @@ class Entity
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToOne(targetEntity="Will", inversedBy="entity", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="will_id", referencedColumnName="id", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
-    private $will;
+    private $content;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Assert\NotBlank()
+     * @Assert\Choice({"todo", "transcription", "validation", "validated"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
 
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToMany(targetEntity="Resource", mappedBy="entity", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Resource", mappedBy="transcript")
+     * @ORM\JoinColumn(name="resource_id", referencedColumnName="id")
      */
-    private $resources;
+    private $resource;
 
     /**
      * @Serializer\Since("1.0")
@@ -113,12 +124,29 @@ class Entity
     {
         return $this->id;
     }
+
     /**
-     * Constructor
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Transcript
      */
-    public function __construct()
+    public function setContent($content)
     {
-        $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 
     /**
@@ -126,7 +154,7 @@ class Entity
      *
      * @param \DateTime $createDate
      *
-     * @return Entity
+     * @return Transcript
      */
     public function setCreateDate($createDate)
     {
@@ -146,61 +174,27 @@ class Entity
     }
 
     /**
-     * Set will
+     * Set resource
      *
-     * @param \DataBundle\Entity\Will $will
+     * @param \AppBundle\Entity\Resource $resource
      *
-     * @return Entity
+     * @return Transcript
      */
-    public function setWill(\DataBundle\Entity\Will $will = null)
+    public function setResource(\AppBundle\Entity\Resource $resource = null)
     {
-        $this->will = $will;
+        $this->resource = $resource;
 
         return $this;
     }
 
     /**
-     * Get will
+     * Get resource
      *
-     * @return \DataBundle\Entity\Will
+     * @return \AppBundle\Entity\Resource
      */
-    public function getWill()
+    public function getResource()
     {
-        return $this->will;
-    }
-
-    /**
-     * Add resource
-     *
-     * @param \DataBundle\Entity\Resource $resource
-     *
-     * @return Entity
-     */
-    public function addResource(\DataBundle\Entity\Resource $resource)
-    {
-        $this->resources[] = $resource;
-
-        return $this;
-    }
-
-    /**
-     * Remove resource
-     *
-     * @param \DataBundle\Entity\Resource $resource
-     */
-    public function removeResource(\DataBundle\Entity\Resource $resource)
-    {
-        $this->resources->removeElement($resource);
-    }
-
-    /**
-     * Get resources
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getResources()
-    {
-        return $this->resources;
+        return $this->resource;
     }
 
     /**
@@ -208,7 +202,7 @@ class Entity
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return Entity
+     * @return Transcript
      */
     public function setCreateUser(\UserBundle\Entity\User $createUser = null)
     {
@@ -225,5 +219,29 @@ class Entity
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Transcript
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

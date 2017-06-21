@@ -1,11 +1,11 @@
 <?php
 
-namespace TranscriptBundle\Controller;
+namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
-use TranscriptBundle\Entity\Transcript;
+use AppBundle\Entity\Transcript;
 
-use TranscriptBundle\Form\TranscriptType;
+use AppBundle\Form\TranscriptType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -40,7 +40,7 @@ class TranscriptController extends FOSRestController
     {
         $status = $paramFetcher->get('status');
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('TranscriptBundle:Transcript');
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Transcript');
         /* @var $repository EntityRepository */
         if($status != "") {
             $transcripts = $repository->findBy(array("status" =>$status));
@@ -76,7 +76,7 @@ class TranscriptController extends FOSRestController
     public function getTranscriptAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $transcript = $em->getRepository('TranscriptBundle:Transcript')->find($request->get('id'));
+        $transcript = $em->getRepository('AppBundle:Transcript')->find($request->get('id'));
         /* @var $transcript Transcript */
 
         if (empty($transcript)) {
@@ -179,8 +179,8 @@ class TranscriptController extends FOSRestController
      *         },
      *         {
      *             "name"="content",
-     *             "transcriptType"="text",
-     *             "requirement"="\S+",
+     *             "transcriptType"="",
+     *             "requirement"="",
      *             "description"="The content of the transcript."
      *         }
      *     },
@@ -198,8 +198,7 @@ class TranscriptController extends FOSRestController
     private function updateTranscript(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $transcript = $em->getRepository('TranscriptBundle:Transcript')
-            ->find($request->get('id'));
+        $transcript = $em->getRepository('AppBundle:Transcript')->find($request->get('id'));
         /* @var $transcript Transcript */
         if (empty($transcript)) {
             return new JsonResponse(['message' => 'Transcript not found'], Response::HTTP_NOT_FOUND);
@@ -239,7 +238,7 @@ class TranscriptController extends FOSRestController
     public function removeTranscriptAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $transcript = $em->getRepository('TranscriptBundle:Transcript')->find($request->get('id'));
+        $transcript = $em->getRepository('AppBundle:Transcript')->find($request->get('id'));
         /* @var $transcript Transcript */
 
         if ($transcript) {

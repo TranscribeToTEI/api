@@ -1,6 +1,6 @@
 <?php
 
-namespace DataBundle\Controller;
+namespace AppBundle\Controller;
 
 use DataBundle\Entity\Entity;
 
@@ -55,7 +55,7 @@ class EntityController extends FOSRestController
      */
     public function getEntitiesAction(Request $request)
     {
-        $entities = $this->getDoctrine()->getManager()->getRepository('DataBundle:Entity')->findAll();
+        $entities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findAll();
         /* @var $entities Entity[] */
 
         return $entities;
@@ -86,7 +86,7 @@ class EntityController extends FOSRestController
     public function getEntityAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('DataBundle:Entity')->find($request->get('id'));
+        $entity = $em->getRepository('AppBundle:Entity')->find($request->get('id'));
         /* @var $entity Entity */
 
         if (empty($entity)) {
@@ -196,7 +196,7 @@ class EntityController extends FOSRestController
     private function updateEntity(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('DataBundle:Entity')
+        $entity = $em->getRepository('AppBundle:Entity')
             ->find($request->get('id'));
         /* @var $entity Entity */
         if (empty($entity)) {
@@ -237,7 +237,7 @@ class EntityController extends FOSRestController
     public function removeEntityAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('DataBundle:Entity')->find($request->get('id'));
+        $entity = $em->getRepository('AppBundle:Entity')->find($request->get('id'));
         /* @var $entity Entity */
 
         if ($entity) {

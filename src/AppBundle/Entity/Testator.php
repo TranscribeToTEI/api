@@ -1,20 +1,20 @@
 <?php
 
-namespace DataBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-use DataBundle\Entity\Will;
+use AppBundle\Entity\Will;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Testator
  *
  * @ORM\Table(name="testator")
- * @ORM\Entity(repositoryClass="DataBundle\Repository\TestatorRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TestatorRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  *
@@ -593,11 +593,11 @@ class Testator
     /**
      * Add will
      *
-     * @param \DataBundle\Entity\Will $will
+     * @param \AppBundle\Entity\Will $will
      *
      * @return Testator
      */
-    public function addWill(\DataBundle\Entity\Will $will)
+    public function addWill(\AppBundle\Entity\Will $will)
     {
         $this->wills[] = $will;
 
@@ -607,9 +607,9 @@ class Testator
     /**
      * Remove will
      *
-     * @param \DataBundle\Entity\Will $will
+     * @param \AppBundle\Entity\Will $will
      */
-    public function removeWill(\DataBundle\Entity\Will $will)
+    public function removeWill(\AppBundle\Entity\Will $will)
     {
         $this->wills->removeElement($will);
     }

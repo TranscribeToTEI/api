@@ -1,13 +1,14 @@
 <?php
 
-namespace DataBundle\Form;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ResourceType extends AbstractType
+class TranscriptType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,10 +16,8 @@ class ResourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type',       TextType::class, array("required" => true))
-            ->add('orderInWill',TextType::class, array("required" => true))
-            ->add('entity',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'DataBundle:Entity'))
-            ->add('transcript', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'TranscriptBundle:Transcript'))
+            ->add('content',    TextareaType::class, array("required" => true))
+            ->add('resource',   \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Resource'))
             ->add('createUser', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
     }
     
@@ -28,7 +27,7 @@ class ResourceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DataBundle\Entity\Resource',
+            'data_class' => 'AppBundle\Entity\Transcript',
             'csrf_protection' => false
         ));
     }
@@ -38,7 +37,7 @@ class ResourceType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'databundle_resource';
+        return 'appbundle_transcript';
     }
 
 

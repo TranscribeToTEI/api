@@ -1,6 +1,6 @@
 <?php
 
-namespace DataBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -8,14 +8,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-use DataBundle\Entity\Entity;
-use DataBundle\Entity\Testator;
+use AppBundle\Entity\Entity;
+use AppBundle\Entity\Testator;
 
 /**
  * Will
  *
  * @ORM\Table(name="will")
- * @ORM\Entity(repositoryClass="DataBundle\Repository\WillRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\WillRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  *
@@ -296,11 +296,11 @@ class Will
     /**
      * Set entity
      *
-     * @param \DataBundle\Entity\Entity $entity
+     * @param \AppBundle\Entity\Entity $entity
      *
      * @return Will
      */
-    public function setEntity(\DataBundle\Entity\Entity $entity = null)
+    public function setEntity(\AppBundle\Entity\Entity $entity = null)
     {
         $this->entity = $entity;
 
@@ -310,7 +310,7 @@ class Will
     /**
      * Get entity
      *
-     * @return \DataBundle\Entity\Entity
+     * @return \AppBundle\Entity\Entity
      */
     public function getEntity()
     {
@@ -320,11 +320,11 @@ class Will
     /**
      * Set testator
      *
-     * @param \DataBundle\Entity\Testator $testator
+     * @param \AppBundle\Entity\Testator $testator
      *
      * @return Will
      */
-    public function setTestator(\DataBundle\Entity\Testator $testator = null)
+    public function setTestator(\AppBundle\Entity\Testator $testator = null)
     {
         $this->testator = $testator;
 
@@ -334,7 +334,7 @@ class Will
     /**
      * Get testator
      *
-     * @return \DataBundle\Entity\Testator
+     * @return \AppBundle\Entity\Testator
      */
     public function getTestator()
     {

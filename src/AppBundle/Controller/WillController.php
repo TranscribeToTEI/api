@@ -1,10 +1,10 @@
 <?php
 
-namespace DataBundle\Controller;
+namespace AppBundle\Controller;
 
-use DataBundle\Entity\Will;
+use AppBundle\Entity\Will;
 
-use DataBundle\Form\WillType;
+use AppBundle\Form\WillType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -56,7 +56,7 @@ class WillController extends FOSRestController
      */
     public function getWillsAction(Request $request)
     {
-        $wills = $this->getDoctrine()->getManager()->getRepository('DataBundle:Will')->findAll();
+        $wills = $this->getDoctrine()->getManager()->getRepository('AppBundle:Will')->findAll();
         /* @var $wills Will[] */
 
         return $wills;
@@ -86,7 +86,7 @@ class WillController extends FOSRestController
     public function getWillAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $will = $em->getRepository('DataBundle:Will')->find($request->get('id'));
+        $will = $em->getRepository('AppBundle:Will')->find($request->get('id'));
         /* @var $will Will */
 
         if (empty($will)) {
@@ -280,7 +280,7 @@ class WillController extends FOSRestController
     private function updateWill(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $will = $em->getRepository('DataBundle:Will')
+        $will = $em->getRepository('AppBundle:Will')
             ->find($request->get('id'));
         /* @var $will Will */
         if (empty($will)) {
@@ -321,7 +321,7 @@ class WillController extends FOSRestController
     public function removeWillAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $will = $em->getRepository('DataBundle:Will')->find($request->get('id'));
+        $will = $em->getRepository('AppBundle:Will')->find($request->get('id'));
         /* @var $will Will */
 
         if ($will) {

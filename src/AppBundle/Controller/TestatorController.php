@@ -1,10 +1,10 @@
 <?php
 
-namespace DataBundle\Controller;
+namespace AppBundle\Controller;
 
-use DataBundle\Entity\Testator;
+use AppBundle\Entity\Testator;
 
-use DataBundle\Form\TestatorType;
+use AppBundle\Form\TestatorType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -56,7 +56,7 @@ class TestatorController extends FOSRestController
      */
     public function getTestatorsAction(Request $request)
     {
-        $testators = $this->getDoctrine()->getManager()->getRepository('DataBundle:Testator')->findAll();
+        $testators = $this->getDoctrine()->getManager()->getRepository('AppBundle:Testator')->findAll();
         /* @var $testators Testator[] */
 
         return $testators;
@@ -87,7 +87,7 @@ class TestatorController extends FOSRestController
     public function getTestatorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $testator = $em->getRepository('DataBundle:Testator')->find($request->get('id'));
+        $testator = $em->getRepository('AppBundle:Testator')->find($request->get('id'));
         /* @var $testator Testator */
 
         if (empty($testator)) {
@@ -407,7 +407,7 @@ class TestatorController extends FOSRestController
     private function updateTestator(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $testator = $em->getRepository('DataBundle:Testator')
+        $testator = $em->getRepository('AppBundle:Testator')
             ->find($request->get('id'));
         /* @var $testator Testator */
         if (empty($testator)) {
@@ -449,7 +449,7 @@ class TestatorController extends FOSRestController
     public function removeTestatorAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $testator = $em->getRepository('DataBundle:Testator')->find($request->get('id'));
+        $testator = $em->getRepository('AppBundle:Testator')->find($request->get('id'));
         /* @var $testator Testator */
 
         if ($testator) {

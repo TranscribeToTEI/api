@@ -1,6 +1,6 @@
 <?php
 
-namespace DataBundle\Form;
+namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -21,8 +21,8 @@ class WillType extends AbstractType
             ->add('minuteDate',         DateType::class, array("required" => true, 'format' => 'yyyy-MM-dd', 'widget' => 'single_text'))
             ->add('willWritingDate',    DateType::class, array("required" => true, 'format' => 'yyyy-MM-dd', 'widget' => 'single_text'))
             ->add('willWritingPlace',   TextType::class, array("required" => false))
-            ->add('entity',             \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'DataBundle:Entity'))
-            ->add('testator',           \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'DataBundle:Testator'))
+            ->add('entity',             \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Entity'))
+            ->add('testator',           \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Testator'))
             ->add('createUser',         \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
     }
     
@@ -32,7 +32,7 @@ class WillType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'DataBundle\Entity\Will',
+            'data_class' => 'AppBundle\Entity\Will',
             'csrf_protection' => false
         ));
     }
@@ -42,7 +42,7 @@ class WillType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'databundle_will';
+        return 'appbundle_will';
     }
 
 

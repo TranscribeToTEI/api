@@ -1,20 +1,20 @@
 <?php
 
-namespace DataBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-use DataBundle\Entity\Entity;
+use AppBundle\Entity\Entity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Resource
  *
  * @ORM\Table(name="resource")
- * @ORM\Entity(repositoryClass="DataBundle\Repository\ResourceRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  *
@@ -98,7 +98,7 @@ class Resource
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToOne(targetEntity="TranscriptBundle\Entity\Transcript", mappedBy="resource", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", mappedBy="resource", cascade={"persist", "remove"})
      */
     private $transcript;
 
@@ -208,11 +208,11 @@ class Resource
     /**
      * Set entity
      *
-     * @param \DataBundle\Entity\Entity $entity
+     * @param \AppBundle\Entity\Entity $entity
      *
      * @return Resource
      */
-    public function setEntity(\DataBundle\Entity\Entity $entity = null)
+    public function setEntity(\AppBundle\Entity\Entity $entity = null)
     {
         $this->entity = $entity;
 
@@ -222,7 +222,7 @@ class Resource
     /**
      * Get entity
      *
-     * @return \DataBundle\Entity\Entity
+     * @return \AppBundle\Entity\Entity
      */
     public function getEntity()
     {
@@ -256,11 +256,11 @@ class Resource
     /**
      * Set transcript
      *
-     * @param \TranscriptBundle\Entity\Transcript $transcript
+     * @param \AppBundle\Entity\Transcript $transcript
      *
      * @return Resource
      */
-    public function setTranscript(\TranscriptBundle\Entity\Transcript $transcript = null)
+    public function setTranscript(\AppBundle\Entity\Transcript $transcript = null)
     {
         $this->transcript = $transcript;
 
@@ -270,7 +270,7 @@ class Resource
     /**
      * Get transcript
      *
-     * @return \TranscriptBundle\Entity\Transcript
+     * @return \AppBundle\Entity\Transcript
      */
     public function getTranscript()
     {
