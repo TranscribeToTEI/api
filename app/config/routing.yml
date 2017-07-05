@@ -1,6 +1,7 @@
 user:
-    resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /users/
+    resource: "@UserBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
 
 app:
     resource: '@AppBundle/Controller/DefaultController.php'
@@ -13,6 +14,12 @@ NelmioApiDocBundle:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /
+    defaults: { _format: html }
 
 entities:
     type:     rest
@@ -33,3 +40,15 @@ testators:
 transcripts:
     type:     rest
     resource: AppBundle\Controller\TranscriptController
+
+contents:
+    type:     rest
+    resource: AppBundle\Controller\ContentController
+
+users:
+    type:     rest
+    resource: UserBundle\Controller\UserController
+
+auth-tokens:
+    type:     rest
+    resource: UserBundle\Controller\AuthTokenController

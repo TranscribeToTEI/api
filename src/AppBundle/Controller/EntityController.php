@@ -56,7 +56,7 @@ class EntityController extends FOSRestController
     public function getEntitiesAction(Request $request)
     {
         $entities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findAll();
-        /* @var $entities Entity[] */
+        /* @var $entities \AppBundle\Entity\Entity[] */
 
         return $entities;
     }
@@ -205,7 +205,7 @@ class EntityController extends FOSRestController
         $form = $this->createForm(EntityType::class, $entity);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
-            $em->persist($entity);
+            $em->merge($entity);
             $em->flush();
             return $entity;
         } else {

@@ -289,7 +289,7 @@ class WillController extends FOSRestController
         $form = $this->createForm(WillType::class, $will);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
-            $em->persist($will);
+            $em->merge($will);
             $em->flush();
             return $will;
         } else {

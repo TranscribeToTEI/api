@@ -17,6 +17,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceRepository")
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
@@ -77,6 +78,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Expose
      *
      * @var string
      *
@@ -86,6 +88,7 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Serializer\Expose
      *
      * @var int

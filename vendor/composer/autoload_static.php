@@ -88,6 +88,7 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
             'Fig\\Link\\' => 9,
             'FOS\\UserBundle\\' => 15,
             'FOS\\RestBundle\\' => 15,
+            'FOS\\CommentBundle\\' => 18,
         ),
         'D' => 
         array (
@@ -257,6 +258,10 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         'FOS\\RestBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/friendsofsymfony/rest-bundle',
+        ),
+        'FOS\\CommentBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/comment-bundle',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

@@ -1,3 +1,6 @@
 services:
-
+    app.versioning:
+        class: AppBundle\Services\Versioning
+        arguments:
+            - '@doctrine.orm.entity_manager'
 

@@ -206,7 +206,7 @@ class TranscriptController extends FOSRestController
         $form = $this->createForm(TranscriptType::class, $transcript);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
-            $em->persist($transcript);
+            $em->merge($transcript);
             $em->flush();
             return $transcript;
         } else {

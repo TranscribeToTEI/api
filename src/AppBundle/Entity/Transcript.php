@@ -15,6 +15,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TranscriptRepository")
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
@@ -48,6 +49,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          absolute = true
  *      )
  * )
+ * @Hateoas\Relation(
+ *     "version",
+ *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object.getId()))")
+ * )
  */
 class Transcript
 {
@@ -66,6 +71,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
      *
      * @var string
      *

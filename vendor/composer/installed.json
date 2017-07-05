@@ -3994,5 +3994,101 @@
             }
         ],
         "description": "A bundle integrating GuzzleHttp >= 4.0"
+    },
+    {
+        "name": "friendsofsymfony/comment-bundle",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/FriendsOfSymfony/FOSCommentBundle.git",
+            "reference": "9adea090ce795d47c8675d4dc4e97c4fc18400fc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCommentBundle/zipball/9adea090ce795d47c8675d4dc4e97c4fc18400fc",
+            "reference": "9adea090ce795d47c8675d4dc4e97c4fc18400fc",
+            "shasum": ""
+        },
+        "require": {
+            "doctrine/annotations": "~1.0",
+            "friendsofsymfony/rest-bundle": "~1.6|~2.0",
+            "jms/serializer-bundle": "~2.0",
+            "php": "^5.5.9|~7.0",
+            "phpoption/phpoption": "~1.1",
+            "symfony/asset": "~2.7|~3.0",
+            "symfony/dependency-injection": "~2.7|~3.0",
+            "symfony/form": "~2.7|~3.0",
+            "symfony/framework-bundle": "~2.7|~3.0",
+            "symfony/routing": "~2.7|~3.0",
+            "symfony/security-bundle": "~2.7|~3.0",
+            "symfony/twig-bridge": "^2.7|~3.0",
+            "symfony/twig-bundle": "~2.7|~3.0",
+            "symfony/validator": "~2.7|~3.0",
+            "symfony/yaml": "~2.7|~3.0",
+            "twig/twig": "~1.28|~2.0"
+        },
+        "conflict": {
+            "twig/twig": "<1.28"
+        },
+        "require-dev": {
+            "doctrine/doctrine-bundle": "~1.6",
+            "doctrine/orm": "~2.3",
+            "friendsofphp/php-cs-fixer": "^1.11",
+            "friendsofsymfony/user-bundle": "~2.0",
+            "ornicar/akismet-bundle": "dev-master",
+            "phpunit/phpunit": "~4.8|~5.0",
+            "symfony/assetic-bundle": "~2.7",
+            "symfony/browser-kit": "~2.7|~3.0",
+            "symfony/css-selector": "~2.7|~3.0",
+            "symfony/dom-crawler": "~2.7|~3.0",
+            "symfony/expression-language": "~2.7|~3.0",
+            "symfony/phpunit-bridge": "~2.7|~3.0"
+        },
+        "suggest": {
+            "friendsofsymfony/user-bundle": "Allows for user integration.",
+            "ornicar/akismet-bundle": "Integrate Akismet for spam detection."
+        },
+        "time": "2017-06-07 13:55:11",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "FOS\\CommentBundle\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Tim Nagel",
+                "email": "tim@nagel.com.au"
+            },
+            {
+                "name": "FriendsOfSymfony Community",
+                "homepage": "https://github.com/friendsofsymfony/FOSCommentBundle/contributors"
+            },
+            {
+                "name": "Alexander Mols",
+                "email": "iam.asm89@gmail.com"
+            }
+        ],
+        "description": "This Bundle provides threaded comment functionality for Symfony2 applications",
+        "homepage": "http://friendsofsymfony.github.com",
+        "keywords": [
+            "comment",
+            "forum",
+            "threads"
+        ]
     }
 ]

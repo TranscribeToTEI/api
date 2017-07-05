@@ -17,6 +17,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TestatorRepository")
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
@@ -78,6 +79,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Assert\NotBlank()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -89,6 +91,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Assert\NotBlank()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -100,6 +103,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Assert\NotBlank()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -110,6 +114,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -121,6 +126,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Assert\NotBlank()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -133,6 +139,7 @@ class Testator
      * @Serializer\Expose
      * @Assert\NotBlank()
      * @Assert\Date()
+     * @Gedmo\Versioned
      *
      * @var \DateTime
      *
@@ -143,6 +150,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -155,6 +163,7 @@ class Testator
      * @Serializer\Expose
      * @Assert\NotBlank()
      * @Assert\Date()
+     * @Gedmo\Versioned
      *
      * @var \DateTime
      *
@@ -166,6 +175,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Assert\NotBlank()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -177,6 +187,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Assert\NotBlank()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -189,6 +200,7 @@ class Testator
      * @Serializer\Expose
      * @Assert\NotBlank()
      * @Assert\Url()
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -199,6 +211,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
      *
      * @var string
      *
@@ -209,6 +222,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
      *
      * @var string
      *

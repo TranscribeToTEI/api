@@ -145,7 +145,7 @@ class ResourceController extends FOSRestController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $em->persist($resource);
+            $em->merge($resource);
             $em->flush();
             return $resource;
         } else {

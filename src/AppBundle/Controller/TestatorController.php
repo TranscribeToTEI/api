@@ -416,7 +416,7 @@ class TestatorController extends FOSRestController
         $form = $this->createForm(TestatorType::class, $testator);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
-            $em->persist($testator);
+            $em->merge($testator);
             $em->flush();
             return $testator;
         } else {
