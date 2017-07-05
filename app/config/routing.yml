@@ -49,6 +49,5 @@ users:
     type:     rest
     resource: UserBundle\Controller\UserController
 
-auth-tokens:
-    type:     rest
-    resource: UserBundle\Controller\AuthTokenController
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

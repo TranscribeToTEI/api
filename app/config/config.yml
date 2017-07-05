@@ -139,7 +139,7 @@ nelmio_api_doc: ~
 # FOS User Bundle
 fos_user:
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
-    firewall_name: main
+    firewall_name: api
     user_class: UserBundle\Entity\User
     from_email:
         address: "contact@karl-pineau.fr"
@@ -156,3 +156,13 @@ fos_comment:
         model:
             comment: AppBundle\Entity\Comment\Comment
             thread: AppBundle\Entity\Comment\Thread
+
+# app/config/config.yml
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        UserBundle\Entity\Client
+    access_token_class:  UserBundle\Entity\AccessToken
+    refresh_token_class: UserBundle\Entity\RefreshToken
+    auth_code_class:     UserBundle\Entity\AuthCode
+    service:
+        user_provider: fos_user.user_provider.username

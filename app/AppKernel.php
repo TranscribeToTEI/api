@@ -25,11 +25,12 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\CommentBundle\FOSCommentBundle(),
+            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle(),
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle(),
-            new FOS\CommentBundle\FOSCommentBundle(),
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
         ];

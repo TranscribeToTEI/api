@@ -10,7 +10,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
@@ -54,7 +54,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *      )
  * )
  */
-class User implements UserInterface
+class User extends BaseUser
 {
     /**
      * @Serializer\Since("1.0")
@@ -73,37 +73,9 @@ class User implements UserInterface
      *
      * @Assert\NotBlank()
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
     protected $name;
-
-    /**
-     * @Serializer\Since("1.0")
-     * @Serializer\Expose
-     *
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
-    protected $email;
-
-    /**
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
-    protected $password;
-
-    /**
-     * @Assert\NotBlank(groups={"New", "FullUpdate"})
-     * @Assert\Length(
-     *      min = 4,
-     *      max = 31,
-     *      minMessage = "Your password must be at least {{ limit }} characters long",
-     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
-     * )
-     * @Assert\Type("string")
-     */
-    protected $plainPassword;
 
 
     /**
@@ -138,71 +110,5 @@ class User implements UserInterface
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
-    }
-
-
-    public function getRoles()
-    {
-        return [];
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUsername()
-    {
-        return $this->email;
-    }
-
-    public function eraseCredentials()
-    {
-        // Suppression des données sensibles
-        $this->plainPassword = null;
     }
 }
