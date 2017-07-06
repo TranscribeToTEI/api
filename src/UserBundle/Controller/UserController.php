@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use UserBundle\Entity\User;
 
 use UserBundle\Form\UserType;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class UserController extends FOSRestController
 {
@@ -53,6 +55,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function getUsersAction(Request $request)
     {
@@ -82,6 +85,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function getUserAction(Request $request)
     {
@@ -92,8 +96,12 @@ class UserController extends FOSRestController
         if (empty($user)) {
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
-
-        return $user;
+        if($this->get('security.token_storage')->getToken()->getUser() == $user OR $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            return $user;
+        } else {
+            // User need to be the user requested or an admin
+            throw $this->createAccessDeniedException('Unable to access this page!');
+        }
     }
 
     /**
@@ -126,7 +134,7 @@ class UserController extends FOSRestController
      */
     public function postUsersAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        /*$em = $this->getDoctrine()->getManager();
 
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -142,7 +150,49 @@ class UserController extends FOSRestController
             return $user;
         } else {
             return $form;
+        }*/
+        /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
+        $formFactory = $this->get('fos_user.registration.form.factory');
+        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
+        $userManager = $this->get('fos_user.user_manager');
+        /** @var $dispatcher \Symfony\Component\EventDispatcher\EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $user = $userManager->createUser();
+        $user->setEnabled(true);
+
+        $event = new \FOS\UserBundle\Event\GetResponseUserEvent($user, $request);
+        $dispatcher->dispatch(\FOS\UserBundle\FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
         }
+
+        $form = $formFactory->createForm();
+        $form->setData($user);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $event = new \FOS\UserBundle\Event\FormEvent($form, $request);
+            $dispatcher->dispatch(\FOS\UserBundle\FOSUserEvents::REGISTRATION_SUCCESS, $event);
+
+            $userManager->updateUser($user);
+
+            if (null === $response = $event->getResponse()) {
+                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $response = new \Symfony\Component\HttpFoundation\RedirectResponse($url);
+            }
+
+            $dispatcher->dispatch(\FOS\UserBundle\FOSUserEvents::REGISTRATION_COMPLETED, new \FOS\UserBundle\Event\FilterUserResponseEvent($user, $request, $response));
+
+            $view = $this->view($user, Response::HTTP_CREATED);
+
+            return $this->handleView($view);
+        }
+
+        $view = $this->view($form, Response::HTTP_BAD_REQUEST);
+        return $this->handleView($view);
     }
 
     /**
@@ -171,6 +221,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function updateUserAction(Request $request)
     {
@@ -203,6 +254,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function patchUserAction(Request $request)
     {
@@ -217,27 +269,31 @@ class UserController extends FOSRestController
         if (empty($user)) {
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
-
-        if ($clearMissing) {
-            $options = ['validation_groups'=>['Default', 'FullUpdate']];
-        } else {
-            $options = [];
-        }
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->submit($request->request->all(), $clearMissing);
-        if ($form->isValid()) {
-            if (!empty($user->getPlainPassword())) {
-                $encoder = $this->get('security.password_encoder');
-                $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($encoded);
+        if($this->get('security.token_storage')->getToken()->getUser() == $user OR $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if ($clearMissing) {
+                $options = ['validation_groups'=>['Default', 'FullUpdate']];
+            } else {
+                $options = [];
             }
 
-            $em->merge($user);
-            $em->flush();
-            return $user;
+            $form = $this->createForm(UserType::class, $user);
+            $form->submit($request->request->all(), $clearMissing);
+            if ($form->isValid()) {
+                if (!empty($user->getPlainPassword())) {
+                    $encoder = $this->get('security.password_encoder');
+                    $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
+                    $user->setPassword($encoded);
+                }
+
+                $em->merge($user);
+                $em->flush();
+                return $user;
+            } else {
+                return $form;
+            }
         } else {
-            return $form;
+            // User need to be the user requested or an admin
+            throw $this->createAccessDeniedException('Unable to access this page!');
         }
     }
 
@@ -261,6 +317,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function removeUserAction(Request $request)
     {
@@ -268,9 +325,12 @@ class UserController extends FOSRestController
         $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
         /* @var $user User */
 
-        if ($user) {
+        if($user AND ($this->get('security.token_storage')->getToken()->getUser() == $user OR $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))) {
             $em->remove($user);
             $em->flush();
+        } else {
+            // User need to be the user requested or an admin
+            throw $this->createAccessDeniedException('Unable to access this page!');
         }
     }
 }

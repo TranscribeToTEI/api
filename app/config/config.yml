@@ -18,7 +18,7 @@ framework:
         resource: '%kernel.project_dir%/app/config/routing.yml'
         strict_requirements: ~
     form: ~
-    csrf_protection: ~
+    csrf_protection: false
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
     templating:
@@ -144,6 +144,14 @@ fos_user:
     from_email:
         address: "contact@karl-pineau.fr"
         sender_name: "Karl Pineau"
+    registration:
+        form:
+            type: UserBundle\Form\RegistrationType
+            validation_groups: [UserRegistration]
+    profile:
+        form:
+            type: UserBundle\Form\ProfileType
+            validation_groups: [UserProfile]
 
 # Guzzle
 csa_guzzle:
@@ -166,3 +174,10 @@ fos_oauth_server:
     auth_code_class:     UserBundle\Entity\AuthCode
     service:
         user_provider: fos_user.user_provider.username
+
+jms_serializer:
+    metadata:
+        directories:
+            FOSUB:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "%kernel.root_dir%/serializer/FOSUserBundle"
