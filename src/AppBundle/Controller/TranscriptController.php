@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
@@ -24,7 +25,7 @@ class TranscriptController extends FOSRestController
      * @Rest\Get("/transcripts")
      * @Rest\View()
      *
-     * @QueryParam(name="status", requirements="Status name", default="", description="Name of the status required")
+     * @QueryParam(name="status", nullable=true, description="Name of the status required")
      *
      * @Doc\ApiDoc(
      *     section="Transcripts",

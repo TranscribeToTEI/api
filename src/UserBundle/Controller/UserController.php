@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Request\ParamFetcher;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -21,28 +24,8 @@ class UserController extends FOSRestController
     /**
      * @Rest\Get("/users")
      * @Rest\QueryParam(
-     *     name="keyword",
-     *     requirements="[a-zA-Z0-9]",
-     *     nullable=true,
-     *     description="The keyword to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="order",
-     *     requirements="asc|desc",
-     *     default="asc",
-     *     description="Sort order (asc or desc)"
-     * )
-     * @Rest\QueryParam(
-     *     name="limit",
-     *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of items per page."
-     * )
-     * @Rest\QueryParam(
-     *     name="offset",
-     *     requirements="\d+",
-     *     default="1",
-     *     description="The pagination offset"
+     *     name="token",
+     *     description="User's token"
      * )
      * @Rest\View()
      *
@@ -55,14 +38,27 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("has_role('ROLE_ADMIN')")
      */
-    public function getUsersAction(Request $request)
+    public function getUsersAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $users = $this->getDoctrine()->getManager()->getRepository('UserBundle:User')->findAll();
-        /* @var $users User[] */
+        $token = $paramFetcher->get('token');
+        $em = $this->getDoctrine()->getManager();
 
-        return $users;
+        if($token != "") {
+            $user = $em->getRepository('UserBundle:AccessToken')->findOneByToken($token)->getUser();
+            /* @var $user User */
+
+            return $user;
+        } else {
+            if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+                $users = $em->getRepository('UserBundle:User')->findAll();
+                /* @var $users User[] */
+
+                return $users;
+            } else {
+                throw $this->createAccessDeniedException('Unable to access this page!');
+            }
+        }
     }
 
     /**
@@ -85,7 +81,6 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function getUserAction(Request $request)
     {
@@ -93,11 +88,11 @@ class UserController extends FOSRestController
         $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
         /* @var $user User */
 
-        if (empty($user)) {
+        if(empty($user)) {
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
         if($this->get('security.token_storage')->getToken()->getUser() == $user OR $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-            return $user;
+             return $user;
         } else {
             // User need to be the user requested or an admin
             throw $this->createAccessDeniedException('Unable to access this page!');
@@ -134,23 +129,6 @@ class UserController extends FOSRestController
      */
     public function postUsersAction(Request $request)
     {
-        /*$em = $this->getDoctrine()->getManager();
-
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->submit($request->request->all());
-
-        if ($form->isValid()) {
-            $encoder = $this->get('security.password_encoder');
-            $encoded = $encoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($encoded);
-
-            $em->persist($user);
-            $em->flush();
-            return $user;
-        } else {
-            return $form;
-        }*/
         /** @var $formFactory \FOS\UserBundle\Form\Factory\FactoryInterface */
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
@@ -221,7 +199,6 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function updateUserAction(Request $request)
     {
@@ -254,7 +231,6 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function patchUserAction(Request $request)
     {

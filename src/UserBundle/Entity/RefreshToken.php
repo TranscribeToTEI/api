@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table("oauth2_refresh_tokens")
- * Note du 5/07/17 : Peut-être que ORM Table n'est pas nécessaire, ajout de https://gist.github.com/tjamps/11d617a4b318d65ca583
  */
 class RefreshToken extends BaseRefreshToken
 {
