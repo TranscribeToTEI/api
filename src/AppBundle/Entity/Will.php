@@ -84,9 +84,9 @@ class Will
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
-     * @ORM\Column(name="number", type="string", length=255)
+     * @ORM\Column(name="call_number", type="string", length=255)
      */
-    private $number;
+    private $callNumber;
 
     /**
      * @Serializer\Since("1.0")
@@ -372,26 +372,26 @@ class Will
     }
 
     /**
-     * Set number
+     * Set callNumber
      *
-     * @param string $number
+     * @param string $callNumber
      *
      * @return Will
      */
-    public function setNumber($number)
+    public function setCallNumber($callNumber)
     {
-        $this->number = $number;
+        $this->callNumber = $callNumber;
 
         return $this;
     }
 
     /**
-     * Get number
+     * Get callNumber
      *
      * @return string
      */
-    public function getNumber()
+    public function getCallNumber()
     {
-        return $this->number;
+        return $this->callNumber;
     }
 }

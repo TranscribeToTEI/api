@@ -16,7 +16,7 @@ class WillType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('number',             TextType::class, array("required" => true))
+            ->add('callNumber',         TextType::class, array("required" => true))
             ->add('title',              TextType::class, array("required" => true))
             ->add('minuteDate',         DateType::class, array("required" => true, 'format' => 'yyyy-MM-dd', 'widget' => 'single_text'))
             ->add('willWritingDate',    DateType::class, array("required" => true, 'format' => 'yyyy-MM-dd', 'widget' => 'single_text'))

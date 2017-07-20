@@ -53,6 +53,10 @@ use FOS\UserBundle\Model\User as BaseUser;
  *          absolute = true
  *      )
  * )
+ * @Hateoas\Relation(
+ *     "preferences",
+ *     embedded = @Hateoas\Embedded("expr(service('user.user').getPreference(object))")
+ * )
  */
 class User extends BaseUser
 {

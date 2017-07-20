@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use UserBundle\Entity\Preference;
 use UserBundle\Entity\User;
 
 use UserBundle\Form\UserType;
@@ -156,6 +157,14 @@ class UserController extends FOSRestController
             $dispatcher->dispatch(\FOS\UserBundle\FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
             $userManager->updateUser($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $userU = $em->getRepository("UserBundle:User")->findOneById($user->getId());
+            $preference = new Preference();
+            $preference->setUser($userU);
+            $preference->setTranscriptionDeskPosition("readLeft");
+            $em->persist($preference);
+            $em->flush();
 
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('fos_user_registration_confirmed');

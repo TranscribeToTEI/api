@@ -3,4 +3,10 @@ services:
         class: AppBundle\Services\Versioning
         arguments:
             - '@doctrine.orm.entity_manager'
+    app.listener.comment:
+        class: AppBundle\EventListener\AuthorCommentListener
+        arguments:
+            - '@security.token_storage'
+        tags:
+            - { name: kernel.event_listener, event: fos_comment.comment.pre_persist, method: onCommentPrePersist }
 

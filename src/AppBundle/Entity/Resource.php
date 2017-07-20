@@ -78,7 +78,6 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
-     * @Serializer\Expose
      *
      * @var string
      *
@@ -88,7 +87,6 @@ class Resource
 
     /**
      * @Serializer\Since("1.0")
-     * @Serializer\Expose
      * @Serializer\Expose
      *
      * @var int

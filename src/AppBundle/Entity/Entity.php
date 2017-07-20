@@ -70,6 +70,16 @@ class Entity
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
+     * @Assert\NotBlank()
+     *
+     * @ORM\Column(name="willNumber", type="integer", nullable=true)
+     */
+    private $willNumber;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
      * @ORM\OneToOne(targetEntity="Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="will_id", referencedColumnName="id", nullable=true)
      */
@@ -225,5 +235,29 @@ class Entity
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set willNumber
+     *
+     * @param integer $willNumber
+     *
+     * @return Entity
+     */
+    public function setWillNumber($willNumber)
+    {
+        $this->willNumber = $willNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get willNumber
+     *
+     * @return integer
+     */
+    public function getWillNumber()
+    {
+        return $this->willNumber;
     }
 }

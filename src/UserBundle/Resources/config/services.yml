@@ -8,3 +8,7 @@ services:
         class: UserBundle\Form\ProfileType
         tags:
             - { name: form.type, alias: user_profile }
+    user.user:
+        class: UserBundle\Services\User
+        arguments:
+            - '@doctrine.orm.entity_manager'

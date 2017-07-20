@@ -17,6 +17,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ContentController extends FOSRestController
 {
@@ -24,7 +25,10 @@ class ContentController extends FOSRestController
      * @Rest\Get("/contents")
      * @Rest\View()
      *
-     * @QueryParam(name="status", requirements="Status name", default="", description="Name of the status required")
+     * @QueryParam(name="status", description="Name of the status required")
+     * @QueryParam(name="type", description="")
+     * @QueryParam(name="date", description="")
+     * @QueryParam(name="limit", requirements="\d+", description="")
      *
      * @Doc\ApiDoc(
      *     section="Contents",
@@ -39,14 +43,23 @@ class ContentController extends FOSRestController
     public function getContentsAction(Request $request, ParamFetcher $paramFetcher)
     {
         $status = $paramFetcher->get('status');
+        $type = $paramFetcher->get('type');
+        $date = $paramFetcher->get('date');
+        $limit = $paramFetcher->get('limit');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Content');
         /* @var $repository EntityRepository */
-        if($status != "") {
-            $contents = $repository->findBy(array("status" =>$status));
-        } else {
-            $contents = $repository->findAll();
-        }
+
+        $query = [];
+        if($status != "") {$query["status"] = $status;}
+        if($type != "") {$query["type"] = $type;}
+
+        $order = [];
+        if($date == "ASC" or $date == "DESC") {$order["createDate"] = $date;}
+
+        if($limit == "" or $limit == null) {$limit = 100;}
+
+        $contents = $repository->findBy($query, $order, $limit);
         /* @var $contents Content[] */
 
         return $contents;
@@ -125,6 +138,7 @@ class ContentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function postContentsAction(Request $request)
     {
@@ -181,6 +195,7 @@ class ContentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function updateContentAction(Request $request)
     {
@@ -225,6 +240,7 @@ class ContentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function patchContentAction(Request $request)
     {
@@ -270,6 +286,7 @@ class ContentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function removeContentAction(Request $request)
     {

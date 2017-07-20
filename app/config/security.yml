@@ -7,7 +7,8 @@ security:
             id: fos_user.user_provider.username
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_MODO:        ROLE_USER
+        ROLE_ADMIN:       ROLE_USER, ROLE_MODO
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     firewalls:
@@ -18,4 +19,4 @@ security:
             pattern: ^/        # All URLs are protected
             fos_oauth: true    # OAuth2 protected resource
             stateless: true    # Do no set session cookies
-            anonymous: true   # Anonymous access is not allowed
+            anonymous: true

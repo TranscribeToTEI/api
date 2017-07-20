@@ -30,7 +30,7 @@ class TestatorType extends AbstractType
             ->add('memoireDesHommes',UrlType::class, array("required" => true))
             ->add('regiment',       TextType::class, array("required" => false))
             ->add('rank',           TextType::class, array("required" => false))
-            ->add('createUser',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
+        ;
     }
     
     /**

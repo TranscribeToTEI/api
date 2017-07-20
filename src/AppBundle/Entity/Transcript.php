@@ -82,6 +82,8 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
      * @Assert\NotBlank()
      * @Assert\Choice({"todo", "transcription", "validation", "validated"})
      *
@@ -94,6 +96,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Gedmo\Versioned
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Resource", mappedBy="transcript")
      * @ORM\JoinColumn(name="resource_id", referencedColumnName="id")
@@ -104,10 +107,22 @@ class Transcript
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
+     * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
 
     /**
      * @Serializer\Since("1.0")
@@ -119,6 +134,31 @@ class Transcript
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
      */
     protected $createDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=false)
+     */
+    protected $updateDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     */
+    private $updateComment;
 
 
     /**
@@ -249,5 +289,77 @@ class Transcript
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Transcript
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Transcript
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return Transcript
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
     }
 }

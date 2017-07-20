@@ -117,6 +117,7 @@ class Content
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
+     * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */

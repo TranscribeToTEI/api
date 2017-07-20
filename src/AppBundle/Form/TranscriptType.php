@@ -16,10 +16,11 @@ class TranscriptType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content',    TextareaType::class,    array("required" => true))
-            ->add('status',     TextType::class,        array("required" => true))
-            ->add('resource',   \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Resource'))
-            ->add('createUser', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
+            ->add('content',        TextareaType::class,    array("required" => true))
+            ->add('status',         TextType::class,        array("required" => true))
+            ->add('resource',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Resource'))
+            ->add('updateComment',  TextType::class, array("required" => false))
+        ;
     }
     
     /**
