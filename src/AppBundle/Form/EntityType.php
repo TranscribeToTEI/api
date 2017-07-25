@@ -3,6 +3,8 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,8 +17,16 @@ class EntityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('will',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Will'))
-            ->add('createUser', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
+            ->add('willNumber',       IntegerType::class, array("required" => true))
+            ->add('will',             WillType::class, array("required" => false))
+            ->add('resources',        CollectionType::class, array(
+                "required" => false,
+                "allow_add" => true,
+                "allow_delete" => true,
+                "delete_empty" => true,
+                'entry_type'   => ResourceType::class
+            ))
+        ;
     }
     
     /**

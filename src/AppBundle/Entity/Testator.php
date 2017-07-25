@@ -70,7 +70,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToMany(targetEntity="Will", mappedBy="testator")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Will", mappedBy="testator")
      * @ORM\JoinColumn(nullable=true)
      */
     private $wills;
@@ -234,6 +234,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
+     * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */

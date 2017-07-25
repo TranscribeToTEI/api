@@ -3,6 +3,8 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,9 +19,17 @@ class ResourceType extends AbstractType
         $builder
             ->add('type',       TextType::class, array("required" => true))
             ->add('orderInWill',TextType::class, array("required" => true))
-            ->add('entity',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Entity'))
-            ->add('transcript', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Transcript'))
-            ->add('createUser', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
+            ->add('images',     CollectionType::class,
+                array(
+                    'required' => false,
+                    'entry_type' => TextType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true
+                )
+            )
+            ->add('notes',      TextareaType::class, array("required" => false))
+            ->add('transcript', TranscriptType::class, array("required" => true))
+        ;
     }
     
     /**

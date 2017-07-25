@@ -2,9 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use DataBundle\Entity\Entity;
+use AppBundle\Entity\Entity;
 
-use DataBundle\Form\EntityType;
+use AppBundle\Entity\Resource;
+use AppBundle\Form\EntityType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -134,6 +135,11 @@ class EntityController extends FOSRestController
 
         if ($form->isValid()) {
             $em->persist($entity);
+            foreach($entity->getResources() as $resource) {
+                /** @var $resource Resource */
+                $resource->setEntity($entity);
+            }
+            $entity->getWill()->setEntity($entity);
             $em->flush();
             return $entity;
         } else {
@@ -205,6 +211,10 @@ class EntityController extends FOSRestController
         $form = $this->createForm(EntityType::class, $entity);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
+            foreach($entity->getResources() as $resource) {
+                /** @var $resource Resource */
+                $resource->setEntity($entity);
+            }
             $em->merge($entity);
             $em->flush();
             return $entity;
@@ -241,8 +251,10 @@ class EntityController extends FOSRestController
         /* @var $entity Entity */
 
         if ($entity) {
-            $em->remove($entity);
-            $em->flush();
+            $entity_service = $this->get('app.entity');
+            /** @var $entity_service \AppBundle\Services\Entity */
+            $entity_service->remove($entity);
         }
+
     }
 }

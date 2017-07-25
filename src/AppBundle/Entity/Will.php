@@ -16,6 +16,7 @@ use AppBundle\Entity\Testator;
  *
  * @ORM\Table(name="will")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\WillRepository")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -71,7 +72,7 @@ class Will
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToOne(targetEntity="Entity", mappedBy="will")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entity", mappedBy="will")
      * @ORM\JoinColumn(nullable=true)
      */
     private $entity;
@@ -81,10 +82,10 @@ class Will
      * @Serializer\Expose
      *
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "La côte ne peut pas être vide")
      * @Gedmo\Versioned
      *
-     * @ORM\Column(name="call_number", type="string", length=255)
+     * @ORM\Column(name="callNumber", type="string", length=255)
      */
     private $callNumber;
 
@@ -93,7 +94,7 @@ class Will
      * @Serializer\Expose
      *
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "Le titre ne peut pas être vide")
      * @Gedmo\Versioned
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -105,8 +106,8 @@ class Will
      * @Serializer\Expose
      *
      * @var \DateTime
-     * @Assert\NotBlank()
-     * @Assert\Date()
+     * @Assert\NotBlank(message = "La date de la minute ne peut pas être vide")
+     * @Assert\Date(message = "La date de la minute n'est pas valide")
      * @Gedmo\Versioned
      *
      * @ORM\Column(name="minuteDate", type="date")
@@ -118,8 +119,8 @@ class Will
      * @Serializer\Expose
      *
      * @var \DateTime
-     * @Assert\NotBlank()
-     * @Assert\Date()
+     * @Assert\NotBlank(message = "La date d'écriture du testament ne peut pas être vide")
+     * @Assert\Date(message = "La date d'écriture du testament n'est pas valide")
      * @Gedmo\Versioned
      *
      * @ORM\Column(name="willWritingDate", type="date")
@@ -141,10 +142,10 @@ class Will
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message = "Le champ testateur ne peut pas être vide")
      *
-     * @ORM\ManyToOne(targetEntity="Testator", inversedBy="wills", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="testator_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Testator", inversedBy="wills", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $testator;
 
@@ -152,6 +153,7 @@ class Will
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
+     * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -185,10 +187,11 @@ class Will
      * @param string $title
      *
      * @return Will
+     * @ORM\PrePersist
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+        $this->title = "Testament ".$this->getCallNumber();
 
         return $this;
     }

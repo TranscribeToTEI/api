@@ -1,12 +1,48 @@
 services:
+    app.entity:
+        class: AppBundle\Services\Entity
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@app.will'
+            - '@app.resource'
+
+    app.resource:
+        class: AppBundle\Services\Resource
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@app.transcript'
+
+    app.testator:
+        class: AppBundle\Services\Testator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    app.transcript:
+        class: AppBundle\Services\Transcript
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    app.will:
+        class: AppBundle\Services\Will
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     app.versioning:
         class: AppBundle\Services\Versioning
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    # Listeners
+
     app.listener.comment:
         class: AppBundle\EventListener\AuthorCommentListener
         arguments:
             - '@security.token_storage'
         tags:
             - { name: kernel.event_listener, event: fos_comment.comment.pre_persist, method: onCommentPrePersist }
+
+    app.listener.resource:
+        class: AppBundle\EventListener\ResourceSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
 

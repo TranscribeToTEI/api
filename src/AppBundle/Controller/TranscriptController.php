@@ -97,12 +97,6 @@ class TranscriptController extends FOSRestController
      *     description="Create a new transcript",
      *     requirements={
      *         {
-     *             "name"="resource",
-     *             "transcriptType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The identifier of the resource containing the transcript."
-     *         },
-     *         {
      *             "name"="content",
      *             "transcriptType"="text",
      *             "requirement"="\S+",
@@ -141,12 +135,6 @@ class TranscriptController extends FOSRestController
      *     description="Update an existing transcript",
      *     requirements={
      *         {
-     *             "name"="resource",
-     *             "transcriptType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The identifier of the resource containing the transcript."
-     *         },
-     *         {
      *             "name"="content",
      *             "transcriptType"="text",
      *             "requirement"="\S+",
@@ -172,12 +160,6 @@ class TranscriptController extends FOSRestController
      *     resource=true,
      *     description="Update an existing transcript",
      *     requirements={
-     *         {
-     *             "name"="resource",
-     *             "transcriptType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The identifier of the resource containing the transcript."
-     *         },
      *         {
      *             "name"="content",
      *             "transcriptType"="",

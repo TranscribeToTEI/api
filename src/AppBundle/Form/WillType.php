@@ -17,13 +17,13 @@ class WillType extends AbstractType
     {
         $builder
             ->add('callNumber',         TextType::class, array("required" => true))
-            ->add('title',              TextType::class, array("required" => true))
+            ->add('title',              TextType::class, array("required" => false))
             ->add('minuteDate',         DateType::class, array("required" => true, 'format' => 'yyyy-MM-dd', 'widget' => 'single_text'))
             ->add('willWritingDate',    DateType::class, array("required" => true, 'format' => 'yyyy-MM-dd', 'widget' => 'single_text'))
             ->add('willWritingPlace',   TextType::class, array("required" => false))
-            ->add('entity',             \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Entity'))
+            ->add('entity',             \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'AppBundle:Entity'))
             ->add('testator',           \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Testator'))
-            ->add('createUser',         \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => false, 'class' => 'UserBundle:User'));
+        ;
     }
     
     /**

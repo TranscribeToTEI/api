@@ -96,16 +96,6 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
-     * @Gedmo\Versioned
-     *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Resource", mappedBy="transcript")
-     * @ORM\JoinColumn(name="resource_id", referencedColumnName="id")
-     */
-    private $resource;
-
-    /**
-     * @Serializer\Since("1.0")
-     * @Serializer\Expose
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -217,30 +207,6 @@ class Transcript
     public function getCreateDate()
     {
         return $this->createDate;
-    }
-
-    /**
-     * Set resource
-     *
-     * @param \AppBundle\Entity\Resource $resource
-     *
-     * @return Transcript
-     */
-    public function setResource(\AppBundle\Entity\Resource $resource = null)
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    /**
-     * Get resource
-     *
-     * @return \AppBundle\Entity\Resource
-     */
-    public function getResource()
-    {
-        return $this->resource;
     }
 
     /**

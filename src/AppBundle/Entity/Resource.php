@@ -70,14 +70,17 @@ class Resource
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\ManyToOne(targetEntity="Entity", inversedBy="resources")
-     * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity", inversedBy="resources")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $entity;
 
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     *
+     * @Assert\NotBlank()
+     * @Assert\Choice({"page", "envelop"})
      *
      * @var string
      *
@@ -99,7 +102,32 @@ class Resource
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", mappedBy="resource", cascade={"persist", "remove"})
+     * @Assert\NotBlank()
+     * @Assert\Type("array")
+     * @var array
+     *
+     * @ORM\Column(name="images", type="array", nullable=true)
+     */
+    private $images;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    private $notes;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $transcript;
 
@@ -107,6 +135,7 @@ class Resource
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
+     * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -276,5 +305,53 @@ class Resource
     public function getTranscript()
     {
         return $this->transcript;
+    }
+
+    /**
+     * Set images
+     *
+     * @param array $images
+     *
+     * @return Resource
+     */
+    public function setImages($images)
+    {
+        $this->images = $images;
+
+        return $this;
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Set notes
+     *
+     * @param string $notes
+     *
+     * @return Resource
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return string
+     */
+    public function getNotes()
+    {
+        return $this->notes;
     }
 }

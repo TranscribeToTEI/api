@@ -3,9 +3,16 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Resource;
+use AppBundle\Entity\Transcript;
 use AppBundle\Form\ResourceType;
+use AppBundle\Repository\ResourceRepository;
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use FOS\RestBundle\Request\ParamFetcher;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,31 +24,9 @@ class ResourceController extends FOSRestController
 {
     /**
      * @Rest\Get("/resources")
-     * @Rest\QueryParam(
-     *     name="keyword",
-     *     requirements="[a-zA-Z0-9]",
-     *     nullable=true,
-     *     description="The keyword to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="order",
-     *     requirements="asc|desc",
-     *     default="asc",
-     *     description="Sort order (asc or desc)"
-     * )
-     * @Rest\QueryParam(
-     *     name="limit",
-     *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of items per page."
-     * )
-     * @Rest\QueryParam(
-     *     name="offset",
-     *     requirements="\d+",
-     *     default="1",
-     *     description="The pagination offset"
-     * )
      * @Rest\View()
+     *
+     * @QueryParam(name="transcript", nullable=true, description="Identifier of the transcript related to the resource.")
      *
      * @Doc\ApiDoc(
      *     section="Resources",
@@ -53,30 +38,32 @@ class ResourceController extends FOSRestController
      *     }
      * )
      */
-    public function getResourcesAction(Request $request)
+    public function getResourcesAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $resources = $this->getDoctrine()->getManager()->getRepository('AppBundle:Resource')->findAll();
-        /* @var $resources Resource[] */
+        $transcript_id = $paramFetcher->get('transcript');
 
-        return $resources;
+        $em = $this->getDoctrine()->getManager();
+        /** @var $em EntityManager */
+
+        $repository = $em->getRepository('AppBundle:Resource');
+        /* @var $repository ResourceRepository */
+
+        if($transcript_id != "") {
+            $transcript = $this->getDoctrine()->getManager()->getRepository('AppBundle:Transcript')->find($transcript_id);
+            /* @var $transcript Transcript */
+            return $repository->findOneBy(array("transcript" => $transcript));
+        } else {
+            return $repository->findAll();
+        }
     }
 
     /**
      * @Rest\Get("/resources/{id}")
      * @Rest\View()
-     *
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,
      *     description="Return one resource",
-     *     requirements={
-     *         {
-     *             "name"="id",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The unique identifier of the resource.",
-     *         }
-     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -107,26 +94,18 @@ class ResourceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="entity",
-     *             "dataType"="entity",
-     *             "requirement"="",
      *             "description"="The entity aggregating the will."
      *         },
      *         {
      *             "name"="type",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
      *             "description"="The type of resource (page, envelope)."
      *         },
      *         {
-     *             "name"="order_in_will",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
+     *             "name"="orderInWill",
      *             "description"="The position of the resource in the order of the resources of the will."
      *         },
      *         {
      *             "name"="transcript",
-     *             "dataType"="entity",
-     *             "requirement"="",
      *             "description"="The transcript of the resource."
      *         }
      *     },
@@ -145,7 +124,7 @@ class ResourceController extends FOSRestController
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $em->merge($resource);
+            $em->persist($resource);
             $em->flush();
             return $resource;
         } else {

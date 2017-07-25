@@ -18,7 +18,6 @@ class TranscriptType extends AbstractType
         $builder
             ->add('content',        TextareaType::class,    array("required" => true))
             ->add('status',         TextType::class,        array("required" => true))
-            ->add('resource',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("required" => true, 'class' => 'AppBundle:Resource'))
             ->add('updateComment',  TextType::class, array("required" => false))
         ;
     }
