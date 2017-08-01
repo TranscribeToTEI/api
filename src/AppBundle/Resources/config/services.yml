@@ -32,6 +32,12 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+    # Export
+    app.xml:
+        class: AppBundle\Services\Xml
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     # Listeners
 
     app.listener.comment:
@@ -41,8 +47,8 @@ services:
         tags:
             - { name: kernel.event_listener, event: fos_comment.comment.pre_persist, method: onCommentPrePersist }
 
-    app.listener.resource:
-        class: AppBundle\EventListener\ResourceSubscriber
+    app.listener.entity:
+        class: AppBundle\EventListener\EntitySubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 

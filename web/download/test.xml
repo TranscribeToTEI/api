@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>A sample TEI document</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher> KANTL </publisher>
+        <pubPlace>Ghent</pubPlace>
+        <date when="2009"/>
+      </publicationStmt>
+      <sourceDesc>
+        <p>No source, born digital</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>Ceci est mon testament</head>
+    </body>
+  </text>
+</TEI>

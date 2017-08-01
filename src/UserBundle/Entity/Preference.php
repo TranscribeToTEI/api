@@ -66,7 +66,7 @@ class Preference
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      *
-     * @Assert\Choice({"readLeft", "readRight"})
+     * @Assert\Choice({"leftRead-centerHelp-rightImage", "leftRead-centerImage-rightHelp", "leftHelp-centerRead-rightImage", "leftHelp-centerImage-rightRead", "leftImage-centerHelp-rightRead", "leftImage-centerRead-rightHelp"})
      * @var string
      *
      * @ORM\Column(name="transcriptionDeskPosition", type="string", length=255)

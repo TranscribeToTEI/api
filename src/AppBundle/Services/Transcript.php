@@ -22,4 +22,13 @@ class Transcript
         $this->em->remove($transcript);
         $this->em->flush();
     }
+
+    /**
+     * @param $transcript \AppBundle\Entity\Transcript
+     * @return null|object \AppBundle\Entity\Resource
+     */
+    public function getResource($transcript)
+    {
+        return $this->em->getRepository('AppBundle:Resource')->findOneBy(array('transcript' => $transcript));
+    }
 }

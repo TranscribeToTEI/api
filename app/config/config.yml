@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@DownloadBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -157,7 +158,7 @@ fos_user:
 csa_guzzle:
     logger: true
 
-# Fos Comment :
+# Fos Comment
 fos_comment:
     db_driver: orm
     class:
@@ -165,7 +166,7 @@ fos_comment:
             comment: AppBundle\Entity\Comment\Comment
             thread: AppBundle\Entity\Comment\Thread
 
-# app/config/config.yml
+# FOS OAuth Server
 fos_oauth_server:
     db_driver: orm       # Drivers available: orm, mongodb, or propel
     client_class:        UserBundle\Entity\Client
@@ -177,9 +178,28 @@ fos_oauth_server:
         options:
             access_token_lifetime: 15768000
 
+# JMS Serialize
 jms_serializer:
     metadata:
         directories:
             FOSUB:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "%kernel.root_dir%/serializer/FOSUserBundle"
+
+# KNP Gaufrette
+knp_gaufrette:
+    adapters:
+        default:
+            local:
+                directory: %kernel.root_dir%/../web/images/uploads
+                create:     true
+    filesystems:
+        default:
+            adapter:    default
+            alias:      default_filesystem
+
+# SRIO Rest Upload
+srio_rest_upload:
+    storages:
+        default:
+            filesystem: gaufrette.default_filesystem

@@ -31,8 +31,11 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new SRIO\RestUploadBundle\SRIORestUploadBundle(),
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
+            new DownloadBundle\DownloadBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

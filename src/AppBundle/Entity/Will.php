@@ -27,7 +27,10 @@ use AppBundle\Entity\Testator;
  *          "get_will",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "modify",
@@ -35,7 +38,10 @@ use AppBundle\Entity\Testator;
  *          "update_will",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "patch",
@@ -43,7 +49,10 @@ use AppBundle\Entity\Testator;
  *          "patch_will",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -51,7 +60,10 @@ use AppBundle\Entity\Testator;
  *          "remove_will",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  */
 class Will
@@ -59,6 +71,7 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
      *
      * @var int
      *
@@ -71,6 +84,7 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entity", mappedBy="will")
      * @ORM\JoinColumn(nullable=true)
@@ -80,10 +94,11 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var string
      * @Assert\NotBlank(message = "La côte ne peut pas être vide")
-     * @Gedmo\Versioned
      *
      * @ORM\Column(name="callNumber", type="string", length=255)
      */
@@ -92,10 +107,11 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var string
      * @Assert\NotBlank(message = "Le titre ne peut pas être vide")
-     * @Gedmo\Versioned
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
@@ -104,11 +120,12 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var \DateTime
      * @Assert\NotBlank(message = "La date de la minute ne peut pas être vide")
      * @Assert\Date(message = "La date de la minute n'est pas valide")
-     * @Gedmo\Versioned
      *
      * @ORM\Column(name="minuteDate", type="date")
      */
@@ -117,11 +134,12 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var \DateTime
      * @Assert\NotBlank(message = "La date d'écriture du testament ne peut pas être vide")
      * @Assert\Date(message = "La date d'écriture du testament n'est pas valide")
-     * @Gedmo\Versioned
      *
      * @ORM\Column(name="willWritingDate", type="date")
      */
@@ -130,9 +148,10 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var string
-     * @Gedmo\Versioned
      *
      * @ORM\Column(name="willWritingPlace", type="string", length=255, nullable=true)
      */
@@ -141,6 +160,8 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "testator"})
+     * @Gedmo\Versioned
      *
      * @Assert\NotBlank(message = "Le champ testateur ne peut pas être vide")
      *
@@ -152,6 +173,7 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -162,6 +184,7 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @var \Datetime
      *
@@ -169,6 +192,45 @@ class Will
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
      */
     protected $createDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=false)
+     */
+    protected $updateDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=true)
+     */
+    private $updateComment;
 
 
     /**

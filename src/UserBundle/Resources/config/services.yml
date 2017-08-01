@@ -12,3 +12,4 @@ services:
         class: UserBundle\Services\User
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@app.versioning'

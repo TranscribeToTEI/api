@@ -25,7 +25,10 @@ use AppBundle\Entity\Resource;
  *          "get_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "modify",
@@ -33,7 +36,10 @@ use AppBundle\Entity\Resource;
  *          "update_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "patch",
@@ -41,7 +47,10 @@ use AppBundle\Entity\Resource;
  *          "patch_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -49,7 +58,10 @@ use AppBundle\Entity\Resource;
  *          "remove_entity",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  */
 class Entity
@@ -57,6 +69,7 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
      *
      * @var int
      *
@@ -69,6 +82,7 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
      *
@@ -79,6 +93,7 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
@@ -88,6 +103,7 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Resource", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -96,6 +112,7 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -106,6 +123,7 @@ class Entity
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @var \DateTime
      *
@@ -113,6 +131,29 @@ class Entity
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
      */
     protected $createDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=false)
+     */
+    protected $updateDate;
 
 
     /**

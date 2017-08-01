@@ -18,31 +18,7 @@ class EntityController extends FOSRestController
 {
     /**
      * @Rest\Get("/entities")
-     * @Rest\QueryParam(
-     *     name="keyword",
-     *     requirements="[a-zA-Z0-9]",
-     *     nullable=true,
-     *     description="The keyword to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="order",
-     *     requirements="asc|desc",
-     *     default="asc",
-     *     description="Sort order (asc or desc)"
-     * )
-     * @Rest\QueryParam(
-     *     name="limit",
-     *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of items per page."
-     * )
-     * @Rest\QueryParam(
-     *     name="offset",
-     *     requirements="\d+",
-     *     default="1",
-     *     description="The pagination offset"
-     * )
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"id", "content"})
      *
      * @Doc\ApiDoc(
      *     section="Entities",

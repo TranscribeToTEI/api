@@ -92,12 +92,7 @@ class UserController extends FOSRestController
         if(empty($user)) {
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
-        if($this->get('security.token_storage')->getToken()->getUser() == $user OR $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-             return $user;
-        } else {
-            // User need to be the user requested or an admin
-            throw $this->createAccessDeniedException('Unable to access this page!');
-        }
+        return $user;
     }
 
     /**

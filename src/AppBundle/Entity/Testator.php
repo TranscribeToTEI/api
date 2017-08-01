@@ -25,7 +25,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "get_testator",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "modify",
@@ -33,7 +36,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "update_testator",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "patch",
@@ -41,7 +47,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "patch_testator",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -49,7 +58,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "remove_testator",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  */
 class Testator
@@ -57,6 +69,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
      *
      * @var int
      *
@@ -69,6 +82,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "wills"})
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Will", mappedBy="testator")
      * @ORM\JoinColumn(nullable=true)
@@ -78,18 +92,20 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
      * @var string
      *
-     * @ORM\Column(name="fullName", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $fullName;
+    private $name;
 
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -102,6 +118,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -114,6 +131,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -124,6 +142,7 @@ class Testator
 
     /**
      * @Serializer\Since("1.0")
+     * @Serializer\Groups({"full", "content"})
      * @Serializer\Expose
      * @Assert\NotBlank()
      * @Gedmo\Versioned
@@ -137,6 +156,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Assert\Date()
      * @Gedmo\Versioned
@@ -150,6 +170,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -161,6 +182,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Assert\Date()
      * @Gedmo\Versioned
@@ -174,6 +196,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -186,6 +209,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -198,6 +222,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Assert\Url()
      * @Gedmo\Versioned
@@ -211,6 +236,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -222,6 +248,7 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -233,6 +260,20 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -243,6 +284,19 @@ class Testator
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @var \DateTime
      *
@@ -250,6 +304,33 @@ class Testator
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
      */
     protected $createDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=false)
+     */
+    protected $updateDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     */
+    private $updateComment;
 
 
     /**
@@ -270,27 +351,27 @@ class Testator
     }
 
     /**
-     * Set fullName
+     * Set name
      *
-     * @param string $fullName
+     * @param string $name
      *
      * @return Testator
      */
-    public function setFullName($fullName)
+    public function setName($name)
     {
-        $this->fullName = $fullName;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get fullName
+     * Get name
      *
      * @return string
      */
-    public function getFullName()
+    public function getName()
     {
-        return $this->fullName;
+        return $this->name;
     }
 
     /**
@@ -661,5 +742,101 @@ class Testator
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Testator
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Testator
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return Testator
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Testator
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
     }
 }

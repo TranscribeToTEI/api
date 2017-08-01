@@ -27,7 +27,10 @@ use FOS\UserBundle\Model\User as BaseUser;
  *          "get_user",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "modify",
@@ -35,7 +38,10 @@ use FOS\UserBundle\Model\User as BaseUser;
  *          "update_user",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "patch",
@@ -43,7 +49,10 @@ use FOS\UserBundle\Model\User as BaseUser;
  *          "patch_user",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -51,11 +60,24 @@ use FOS\UserBundle\Model\User as BaseUser;
  *          "remove_user",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *     "preferences",
- *     embedded = @Hateoas\Embedded("expr(service('user.user').getPreference(object))")
+ *     embedded = @Hateoas\Embedded("expr(service('user.user').getPreference(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "preferences"}
+ *     )
+ * )
+ * @Hateoas\Relation(
+ *     "contributions",
+ *     embedded = @Hateoas\Embedded("expr(service('user.user').getGroupedTranscriptions(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "contributions"}
+ *     )
  * )
  */
 class User extends BaseUser
@@ -63,6 +85,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -74,6 +97,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
      *

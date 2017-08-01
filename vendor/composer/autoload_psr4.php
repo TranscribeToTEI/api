@@ -35,6 +35,7 @@ return array(
     'OAuth2\\' => array($vendorDir . '/friendsofsymfony/oauth2-php/lib'),
     'Negotiation\\' => array($vendorDir . '/willdurand/negotiation/src/Negotiation'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
+    'Knp\\Bundle\\GaufretteBundle\\' => array($vendorDir . '/knplabs/knp-gaufrette-bundle'),
     'JMS\\SerializerBundle\\' => array($vendorDir . '/jms/serializer-bundle'),
     'Incenteev\\ParameterHandler\\' => array($vendorDir . '/incenteev/composer-parameter-handler'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),

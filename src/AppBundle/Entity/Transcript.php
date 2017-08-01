@@ -23,7 +23,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "get_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "modify",
@@ -31,7 +34,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "update_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "patch",
@@ -39,7 +45,10 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "patch_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -47,11 +56,24 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          "remove_transcript",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *     "version",
- *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object.getId()))")
+ *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "versioning"}
+ *     )
+ * )
+ * @Hateoas\Relation(
+ *     "resource",
+ *     embedded = @Hateoas\Embedded("expr(service('app.transcript').getResource(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "parent"}
+ *     )
  * )
  */
 class Transcript
@@ -59,6 +81,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
      *
      * @var int
      *
@@ -71,6 +94,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -82,6 +106,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -96,6 +121,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -106,17 +132,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
-     * @Gedmo\Versioned
-     *
-     * @Gedmo\Blameable(on="update")
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $updateUser;
-
-    /**
-     * @Serializer\Since("1.0")
-     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @var \DateTime
      *
@@ -128,6 +144,19 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -140,6 +169,7 @@ class Transcript
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
      *
      * @Assert\Type("string")

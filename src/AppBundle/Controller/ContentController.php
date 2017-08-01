@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\ContentRepository;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Content;
 
@@ -48,7 +49,7 @@ class ContentController extends FOSRestController
         $limit = $paramFetcher->get('limit');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Content');
-        /* @var $repository EntityRepository */
+        /* @var $repository ContentRepository */
 
         $query = [];
         if($status != "") {$query["status"] = $status;}

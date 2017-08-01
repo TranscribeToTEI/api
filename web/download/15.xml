@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Entity 15, containing the will of test3</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TranscribeToTEI software - project Testaments de Poilus</publisher>
+        <pubPlace>Paris</pubPlace>
+        <date when="2017-08-01 18:02:14"/>
+      </publicationStmt>
+      <sourceDesc>
+        <p>https://testaments-de-poilus.huma-num.fr</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>Ceci est mon testament</head>
+    </body>
+  </text>
+</TEI>

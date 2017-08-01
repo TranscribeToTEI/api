@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'SensioLabs\\Security' => array($vendorDir . '/sensiolabs/security-checker'),
+    'SRIO\\RestUploadBundle' => array($vendorDir . '/srio/rest-upload-bundle'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
     'PhpCollection' => array($vendorDir . '/phpcollection/phpcollection/src'),
     'Pagerfanta\\' => array($vendorDir . '/pagerfanta/pagerfanta/src'),
@@ -19,6 +20,7 @@ return array(
     'JMS\\' => array($vendorDir . '/jms/parser-lib/src'),
     'Hateoas' => array($vendorDir . '/willdurand/hateoas/src'),
     'Gedmo\\' => array($vendorDir . '/gedmo/doctrine-extensions/lib'),
+    'Gaufrette' => array($vendorDir . '/knplabs/gaufrette/src'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),

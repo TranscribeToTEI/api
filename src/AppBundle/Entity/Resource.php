@@ -25,7 +25,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "get_resource",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "modify",
@@ -33,7 +36,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "update_resource",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "patch",
@@ -41,7 +47,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "patch_resource",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  * @Hateoas\Relation(
  *      "delete",
@@ -49,7 +58,10 @@ use JMS\Serializer\Annotation as Serializer;
  *          "remove_resource",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "links"}
+ *     )
  * )
  */
 class Resource
@@ -57,6 +69,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
      *
      * @var int
      *
@@ -69,6 +82,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity", inversedBy="resources")
      * @ORM\JoinColumn(nullable=true)
@@ -78,6 +92,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
      * @Assert\Choice({"page", "envelop"})
@@ -91,6 +106,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @var int
      *
@@ -101,6 +117,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
      * @Assert\Type("array")
@@ -113,6 +130,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @Assert\Type("string")
      *
@@ -125,6 +143,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=true)
@@ -134,6 +153,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -144,6 +164,7 @@ class Resource
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
      *
      * @var \DateTime
      *
@@ -151,6 +172,31 @@ class Resource
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
      */
     protected $createDate;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=false)
+     */
+    protected $updateDate;
 
 
     /**

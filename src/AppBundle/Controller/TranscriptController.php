@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\TranscriptRepository;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Transcript;
 
@@ -42,7 +43,7 @@ class TranscriptController extends FOSRestController
         $status = $paramFetcher->get('status');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Transcript');
-        /* @var $repository EntityRepository */
+        /* @var $repository TranscriptRepository */
         if($status != "") {
             $transcripts = $repository->findBy(array("status" =>$status));
         } else {
@@ -76,6 +77,7 @@ class TranscriptController extends FOSRestController
      */
     public function getTranscriptAction(Request $request)
     {
+        //serializerGroups={"full"}
         $em = $this->getDoctrine()->getManager();
         $transcript = $em->getRepository('AppBundle:Transcript')->find($request->get('id'));
         /* @var $transcript Transcript */

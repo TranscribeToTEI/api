@@ -1,3 +1,8 @@
+download:
+    resource: "@DownloadBundle/Controller/"
+    type:     annotation
+    prefix:   /download/
+
 user:
     resource: "@UserBundle/Controller/DefaultController.php"
     type:     annotation
@@ -21,6 +26,10 @@ fos_comment_api:
     prefix: /
     defaults: { _format: html }
 
+app-preferences:
+    type:     rest
+    resource: AppBundle\Controller\AppPreferenceController
+
 entities:
     type:     rest
     resource: AppBundle\Controller\EntityController
@@ -37,6 +46,14 @@ testators:
     type:     rest
     resource: AppBundle\Controller\TestatorController
 
+places:
+    type:     rest
+    resource: AppBundle\Controller\PlaceController
+
+regiments:
+    type:     rest
+    resource: AppBundle\Controller\RegimentController
+
 transcripts:
     type:     rest
     resource: AppBundle\Controller\TranscriptController
@@ -44,6 +61,10 @@ transcripts:
 contents:
     type:     rest
     resource: AppBundle\Controller\ContentController
+
+export:
+    type:     rest
+    resource: AppBundle\Controller\ExportController
 
 users:
     type:     rest
