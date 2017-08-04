@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Entity 6, containing the will of Samuel Beckett</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TranscribeToTEI software - project Testaments de Poilus</publisher>
+        <pubPlace>Paris</pubPlace>
+        <date when="2017-08-03 16:16:10"/>
+      </publicationStmt>
+      <sourceDesc>
+        <p>https://testaments-de-poilus.huma-num.fr</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text xml:id="will-6">
+    <front>
+      <docDate><date>29-08-1914</date>.<placeName>Paris</placeName>.</docDate>
+      <div type="summary">
+        <p>Testament olographe de <persName ref="#pers5"><forname>Samuel</forname><surname>Beckett</surname></persName>, Mort pour la France &#xE0; <placeName ref="#pl-7">Paris</placeName>,  le 21-12-1989.</p>
+      </div>
+      <div type="reference">
+        <p>MC/ET/XLVIII/1820, minute du 20-01-1921</p>
+      </div>
+    </front>
+    <body>
+      <div><dateline>Paris 7 Ao&#xFB;t 1914</dateline>
+<head>Ceci est mon testament.</head>
+<p>Ceci est un test de paragraphe</p></div>
+    </body>
+  </text>
+</TEI>

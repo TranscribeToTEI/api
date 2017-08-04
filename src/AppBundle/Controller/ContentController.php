@@ -30,6 +30,7 @@ class ContentController extends FOSRestController
      * @QueryParam(name="type", description="")
      * @QueryParam(name="date", description="")
      * @QueryParam(name="limit", requirements="\d+", description="")
+     * @QueryParam(name="onhomepage", description="")
      *
      * @Doc\ApiDoc(
      *     section="Contents",
@@ -47,6 +48,7 @@ class ContentController extends FOSRestController
         $type = $paramFetcher->get('type');
         $date = $paramFetcher->get('date');
         $limit = $paramFetcher->get('limit');
+        $onHomepage = $paramFetcher->get('onhomepage');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Content');
         /* @var $repository ContentRepository */
@@ -54,6 +56,7 @@ class ContentController extends FOSRestController
         $query = [];
         if($status != "") {$query["status"] = $status;}
         if($type != "") {$query["type"] = $type;}
+        if($onHomepage != "") {$query["onHomepage"] = $onHomepage;}
 
         $order = [];
         if($date == "ASC" or $date == "DESC") {$order["createDate"] = $date;}

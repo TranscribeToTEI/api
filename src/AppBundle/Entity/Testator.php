@@ -173,9 +173,8 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var string
-     *
-     * @ORM\Column(name="placeOfBirth", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $placeOfBirth;
 
@@ -200,9 +199,8 @@ class Testator
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
-     * @var string
-     *
-     * @ORM\Column(name="placeOfDeath", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $placeOfDeath;
 
@@ -239,9 +237,8 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var string
-     *
-     * @ORM\Column(name="regiment", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Regiment")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $regiment;
 
@@ -495,30 +492,6 @@ class Testator
     }
 
     /**
-     * Set placeOfBirth
-     *
-     * @param string $placeOfBirth
-     *
-     * @return Testator
-     */
-    public function setPlaceOfBirth($placeOfBirth)
-    {
-        $this->placeOfBirth = $placeOfBirth;
-
-        return $this;
-    }
-
-    /**
-     * Get placeOfBirth
-     *
-     * @return string
-     */
-    public function getPlaceOfBirth()
-    {
-        return $this->placeOfBirth;
-    }
-
-    /**
      * Set dateOfDeath
      *
      * @param \DateTime $dateOfDeath
@@ -540,30 +513,6 @@ class Testator
     public function getDateOfDeath()
     {
         return $this->dateOfDeath;
-    }
-
-    /**
-     * Set placeOfDeath
-     *
-     * @param string $placeOfDeath
-     *
-     * @return Testator
-     */
-    public function setPlaceOfDeath($placeOfDeath)
-    {
-        $this->placeOfDeath = $placeOfDeath;
-
-        return $this;
-    }
-
-    /**
-     * Get placeOfDeath
-     *
-     * @return string
-     */
-    public function getPlaceOfDeath()
-    {
-        return $this->placeOfDeath;
     }
 
     /**
@@ -612,30 +561,6 @@ class Testator
     public function getMemoireDesHommes()
     {
         return $this->memoireDesHommes;
-    }
-
-    /**
-     * Set regiment
-     *
-     * @param string $regiment
-     *
-     * @return Testator
-     */
-    public function setRegiment($regiment)
-    {
-        $this->regiment = $regiment;
-
-        return $this;
-    }
-
-    /**
-     * Get regiment
-     *
-     * @return string
-     */
-    public function getRegiment()
-    {
-        return $this->regiment;
     }
 
     /**
@@ -838,5 +763,77 @@ class Testator
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set placeOfBirth
+     *
+     * @param \AppBundle\Entity\Place $placeOfBirth
+     *
+     * @return Testator
+     */
+    public function setPlaceOfBirth(\AppBundle\Entity\Place $placeOfBirth = null)
+    {
+        $this->placeOfBirth = $placeOfBirth;
+
+        return $this;
+    }
+
+    /**
+     * Get placeOfBirth
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getPlaceOfBirth()
+    {
+        return $this->placeOfBirth;
+    }
+
+    /**
+     * Set placeOfDeath
+     *
+     * @param \AppBundle\Entity\Place $placeOfDeath
+     *
+     * @return Testator
+     */
+    public function setPlaceOfDeath(\AppBundle\Entity\Place $placeOfDeath)
+    {
+        $this->placeOfDeath = $placeOfDeath;
+
+        return $this;
+    }
+
+    /**
+     * Get placeOfDeath
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getPlaceOfDeath()
+    {
+        return $this->placeOfDeath;
+    }
+
+    /**
+     * Set regiment
+     *
+     * @param \AppBundle\Entity\Regiment $regiment
+     *
+     * @return Testator
+     */
+    public function setRegiment(\AppBundle\Entity\Regiment $regiment = null)
+    {
+        $this->regiment = $regiment;
+
+        return $this;
+    }
+
+    /**
+     * Get regiment
+     *
+     * @return \AppBundle\Entity\Regiment
+     */
+    public function getRegiment()
+    {
+        return $this->regiment;
     }
 }

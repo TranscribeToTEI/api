@@ -151,9 +151,8 @@ class Will
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var string
-     *
-     * @ORM\Column(name="willWritingPlace", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $willWritingPlace;
 
@@ -317,30 +316,6 @@ class Will
     }
 
     /**
-     * Set willWritingPlace
-     *
-     * @param string $willWritingPlace
-     *
-     * @return Will
-     */
-    public function setWillWritingPlace($willWritingPlace)
-    {
-        $this->willWritingPlace = $willWritingPlace;
-
-        return $this;
-    }
-
-    /**
-     * Get willWritingPlace
-     *
-     * @return string
-     */
-    public function getWillWritingPlace()
-    {
-        return $this->willWritingPlace;
-    }
-
-    /**
      * Set createDate
      *
      * @param \DateTime $createDate
@@ -458,5 +433,101 @@ class Will
     public function getCallNumber()
     {
         return $this->callNumber;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Will
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return Will
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set willWritingPlace
+     *
+     * @param \AppBundle\Entity\Place $willWritingPlace
+     *
+     * @return Will
+     */
+    public function setWillWritingPlace(\AppBundle\Entity\Place $willWritingPlace = null)
+    {
+        $this->willWritingPlace = $willWritingPlace;
+
+        return $this;
+    }
+
+    /**
+     * Get willWritingPlace
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getWillWritingPlace()
+    {
+        return $this->willWritingPlace;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Will
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
     }
 }

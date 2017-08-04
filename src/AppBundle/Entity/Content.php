@@ -138,6 +138,21 @@ class Content
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\NotBlank()
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="onHomepage", type="boolean")
+     */
+    private $onHomepage;
+
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
      * @Gedmo\Blameable(on="create")
@@ -422,5 +437,29 @@ class Content
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set onHomepage
+     *
+     * @param boolean $onHomepage
+     *
+     * @return Content
+     */
+    public function setOnHomepage($onHomepage)
+    {
+        $this->onHomepage = $onHomepage;
+
+        return $this;
+    }
+
+    /**
+     * Get onHomepage
+     *
+     * @return bool
+     */
+    public function getOnHomepage()
+    {
+        return $this->onHomepage;
     }
 }
