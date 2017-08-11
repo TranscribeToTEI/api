@@ -153,14 +153,6 @@ class UserController extends FOSRestController
 
             $userManager->updateUser($user);
 
-            $em = $this->getDoctrine()->getManager();
-            $userU = $em->getRepository("UserBundle:User")->findOneById($user->getId());
-            $preference = new Preference();
-            $preference->setUser($userU);
-            $preference->setTranscriptionDeskPosition("readLeft");
-            $em->persist($preference);
-            $em->flush();
-
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('fos_user_registration_confirmed');
                 $response = new \Symfony\Component\HttpFoundation\RedirectResponse($url);

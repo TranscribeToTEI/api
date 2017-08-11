@@ -14,7 +14,7 @@ class DownloadController extends Controller
      */
     public function downloadExportAction($filename)
     {
-        $path = /*$this->get('kernel')->getRootDir().*/ "http://localhost:8888/TestamentsDePoilus/api/web/download/";
+        $path = $this->getParameter('downloadFolder');
         $content = file_get_contents($path.$filename);
 
         $response = new Response();

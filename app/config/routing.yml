@@ -1,7 +1,7 @@
 download:
     resource: "@DownloadBundle/Controller/"
     type:     annotation
-    prefix:   /download/
+    prefix:   /download/file/
 
 user:
     resource: "@UserBundle/Controller/DefaultController.php"
@@ -62,9 +62,13 @@ contents:
     type:     rest
     resource: AppBundle\Controller\ContentController
 
-export:
+XML:
     type:     rest
-    resource: AppBundle\Controller\ExportController
+    resource: AppBundle\Controller\XMLController
+
+model:
+    type:     rest
+    resource: AppBundle\Controller\ModelController
 
 users:
     type:     rest

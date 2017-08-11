@@ -13,3 +13,9 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.versioning'
+    user.listener.registration:
+        class: UserBundle\EventListener\RegistrationListener
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: kernel.event_subscriber }

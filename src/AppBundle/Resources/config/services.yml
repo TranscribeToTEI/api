@@ -4,10 +4,10 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.will'
-            - '@app.resource'
+            - '@app.resourcei'
 
-    app.resource:
-        class: AppBundle\Services\Resource
+    app.resourcei:
+        class: AppBundle\Services\ResourceI
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.transcript'
@@ -32,14 +32,24 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    # Export
-    app.xml:
-        class: AppBundle\Services\Xml
+    # XML Management
+    app.xml.builder:
+        class: AppBundle\Services\XML\Builder
         arguments:
             - '@doctrine.orm.entity_manager'
+    app.xml.validator:
+        class: AppBundle\Services\XML\Validator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@app.xml.builder'
+            - '%validatorRelaxNG%'
+    app.xml.model:
+        class: AppBundle\Services\XML\Model
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%modelXML%'
 
-    # Listeners
-
+    # Listenersw
     app.listener.comment:
         class: AppBundle\EventListener\AuthorCommentListener
         arguments:
@@ -47,8 +57,14 @@ services:
         tags:
             - { name: kernel.event_listener, event: fos_comment.comment.pre_persist, method: onCommentPrePersist }
 
-    app.listener.entity:
-        class: AppBundle\EventListener\EntitySubscriber
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
+    #app.listener.entity:
+    #    class: AppBundle\EventListener\EntitySubscriber
+    #    tags:
+    #        - { name: doctrine.event_subscriber, connection: default }
+
+    # Commands
+    app.command.test.email:
+            class: AppBundle\Command\TestEmailCommand
+            arguments:
+                - '%mailer_user%'
 

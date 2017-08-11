@@ -3,30 +3,45 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>Entity 6, containing the will of Samuel Beckett</title>
+        <title>Test de Testament</title>
+        <respStmt>
+          <resp>Identification du testament</resp>
+          <persName xml:id="MFLimon">Marie-Fran&#xE7;oise Limon</persName>
+        </respStmt>
       </titleStmt>
       <publicationStmt>
-        <publisher>TranscribeToTEI software - project Testaments de Poilus</publisher>
+        <publisher>Project Testaments de Poilus</publisher>
         <pubPlace>Paris</pubPlace>
-        <date when="2017-08-03 16:16:10"/>
+        <date when="2017-08-10" type="otherDate"/>
       </publicationStmt>
       <sourceDesc>
-        <p>https://testaments-de-poilus.huma-num.fr</p>
+        <msDesc>
+          <msIdentifier>
+            <institution>Archives nationales</institution>
+            <collection>Minutier central des notaires de Paris</collection>
+            <idno>1, minute du 0808-AugAug-17171717 (d&#xE9;p&#xF4;t du testament de Samuel Beckett)</idno>
+            <msName>Testament de Samuel Beckett (1717-AugAug-17171717)</msName>
+          </msIdentifier>
+          <physDesc>
+            <objectDesc>
+              <supportDesc>
+                <support>papier &#xE0; lettre de deuil avec adresse imprim&#xE9;e</support>
+              </supportDesc>
+            </objectDesc>
+            <handDesc>
+              <p>Encre</p>
+            </handDesc>
+          </physDesc>
+        </msDesc>
       </sourceDesc>
     </fileDesc>
+    <revisionDesc>
+      <change when="2017-08-02" who="14">validation</change>
+    </revisionDesc>
   </teiHeader>
-  <text xml:id="will-6">
-    <front>
-      <docDate><date>29-08-1914</date>.<placeName>Paris</placeName>.</docDate>
-      <div type="summary">
-        <p>Testament olographe de <persName ref="#pers5"><forname>Samuel</forname><surname>Beckett</surname></persName>, Mort pour la France &#xE0; <placeName ref="#pl-7">Paris</placeName>,  le 21-12-1989.</p>
-      </div>
-      <div type="reference">
-        <p>MC/ET/XLVIII/1820, minute du 20-01-1921</p>
-      </div>
-    </front>
+  <text xml:id="will-7">
     <body>
-      <div><dateline>Paris 7 Ao&#xFB;t 1914</dateline>
+      <div type="will"><dateline>Paris 7 Ao&#xFB;t 1914</dateline>
 <head>Ceci est mon testament.</head>
 <p>Ceci est un test de paragraphe</p></div>
     </body>

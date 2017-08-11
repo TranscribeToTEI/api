@@ -10,7 +10,7 @@ class Entity
     private $will;
     private $resource;
 
-    public function __construct(EntityManager $em, Will $will, Resource $resource)
+    public function __construct(EntityManager $em, Will $will, ResourceI $resource)
     {
         $this->em = $em;
         $this->will = $will;
@@ -22,7 +22,7 @@ class Entity
      */
     public function remove($entity)
     {
-        if($entity->getWill()) {
+        if($entity->getWill() != null) {
             $this->will->remove($entity->getWill());
         }
         foreach($entity->getResources() as $resource) {

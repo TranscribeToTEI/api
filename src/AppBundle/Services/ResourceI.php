@@ -5,7 +5,7 @@ namespace AppBundle\Services;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
 
-class Resource
+class ResourceI
 {
     private $em;
     private $transcript;

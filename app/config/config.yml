@@ -90,10 +90,13 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
+    transport: "%mailer_transport%"
+    auth_mode: "%mailer_auth_mode%"
+    host:      "%mailer_host%"
+    port:      "%mailer_port%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    encryption: "%mailer_encryption%"
     spool: { type: memory }
 
 # Stof Doctrine extension
@@ -143,9 +146,11 @@ fos_user:
     firewall_name: api
     user_class: UserBundle\Entity\User
     from_email:
-        address: "contact@karl-pineau.fr"
+        address: "testaments-de-poilus@karl-pineau.fr"
         sender_name: "Karl Pineau"
     registration:
+        confirmation:
+            enabled: true
         form:
             type: UserBundle\Form\RegistrationType
             validation_groups: [UserRegistration]
@@ -187,19 +192,19 @@ jms_serializer:
                 path: "%kernel.root_dir%/serializer/FOSUserBundle"
 
 # KNP Gaufrette
-knp_gaufrette:
-    adapters:
-        default:
-            local:
-                directory: %kernel.root_dir%/../web/images/uploads
-                create:     true
-    filesystems:
-        default:
-            adapter:    default
-            alias:      default_filesystem
+#knp_gaufrette:
+#    adapters:
+#        default:
+#            local:
+#                directory: %kernel.root_dir%/../web/images/uploads
+#                create:     true
+#    filesystems:
+#        default:
+#            adapter:    default
+#            alias:      default_filesystem
 
 # SRIO Rest Upload
-srio_rest_upload:
-    storages:
-        default:
-            filesystem: gaufrette.default_filesystem
+#srio_rest_upload:
+#    storages:
+#        default:
+#            filesystem: gaufrette.default_filesystem
