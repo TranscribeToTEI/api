@@ -1,0 +1,19 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% block subject %}
+{%- autoescape false -%}
+{{ 'registration.email.subject'|trans({'%username%': user.name, '%confirmationUrl%': confirmationUrl}) }}
+{%- endautoescape -%}
+{% endblock %}
+
+{% block body_text %}
+{% autoescape false %}
+Cher•e {{ user.name }},
+
+Bienvenue sur Testaments de Poilus. Votre compte a bien été créé. Pour l'activer, veuillez cliquer sur le lien suivant : https://testaments-de-poilus.huma-num.fr/webapp/app/#!/security/confirm/{{ user.confirmationToken }}
+
+Bonne journée,
+L'équipe de Testaments de Poilus
+{# 'registration.email.message'|trans({'%username%': user.username, '%confirmationUrl%': confirmationUrl}) #}
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

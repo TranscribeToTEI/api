@@ -151,9 +151,13 @@ fos_user:
     registration:
         confirmation:
             enabled: true
+            template:   UserBundle:Registration:email.txt.twig
         form:
             type: UserBundle\Form\RegistrationType
             validation_groups: [UserRegistration]
+    resetting:
+        email:
+            template:   UserBundle:Resetting:email.txt.twig
     profile:
         form:
             type: UserBundle\Form\ProfileType

@@ -19,3 +19,11 @@ services:
             - '@doctrine.orm.entity_manager'
         tags:
             - { name: kernel.event_subscriber }
+    user.listener.password_changing:
+        class: UserBundle\EventListener\ChangePasswordListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@twig"
+            - "@mailer"
+        tags:
+            - { name: kernel.event_subscriber }

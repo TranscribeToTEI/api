@@ -74,6 +74,19 @@ class Preference
     private $transcriptionDeskPosition;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
+     * @Assert\NotBlank()
+     * @Assert\Choice({"todo", "done", "notInterested"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="tutorial_status", type="string", length=255)
+     */
+    private $tutorialStatus;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -136,5 +149,29 @@ class Preference
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set tutorialStatus
+     *
+     * @param string $tutorialStatus
+     *
+     * @return Preference
+     */
+    public function setTutorialStatus($tutorialStatus)
+    {
+        $this->tutorialStatus = $tutorialStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get tutorialStatus
+     *
+     * @return string
+     */
+    public function getTutorialStatus()
+    {
+        return $this->tutorialStatus;
     }
 }

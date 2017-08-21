@@ -40,6 +40,7 @@ class RegistrationListener implements EventSubscriberInterface
 
         $preferences = new Preference();
         $preferences->setTranscriptionDeskPosition("leftRead-centerHelp-rightImage");
+        $preferences->setTutorialStatus("todo");
         $preferences->setUser($user);
 
         $this->em->persist($preferences);
