@@ -17,10 +17,12 @@ use UserBundle\Entity\User;
 class RegistrationListener implements EventSubscriberInterface
 {
     private $em;
+    private $user;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, \UserBundle\Services\User $user)
     {
         $this->em = $em;
+        $this->user = $user;
     }
 
     /**
@@ -37,13 +39,6 @@ class RegistrationListener implements EventSubscriberInterface
     {
         /** @var $user User */
         $user = $this->em->getRepository("UserBundle:User")->find($event->getUser()->getId());
-
-        $preferences = new Preference();
-        $preferences->setTranscriptionDeskPosition("leftRead-centerHelp-rightImage");
-        $preferences->setTutorialStatus("todo");
-        $preferences->setUser($user);
-
-        $this->em->persist($preferences);
-        $this->em->flush();
+        $this->user->setPreference($user);
     }
 }

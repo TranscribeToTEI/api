@@ -39,7 +39,8 @@ class User
     public function setPreference($user) {
         $preference = new Preference();
         $preference->setUser($user);
-        $preference->setTranscriptionDeskPosition("readLeft");
+        $preference->setTranscriptionDeskPosition("leftRead-centerHelp-rightImage");
+        $preference->setTutorialStatus("todo");
         $this->em->persist($preference);
         $this->em->flush();
         return $preference;

@@ -4,9 +4,11 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,6 +26,15 @@ class ContentType extends AbstractType
             ->add('status',         TextType::class,        array("required" => false))
             ->add('onHomepage',     TextType::class,        array("required" => true))
             ->add('updateComment',  TextType::class,        array("required" => true))
+            ->add('tags',           CollectionType::class,
+                array(
+                    'required' => false,
+                    'entry_type' => TextType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true
+                )
+            )
+            ->add('illustration',   UrlType::class,        array("required" => false))
         ;
     }
     

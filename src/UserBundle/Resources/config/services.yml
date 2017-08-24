@@ -17,10 +17,19 @@ services:
         class: UserBundle\EventListener\RegistrationListener
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@user.user'
         tags:
             - { name: kernel.event_subscriber }
-    user.listener.password_changing:
+    user.listener.change_password:
         class: UserBundle\EventListener\ChangePasswordListener
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@twig"
+            - "@mailer"
+        tags:
+            - { name: kernel.event_subscriber }
+    user.listener.reset_password:
+        class: UserBundle\EventListener\ResetPasswordListener
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@twig"

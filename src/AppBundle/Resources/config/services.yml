@@ -32,6 +32,12 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+    # Mailing
+    app.contact:
+        class: AppBundle\Services\Contact
+        arguments:
+            - '@mailer'
+
     # XML Management
     app.xml.builder:
         class: AppBundle\Services\XML\Builder
@@ -49,7 +55,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '%modelXML%'
 
-    # Listenersw
+    # Listeners
     app.listener.comment:
         class: AppBundle\EventListener\AuthorCommentListener
         arguments:

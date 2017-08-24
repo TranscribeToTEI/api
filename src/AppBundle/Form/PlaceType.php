@@ -16,9 +16,14 @@ class PlaceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',           TextType::class,        array("required" => true))
-            ->add('description',    TextareaType::class,    array("required" => false))
-            ->add('updateComment',  TextType::class,        array("required" => true))
+            ->add('name',                       TextType::class,        array("required" => true))
+            ->add('frenchDepartement',          TextType::class,        array("required" => false))
+            ->add('frenchRegion',               TextType::class,        array("required" => false))
+            ->add('country',                    TextType::class,        array("required" => false))
+            ->add('description',                TextareaType::class,    array("required" => false))
+            ->add('geonamesId',                 TextType::class,        array("required" => false))
+            ->add('geographicalCoordinates',    TextType::class,        array("required" => false))
+            ->add('updateComment',              TextType::class,        array("required" => true))
         ;
     }
     

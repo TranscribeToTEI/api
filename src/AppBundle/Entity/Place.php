@@ -83,6 +83,7 @@ class Place
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
+     * @Assert\NotBlank()
      *
      * @Gedmo\Versioned
      *
@@ -99,9 +100,74 @@ class Place
      *
      * @Gedmo\Versioned
      *
+     * @ORM\Column(name="frenchDepartement", type="string", length=255, nullable=true)
+     */
+    private $frenchDepartement;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="frenchRegion", type="string", length=255, nullable=true)
+     */
+    private $frenchRegion;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="geonamesId", type="string", length=255, nullable=true)
+     */
+    private $geonamesId;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="geographicalCoordinates", type="string", length=255, nullable=true)
+     */
+    private $geographicalCoordinates;
 
     /**
      * @Serializer\Since("1.0")
@@ -342,5 +408,125 @@ class Place
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set geonamesId
+     *
+     * @param string $geonamesId
+     *
+     * @return Place
+     */
+    public function setGeonamesId($geonamesId)
+    {
+        $this->geonamesId = $geonamesId;
+
+        return $this;
+    }
+
+    /**
+     * Get geonamesId
+     *
+     * @return string
+     */
+    public function getGeonamesId()
+    {
+        return $this->geonamesId;
+    }
+
+    /**
+     * Set geographicalCoordinates
+     *
+     * @param string $geographicalCoordinates
+     *
+     * @return Place
+     */
+    public function setGeographicalCoordinates($geographicalCoordinates)
+    {
+        $this->geographicalCoordinates = $geographicalCoordinates;
+
+        return $this;
+    }
+
+    /**
+     * Get geographicalCoordinates
+     *
+     * @return string
+     */
+    public function getGeographicalCoordinates()
+    {
+        return $this->geographicalCoordinates;
+    }
+
+    /**
+     * Set frenchDepartement
+     *
+     * @param string $frenchDepartement
+     *
+     * @return Place
+     */
+    public function setFrenchDepartement($frenchDepartement)
+    {
+        $this->frenchDepartement = $frenchDepartement;
+
+        return $this;
+    }
+
+    /**
+     * Get frenchDepartement
+     *
+     * @return string
+     */
+    public function getFrenchDepartement()
+    {
+        return $this->frenchDepartement;
+    }
+
+    /**
+     * Set frenchRegion
+     *
+     * @param string $frenchRegion
+     *
+     * @return Place
+     */
+    public function setFrenchRegion($frenchRegion)
+    {
+        $this->frenchRegion = $frenchRegion;
+
+        return $this;
+    }
+
+    /**
+     * Get frenchRegion
+     *
+     * @return string
+     */
+    public function getFrenchRegion()
+    {
+        return $this->frenchRegion;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return Place
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

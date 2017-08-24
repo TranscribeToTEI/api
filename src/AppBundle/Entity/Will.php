@@ -111,6 +111,19 @@ class Will
      * @Gedmo\Versioned
      *
      * @var string
+     * @Assert\Url()
+     *
+     * @ORM\Column(name="minuteLink", type="text", nullable=true)
+     */
+    private $minuteLink;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
      * @Assert\NotBlank(message = "Le titre ne peut pas être vide")
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -159,7 +172,7 @@ class Will
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "testator"})
+     * @Serializer\Groups({"full", "content", "testator"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank(message = "Le champ testateur ne peut pas être vide")
@@ -168,6 +181,74 @@ class Will
      * @ORM\JoinColumn(nullable=false)
      */
     private $testator;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="physDescSupport", type="string", length=255, nullable=true)
+     */
+    private $physDescSupport;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="physDescHeight", type="string", length=255, nullable=true)
+     */
+    private $physDescHeight;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="physDescWidth", type="string", length=255, nullable=true)
+     */
+    private $physDescWidth;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="physDescHand", type="string", length=255, nullable=true)
+     */
+    private $physDescHand;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Choice({"AN", "AD78"})
+     *
+     * @ORM\Column(name="hostingOrganization", type="string", length=255, nullable=true)
+     */
+    private $hostingOrganization;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="identificationUser", type="string", length=255, nullable=true)
+     */
+    private $identificationUser;
 
     /**
      * @Serializer\Since("1.0")
@@ -529,5 +610,173 @@ class Will
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set physDescSupport
+     *
+     * @param string $physDescSupport
+     *
+     * @return Will
+     */
+    public function setPhysDescSupport($physDescSupport)
+    {
+        $this->physDescSupport = $physDescSupport;
+
+        return $this;
+    }
+
+    /**
+     * Get physDescSupport
+     *
+     * @return string
+     */
+    public function getPhysDescSupport()
+    {
+        return $this->physDescSupport;
+    }
+
+    /**
+     * Set physDescHeight
+     *
+     * @param string $physDescHeight
+     *
+     * @return Will
+     */
+    public function setPhysDescHeight($physDescHeight)
+    {
+        $this->physDescHeight = $physDescHeight;
+
+        return $this;
+    }
+
+    /**
+     * Get physDescHeight
+     *
+     * @return string
+     */
+    public function getPhysDescHeight()
+    {
+        return $this->physDescHeight;
+    }
+
+    /**
+     * Set physDescWidth
+     *
+     * @param string $physDescWidth
+     *
+     * @return Will
+     */
+    public function setPhysDescWidth($physDescWidth)
+    {
+        $this->physDescWidth = $physDescWidth;
+
+        return $this;
+    }
+
+    /**
+     * Get physDescWidth
+     *
+     * @return string
+     */
+    public function getPhysDescWidth()
+    {
+        return $this->physDescWidth;
+    }
+
+    /**
+     * Set physDescHand
+     *
+     * @param string $physDescHand
+     *
+     * @return Will
+     */
+    public function setPhysDescHand($physDescHand)
+    {
+        $this->physDescHand = $physDescHand;
+
+        return $this;
+    }
+
+    /**
+     * Get physDescHand
+     *
+     * @return string
+     */
+    public function getPhysDescHand()
+    {
+        return $this->physDescHand;
+    }
+
+    /**
+     * Set hostingOrganization
+     *
+     * @param string $hostingOrganization
+     *
+     * @return Will
+     */
+    public function setHostingOrganization($hostingOrganization)
+    {
+        $this->hostingOrganization = $hostingOrganization;
+
+        return $this;
+    }
+
+    /**
+     * Get hostingOrganization
+     *
+     * @return string
+     */
+    public function getHostingOrganization()
+    {
+        return $this->hostingOrganization;
+    }
+
+    /**
+     * Set identificationUser
+     *
+     * @param string $identificationUser
+     *
+     * @return Will
+     */
+    public function setIdentificationUser($identificationUser)
+    {
+        $this->identificationUser = $identificationUser;
+
+        return $this;
+    }
+
+    /**
+     * Get identificationUser
+     *
+     * @return string
+     */
+    public function getIdentificationUser()
+    {
+        return $this->identificationUser;
+    }
+
+    /**
+     * Set minuteLink
+     *
+     * @param string $minuteLink
+     *
+     * @return Will
+     */
+    public function setMinuteLink($minuteLink)
+    {
+        $this->minuteLink = $minuteLink;
+
+        return $this;
+    }
+
+    /**
+     * Get minuteLink
+     *
+     * @return string
+     */
+    public function getMinuteLink()
+    {
+        return $this->minuteLink;
     }
 }

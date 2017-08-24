@@ -23,18 +23,10 @@ class ChangePasswordListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [
-            FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onPasswordChangingSuccess',
-            FOSUserEvents::RESETTING_RESET_SUCCESS => 'onPasswordResettingSuccess',
-            ];
+        return [FOSUserEvents::CHANGE_PASSWORD_SUCCESS => 'onPasswordChangingSuccess'];
     }
 
-    public function onPasswordChangingSuccess(UserEvent $event)
-    {
-        $this->sendEmail($event->getUser()->getEmail());
-    }
-
-    public function onPasswordResettingSuccess(FormEvent $event)
+    public function onPasswordChangingSuccess(FormEvent $event)
     {
         /** @var $user \FOS\UserBundle\Model\UserInterface */
         $user = $event->getForm()->getData();

@@ -13,3 +13,9 @@ FOS\UserBundle\Model\User:
         name:
             expose: true
             groups: "full, content"
+        biography:
+            expose: true
+            groups: "full, content"
+        picture:
+            expose: true
+            groups: "full, content"

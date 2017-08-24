@@ -105,6 +105,27 @@ class User extends BaseUser
      */
     protected $name;
 
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @ORM\Column(name="biography", type="string", length=255, nullable=true)
+     */
+    protected $biography;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Assert\Url()
+     *
+     * @ORM\Column(name="picture", type="text", nullable=true)
+     */
+    private $picture;
+
 
     /**
      * Get id
@@ -147,5 +168,53 @@ class User extends BaseUser
         $this->setUsername($email);
 
         return $this;
+    }
+
+    /**
+     * Set biography
+     *
+     * @param string $biography
+     *
+     * @return User
+     */
+    public function setBiography($biography)
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    /**
+     * Get biography
+     *
+     * @return string
+     */
+    public function getBiography()
+    {
+        return $this->biography;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param string $picture
+     *
+     * @return User
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

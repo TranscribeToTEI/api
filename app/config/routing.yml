@@ -62,6 +62,10 @@ contents:
     type:     rest
     resource: AppBundle\Controller\ContentController
 
+contact:
+    type:     rest
+    resource: AppBundle\Controller\ContactController
+
 XML:
     type:     rest
     resource: AppBundle\Controller\XMLController

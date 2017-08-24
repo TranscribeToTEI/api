@@ -6,8 +6,10 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseNullableUserEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -508,10 +510,79 @@ class UserController extends FOSRestController
             );
 
             return $response;
+        } else {
+            return new JsonResponse(false);
         }
 
         /*return $this->render('@FOSUser/Resetting/reset.html.twig', array(
             'token' => $token,
+            'form' => $form->createView(),
+        ));*/
+    }
+
+    /**
+     * @Rest\Post("users/password/change")
+     * @Rest\View()
+     * @Doc\ApiDoc(
+     *     section="User",
+     *     resource=true,
+     *     description="Change password",
+     *     requirements={
+     *     },
+     *     statusCodes={
+     *         200="Returned when fetched",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function changePasswordAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        /** @var $dispatcher EventDispatcherInterface */
+        $dispatcher = $this->get('event_dispatcher');
+
+        $event = new GetResponseUserEvent($user, $request);
+        $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_INITIALIZE, $event);
+
+        if (null !== $event->getResponse()) {
+            return $event->getResponse();
+        }
+
+        /** @var $formFactory FactoryInterface */
+        $formFactory = $this->get('fos_user.change_password.form.factory');
+
+        $form = $formFactory->createForm();
+        $form->setData($user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var $userManager UserManagerInterface */
+            $userManager = $this->get('fos_user.user_manager');
+
+            $event = new FormEvent($form, $request);
+            $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
+
+            $userManager->updateUser($user);
+
+            if (null === $response = $event->getResponse()) {
+                /*$url = $this->generateUrl('fos_user_profile_show');
+                $response = new RedirectResponse($url);*/
+                $response = new JsonResponse(true);
+            }
+
+            $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
+
+            return $response;
+        } else {
+            return new JsonResponse(false);
+        }
+
+        /*return $this->render('@FOSUser/ChangePassword/change_password.html.twig', array(
             'form' => $form->createView(),
         ));*/
     }

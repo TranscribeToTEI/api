@@ -149,6 +149,28 @@ class Content
      */
     private $onHomepage;
 
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     *
+     * @var array
+     *
+     * @ORM\Column(name="tags", type="array", nullable=true)
+     */
+    private $tags;
+
+    /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     * @Assert\Url()
+     *
+     * @ORM\Column(name="illustration", type="text", nullable=true)
+     */
+    private $illustration;
 
     /**
      * @Serializer\Since("1.0")
@@ -461,5 +483,53 @@ class Content
     public function getOnHomepage()
     {
         return $this->onHomepage;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param array $tags
+     *
+     * @return Content
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set illustration
+     *
+     * @param string $illustration
+     *
+     * @return Content
+     */
+    public function setIllustration($illustration)
+    {
+        $this->illustration = $illustration;
+
+        return $this;
+    }
+
+    /**
+     * Get illustration
+     *
+     * @return string
+     */
+    public function getIllustration()
+    {
+        return $this->illustration;
     }
 }
