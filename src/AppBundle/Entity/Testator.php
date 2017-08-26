@@ -63,6 +63,13 @@ use JMS\Serializer\Annotation as Serializer;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "version",
+ *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "versioning"}
+ *     )
+ * )
  */
 class Testator
 {

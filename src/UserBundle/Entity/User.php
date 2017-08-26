@@ -73,6 +73,13 @@ use FOS\UserBundle\Model\User as BaseUser;
  *     )
  * )
  * @Hateoas\Relation(
+ *     "accesses",
+ *     embedded = @Hateoas\Embedded("expr(service('user.user').getAccess(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "accesses"}
+ *     )
+ * )
+ * @Hateoas\Relation(
  *     "contributions",
  *     embedded = @Hateoas\Embedded("expr(service('user.user').getGroupedTranscriptions(object))"),
  *     exclusion = @Hateoas\Exclusion(

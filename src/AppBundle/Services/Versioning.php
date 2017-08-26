@@ -15,12 +15,12 @@ class Versioning
     }
 
     /**
-     * @param $transcript \AppBundle\Entity\Transcript
+     * @param mixed
      * @return mixed
      */
-    public function getVersions($transcript)
+    public function getVersions($entity)
     {
         $repo = $this->em->getRepository('Gedmo\Loggable\Entity\LogEntry');
-        return $repo->getLogEntries($transcript);
+        return $repo->getLogEntries($entity);
     }
 }

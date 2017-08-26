@@ -3,19 +3,19 @@ FOS\UserBundle\Model\User:
     properties:
         id:
             expose: true
-            groups: "full, id"
+            groups: [full, id]
         email:
             expose: true
-            groups: "full, content"
+            groups: [full, content]
         roles:
             expose: true
-            groups: "full, content"
+            groups: [full, content]
         name:
             expose: true
-            groups: "full, content"
+            groups: [full, content]
         biography:
             expose: true
-            groups: "full, content"
+            groups: [full, content]
         picture:
             expose: true
-            groups: "full, content"
+            groups: [full, content]

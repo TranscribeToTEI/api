@@ -2,9 +2,9 @@
 
 namespace UserBundle\Controller;
 
-use UserBundle\Entity\Preference;
+use UserBundle\Entity\Access;
 
-use UserBundle\Form\PreferenceType;
+use UserBundle\Form\AccessType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -19,52 +19,57 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 use UserBundle\Repository\UserRepository;
 
-class PreferenceController extends FOSRestController
+class AccessController extends FOSRestController
 {
     /**
-     * @Rest\Get("/preferences")
+     * @Rest\Get("/accesses")
      * @QueryParam(name="user", nullable=true, description="User is required")
      *
      * @Rest\View()
      *
      * @Doc\ApiDoc(
-     *     section="Preferences",
+     *     section="Accesses",
      *     resource=true,
-     *     description="Get the list of all preferences",
+     *     description="Get the list of all accesses",
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function getPreferencesAction(Request $request, ParamFetcher $paramFetcher)
+    public function getAccessesAction(Request $request, ParamFetcher $paramFetcher)
     {
         $user = $paramFetcher->get('user');
 
-        $repository = $this->getDoctrine()->getManager()->getRepository('UserBundle:Preference');
+        $repository = $this->getDoctrine()->getManager()->getRepository('UserBundle:Access');
         /* @var $repository UserRepository */
         if($user != "") {
-            $preference = $repository->findOneBy(array("user" => $user));
-            /* @var $preference Preference */
+            $access = $repository->findOneBy(array("user" => $user));
+            /* @var $access Access */
         } else {
-            $preference = null;
+            if($this->get('security.authorization_checker')->isGranted('ROLE_MODO')) {
+                $access = $repository->findAll();
+                /* @var $access Access[] */
+            } else {
+                throw $this->createAccessDeniedException('Unable to access this page!');
+            }
         }
-        return $preference;
+        return $access;
     }
 
     /**
-     * @Rest\Get("/preferences/{id}")
+     * @Rest\Get("/accesses/{id}")
      * @Rest\View()
      * @Doc\ApiDoc(
-     *     section="Preferences",
+     *     section="Accesses",
      *     resource=true,
-     *     description="Return one preference",
+     *     description="Return one access",
      *     requirements={
      *         {
      *             "name"="id",
      *             "dataType"="integer",
      *             "requirement"="\d+",
-     *             "description"="The preference unique identifier.",
+     *             "description"="The access unique identifier.",
      *         }
      *     },
      *     statusCodes={
@@ -73,45 +78,45 @@ class PreferenceController extends FOSRestController
      *     }
      * )
      */
-    public function getPreferenceAction(Request $request)
+    public function getAccessAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $preference = $em->getRepository('UserBundle:Preference')->find($request->get('id'));
-        /* @var $preference Preference */
+        $access = $em->getRepository('UserBundle:Access')->find($request->get('id'));
+        /* @var $access Access */
 
-        if (empty($preference)) {
-            return new JsonResponse(['message' => 'Preference not found'], Response::HTTP_NOT_FOUND);
+        if (empty($access)) {
+            return new JsonResponse(['message' => 'Access not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $preference;
+        return $access;
     }
 
     /**
-     * @Rest\Post("/preferences")
+     * @Rest\Post("/accesses")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      *
      * @Doc\ApiDoc(
-     *     section="Preferences",
+     *     section="Accesses",
      *     resource=true,
-     *     description="Create a new preference",
+     *     description="Create a new access",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function postPreferencesAction(Request $request)
+    public function postAccessesAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $preference = new Preference();
-        $form = $this->createForm(PreferenceType::class, $preference);
+        $access = new Access();
+        $form = $this->createForm(AccessType::class, $access);
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $em->persist($preference);
+            $em->persist($access);
             $em->flush();
-            return $preference;
+            return $access;
         } else {
             return $form;
         }
@@ -119,77 +124,76 @@ class PreferenceController extends FOSRestController
 
     /**
      * @Rest\View()
-     * @Rest\Put("/preferences/{id}")
+     * @Rest\Put("/accesses/{id}")
      * @Doc\ApiDoc(
-     *     section="Preferences",
+     *     section="Accesses",
      *     resource=true,
-     *     description="Update an existing preference",
+     *     description="Update an existing access",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function updatePreferenceAction(Request $request)
+    public function updateAccessAction(Request $request)
     {
-        return $this->updatePreference($request, true);
+        return $this->updateAccess($request, true);
     }
 
     /**
      * @Rest\View()
-     * @Rest\Patch("/preferences/{id}")
+     * @Rest\Patch("/accesses/{id}")
      * @Doc\ApiDoc(
-     *     section="Preferences",
+     *     section="Accesses",
      *     resource=true,
-     *     description="Update an existing preference",
+     *     description="Update an existing access",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function patchPreferenceAction(Request $request)
+    public function patchAccessAction(Request $request)
     {
-        return $this->updatePreference($request, false);
+        return $this->updateAccess($request, false);
     }
 
-    private function updatePreference(Request $request, $clearMissing)
+    private function updateAccess(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $preference = $em->getRepository('UserBundle:Preference')
-            ->find($request->get('id'));
-        /* @var $preference Preference */
-        if (empty($preference)) {
-            return new JsonResponse(['message' => 'Preference not found'], Response::HTTP_NOT_FOUND);
+        $access = $em->getRepository('UserBundle:Access')->find($request->get('id'));
+        /* @var $access Access */
+        if (empty($access)) {
+            return new JsonResponse(['message' => 'Access not found'], Response::HTTP_NOT_FOUND);
         }
-        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $preference->getUser()) {
+        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $access->getUser()) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
-        $form = $this->createForm(PreferenceType::class, $preference);
+        $form = $this->createForm(AccessType::class, $access);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
-            $em->merge($preference);
+            $em->merge($access);
             $em->flush();
-            return $preference;
+            return $access;
         } else {
             return $form;
         }
     }
 
     /**
-     * @Rest\Delete("/preferences/{id}")
+     * @Rest\Delete("/accesses/{id}")
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Doc\ApiDoc(
-     *     section="Preferences",
+     *     section="Accesses",
      *     resource=true,
-     *     description="Remove a preference",
+     *     description="Remove a access",
      *     requirements={
      *         {
      *             "name"="id",
      *             "dataType"="integer",
      *             "requirement"="\d+",
-     *             "description"="The preference unique identifier.",
+     *             "description"="The access unique identifier.",
      *         }
      *     },
      *     statusCodes={
@@ -198,17 +202,17 @@ class PreferenceController extends FOSRestController
      *     }
      * )
      */
-    public function removePreferenceAction(Request $request)
+    public function removeAccessAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $preference = $em->getRepository('UserBundle:Preference')->find($request->get('id'));
-        /* @var $preference Preference */
-        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $preference->getUser()) {
+        $access = $em->getRepository('UserBundle:Access')->find($request->get('id'));
+        /* @var $access Access */
+        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $access->getUser()) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
-        if ($preference) {
-            $em->remove($preference);
+        if ($access) {
+            $em->remove($access);
             $em->flush();
         }
     }

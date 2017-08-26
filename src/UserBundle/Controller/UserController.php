@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use FOS\RestBundle\Context\Context;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseNullableUserEvent;
@@ -15,6 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use UserBundle\Entity\Access;
 use UserBundle\Entity\Preference;
 use UserBundle\Entity\User;
 
@@ -27,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
@@ -36,11 +39,9 @@ class UserController extends FOSRestController
 {
     /**
      * @Rest\Get("/users")
-     * @Rest\QueryParam(
-     *     name="token",
-     *     description="User's token"
-     * )
-     * @Rest\View()
+     * @QueryParam(name="token", description="User's token")
+     * @QueryParam(name="username", nullable=true, description="Username of an user")
+     * @QueryParam(name="profile", requirements="short|full", nullable=true, description="Quantity of information returned about the user.")
      *
      * @Doc\ApiDoc(
      *     section="Users",
@@ -55,28 +56,43 @@ class UserController extends FOSRestController
     public function getUsersAction(Request $request, ParamFetcher $paramFetcher)
     {
         $token = $paramFetcher->get('token');
+        $username = $paramFetcher->get('username');
+        $profile = $paramFetcher->get('profile');
+
         $em = $this->getDoctrine()->getManager();
 
         if($token != "") {
-            $user = $em->getRepository('UserBundle:AccessToken')->findOneByToken($token)->getUser();
-            /* @var $user User */
-
-            return $user;
+            $users = $em->getRepository('UserBundle:AccessToken')->findOneByToken($token)->getUser();
+            /* @var $users User */
+        } elseif($username != "") {
+            $users = $em->getRepository('UserBundle:User')->findOneBy(array('username' => $username));
+            /* @var $users User */
         } else {
             if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 $users = $em->getRepository('UserBundle:User')->findAll();
                 /* @var $users User[] */
-
-                return $users;
             } else {
                 throw $this->createAccessDeniedException('Unable to access this page!');
             }
         }
+
+        $groups = ['preferences', 'accesses', 'id', 'content'];
+        if($profile == 'full') {
+            $groups = ['full'];
+        }
+
+        $view = $this->view($users, 200);
+        $context = new Context();
+        $context->setGroups($groups);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
      * @Rest\Get("/users/{id}")
-     * @Rest\View()
+     * @QueryParam(name="profile", requirements="short|full", nullable=true, description="Quantity of information returned about the user.")
+     *
      * @Doc\ApiDoc(
      *     section="Users",
      *     resource=true,
@@ -95,8 +111,10 @@ class UserController extends FOSRestController
      *     }
      * )
      */
-    public function getUserAction(Request $request)
+    public function getUserAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $profile = $paramFetcher->get('profile');
+
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
         /* @var $user User */
@@ -104,7 +122,18 @@ class UserController extends FOSRestController
         if(empty($user)) {
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
-        return $user;
+
+        $groups = ['preferences', 'id', 'accesses', 'content'];
+        if($profile == 'full') {
+            $groups = ['full'];
+        }
+
+        $view = $this->view($user, 200);
+        $context = new Context();
+        $context->setGroups($groups);
+        $view->setContext($context);
+
+        return $this->handleView($view);
     }
 
     /**
@@ -585,5 +614,64 @@ class UserController extends FOSRestController
         /*return $this->render('@FOSUser/ChangePassword/change_password.html.twig', array(
             'form' => $form->createView(),
         ));*/
+    }
+
+    /**
+     * @Rest\Post("/users/{id}/roles")
+     * @Rest\View()
+     *
+     * @Doc\ApiDoc(
+     *     section="Users",
+     *     resource=true,
+     *     description="Add a role to user",
+     *     requirements={
+     *         {
+     *             "name"="id",
+     *             "dataType"="integer",
+     *             "requirement"="\d+",
+     *             "description"="The user unique identifier.",
+     *         }
+     *     },
+     *     statusCodes={
+     *         200="Returned when fetched",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function setRoleAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
+        /* @var $user User */
+
+        if($user == null) {
+            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $allowedRoles = ['ROLE_MODO', 'ROLE_THESAURUS_EDIT'];
+        if(in_array($request->get('role'), $allowedRoles)) {
+            $user->addRole($request->get('role'));
+
+            if($request->get('role') == 'ROLE_THESAURUS_EDIT') {
+                /** @var $access Access */
+                $access = $em->getRepository('UserBundle:Access')->findOneBy(array('user' => $user));
+                $access->setThesaurusRequest(null);
+                $access->setIsThesaurusAccess(true);
+            }
+            $em->flush();
+
+            // Email notification :
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Votre compte dispose d\'un nouveau role - Testaments de Poilus')
+                ->setFrom('testaments-de-poilus@huma-num.fr')
+                ->setTo($user->getEmail())
+                ->setBody($this->renderView(
+                    'UserBundle:SetRole:emailPromote.html.twig',
+                    array('user'=> $user, 'role' => $request->get('role'))))
+            ;
+            $this->get('mailer')->send($message);
+        }
+
+        return $user;
     }
 }

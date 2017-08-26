@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class TestatorController extends FOSRestController
 {
@@ -166,6 +167,7 @@ class TestatorController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_THESAURUS_EDIT')")
      */
     public function postTestatorsAction(Request $request)
     {
@@ -276,6 +278,7 @@ class TestatorController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_THESAURUS_EDIT')")
      */
     public function updateTestatorAction(Request $request)
     {
@@ -374,6 +377,7 @@ class TestatorController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_THESAURUS_EDIT')")
      */
     public function patchTestatorAction(Request $request)
     {
@@ -421,6 +425,7 @@ class TestatorController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function removeTestatorAction(Request $request)
     {

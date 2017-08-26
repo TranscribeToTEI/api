@@ -9,10 +9,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * Preference
+ * Access
  *
- * @ORM\Table(name="preference")
- * @ORM\Entity(repositoryClass="UserBundle\Repository\PreferenceRepository")
+ * @ORM\Table(name="access")
+ * @ORM\Entity(repositoryClass="UserBundle\Repository\AccessRepository")
  * @Serializer\ExclusionPolicy("all")
  *
  * @Hateoas\Relation(
@@ -60,7 +60,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  */
-class Preference
+class Access
 {
     /**
      * @Serializer\Since("1.0")
@@ -80,28 +80,28 @@ class Preference
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Assert\Choice({"leftRead-centerHelp-rightImage", "leftRead-centerImage-rightHelp", "leftHelp-centerRead-rightImage", "leftHelp-centerImage-rightRead", "leftImage-centerHelp-rightRead", "leftImage-centerRead-rightHelp"})
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="transcriptionDeskPosition", type="string", length=255)
+     * @ORM\Column(name="isThesaurusAccess", type="boolean")
      */
-    private $transcriptionDeskPosition;
+    private $isThesaurusAccess;
 
     /**
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Assert\NotBlank()
-     * @Assert\Choice({"todo", "done", "notInterested"})
-     *
      * @var string
      *
-     * @ORM\Column(name="tutorial_status", type="string", length=255)
+     * @ORM\Column(name="thesaurusRequest", type="string", length=255, nullable=true)
      */
-    private $tutorialStatus;
+    private $thesaurusRequest;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -119,27 +119,51 @@ class Preference
     }
 
     /**
-     * Set transcriptionDeskPosition
+     * Set isThesaurusAccess
      *
-     * @param string $transcriptionDeskPosition
+     * @param boolean $isThesaurusAccess
      *
-     * @return Preference
+     * @return Access
      */
-    public function setTranscriptionDeskPosition($transcriptionDeskPosition)
+    public function setIsThesaurusAccess($isThesaurusAccess)
     {
-        $this->transcriptionDeskPosition = $transcriptionDeskPosition;
+        $this->isThesaurusAccess = $isThesaurusAccess;
 
         return $this;
     }
 
     /**
-     * Get transcriptionDeskPosition
+     * Get isThesaurusAccess
+     *
+     * @return bool
+     */
+    public function getIsThesaurusAccess()
+    {
+        return $this->isThesaurusAccess;
+    }
+
+    /**
+     * Set thesaurusRequest
+     *
+     * @param string $thesaurusRequest
+     *
+     * @return Access
+     */
+    public function setThesaurusRequest($thesaurusRequest)
+    {
+        $this->thesaurusRequest = $thesaurusRequest;
+
+        return $this;
+    }
+
+    /**
+     * Get thesaurusRequest
      *
      * @return string
      */
-    public function getTranscriptionDeskPosition()
+    public function getThesaurusRequest()
     {
-        return $this->transcriptionDeskPosition;
+        return $this->thesaurusRequest;
     }
 
     /**
@@ -147,7 +171,7 @@ class Preference
      *
      * @param \UserBundle\Entity\User $user
      *
-     * @return Preference
+     * @return Access
      */
     public function setUser(\UserBundle\Entity\User $user)
     {
@@ -164,29 +188,5 @@ class Preference
     public function getUser()
     {
         return $this->user;
-    }
-
-    /**
-     * Set tutorialStatus
-     *
-     * @param string $tutorialStatus
-     *
-     * @return Preference
-     */
-    public function setTutorialStatus($tutorialStatus)
-    {
-        $this->tutorialStatus = $tutorialStatus;
-
-        return $this;
-    }
-
-    /**
-     * Get tutorialStatus
-     *
-     * @return string
-     */
-    public function getTutorialStatus()
-    {
-        return $this->tutorialStatus;
     }
 }

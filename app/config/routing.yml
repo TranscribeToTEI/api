@@ -70,6 +70,10 @@ XML:
     type:     rest
     resource: AppBundle\Controller\XMLController
 
+logs:
+    type:     rest
+    resource: AppBundle\Controller\LogsController
+
 model:
     type:     rest
     resource: AppBundle\Controller\ModelController
@@ -81,6 +85,10 @@ users:
 preferences:
     type:     rest
     resource: UserBundle\Controller\PreferenceController
+
+accesses:
+    type:     rest
+    resource: UserBundle\Controller\AccessController
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

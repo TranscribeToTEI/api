@@ -8,6 +8,7 @@ use AppBundle\Entity\Transcript;
 use AppBundle\Repository\ResourceRepository;
 use AppBundle\Services\Versioning;
 use Doctrine\ORM\EntityManager;
+use UserBundle\Entity\Access;
 use UserBundle\Entity\Preference;
 
 class User
@@ -44,6 +45,31 @@ class User
         $this->em->persist($preference);
         $this->em->flush();
         return $preference;
+    }
+
+    /**
+     * @param $user \UserBundle\Entity\User
+     * @return Access
+     */
+    public function getAccess($user)
+    {
+        $access = $this->em->getRepository('UserBundle:Access')->findOneByUser($user);
+        if($access == null) {$access = $this->setAccess($user);}
+        return $access;
+    }
+
+    /**
+     * @param $user \UserBundle\Entity\User
+     * @return Access
+     */
+    public function setAccess($user) {
+        $access = new Access();
+        $access->setUser($user);
+        $access->setIsThesaurusAccess(false);
+        $access->setThesaurusRequest(null);
+        $this->em->persist($access);
+        $this->em->flush();
+        return $access;
     }
 
     /**

@@ -61,6 +61,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "version",
+ *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "versioning"}
+ *     )
+ * )
  */
 class Regiment
 {
