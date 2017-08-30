@@ -162,7 +162,7 @@ class PreferenceController extends FOSRestController
         if (empty($preference)) {
             return new JsonResponse(['message' => 'Preference not found'], Response::HTTP_NOT_FOUND);
         }
-        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $preference->getUser()) {
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $preference->getUser()) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
@@ -203,7 +203,7 @@ class PreferenceController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $preference = $em->getRepository('UserBundle:Preference')->find($request->get('id'));
         /* @var $preference Preference */
-        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $preference->getUser()) {
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $preference->getUser()) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 

@@ -166,7 +166,7 @@ class AccessController extends FOSRestController
         if (empty($access)) {
             return new JsonResponse(['message' => 'Access not found'], Response::HTTP_NOT_FOUND);
         }
-        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $access->getUser()) {
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $access->getUser()) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
@@ -207,7 +207,7 @@ class AccessController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $access = $em->getRepository('UserBundle:Access')->find($request->get('id'));
         /* @var $access Access */
-        if($this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() == $access->getUser()) {
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $access->getUser()) {
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 

@@ -29,7 +29,8 @@ class ModelController extends FOSRestController
      * @Rest\View()
      *
      * @QueryParam(name="element", nullable=false, description="Name of the element required")
-     * @QueryParam(name="info", nullable=false, requirements="doc", description="Type of information required")
+     * @QueryParam(name="elements", nullable=false, requirements="true", description="Query every elements info")
+     * @QueryParam(name="info", nullable=false, requirements="doc|content", description="Type of information required")
      *
      * @Doc\ApiDoc(
      *     section="Model",
@@ -41,17 +42,47 @@ class ModelController extends FOSRestController
      *     }
      * )
      */
-    public function modelAction(Request $request, ParamFetcher $paramFetcher)
+    public function getModelAction(Request $request, ParamFetcher $paramFetcher)
     {
         $element = $paramFetcher->get('element');
-        if(empty($element)) {return new JsonResponse(['message' => 'Invalid element'], Response::HTTP_NOT_ACCEPTABLE);}
+        if($element == "") {$element = null;}
+
+        $elements = $paramFetcher->get('elements');
+        if($elements == "true") {$elements = true;}
+
+        if($element == null and $elements != true) {return new JsonResponse(['message' => 'Invalid element'], Response::HTTP_NOT_ACCEPTABLE);}
+
         $info = $paramFetcher->get('info');
         if(empty($info)) {return new JsonResponse(['message' => 'Invalid type of information'], Response::HTTP_NOT_ACCEPTABLE);}
 
         /** @var $modelService Model */
         $modelService = $this->get('app.xml.model');
-        $doc = $modelService->getDoc($element);
+        $response = null;
 
-        return new JsonResponse(['doc' => $doc], Response::HTTP_OK);
+        if($element != null) {
+            $response = $this->getInfo($element, $info);
+        } elseif($elements == true) {
+            $elementsList = $modelService->getAllElements();
+            foreach ($elementsList as $element) {
+                $response[$element] = $this->getInfo($element, $info);
+            }
+        }
+
+        return new JsonResponse(["data" => $response], Response::HTTP_OK);
+    }
+
+    /**
+     * @param $element string
+     * @param $info string
+     * @return array|string
+     */
+    private function getInfo($element, $info) {
+        /** @var $modelService Model */
+        $modelService = $this->get('app.xml.model');
+        if ($info == 'doc') {
+            return $modelService->getDoc($element);
+        } elseif ($info == 'content') {
+            return $modelService->getContent($element);
+        }
     }
 }
