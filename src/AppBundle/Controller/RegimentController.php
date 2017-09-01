@@ -119,7 +119,7 @@ class RegimentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_THESAURUS_EDIT')")
+     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
      */
     public function postRegimentsAction(Request $request)
     {
@@ -176,7 +176,7 @@ class RegimentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_THESAURUS_EDIT')")
+     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
      */
     public function updateRegimentAction(Request $request)
     {
@@ -221,7 +221,7 @@ class RegimentController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_THESAURUS_EDIT')")
+     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
      */
     public function patchRegimentAction(Request $request)
     {

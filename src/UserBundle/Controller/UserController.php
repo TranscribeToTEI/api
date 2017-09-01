@@ -648,15 +648,15 @@ class UserController extends FOSRestController
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $allowedRoles = ['ROLE_MODO', 'ROLE_THESAURUS_EDIT'];
+        $allowedRoles = ['ROLE_MODO', 'ROLE_TAXONOMY_EDIT'];
         if(in_array($request->get('role'), $allowedRoles)) {
             $user->addRole($request->get('role'));
 
-            if($request->get('role') == 'ROLE_THESAURUS_EDIT') {
+            if($request->get('role') == 'ROLE_TAXONOMY_EDIT') {
                 /** @var $access Access */
                 $access = $em->getRepository('UserBundle:Access')->findOneBy(array('user' => $user));
-                $access->setThesaurusRequest(null);
-                $access->setIsThesaurusAccess(true);
+                $access->setTaxonomyRequest(null);
+                $access->setIsTaxonomyAccess(true);
             }
             $em->flush();
 

@@ -65,8 +65,8 @@ class User
     public function setAccess($user) {
         $access = new Access();
         $access->setUser($user);
-        $access->setIsThesaurusAccess(false);
-        $access->setThesaurusRequest(null);
+        $access->setIsTaxonomyAccess(false);
+        $access->setTaxonomyRequest(null);
         $this->em->persist($access);
         $this->em->flush();
         return $access;

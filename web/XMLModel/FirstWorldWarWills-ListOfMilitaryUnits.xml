@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TEI xmlns="http://www.tei-c.org/ns/1.0"  xml:id="FirstWorldWarWills-ListOfMilitaryUnits">
+  <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title type="corpusTitle">Transcription collaborative de testaments de Poilus de la Grande Guerre</title>
+            <title type="fileTitle">Notices descriptives des unités militaires d'incorporation des testateurs</title>
+            <respStmt>
+               <resp>saisie des premiers éléments de description des unités avant import dans la plate-forme</resp>
+               <!-- lister ici les personnes qui ont contribué à la saisie des éléments sur les testateurs dans les fichiers de récolement CSV -->
+               <persName xml:id="ML">
+                  <forename>Mélisa</forename>
+                  <surname>Locatelli</surname>
+                  <affiliation><orgName>Archives nationales (Département du Minutier central des notaires de Paris)</orgName></affiliation></persName>
+               
+            </respStmt>
+            <respStmt>
+               <resp>ajouts et modifications</resp>
+               <!-- ici devrait figurer la liste de tous les contributeurs aux notices à la date de leur export -->
+               <persName xml:id="CN"><forename>Christine</forename><surname>Nougaret</surname><affiliation><orgName>Ecole nationale des chartes (EA 3624 - Centre Jean-Mabillon)</orgName></affiliation></persName>
+               <persName xml:id="JD"><forename>Jean</forename><surname> Dupont</surname></persName>
+               <persName xml:id="FC"><forename>Florence</forename><surname>Clavaud</surname><affiliation><orgName>Archives nationales</orgName></affiliation><affiliation><orgName>Ecole nationale des chartes (EA 3624 - Centre Jean-Mabillon)</orgName></affiliation></persName>
+               <persName xml:id="KP"><forename>Karl</forename><surname>Pineau</surname><affiliation><orgName>Université Cergy-Pontoise</orgName></affiliation></persName>
+            </respStmt>
+            <respStmt>
+               <resp>validation</resp>
+               <!-- ici devrait figurer la liste de tous les contributeurs qui ont validé les notices à la date de leur export -->
+               <persName corresp="#CN">Christine Nougaret</persName>
+               <persName corresp="#FC">Florence Clavaud</persName>
+               <persName corresp="#KP">Karl Pineau</persName>
+            </respStmt>
+            
+            <funder><orgName>LabEx PATRIMA</orgName></funder>
+            <funder><orgName>Mission du Centenaire de la Première Guerre Mondiale</orgName></funder>
+         </titleStmt>
+         <publicationStmt>
+            <publisher><orgName>Université de Cergy-Pontoise</orgName></publisher>
+            <publisher><orgName>Archives nationales</orgName></publisher>
+            <publisher><orgName>Archives départementales des Yvelines</orgName></publisher>
+            <publisher><orgName>Ecole nationale des chartes</orgName></publisher>
+            <date when="2017-10"><!-- ici, pour ce fichier, et pour tous les fichiers contenant des notices descriptives, il faudrait stocker la date de l'export TEI--></date>
+            <availability>
+               <licence>Licence CC BY (à revoir)</licence>
+            </availability>
+         </publicationStmt>
+         
+         <sourceDesc>
+            <p>Document nativement numérique</p>
+         </sourceDesc>
+         
+      </fileDesc>
+     
+     <profileDesc>
+        <creation>Fichier produit à partir de données saisies avant import initial dans la plate-forme, ou directement dans la plate-forme, converties automatiquement en TEI</creation>
+        <langUsage><language ident="fre">français</language></langUsage>
+       
+     </profileDesc>
+     
+     <encodingDesc>
+        <projectDesc>
+           <p>Le présent fichier accompagne les fichiers de transcription des testaments de Poilus réalisés dans le cadre du projet de transcription collaborative etc.</p>
+           <p>Les notices, produites par les différents contributeurs et validées par l'équipe scientifique du projet, fournissent des éléments d'identification et d'histoire relatifs aux unités iltaires (régiments, bataillons) dans lesquelles les testateurs étaient incorporés lors de leur décès.</p>
+        </projectDesc>
+        <editorialDecl>
+           <p>Chaque notice contient : le nom de l'unité militaire sous sa forme normalisée selon la norme française AFNOR NF Z 44-061 (TODO CHECK), une forme du nom plus courte (qui est utilisée pour afficher la notice), et optionnellement, un historique rédigé de l'unité, ainsi que des références bibliographiques sur l'unité. Y sont également stockées les identifiants des personnes qui ont contribué à l'élaboration de la notice à la date de son export au sein du présent fichier.</p>
+        
+           <p>La vue HTML de la notice dans la plate-forme de transcription ajoute automatiquement à ces informations le ou les liens vers la ou les notices des testateurs qui ont été incorporés dans l'unité décrite.</p>
+           
+        </editorialDecl>
+        
+        <appInfo>
+           <application version="1.0" ident="TranscribeToTEI">
+              <label>Transcribe To TEI</label>
+              <ref target="https://github.com/TranscribeToTEI">https://github.com/TranscribeToTEI</ref>
+           </application>
+        </appInfo>
+        <!-- TODO PREVOIR LIEN VERS LE SCHEMA  <schemaRef>-->
+     </encodingDesc>
+     <revisionDesc>
+        <!-- le fichier TEI doit consigner la liste des principales étapes de travail -->
+        
+        <!--  <change when="2017-07-30" who="#LDupont">première transcription</change>-->
+        <change when-iso="2017-07-31/2017-08-02" who="#MDurand #tata">description</change>
+        <change when="2017-08-01" who="#FClavaud">validation</change>
+        <change when="2017-08-03" who="#KPineau">export</change>
+     </revisionDesc>
+  </teiHeader>
+  <text>
+    
+     <body>
+        
+        <listOrg>
+          
+           <org xml:id="o-0001"  resp="#ML #JD #FC">
+              <!-- la forme standardisée du nom, qui pourra servir pour la recherche. Le dernier segment (orgName) devrait servir à l'affichage dans la liste des unités -->
+              <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment d'infanterie (<num>68</num>)</orgName></orgName>
+                 <!-- la forme courante du nom, telle qu'utilisée dans les métadonnées du testament-->
+              <orgName type="proseForm">68<hi  rend="superscript">e</hi> régiment d'infanterie</orgName>
+            
+              <note type="history">
+                 <p></p>
+                 <p></p>
+              </note>
+            
+           </org>
+           <org xml:id="o-0002" resp="#ML #JD">
+              <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment de zouaves (<num>4</num>)</orgName></orgName>
+              <orgName type="proseForm">4<hi  rend="superscript">e</hi> régiment de zouaves</orgName>
+              <note type="history"><p></p></note>
+             
+           </org>
+           <org xml:id="o-0003" resp="#ML #JD #CN">
+              <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment d'infanterie coloniale (<num>23</num>)</orgName>
+              </orgName>
+              <orgName type="proseForm">23<hi rend="superscript">e</hi> régiment d'infanterie coloniale</orgName>
+             
+            
+              <bibl>Article <title level="a">23e régiment d'infanterie coloniale</title> de <title level="m">Wikipédia en français</title>. Contenu soumis à la licence CC-BY-SA 3.0.
+                 <ref type="uri">http://fr.wikipedia.org/wiki/23e_r%C3%A9giment_d%27infanterie_coloniale</ref></bibl>
+           </org>
+           <org xml:id="o-0004" resp="#ML #CN">
+              <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Bataillon de tirailleurs malgaches (1)</orgName>
+              </orgName>
+              
+              <orgName type="proseForm">1<hi rend="superscript">er</hi> bataillon de tirailleurs malgaches</orgName>
+              <note type="history"><p></p></note>
+             
+           </org>
+           <org xml:id="o-0005" resp="#FC">
+              <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment d'infanterie territoriale (<num>27</num>)</orgName>
+                 <orgName type="proseForm">27<hi rend="superscript">e</hi> régiment d'infanterie territoriale</orgName>
+                 
+              </orgName>
+           </org>
+        </listOrg>
+     </body>
+  </text>
+</TEI>

@@ -16,11 +16,11 @@ class AccessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isThesaurusAccess',      ChoiceType::class,  array('required' => false, 'choices'  => array(
+            ->add('isTaxonomyAccess',      ChoiceType::class,  array('required' => false, 'choices'  => array(
                 'Yes' => true,
                 'No' => false,
             )))
-            ->add('thesaurusRequest',       TextType::class,    array('required' => false))
+            ->add('taxonomyRequest',       TextType::class,    array('required' => false))
         ;
     }
     

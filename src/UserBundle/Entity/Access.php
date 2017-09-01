@@ -82,9 +82,9 @@ class Access
      *
      * @var bool
      *
-     * @ORM\Column(name="isThesaurusAccess", type="boolean")
+     * @ORM\Column(name="isTaxonomyAccess", type="boolean")
      */
-    private $isThesaurusAccess;
+    private $isTaxonomyAccess;
 
     /**
      * @Serializer\Since("1.0")
@@ -93,9 +93,9 @@ class Access
      *
      * @var string
      *
-     * @ORM\Column(name="thesaurusRequest", type="string", length=255, nullable=true)
+     * @ORM\Column(name="taxonomyRequest", type="string", length=255, nullable=true)
      */
-    private $thesaurusRequest;
+    private $taxonomyRequest;
 
     /**
      * @Serializer\Since("1.0")
@@ -119,51 +119,51 @@ class Access
     }
 
     /**
-     * Set isThesaurusAccess
+     * Set isTaxonomyAccess
      *
-     * @param boolean $isThesaurusAccess
+     * @param boolean $isTaxonomyAccess
      *
      * @return Access
      */
-    public function setIsThesaurusAccess($isThesaurusAccess)
+    public function setIsTaxonomyAccess($isTaxonomyAccess)
     {
-        $this->isThesaurusAccess = $isThesaurusAccess;
+        $this->isTaxonomyAccess = $isTaxonomyAccess;
 
         return $this;
     }
 
     /**
-     * Get isThesaurusAccess
+     * Get isTaxonomyAccess
      *
      * @return bool
      */
-    public function getIsThesaurusAccess()
+    public function getIsTaxonomyAccess()
     {
-        return $this->isThesaurusAccess;
+        return $this->isTaxonomyAccess;
     }
 
     /**
-     * Set thesaurusRequest
+     * Set taxonomyRequest
      *
-     * @param string $thesaurusRequest
+     * @param string $taxonomyRequest
      *
      * @return Access
      */
-    public function setThesaurusRequest($thesaurusRequest)
+    public function setTaxonomyRequest($taxonomyRequest)
     {
-        $this->thesaurusRequest = $thesaurusRequest;
+        $this->taxonomyRequest = $taxonomyRequest;
 
         return $this;
     }
 
     /**
-     * Get thesaurusRequest
+     * Get taxonomyRequest
      *
      * @return string
      */
-    public function getThesaurusRequest()
+    public function getTaxonomyRequest()
     {
-        return $this->thesaurusRequest;
+        return $this->taxonomyRequest;
     }
 
     /**

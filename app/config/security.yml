@@ -7,10 +7,10 @@ security:
             id: fos_user.user_provider.username
 
     role_hierarchy:
-        ROLE_THESAURUS_EDIT:  ROLE_USER
-        ROLE_MODO:            ROLE_USER, ROLE_THESAURUS_EDIT
-        ROLE_ADMIN:           ROLE_MODO, ROLE_THESAURUS_EDIT
-        ROLE_SUPER_ADMIN:     ROLE_ADMIN, ROLE_MODO, ROLE_THESAURUS_EDIT
+        ROLE_TAXONOMY_EDIT:  ROLE_USER
+        ROLE_MODO:            ROLE_USER, ROLE_TAXONOMY_EDIT
+        ROLE_ADMIN:           ROLE_MODO, ROLE_TAXONOMY_EDIT
+        ROLE_SUPER_ADMIN:     ROLE_ADMIN, ROLE_MODO, ROLE_TAXONOMY_EDIT
 
     firewalls:
         oauth_token:  # Everyone can access the access token URL.
