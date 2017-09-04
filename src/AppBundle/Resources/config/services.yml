@@ -17,6 +17,16 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+    app.place:
+        class: AppBundle\Services\Place
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    app.regiment:
+        class: AppBundle\Services\Regiment
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     app.transcript:
         class: AppBundle\Services\Transcript
         arguments:

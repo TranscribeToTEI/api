@@ -102,6 +102,17 @@ class Preference
     private $tutorialStatus;
 
     /**
+     * @Serializer\Since("1.0")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="smartTEI", type="boolean")
+     */
+    private $smartTEI;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -188,5 +199,29 @@ class Preference
     public function getTutorialStatus()
     {
         return $this->tutorialStatus;
+    }
+
+    /**
+     * Set smartTEI
+     *
+     * @param boolean $smartTEI
+     *
+     * @return Preference
+     */
+    public function setSmartTEI($smartTEI)
+    {
+        $this->smartTEI = $smartTEI;
+
+        return $this;
+    }
+
+    /**
+     * Get smartTEI
+     *
+     * @return boolean
+     */
+    public function getSmartTEI()
+    {
+        return $this->smartTEI;
     }
 }

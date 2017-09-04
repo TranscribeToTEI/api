@@ -3,6 +3,7 @@
 namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,7 +16,9 @@ class PreferenceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('transcriptionDeskPosition',  TextType::class, array('required' => true))
+            ->add('transcriptionDeskPosition',  TextType::class,    array('required' => true))
+            ->add('smartTEI',                   ChoiceType::class,  array('required' => false, 'choices'  => array('Yes' => true, 'No' => false)))
+            ->add('tutorialStatus',             TextType::class,    array('required' => false))
         ;
     }
     

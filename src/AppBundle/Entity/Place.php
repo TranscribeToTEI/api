@@ -68,6 +68,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "versioning"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "testators",
+ *     embedded = @Hateoas\Embedded("expr(service('app.place').getTestators(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "content"}
+ *     )
+ * )
  */
 class Place
 {
