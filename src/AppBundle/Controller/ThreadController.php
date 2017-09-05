@@ -54,7 +54,7 @@ class ThreadController extends FOSRestController
         if($user != "") {
             $selectedThreads = array();
             foreach ($threads as $thread) {
-                if(strpos($thread->getId(), "user-") !== false and strpos($thread->getId(), $user) !== false) {
+                if(strpos($thread->getId(), "users-") !== false and strpos($thread->getId(), strval($user)) !== false) {
                     $selectedThreads[] = $thread;
                 }
             }
