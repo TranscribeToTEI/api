@@ -30,6 +30,10 @@ app-preferences:
     type:     rest
     resource: AppBundle\Controller\AppPreferenceController
 
+override-thread:
+    type:     rest
+    resource: AppBundle\Controller\ThreadController
+
 entities:
     type:     rest
     resource: AppBundle\Controller\EntityController
