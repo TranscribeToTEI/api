@@ -124,6 +124,7 @@ class Regiment
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -136,6 +137,7 @@ class Regiment
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")

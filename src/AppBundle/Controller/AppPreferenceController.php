@@ -23,7 +23,7 @@ class AppPreferenceController extends FOSRestController
 {
     /**
      * @Rest\Get("/app-preference")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="status", description="Name of the status required")
      * @QueryParam(name="type", description="")
@@ -67,7 +67,7 @@ class AppPreferenceController extends FOSRestController
 
     /**
      * @Rest\Get("/app-preference/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="AppPreferences",
      *     resource=true,

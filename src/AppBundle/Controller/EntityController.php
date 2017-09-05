@@ -18,7 +18,7 @@ class EntityController extends FOSRestController
 {
     /**
      * @Rest\Get("/entities")
-     * @Rest\View(serializerGroups={"id", "content"})
+     * @Rest\View(serializerGroups={"id", "content"}, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Entities",
@@ -40,7 +40,7 @@ class EntityController extends FOSRestController
 
     /**
      * @Rest\Get("/entities/{id}")
-     * @Rest\View
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Entities",

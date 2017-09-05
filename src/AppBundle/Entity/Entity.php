@@ -120,6 +120,7 @@ class Entity
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -143,6 +144,7 @@ class Entity
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")

@@ -19,7 +19,7 @@ class TestatorController extends FOSRestController
 {
     /**
      * @Rest\Get("/testators")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Testators",
@@ -41,7 +41,7 @@ class TestatorController extends FOSRestController
 
     /**
      * @Rest\Get("/testators/{id}")
-     * @Rest\View
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Testators",

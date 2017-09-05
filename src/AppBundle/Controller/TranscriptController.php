@@ -24,7 +24,7 @@ class TranscriptController extends FOSRestController
 {
     /**
      * @Rest\Get("/transcripts")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="status", nullable=true, description="Name of the status required")
      *
@@ -56,7 +56,7 @@ class TranscriptController extends FOSRestController
 
     /**
      * @Rest\Get("/transcripts/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Transcripts",
      *     resource=true,

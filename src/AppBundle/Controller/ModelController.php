@@ -26,7 +26,7 @@ class ModelController extends FOSRestController
 {
     /**
      * @Rest\Get("/model")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="element", nullable=false, description="Name of the element required")
      * @QueryParam(name="elements", nullable=false, requirements="true", description="Query every elements info")

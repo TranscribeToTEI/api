@@ -27,7 +27,7 @@ class LogsController extends FOSRestController
 {
     /**
      * @Rest\Get("/logs")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Logs",

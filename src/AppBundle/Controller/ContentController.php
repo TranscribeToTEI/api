@@ -24,7 +24,7 @@ class ContentController extends FOSRestController
 {
     /**
      * @Rest\Get("/contents")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="status", description="Name of the status required")
      * @QueryParam(name="type", description="")
@@ -71,7 +71,7 @@ class ContentController extends FOSRestController
 
     /**
      * @Rest\Get("/contents/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Contents",
      *     resource=true,

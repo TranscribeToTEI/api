@@ -24,7 +24,7 @@ class ResourceController extends FOSRestController
 {
     /**
      * @Rest\Get("/resources")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="transcript", nullable=true, description="Identifier of the transcript related to the resource.")
      *
@@ -59,7 +59,7 @@ class ResourceController extends FOSRestController
 
     /**
      * @Rest\Get("/resources/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,

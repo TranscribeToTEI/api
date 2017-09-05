@@ -23,7 +23,7 @@ class RegimentController extends FOSRestController
 {
     /**
      * @Rest\Get("/regiments")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Regiments",
@@ -48,7 +48,7 @@ class RegimentController extends FOSRestController
 
     /**
      * @Rest\Get("/regiments/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Regiments",
      *     resource=true,

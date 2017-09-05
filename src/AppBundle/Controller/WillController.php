@@ -18,7 +18,7 @@ class WillController extends FOSRestController
 {
     /**
      * @Rest\Get("/wills")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Wills",
@@ -40,7 +40,7 @@ class WillController extends FOSRestController
 
     /**
      * @Rest\Get("/wills/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Wills",
      *     resource=true,

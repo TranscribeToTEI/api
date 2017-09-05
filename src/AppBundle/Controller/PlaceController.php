@@ -23,7 +23,7 @@ class PlaceController extends FOSRestController
 {
     /**
      * @Rest\Get("/places")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Places",
@@ -48,7 +48,7 @@ class PlaceController extends FOSRestController
 
     /**
      * @Rest\Get("/places/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Places",
      *     resource=true,

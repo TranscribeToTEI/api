@@ -85,6 +85,7 @@ class Will
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entity", mappedBy="will")
      * @ORM\JoinColumn(nullable=true)
@@ -163,6 +164,7 @@ class Will
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
@@ -174,6 +176,7 @@ class Will
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "testator"})
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(2)
      *
      * @Assert\NotBlank(message = "Le champ testateur ne peut pas être vide")
      *
@@ -254,6 +257,7 @@ class Will
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -277,6 +281,7 @@ class Will
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
      * @Gedmo\Versioned
      *
      * @Gedmo\Blameable(on="update")

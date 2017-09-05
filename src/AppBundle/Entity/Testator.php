@@ -179,6 +179,7 @@ class Testator
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
@@ -205,6 +206,7 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=false)
@@ -243,6 +245,7 @@ class Testator
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Regiment")
      * @ORM\JoinColumn(nullable=true)
@@ -278,6 +281,7 @@ class Testator
      * @Serializer\Since("1.0")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -290,6 +294,7 @@ class Testator
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
