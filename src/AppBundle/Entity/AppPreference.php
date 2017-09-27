@@ -64,7 +64,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class AppPreference
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -77,7 +77,7 @@ class AppPreference
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -92,7 +92,7 @@ class AppPreference
     /**
      * Refers to the help homepage in the navbar of the project
      *
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -105,7 +105,7 @@ class AppPreference
     /**
      * Refers to the help homepage in the transcription tool of the project
      *
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -117,7 +117,7 @@ class AppPreference
 
     /**
      * Refers to the discover page in the navbar of the project
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -129,7 +129,7 @@ class AppPreference
 
     /**
      * Refers to the about page in the footer of the project
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -141,7 +141,7 @@ class AppPreference
 
     /**
      * Refers to the legal notices page in the footer of the project
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -153,7 +153,7 @@ class AppPreference
 
     /**
      * Refers to the credits page in the footer of the project
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -164,7 +164,7 @@ class AppPreference
     private $creditsContent;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -176,7 +176,7 @@ class AppPreference
     private $facebookPageId;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -188,7 +188,7 @@ class AppPreference
     private $twitterId;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -201,7 +201,7 @@ class AppPreference
     private $enableContact;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -213,7 +213,7 @@ class AppPreference
     private $systemEmail;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *

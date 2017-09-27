@@ -63,7 +63,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class Preference
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -76,7 +76,7 @@ class Preference
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -88,7 +88,7 @@ class Preference
     private $transcriptionDeskPosition;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -102,7 +102,7 @@ class Preference
     private $tutorialStatus;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *

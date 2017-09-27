@@ -150,10 +150,10 @@ class TestatorController extends FOSRestController
      *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
      *         },
      *         {
-     *             "name"="regiment",
+     *             "name"="militaryUnit",
      *             "dataType"="string",
      *             "requirement"="\S{0,255}",
-     *             "description"="The name of the regiment of the testator."
+     *             "description"="The name of the militaryUnit of the testator."
      *         },
      *         {
      *             "name"="rank",
@@ -261,10 +261,10 @@ class TestatorController extends FOSRestController
      *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
      *         },
      *         {
-     *             "name"="regiment",
+     *             "name"="militaryUnit",
      *             "dataType"="string",
      *             "requirement"="\S{0,255}",
-     *             "description"="The name of the regiment of the testator."
+     *             "description"="The name of the militaryUnit of the testator."
      *         },
      *         {
      *             "name"="rank",
@@ -360,10 +360,10 @@ class TestatorController extends FOSRestController
      *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
      *         },
      *         {
-     *             "name"="regiment",
+     *             "name"="militaryUnit",
      *             "dataType"="string",
      *             "requirement"="\S{0,255}",
-     *             "description"="The name of the regiment of the testator."
+     *             "description"="The name of the militaryUnit of the testator."
      *         },
      *         {
      *             "name"="rank",

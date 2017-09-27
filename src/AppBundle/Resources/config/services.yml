@@ -22,8 +22,8 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
-    app.regiment:
-        class: AppBundle\Services\Regiment
+    app.militaryUnit:
+        class: AppBundle\Services\MilitaryUnit
         arguments:
             - '@doctrine.orm.entity_manager'
 

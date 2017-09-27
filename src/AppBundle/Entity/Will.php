@@ -69,7 +69,7 @@ use AppBundle\Entity\Testator;
 class Will
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -82,7 +82,7 @@ class Will
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
      * @Serializer\MaxDepth(1)
@@ -93,7 +93,7 @@ class Will
     private $entity;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -106,7 +106,7 @@ class Will
     private $callNumber;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -119,7 +119,7 @@ class Will
     private $minuteLink;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -132,35 +132,61 @@ class Will
     private $title;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var \DateTime
+     * @var string
      * @Assert\NotBlank(message = "La date de la minute ne peut pas être vide")
-     * @Assert\Date(message = "La date de la minute n'est pas valide")
      *
-     * @ORM\Column(name="minuteDate", type="date")
+     * @ORM\Column(name="minuteDate", type="string", length=255)
      */
     private $minuteDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * The field is used to index dates in search
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="minuteYear", type="string", length=5)
+     */
+    private $minuteYear;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var \DateTime
+     * @var string
      * @Assert\NotBlank(message = "La date d'écriture du testament ne peut pas être vide")
-     * @Assert\Date(message = "La date d'écriture du testament n'est pas valide")
      *
-     * @ORM\Column(name="willWritingDate", type="date")
+     * @ORM\Column(name="willWritingDate", type="string", length=255)
      */
     private $willWritingDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * The field is used to index dates in search
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="willWritingYear", type="string", length=5)
+     */
+    private $willWritingYear;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -172,7 +198,7 @@ class Will
     private $willWritingPlace;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "testator"})
      * @Gedmo\Versioned
@@ -186,51 +212,95 @@ class Will
     private $testator;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
      *
-     * @ORM\Column(name="physDescSupport", type="string", length=255, nullable=true)
+     * @ORM\Column(name="pagePhysDescSupport", type="string", length=255, nullable=true)
      */
-    private $physDescSupport;
+    private $pagePhysDescSupport;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
      *
-     * @ORM\Column(name="physDescHeight", type="string", length=255, nullable=true)
+     * @ORM\Column(name="pagePhysDescHeight", type="string", length=255, nullable=true)
      */
-    private $physDescHeight;
+    private $pagePhysDescHeight;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
      *
-     * @ORM\Column(name="physDescWidth", type="string", length=255, nullable=true)
+     * @ORM\Column(name="pagePhysDescWidth", type="string", length=255, nullable=true)
      */
-    private $physDescWidth;
+    private $pagePhysDescWidth;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
      *
-     * @ORM\Column(name="physDescHand", type="string", length=255, nullable=true)
+     * @ORM\Column(name="pagePhysDescHand", type="string", length=255, nullable=true)
      */
-    private $physDescHand;
+    private $pagePhysDescHand;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="envelopPhysDescSupport", type="string", length=255, nullable=true)
+     */
+    private $envelopPhysDescSupport;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="envelopPhysDescHeight", type="string", length=255, nullable=true)
+     */
+    private $envelopPhysDescHeight;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="envelopPhysDescWidth", type="string", length=255, nullable=true)
+     */
+    private $envelopPhysDescWidth;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="envelopPhysDescHand", type="string", length=255, nullable=true)
+     */
+    private $envelopPhysDescHand;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -243,7 +313,7 @@ class Will
     private $hostingOrganization;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
@@ -254,7 +324,7 @@ class Will
     private $identificationUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -266,7 +336,7 @@ class Will
     protected $createUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
@@ -278,7 +348,7 @@ class Will
     protected $createDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -291,7 +361,7 @@ class Will
     protected $updateUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -304,7 +374,7 @@ class Will
     protected $updateDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -326,175 +396,6 @@ class Will
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Will
-     * @ORM\PrePersist
-     */
-    public function setTitle($title)
-    {
-        $this->title = "Testament ".$this->getCallNumber();
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set minuteDate
-     *
-     * @param \DateTime $minuteDate
-     *
-     * @return Will
-     */
-    public function setMinuteDate($minuteDate)
-    {
-        $this->minuteDate = $minuteDate;
-
-        return $this;
-    }
-
-    /**
-     * Get minuteDate
-     *
-     * @return \DateTime
-     */
-    public function getMinuteDate()
-    {
-        return $this->minuteDate;
-    }
-
-    /**
-     * Set willWritingDate
-     *
-     * @param \DateTime $willWritingDate
-     *
-     * @return Will
-     */
-    public function setWillWritingDate($willWritingDate)
-    {
-        $this->willWritingDate = $willWritingDate;
-
-        return $this;
-    }
-
-    /**
-     * Get willWritingDate
-     *
-     * @return \DateTime
-     */
-    public function getWillWritingDate()
-    {
-        return $this->willWritingDate;
-    }
-
-    /**
-     * Set createDate
-     *
-     * @param \DateTime $createDate
-     *
-     * @return Will
-     */
-    public function setCreateDate($createDate)
-    {
-        $this->createDate = $createDate;
-
-        return $this;
-    }
-
-    /**
-     * Get createDate
-     *
-     * @return \DateTime
-     */
-    public function getCreateDate()
-    {
-        return $this->createDate;
-    }
-
-    /**
-     * Set entity
-     *
-     * @param \AppBundle\Entity\Entity $entity
-     *
-     * @return Will
-     */
-    public function setEntity(\AppBundle\Entity\Entity $entity = null)
-    {
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get entity
-     *
-     * @return \AppBundle\Entity\Entity
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    /**
-     * Set testator
-     *
-     * @param \AppBundle\Entity\Testator $testator
-     *
-     * @return Will
-     */
-    public function setTestator(\AppBundle\Entity\Testator $testator = null)
-    {
-        $this->testator = $testator;
-
-        return $this;
-    }
-
-    /**
-     * Get testator
-     *
-     * @return \AppBundle\Entity\Testator
-     */
-    public function getTestator()
-    {
-        return $this->testator;
-    }
-
-    /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Will
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
     }
 
     /**
@@ -522,195 +423,339 @@ class Will
     }
 
     /**
-     * Set updateDate
+     * Set minuteLink
      *
-     * @param \DateTime $updateDate
+     * @param string $minuteLink
      *
      * @return Will
      */
-    public function setUpdateDate($updateDate)
+    public function setMinuteLink($minuteLink)
     {
-        $this->updateDate = $updateDate;
+        $this->minuteLink = $minuteLink;
 
         return $this;
     }
 
     /**
-     * Get updateDate
-     *
-     * @return \DateTime
-     */
-    public function getUpdateDate()
-    {
-        return $this->updateDate;
-    }
-
-    /**
-     * Set updateComment
-     *
-     * @param string $updateComment
-     *
-     * @return Will
-     */
-    public function setUpdateComment($updateComment)
-    {
-        $this->updateComment = $updateComment;
-
-        return $this;
-    }
-
-    /**
-     * Get updateComment
+     * Get minuteLink
      *
      * @return string
      */
-    public function getUpdateComment()
+    public function getMinuteLink()
     {
-        return $this->updateComment;
+        return $this->minuteLink;
     }
 
     /**
-     * Set willWritingPlace
+     * Set title
      *
-     * @param \AppBundle\Entity\Place $willWritingPlace
+     * @param string $title
      *
      * @return Will
      */
-    public function setWillWritingPlace(\AppBundle\Entity\Place $willWritingPlace = null)
+    public function setTitle($title)
     {
-        $this->willWritingPlace = $willWritingPlace;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get willWritingPlace
-     *
-     * @return \AppBundle\Entity\Place
-     */
-    public function getWillWritingPlace()
-    {
-        return $this->willWritingPlace;
-    }
-
-    /**
-     * Set updateUser
-     *
-     * @param \UserBundle\Entity\User $updateUser
-     *
-     * @return Will
-     */
-    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
-    {
-        $this->updateUser = $updateUser;
-
-        return $this;
-    }
-
-    /**
-     * Get updateUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getUpdateUser()
-    {
-        return $this->updateUser;
-    }
-
-    /**
-     * Set physDescSupport
-     *
-     * @param string $physDescSupport
-     *
-     * @return Will
-     */
-    public function setPhysDescSupport($physDescSupport)
-    {
-        $this->physDescSupport = $physDescSupport;
-
-        return $this;
-    }
-
-    /**
-     * Get physDescSupport
+     * Get title
      *
      * @return string
      */
-    public function getPhysDescSupport()
+    public function getTitle()
     {
-        return $this->physDescSupport;
+        return $this->title;
     }
 
     /**
-     * Set physDescHeight
+     * Set minuteDate
      *
-     * @param string $physDescHeight
+     * @param string $minuteDate
      *
      * @return Will
      */
-    public function setPhysDescHeight($physDescHeight)
+    public function setMinuteDate($minuteDate)
     {
-        $this->physDescHeight = $physDescHeight;
+        $this->minuteDate = $minuteDate;
 
         return $this;
     }
 
     /**
-     * Get physDescHeight
+     * Get minuteDate
      *
      * @return string
      */
-    public function getPhysDescHeight()
+    public function getMinuteDate()
     {
-        return $this->physDescHeight;
+        return $this->minuteDate;
     }
 
     /**
-     * Set physDescWidth
+     * Set minuteYear
      *
-     * @param string $physDescWidth
+     * @param string $minuteYear
      *
      * @return Will
      */
-    public function setPhysDescWidth($physDescWidth)
+    public function setMinuteYear($minuteYear)
     {
-        $this->physDescWidth = $physDescWidth;
+        $this->minuteYear = $minuteYear;
 
         return $this;
     }
 
     /**
-     * Get physDescWidth
+     * Get minuteYear
      *
      * @return string
      */
-    public function getPhysDescWidth()
+    public function getMinuteYear()
     {
-        return $this->physDescWidth;
+        return $this->minuteYear;
     }
 
     /**
-     * Set physDescHand
+     * Set willWritingDate
      *
-     * @param string $physDescHand
+     * @param string $willWritingDate
      *
      * @return Will
      */
-    public function setPhysDescHand($physDescHand)
+    public function setWillWritingDate($willWritingDate)
     {
-        $this->physDescHand = $physDescHand;
+        $this->willWritingDate = $willWritingDate;
 
         return $this;
     }
 
     /**
-     * Get physDescHand
+     * Get willWritingDate
      *
      * @return string
      */
-    public function getPhysDescHand()
+    public function getWillWritingDate()
     {
-        return $this->physDescHand;
+        return $this->willWritingDate;
+    }
+
+    /**
+     * Set willWritingYear
+     *
+     * @param string $willWritingYear
+     *
+     * @return Will
+     */
+    public function setWillWritingYear($willWritingYear)
+    {
+        $this->willWritingYear = $willWritingYear;
+
+        return $this;
+    }
+
+    /**
+     * Get willWritingYear
+     *
+     * @return string
+     */
+    public function getWillWritingYear()
+    {
+        return $this->willWritingYear;
+    }
+
+    /**
+     * Set pagePhysDescSupport
+     *
+     * @param string $pagePhysDescSupport
+     *
+     * @return Will
+     */
+    public function setPagePhysDescSupport($pagePhysDescSupport)
+    {
+        $this->pagePhysDescSupport = $pagePhysDescSupport;
+
+        return $this;
+    }
+
+    /**
+     * Get pagePhysDescSupport
+     *
+     * @return string
+     */
+    public function getPagePhysDescSupport()
+    {
+        return $this->pagePhysDescSupport;
+    }
+
+    /**
+     * Set pagePhysDescHeight
+     *
+     * @param string $pagePhysDescHeight
+     *
+     * @return Will
+     */
+    public function setPagePhysDescHeight($pagePhysDescHeight)
+    {
+        $this->pagePhysDescHeight = $pagePhysDescHeight;
+
+        return $this;
+    }
+
+    /**
+     * Get pagePhysDescHeight
+     *
+     * @return string
+     */
+    public function getPagePhysDescHeight()
+    {
+        return $this->pagePhysDescHeight;
+    }
+
+    /**
+     * Set pagePhysDescWidth
+     *
+     * @param string $pagePhysDescWidth
+     *
+     * @return Will
+     */
+    public function setPagePhysDescWidth($pagePhysDescWidth)
+    {
+        $this->pagePhysDescWidth = $pagePhysDescWidth;
+
+        return $this;
+    }
+
+    /**
+     * Get pagePhysDescWidth
+     *
+     * @return string
+     */
+    public function getPagePhysDescWidth()
+    {
+        return $this->pagePhysDescWidth;
+    }
+
+    /**
+     * Set pagePhysDescHand
+     *
+     * @param string $pagePhysDescHand
+     *
+     * @return Will
+     */
+    public function setPagePhysDescHand($pagePhysDescHand)
+    {
+        $this->pagePhysDescHand = $pagePhysDescHand;
+
+        return $this;
+    }
+
+    /**
+     * Get pagePhysDescHand
+     *
+     * @return string
+     */
+    public function getPagePhysDescHand()
+    {
+        return $this->pagePhysDescHand;
+    }
+
+    /**
+     * Set envelopPhysDescSupport
+     *
+     * @param string $envelopPhysDescSupport
+     *
+     * @return Will
+     */
+    public function setEnvelopPhysDescSupport($envelopPhysDescSupport)
+    {
+        $this->envelopPhysDescSupport = $envelopPhysDescSupport;
+
+        return $this;
+    }
+
+    /**
+     * Get envelopPhysDescSupport
+     *
+     * @return string
+     */
+    public function getEnvelopPhysDescSupport()
+    {
+        return $this->envelopPhysDescSupport;
+    }
+
+    /**
+     * Set envelopPhysDescHeight
+     *
+     * @param string $envelopPhysDescHeight
+     *
+     * @return Will
+     */
+    public function setEnvelopPhysDescHeight($envelopPhysDescHeight)
+    {
+        $this->envelopPhysDescHeight = $envelopPhysDescHeight;
+
+        return $this;
+    }
+
+    /**
+     * Get envelopPhysDescHeight
+     *
+     * @return string
+     */
+    public function getEnvelopPhysDescHeight()
+    {
+        return $this->envelopPhysDescHeight;
+    }
+
+    /**
+     * Set envelopPhysDescWidth
+     *
+     * @param string $envelopPhysDescWidth
+     *
+     * @return Will
+     */
+    public function setEnvelopPhysDescWidth($envelopPhysDescWidth)
+    {
+        $this->envelopPhysDescWidth = $envelopPhysDescWidth;
+
+        return $this;
+    }
+
+    /**
+     * Get envelopPhysDescWidth
+     *
+     * @return string
+     */
+    public function getEnvelopPhysDescWidth()
+    {
+        return $this->envelopPhysDescWidth;
+    }
+
+    /**
+     * Set envelopPhysDescHand
+     *
+     * @param string $envelopPhysDescHand
+     *
+     * @return Will
+     */
+    public function setEnvelopPhysDescHand($envelopPhysDescHand)
+    {
+        $this->envelopPhysDescHand = $envelopPhysDescHand;
+
+        return $this;
+    }
+
+    /**
+     * Get envelopPhysDescHand
+     *
+     * @return string
+     */
+    public function getEnvelopPhysDescHand()
+    {
+        return $this->envelopPhysDescHand;
     }
 
     /**
@@ -762,26 +807,194 @@ class Will
     }
 
     /**
-     * Set minuteLink
+     * Set createDate
      *
-     * @param string $minuteLink
+     * @param \DateTime $createDate
      *
      * @return Will
      */
-    public function setMinuteLink($minuteLink)
+    public function setCreateDate($createDate)
     {
-        $this->minuteLink = $minuteLink;
+        $this->createDate = $createDate;
 
         return $this;
     }
 
     /**
-     * Get minuteLink
+     * Get createDate
+     *
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Will
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return Will
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
      *
      * @return string
      */
-    public function getMinuteLink()
+    public function getUpdateComment()
     {
-        return $this->minuteLink;
+        return $this->updateComment;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param \AppBundle\Entity\Entity $entity
+     *
+     * @return Will
+     */
+    public function setEntity(\AppBundle\Entity\Entity $entity = null)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return \AppBundle\Entity\Entity
+     */
+    public function getEntity()
+    {
+        return $this->entity;
+    }
+
+    /**
+     * Set willWritingPlace
+     *
+     * @param \AppBundle\Entity\Place $willWritingPlace
+     *
+     * @return Will
+     */
+    public function setWillWritingPlace(\AppBundle\Entity\Place $willWritingPlace = null)
+    {
+        $this->willWritingPlace = $willWritingPlace;
+
+        return $this;
+    }
+
+    /**
+     * Get willWritingPlace
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getWillWritingPlace()
+    {
+        return $this->willWritingPlace;
+    }
+
+    /**
+     * Set testator
+     *
+     * @param \AppBundle\Entity\Testator $testator
+     *
+     * @return Will
+     */
+    public function setTestator(\AppBundle\Entity\Testator $testator)
+    {
+        $this->testator = $testator;
+
+        return $this;
+    }
+
+    /**
+     * Get testator
+     *
+     * @return \AppBundle\Entity\Testator
+     */
+    public function getTestator()
+    {
+        return $this->testator;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return Will
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Will
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
     }
 }

@@ -9,10 +9,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * Content
+ * ManuscripedReference
  *
- * @ORM\Table(name="content")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentRepository")
+ * @ORM\Table(name="manuscriped_reference")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ManuscripedReferenceRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -20,7 +20,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_content",
+ *          "get_manuscriped_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +31,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_content",
+ *          "update_manuscriped_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +42,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_content",
+ *          "patch_manuscriped_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +53,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_content",
+ *          "remove_manuscriped_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -62,13 +62,12 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  */
-class Content
+class ManuscripedReference
 {
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
-     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -83,13 +82,11 @@ class Content
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
-     *
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="documentName", type="string", length=255, nullable=true)
      */
-    private $title;
+    private $documentName;
 
     /**
      * @Serializer\Since("0.1")
@@ -98,12 +95,23 @@ class Content
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="institutionName", type="string", length=255)
+     */
+    private $institutionName;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
+     * @ORM\Column(name="collectionName", type="string", length=255, nullable=true)
      */
-    private $content;
+    private $collectionName;
 
     /**
      * @Serializer\Since("0.1")
@@ -112,52 +120,11 @@ class Content
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
-     * @Assert\Choice({"blogContent", "helpContent", "staticContent"})
-     *
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="documentNumber", type="string", length=255)
      */
-    private $type;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
-     * @Assert\Choice({"draft", "public", "private", "notIndexed"})
-     *
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=255)
-     */
-    private $status;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
-     *
-     * @var bool
-     *
-     * @ORM\Column(name="onHomepage", type="boolean")
-     */
-    private $onHomepage;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     *
-     * @var array
-     *
-     * @ORM\Column(name="tags", type="array", nullable=true)
-     */
-    private $tags;
+    private $documentNumber;
 
     /**
      * @Serializer\Since("0.1")
@@ -166,11 +133,10 @@ class Content
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\Url()
      *
-     * @ORM\Column(name="illustration", type="text", nullable=true)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
-    private $illustration;
+    private $url;
 
     /**
      * @Serializer\Since("0.1")
@@ -248,99 +214,123 @@ class Content
     }
 
     /**
-     * Set title
+     * Set documentName
      *
-     * @param string $title
+     * @param string $documentName
      *
-     * @return Content
+     * @return ManuscripedReference
      */
-    public function setTitle($title)
+    public function setDocumentName($documentName)
     {
-        $this->title = $title;
+        $this->documentName = $documentName;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get documentName
      *
      * @return string
      */
-    public function getTitle()
+    public function getDocumentName()
     {
-        return $this->title;
+        return $this->documentName;
     }
 
     /**
-     * Set content
+     * Set institutionName
      *
-     * @param string $content
+     * @param string $institutionName
      *
-     * @return Content
+     * @return ManuscripedReference
      */
-    public function setContent($content)
+    public function setInstitutionName($institutionName)
     {
-        $this->content = $content;
+        $this->institutionName = $institutionName;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get institutionName
      *
      * @return string
      */
-    public function getContent()
+    public function getInstitutionName()
     {
-        return $this->content;
+        return $this->institutionName;
     }
 
     /**
-     * Set type
+     * Set collectionName
      *
-     * @param string $type
+     * @param string $collectionName
      *
-     * @return Content
+     * @return ManuscripedReference
      */
-    public function setType($type)
+    public function setCollectionName($collectionName)
     {
-        $this->type = $type;
+        $this->collectionName = $collectionName;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Get collectionName
      *
      * @return string
      */
-    public function getType()
+    public function getCollectionName()
     {
-        return $this->type;
+        return $this->collectionName;
     }
 
     /**
-     * Set status
+     * Set documentNumber
      *
-     * @param string $status
+     * @param string $documentNumber
      *
-     * @return Content
+     * @return ManuscripedReference
      */
-    public function setStatus($status)
+    public function setDocumentNumber($documentNumber)
     {
-        $this->status = $status;
+        $this->documentNumber = $documentNumber;
 
         return $this;
     }
 
     /**
-     * Get status
+     * Get documentNumber
      *
      * @return string
      */
-    public function getStatus()
+    public function getDocumentNumber()
     {
-        return $this->status;
+        return $this->documentNumber;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     *
+     * @return ManuscripedReference
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**
@@ -348,7 +338,7 @@ class Content
      *
      * @param \DateTime $createDate
      *
-     * @return Content
+     * @return ManuscripedReference
      */
     public function setCreateDate($createDate)
     {
@@ -368,35 +358,11 @@ class Content
     }
 
     /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Content
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
-    }
-
-    /**
      * Set updateDate
      *
      * @param \DateTime $updateDate
      *
-     * @return Content
+     * @return ManuscripedReference
      */
     public function setUpdateDate($updateDate)
     {
@@ -420,7 +386,7 @@ class Content
      *
      * @param string $updateComment
      *
-     * @return Content
+     * @return ManuscripedReference
      */
     public function setUpdateComment($updateComment)
     {
@@ -440,11 +406,35 @@ class Content
     }
 
     /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return ManuscripedReference
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
      * Set updateUser
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Content
+     * @return ManuscripedReference
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {
@@ -461,77 +451,5 @@ class Content
     public function getUpdateUser()
     {
         return $this->updateUser;
-    }
-
-    /**
-     * Set onHomepage
-     *
-     * @param boolean $onHomepage
-     *
-     * @return Content
-     */
-    public function setOnHomepage($onHomepage)
-    {
-        $this->onHomepage = $onHomepage;
-
-        return $this;
-    }
-
-    /**
-     * Get onHomepage
-     *
-     * @return bool
-     */
-    public function getOnHomepage()
-    {
-        return $this->onHomepage;
-    }
-
-    /**
-     * Set tags
-     *
-     * @param array $tags
-     *
-     * @return Content
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return array
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Set illustration
-     *
-     * @param string $illustration
-     *
-     * @return Content
-     */
-    public function setIllustration($illustration)
-    {
-        $this->illustration = $illustration;
-
-        return $this;
-    }
-
-    /**
-     * Get illustration
-     *
-     * @return string
-     */
-    public function getIllustration()
-    {
-        return $this->illustration;
     }
 }

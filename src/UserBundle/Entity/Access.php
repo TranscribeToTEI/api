@@ -63,7 +63,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 class Access
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -76,7 +76,7 @@ class Access
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -87,7 +87,7 @@ class Access
     private $isTaxonomyAccess;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -98,7 +98,7 @@ class Access
     private $taxonomyRequest;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *

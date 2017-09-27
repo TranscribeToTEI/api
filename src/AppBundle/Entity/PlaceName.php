@@ -8,11 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
+
 /**
- * Place
+ * PlaceName
  *
- * @ORM\Table(name="place")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PlaceRepository")
+ * @ORM\Table(name="place_name")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PlaceNameRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -20,7 +21,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_place",
+ *          "get_place_name",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +32,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_place",
+ *          "update_place_name",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +43,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_place",
+ *          "patch_place_name",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +54,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_place",
+ *          "remove_place_name",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -61,28 +62,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "links"}
  *     )
  * )
- * @Hateoas\Relation(
- *     "version",
- *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
- *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "versioning"}
- *     )
- * )
- * @Hateoas\Relation(
- *     "testators",
- *     embedded = @Hateoas\Embedded("expr(service('app.place').getTestators(object))"),
- *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content"}
- *     )
- * )
  */
-class Place
+class PlaceName
 {
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
-     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -92,14 +78,46 @@ class Place
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="name")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $placeName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchDepartement")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $placeDepartement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchRegion")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $placeRegion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="city")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $placeCity;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="country")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $placeCountry;
+
+    /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
+     * @var string
      * @Assert\NotBlank()
-     * @Serializer\MaxDepth(1)
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeName", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
@@ -108,44 +126,27 @@ class Place
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Serializer\MaxDepth(1)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeDepartement", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="date", type="string", length=255, nullable=true)
      */
-    private $frenchDepartement;
+    private $date;
 
     /**
+     * The field is used to index dates in search
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Serializer\MaxDepth(1)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeRegion", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="year", type="string", length=5)
      */
-    private $frenchRegion;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Serializer\MaxDepth(1)
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeCity", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $city;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Serializer\MaxDepth(1)
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeCountry", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $country;
+    private $year;
 
     /**
      * @Serializer\Since("0.1")
@@ -155,36 +156,11 @@ class Place
      * @var string
      *
      * @Gedmo\Versioned
+     * @Assert\Choice({"Commune", "Localité", "Autre lieu habité", "Forêt", "Colline", "Autre lieu géographique"})
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="placeType", type="string", length=255, nullable=true)
      */
-    private $description;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @var string
-     *
-     * @Gedmo\Versioned
-     *
-     * @ORM\Column(name="geonamesId", type="string", length=255, nullable=true)
-     */
-    private $geonamesId;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @var string
-     *
-     * @Gedmo\Versioned
-     *
-     * @ORM\Column(name="geographicalCoordinates", type="string", length=255, nullable=true)
-     */
-    private $geographicalCoordinates;
+    private $placeType;
 
     /**
      * @Serializer\Since("0.1")
@@ -260,87 +236,77 @@ class Place
     {
         return $this->id;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->name = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->frenchDepartement = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->frenchRegion = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->country = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Set description
+     * Set name
      *
-     * @param string $description
+     * @param string $name
      *
-     * @return Place
+     * @return PlaceName
      */
-    public function setDescription($description)
+    public function setName($name)
     {
-        $this->description = $description;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get name
      *
      * @return string
      */
-    public function getDescription()
+    public function getName()
     {
-        return $this->description;
+        return $this->name;
     }
 
     /**
-     * Set geonamesId
+     * Set date
      *
-     * @param string $geonamesId
+     * @param string $date
      *
-     * @return Place
+     * @return PlaceName
      */
-    public function setGeonamesId($geonamesId)
+    public function setDate($date)
     {
-        $this->geonamesId = $geonamesId;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get geonamesId
+     * Get date
      *
      * @return string
      */
-    public function getGeonamesId()
+    public function getDate()
     {
-        return $this->geonamesId;
+        return $this->date;
     }
 
     /**
-     * Set geographicalCoordinates
+     * Set placeType
      *
-     * @param string $geographicalCoordinates
+     * @param string $placeType
      *
-     * @return Place
+     * @return PlaceName
      */
-    public function setGeographicalCoordinates($geographicalCoordinates)
+    public function setPlaceType($placeType)
     {
-        $this->geographicalCoordinates = $geographicalCoordinates;
+        $this->placeType = $placeType;
 
         return $this;
     }
 
     /**
-     * Get geographicalCoordinates
+     * Get placeType
      *
      * @return string
      */
-    public function getGeographicalCoordinates()
+    public function getPlaceType()
     {
-        return $this->geographicalCoordinates;
+        return $this->placeType;
     }
 
     /**
@@ -348,7 +314,7 @@ class Place
      *
      * @param \DateTime $createDate
      *
-     * @return Place
+     * @return PlaceName
      */
     public function setCreateDate($createDate)
     {
@@ -372,7 +338,7 @@ class Place
      *
      * @param \DateTime $updateDate
      *
-     * @return Place
+     * @return PlaceName
      */
     public function setUpdateDate($updateDate)
     {
@@ -396,7 +362,7 @@ class Place
      *
      * @param string $updateComment
      *
-     * @return Place
+     * @return PlaceName
      */
     public function setUpdateComment($updateComment)
     {
@@ -416,139 +382,99 @@ class Place
     }
 
     /**
-     * Add name
+     * Set placeName
      *
-     * @param \AppBundle\Entity\PlaceName $name
+     * @param \AppBundle\Entity\Place $placeName
      *
-     * @return Place
+     * @return PlaceName
      */
-    public function addName(\AppBundle\Entity\PlaceName $name)
+    public function setPlaceName(\AppBundle\Entity\Place $placeName = null)
     {
-        $this->name[] = $name;
+        $this->placeName = $placeName;
 
         return $this;
     }
 
     /**
-     * Remove name
+     * Get placeName
      *
-     * @param \AppBundle\Entity\PlaceName $name
+     * @return \AppBundle\Entity\Place
      */
-    public function removeName(\AppBundle\Entity\PlaceName $name)
+    public function getPlaceName()
     {
-        $this->name->removeElement($name);
+        return $this->placeName;
     }
 
     /**
-     * Get name
+     * Set placeDepartement
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \AppBundle\Entity\Place $placeDepartement
+     *
+     * @return PlaceName
      */
-    public function getName()
+    public function setPlaceDepartement(\AppBundle\Entity\Place $placeDepartement = null)
     {
-        return $this->name;
-    }
-
-    /**
-     * Add frenchDepartement
-     *
-     * @param \AppBundle\Entity\PlaceName $frenchDepartement
-     *
-     * @return Place
-     */
-    public function addFrenchDepartement(\AppBundle\Entity\PlaceName $frenchDepartement)
-    {
-        $this->frenchDepartement[] = $frenchDepartement;
+        $this->placeDepartement = $placeDepartement;
 
         return $this;
     }
 
     /**
-     * Remove frenchDepartement
+     * Get placeDepartement
      *
-     * @param \AppBundle\Entity\PlaceName $frenchDepartement
+     * @return \AppBundle\Entity\Place
      */
-    public function removeFrenchDepartement(\AppBundle\Entity\PlaceName $frenchDepartement)
+    public function getPlaceDepartement()
     {
-        $this->frenchDepartement->removeElement($frenchDepartement);
+        return $this->placeDepartement;
     }
 
     /**
-     * Get frenchDepartement
+     * Set placeRegion
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \AppBundle\Entity\Place $placeRegion
+     *
+     * @return PlaceName
      */
-    public function getFrenchDepartement()
+    public function setPlaceRegion(\AppBundle\Entity\Place $placeRegion = null)
     {
-        return $this->frenchDepartement;
-    }
-
-    /**
-     * Add frenchRegion
-     *
-     * @param \AppBundle\Entity\PlaceName $frenchRegion
-     *
-     * @return Place
-     */
-    public function addFrenchRegion(\AppBundle\Entity\PlaceName $frenchRegion)
-    {
-        $this->frenchRegion[] = $frenchRegion;
+        $this->placeRegion = $placeRegion;
 
         return $this;
     }
 
     /**
-     * Remove frenchRegion
+     * Get placeRegion
      *
-     * @param \AppBundle\Entity\PlaceName $frenchRegion
+     * @return \AppBundle\Entity\Place
      */
-    public function removeFrenchRegion(\AppBundle\Entity\PlaceName $frenchRegion)
+    public function getPlaceRegion()
     {
-        $this->frenchRegion->removeElement($frenchRegion);
+        return $this->placeRegion;
     }
 
     /**
-     * Get frenchRegion
+     * Set placeCountry
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \AppBundle\Entity\Place $placeCountry
+     *
+     * @return PlaceName
      */
-    public function getFrenchRegion()
+    public function setPlaceCountry(\AppBundle\Entity\Place $placeCountry = null)
     {
-        return $this->frenchRegion;
-    }
-
-    /**
-     * Add country
-     *
-     * @param \AppBundle\Entity\PlaceName $country
-     *
-     * @return Place
-     */
-    public function addCountry(\AppBundle\Entity\PlaceName $country)
-    {
-        $this->country[] = $country;
+        $this->placeCountry = $placeCountry;
 
         return $this;
     }
 
     /**
-     * Remove country
+     * Get placeCountry
      *
-     * @param \AppBundle\Entity\PlaceName $country
+     * @return \AppBundle\Entity\Place
      */
-    public function removeCountry(\AppBundle\Entity\PlaceName $country)
+    public function getPlaceCountry()
     {
-        $this->country->removeElement($country);
-    }
-
-    /**
-     * Get country
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCountry()
-    {
-        return $this->country;
+        return $this->placeCountry;
     }
 
     /**
@@ -556,7 +482,7 @@ class Place
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return Place
+     * @return PlaceName
      */
     public function setCreateUser(\UserBundle\Entity\User $createUser = null)
     {
@@ -580,7 +506,7 @@ class Place
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Place
+     * @return PlaceName
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {
@@ -600,36 +526,50 @@ class Place
     }
 
     /**
-     * Add city
+     * Set year
      *
-     * @param \AppBundle\Entity\PlaceName $city
+     * @param string $year
      *
-     * @return Place
+     * @return PlaceName
      */
-    public function addCity(\AppBundle\Entity\PlaceName $city)
+    public function setYear($year)
     {
-        $this->city[] = $city;
+        $this->year = $year;
 
         return $this;
     }
 
     /**
-     * Remove city
+     * Get year
      *
-     * @param \AppBundle\Entity\PlaceName $city
+     * @return string
      */
-    public function removeCity(\AppBundle\Entity\PlaceName $city)
+    public function getYear()
     {
-        $this->city->removeElement($city);
+        return $this->year;
     }
 
     /**
-     * Get city
+     * Set placeCity
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param \AppBundle\Entity\Place $placeCity
+     *
+     * @return PlaceName
      */
-    public function getCity()
+    public function setPlaceCity(\AppBundle\Entity\Place $placeCity = null)
     {
-        return $this->city;
+        $this->placeCity = $placeCity;
+
+        return $this;
+    }
+
+    /**
+     * Get placeCity
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getPlaceCity()
+    {
+        return $this->placeCity;
     }
 }

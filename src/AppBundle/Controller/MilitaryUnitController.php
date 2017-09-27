@@ -3,9 +3,9 @@
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityRepository;
-use AppBundle\Entity\Regiment;
+use AppBundle\Entity\MilitaryUnit;
 
-use AppBundle\Form\RegimentType;
+use AppBundle\Form\MilitaryUnitType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -19,46 +19,46 @@ use FOS\RestBundle\Request\ParamFetcher;
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class RegimentController extends FOSRestController
+class MilitaryUnitController extends FOSRestController
 {
     /**
-     * @Rest\Get("/regiments")
+     * @Rest\Get("/military-units")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
-     *     section="Regiments",
+     *     section="MilitaryUnits",
      *     resource=true,
-     *     description="Get the list of all regiments",
+     *     description="Get the list of all military units",
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function getRegimentsAction(Request $request)
+    public function getMilitaryUnitsAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Regiment');
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:MilitaryUnit');
         /* @var $repository EntityRepository */
 
-        $regiments = $repository->findAll();
-        /* @var $regiments Regiment[] */
+        $militaryUnits = $repository->findAll();
+        /* @var $militaryUnits MilitaryUnit[] */
 
-        return $regiments;
+        return $militaryUnits;
     }
 
     /**
-     * @Rest\Get("/regiments/{id}")
+     * @Rest\Get("/military-units/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
-     *     section="Regiments",
+     *     section="MilitaryUnits",
      *     resource=true,
-     *     description="Return one regiment",
+     *     description="Return one militaryUnit",
      *     requirements={
      *         {
      *             "name"="id",
-     *             "regimentType"="integer",
+     *             "militaryUnitType"="integer",
      *             "requirement"="\d+",
-     *             "description"="The regiment unique identifier.",
+     *             "description"="The military unit unique identifier.",
      *         }
      *     },
      *     statusCodes={
@@ -67,51 +67,51 @@ class RegimentController extends FOSRestController
      *     }
      * )
      */
-    public function getRegimentAction(Request $request)
+    public function getMilitaryUnitAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $regiment = $em->getRepository('AppBundle:Regiment')->find($request->get('id'));
-        /* @var $regiment Regiment */
+        $militaryUnit = $em->getRepository('AppBundle:MilitaryUnit')->find($request->get('id'));
+        /* @var $militaryUnit MilitaryUnit */
 
-        if (empty($regiment)) {
-            return new JsonResponse(['message' => 'Regiment not found'], Response::HTTP_NOT_FOUND);
+        if (empty($militaryUnit)) {
+            return new JsonResponse(['message' => 'MilitaryUnit not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $regiment;
+        return $militaryUnit;
     }
 
     /**
-     * @Rest\Post("/regiments")
+     * @Rest\Post("/military-units")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      *
      * @Doc\ApiDoc(
-     *     section="Regiments",
+     *     section="MilitaryUnits",
      *     resource=true,
-     *     description="Create a new regiment",
+     *     description="Create a new military unit",
      *     requirements={
      *         {
      *             "name"="Title",
-     *             "regimentType"="string",
+     *             "militaryUnitType"="string",
      *             "requirement"="\S{0,255}",
-     *             "description"="The title of the regiment."
+     *             "description"="The title of the military unit."
      *         },
      *         {
-     *             "name"="Regiment",
-     *             "regimentType"="text",
+     *             "name"="MilitaryUnit",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S+",
-     *             "description"="The text of the regiment."
+     *             "description"="The text of the military unit."
      *         },
      *         {
      *             "name"="Type",
-     *             "regimentType"="text",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S{0,255}",
-     *             "description"="The type of the regiment."
+     *             "description"="The type of the military unit."
      *         },
      *         {
      *             "name"="Status",
-     *             "regimentType"="text",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S{0,255}",
-     *             "description"="The status of the regiment."
+     *             "description"="The status of the military unit."
      *         }
      *     },
      *     statusCodes={
@@ -121,18 +121,18 @@ class RegimentController extends FOSRestController
      * )
      * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
      */
-    public function postRegimentsAction(Request $request)
+    public function postMilitaryUnitsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $regiment = new Regiment();
-        $form = $this->createForm(RegimentType::class, $regiment);
+        $militaryUnit = new MilitaryUnit();
+        $form = $this->createForm(MilitaryUnitType::class, $militaryUnit);
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
-            $em->persist($regiment);
+            $em->persist($militaryUnit);
             $em->flush();
-            return $regiment;
+            return $militaryUnit;
         } else {
             return $form;
         }
@@ -140,35 +140,35 @@ class RegimentController extends FOSRestController
 
     /**
      * @Rest\View()
-     * @Rest\Put("/regiments/{id}")
+     * @Rest\Put("/military-units/{id}")
      * @Doc\ApiDoc(
-     *     section="Regiments",
+     *     section="MilitaryUnits",
      *     resource=true,
-     *     description="Update an existing regiment",
+     *     description="Update an existing military unit",
      *     requirements={
      *         {
      *             "name"="Title",
-     *             "regimentType"="string",
+     *             "militaryUnitType"="string",
      *             "requirement"="\S{0,255}",
-     *             "description"="The title of the regiment."
+     *             "description"="The title of the military unit."
      *         },
      *         {
-     *             "name"="Regiment",
-     *             "regimentType"="text",
+     *             "name"="MilitaryUnit",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S+",
-     *             "description"="The text of the regiment."
+     *             "description"="The text of the military unit."
      *         },
      *         {
      *             "name"="Type",
-     *             "regimentType"="text",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S{0,255}",
-     *             "description"="The type of the regiment."
+     *             "description"="The type of the military unit."
      *         },
      *         {
      *             "name"="Status",
-     *             "regimentType"="text",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S{0,255}",
-     *             "description"="The status of the regiment."
+     *             "description"="The status of the military unit."
      *         }
      *     },
      *     statusCodes={
@@ -178,42 +178,42 @@ class RegimentController extends FOSRestController
      * )
      * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
      */
-    public function updateRegimentAction(Request $request)
+    public function updateMilitaryUnitAction(Request $request)
     {
-        return $this->updateRegiment($request, true);
+        return $this->updateMilitaryUnit($request, true);
     }
 
     /**
      * @Rest\View()
-     * @Rest\Patch("/regiments/{id}")
+     * @Rest\Patch("/military-units/{id}")
      * @Doc\ApiDoc(
-     *     section="Regiments",
+     *     section="MilitaryUnits",
      *     resource=true,
-     *     description="Update an existing regiment",
+     *     description="Update an existing military unit",
      *     requirements={
      *         {
      *             "name"="Title",
-     *             "regimentType"="string",
+     *             "militaryUnitType"="string",
      *             "requirement"="\S{0,255}",
-     *             "description"="The title of the regiment."
+     *             "description"="The title of the military unit."
      *         },
      *         {
-     *             "name"="Regiment",
-     *             "regimentType"="text",
+     *             "name"="MilitaryUnit",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S+",
-     *             "description"="The text of the regiment."
+     *             "description"="The text of the military unit."
      *         },
      *         {
      *             "name"="Type",
-     *             "regimentType"="text",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S{0,255}",
-     *             "description"="The type of the regiment."
+     *             "description"="The type of the military unit."
      *         },
      *         {
      *             "name"="Status",
-     *             "regimentType"="text",
+     *             "militaryUnitType"="text",
      *             "requirement"="\S{0,255}",
-     *             "description"="The status of the regiment."
+     *             "description"="The status of the military unit."
      *         }
      *     },
      *     statusCodes={
@@ -223,43 +223,43 @@ class RegimentController extends FOSRestController
      * )
      * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
      */
-    public function patchRegimentAction(Request $request)
+    public function patchMilitaryUnitAction(Request $request)
     {
-        return $this->updateRegiment($request, false);
+        return $this->updateMilitaryUnit($request, false);
     }
 
-    private function updateRegiment(Request $request, $clearMissing)
+    private function updateMilitaryUnit(Request $request, $clearMissing)
     {
         $em = $this->getDoctrine()->getManager();
-        $regiment = $em->getRepository('AppBundle:Regiment')->find($request->get('id'));
-        /* @var $regiment Regiment */
-        if (empty($regiment)) {
-            return new JsonResponse(['message' => 'Regiment not found'], Response::HTTP_NOT_FOUND);
+        $militaryUnit = $em->getRepository('AppBundle:MilitaryUnit')->find($request->get('id'));
+        /* @var $militaryUnit MilitaryUnit */
+        if (empty($militaryUnit)) {
+            return new JsonResponse(['message' => 'MilitaryUnit not found'], Response::HTTP_NOT_FOUND);
         }
-        $form = $this->createForm(RegimentType::class, $regiment);
+        $form = $this->createForm(MilitaryUnitType::class, $militaryUnit);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
-            $em->merge($regiment);
+            $em->merge($militaryUnit);
             $em->flush();
-            return $regiment;
+            return $militaryUnit;
         } else {
             return $form;
         }
     }
 
     /**
-     * @Rest\Delete("/regiments/{id}")
+     * @Rest\Delete("/military-units/{id}")
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Doc\ApiDoc(
-     *     section="Regiments",
+     *     section="MilitaryUnits",
      *     resource=true,
-     *     description="Remove a regiment",
+     *     description="Remove a military unit",
      *     requirements={
      *         {
      *             "name"="id",
-     *             "regimentType"="integer",
+     *             "militaryUnitType"="integer",
      *             "requirement"="\d+",
-     *             "description"="The regiment unique identifier.",
+     *             "description"="The militaryUnit unique identifier.",
      *         }
      *     },
      *     statusCodes={
@@ -269,14 +269,14 @@ class RegimentController extends FOSRestController
      * )
      * @Security("is_granted('ROLE_MODO')")
      */
-    public function removeRegimentAction(Request $request)
+    public function removeMilitaryUnitAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $regiment = $em->getRepository('AppBundle:Regiment')->find($request->get('id'));
-        /* @var $regiment Regiment */
+        $militaryUnit = $em->getRepository('AppBundle:MilitaryUnit')->find($request->get('id'));
+        /* @var $militaryUnit MilitaryUnit */
 
-        if ($regiment) {
-            $em->remove($regiment);
+        if ($militaryUnit) {
+            $em->remove($militaryUnit);
             $em->flush();
         }
     }

@@ -90,7 +90,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 class User extends BaseUser
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -102,7 +102,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -113,7 +113,7 @@ class User extends BaseUser
     protected $name;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -122,7 +122,7 @@ class User extends BaseUser
     protected $biography;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *

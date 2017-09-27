@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RegimentType extends AbstractType
+class MilitaryUnitType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -17,6 +17,9 @@ class RegimentType extends AbstractType
     {
         $builder
             ->add('name',           TextType::class,        array("required" => true))
+            ->add('country',        TextType::class,        array("required" => false))
+            ->add('armyCorps',      TextType::class,        array("required" => false))
+            ->add('regimentNumber', TextType::class,        array("required" => false))
             ->add('description',    TextareaType::class,    array("required" => false))
             ->add('updateComment',  TextType::class,        array("required" => true))
         ;
@@ -28,7 +31,7 @@ class RegimentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Regiment',
+            'data_class' => 'AppBundle\Entity\MilitaryUnit',
             'csrf_protection' => false
         ));
     }
@@ -38,7 +41,7 @@ class RegimentType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_regiment';
+        return 'appbundle_militaryunit';
     }
 
 

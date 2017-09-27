@@ -74,7 +74,7 @@ use JMS\Serializer\Annotation as Serializer;
 class Testator
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -87,7 +87,7 @@ class Testator
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "wills"})
      *
@@ -97,7 +97,7 @@ class Testator
     private $wills;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
@@ -110,7 +110,7 @@ class Testator
     private $name;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
@@ -123,7 +123,7 @@ class Testator
     private $surname;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
@@ -136,7 +136,7 @@ class Testator
     private $firstnames;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -148,34 +148,83 @@ class Testator
     private $profession;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Groups({"full", "content"})
      * @Serializer\Expose
-     * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="addressNumber", type="string", length=255, nullable=true)
      */
-    private $address;
+    private $addressNumber;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="addressStreet", type="string", length=255, nullable=true)
+     */
+    private $addressStreet;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="addressDistrict", type="string", length=255, nullable=true)
+     */
+    private $addressDistrict;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="addressCity", type="string", length=255, nullable=true)
+     */
+    private $addressCity;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
-     * @Assert\Date()
+     *
      * @Gedmo\Versioned
      *
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="dateOfBirth", type="date")
+     * @ORM\Column(name="dateOfBirth", type="string", length=255)
      */
     private $dateOfBirth;
 
     /**
-     * @Serializer\Since("1.0")
+     * The field is used to index dates in search
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="yearOfBirth", type="string", length=5)
+     */
+    private $yearOfBirth;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -187,21 +236,35 @@ class Testator
     private $placeOfBirth;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
-     * @Assert\Date()
+     *
      * @Gedmo\Versioned
      *
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="dateOfDeath", type="date")
+     * @ORM\Column(name="dateOfDeath", type="string", length=255)
      */
     private $dateOfDeath;
 
     /**
-     * @Serializer\Since("1.0")
+     * The field is used to index dates in search
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="yearOfDeath", type="string", length=5)
+     */
+    private $yearOfDeath;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
@@ -214,7 +277,7 @@ class Testator
     private $placeOfDeath;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
@@ -227,7 +290,7 @@ class Testator
     private $deathMention;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
@@ -241,19 +304,19 @@ class Testator
     private $memoireDesHommes;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Regiment")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MilitaryUnit")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $regiment;
+    private $militaryUnit;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
@@ -265,7 +328,7 @@ class Testator
     private $rank;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -278,7 +341,7 @@ class Testator
     private $description;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -290,7 +353,7 @@ class Testator
     protected $createUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -303,7 +366,7 @@ class Testator
     protected $updateUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
@@ -315,7 +378,7 @@ class Testator
     protected $createDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -328,7 +391,7 @@ class Testator
     protected $updateDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -456,33 +519,105 @@ class Testator
     }
 
     /**
-     * Set address
+     * Set addressNumber
      *
-     * @param string $address
+     * @param string $addressNumber
      *
      * @return Testator
      */
-    public function setAddress($address)
+    public function setAddressNumber($addressNumber)
     {
-        $this->address = $address;
+        $this->addressNumber = $addressNumber;
 
         return $this;
     }
 
     /**
-     * Get address
+     * Get addressNumber
      *
      * @return string
      */
-    public function getAddress()
+    public function getAddressNumber()
     {
-        return $this->address;
+        return $this->addressNumber;
+    }
+
+    /**
+     * Set addressStreet
+     *
+     * @param string $addressStreet
+     *
+     * @return Testator
+     */
+    public function setAddressStreet($addressStreet)
+    {
+        $this->addressStreet = $addressStreet;
+
+        return $this;
+    }
+
+    /**
+     * Get addressStreet
+     *
+     * @return string
+     */
+    public function getAddressStreet()
+    {
+        return $this->addressStreet;
+    }
+
+    /**
+     * Set addressDistrict
+     *
+     * @param string $addressDistrict
+     *
+     * @return Testator
+     */
+    public function setAddressDistrict($addressDistrict)
+    {
+        $this->addressDistrict = $addressDistrict;
+
+        return $this;
+    }
+
+    /**
+     * Get addressDistrict
+     *
+     * @return string
+     */
+    public function getAddressDistrict()
+    {
+        return $this->addressDistrict;
+    }
+
+    /**
+     * Set addressCity
+     *
+     * @param string $addressCity
+     *
+     * @return Testator
+     */
+    public function setAddressCity($addressCity)
+    {
+        $this->addressCity = $addressCity;
+
+        return $this;
+    }
+
+    /**
+     * Get addressCity
+     *
+     * @return string
+     */
+    public function getAddressCity()
+    {
+        return $this->addressCity;
     }
 
     /**
      * Set dateOfBirth
      *
-     * @param \DateTime $dateOfBirth
+     * @param string $dateOfBirth
      *
      * @return Testator
      */
@@ -496,7 +631,7 @@ class Testator
     /**
      * Get dateOfBirth
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDateOfBirth()
     {
@@ -504,9 +639,33 @@ class Testator
     }
 
     /**
+     * Set yearOfBirth
+     *
+     * @param string $yearOfBirth
+     *
+     * @return Testator
+     */
+    public function setYearOfBirth($yearOfBirth)
+    {
+        $this->yearOfBirth = $yearOfBirth;
+
+        return $this;
+    }
+
+    /**
+     * Get yearOfBirth
+     *
+     * @return string
+     */
+    public function getYearOfBirth()
+    {
+        return $this->yearOfBirth;
+    }
+
+    /**
      * Set dateOfDeath
      *
-     * @param \DateTime $dateOfDeath
+     * @param string $dateOfDeath
      *
      * @return Testator
      */
@@ -520,11 +679,35 @@ class Testator
     /**
      * Get dateOfDeath
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDateOfDeath()
     {
         return $this->dateOfDeath;
+    }
+
+    /**
+     * Set yearOfDeath
+     *
+     * @param string $yearOfDeath
+     *
+     * @return Testator
+     */
+    public function setYearOfDeath($yearOfDeath)
+    {
+        $this->yearOfDeath = $yearOfDeath;
+
+        return $this;
+    }
+
+    /**
+     * Get yearOfDeath
+     *
+     * @return string
+     */
+    public function getYearOfDeath()
+    {
+        return $this->yearOfDeath;
     }
 
     /**
@@ -600,88 +783,6 @@ class Testator
     }
 
     /**
-     * Set createDate
-     *
-     * @param \DateTime $createDate
-     *
-     * @return Testator
-     */
-    public function setCreateDate($createDate)
-    {
-        $this->createDate = $createDate;
-
-        return $this;
-    }
-
-    /**
-     * Get createDate
-     *
-     * @return \DateTime
-     */
-    public function getCreateDate()
-    {
-        return $this->createDate;
-    }
-
-    /**
-     * Add will
-     *
-     * @param \AppBundle\Entity\Will $will
-     *
-     * @return Testator
-     */
-    public function addWill(\AppBundle\Entity\Will $will)
-    {
-        $this->wills[] = $will;
-
-        return $this;
-    }
-
-    /**
-     * Remove will
-     *
-     * @param \AppBundle\Entity\Will $will
-     */
-    public function removeWill(\AppBundle\Entity\Will $will)
-    {
-        $this->wills->removeElement($will);
-    }
-
-    /**
-     * Get wills
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWills()
-    {
-        return $this->wills;
-    }
-
-    /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Testator
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -703,6 +804,30 @@ class Testator
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     *
+     * @return Testator
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
     }
 
     /**
@@ -754,27 +879,37 @@ class Testator
     }
 
     /**
-     * Set updateUser
+     * Add will
      *
-     * @param \UserBundle\Entity\User $updateUser
+     * @param \AppBundle\Entity\Will $will
      *
      * @return Testator
      */
-    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    public function addWill(\AppBundle\Entity\Will $will)
     {
-        $this->updateUser = $updateUser;
+        $this->wills[] = $will;
 
         return $this;
     }
 
     /**
-     * Get updateUser
+     * Remove will
      *
-     * @return \UserBundle\Entity\User
+     * @param \AppBundle\Entity\Will $will
      */
-    public function getUpdateUser()
+    public function removeWill(\AppBundle\Entity\Will $will)
     {
-        return $this->updateUser;
+        $this->wills->removeElement($will);
+    }
+
+    /**
+     * Get wills
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWills()
+    {
+        return $this->wills;
     }
 
     /**
@@ -826,26 +961,74 @@ class Testator
     }
 
     /**
-     * Set regiment
+     * Set militaryUnit
      *
-     * @param \AppBundle\Entity\Regiment $regiment
+     * @param \AppBundle\Entity\MilitaryUnit $militaryUnit
      *
      * @return Testator
      */
-    public function setRegiment(\AppBundle\Entity\Regiment $regiment = null)
+    public function setMilitaryUnit(\AppBundle\Entity\MilitaryUnit $militaryUnit = null)
     {
-        $this->regiment = $regiment;
+        $this->militaryUnit = $militaryUnit;
 
         return $this;
     }
 
     /**
-     * Get regiment
+     * Get militaryUnit
      *
-     * @return \AppBundle\Entity\Regiment
+     * @return \AppBundle\Entity\MilitaryUnit
      */
-    public function getRegiment()
+    public function getMilitaryUnit()
     {
-        return $this->regiment;
+        return $this->militaryUnit;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return Testator
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Testator
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
     }
 }

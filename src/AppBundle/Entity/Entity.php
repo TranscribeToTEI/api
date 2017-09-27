@@ -74,7 +74,7 @@ use AppBundle\Entity\Resource;
 class Entity
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -87,7 +87,7 @@ class Entity
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -98,7 +98,7 @@ class Entity
     private $willNumber;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -108,7 +108,7 @@ class Entity
     private $will;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -117,7 +117,7 @@ class Entity
     private $resources;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -129,7 +129,7 @@ class Entity
     protected $createUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
@@ -141,7 +141,7 @@ class Entity
     protected $createDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -153,7 +153,7 @@ class Entity
     protected $updateUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
@@ -310,5 +310,53 @@ class Entity
     public function getWillNumber()
     {
         return $this->willNumber;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Entity
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Entity
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
     }
 }

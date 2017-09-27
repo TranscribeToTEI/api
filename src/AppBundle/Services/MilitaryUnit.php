@@ -6,7 +6,7 @@ use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
 
-class Regiment
+class MilitaryUnit
 {
     private $em;
 
@@ -16,7 +16,7 @@ class Regiment
     }
 
     /**
-     * @param $regiment \AppBundle\Entity\Regiment
+     * @param $regiment \AppBundle\Entity\MilitaryUnit
      */
     public function remove($regiment)
     {
@@ -30,10 +30,10 @@ class Regiment
     }
 
     /**
-     * @param $regiment \AppBundle\Entity\Regiment
+     * @param $militaryUnit \AppBundle\Entity\MilitaryUnit
      * @return array
      */
-    public function getTestators($regiment) {
-        return $this->em->getRepository('AppBundle:Testator')->findBy(array('regiment' => $regiment));
+    public function getTestators($militaryUnit) {
+        return $this->em->getRepository('AppBundle:Testator')->findBy(array('militaryUnit' => $militaryUnit));
     }
 }

@@ -67,7 +67,7 @@ use JMS\Serializer\Annotation as Serializer;
 class Resource
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
      *
@@ -80,7 +80,7 @@ class Resource
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
      *
@@ -90,7 +90,7 @@ class Resource
     private $entity;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -104,7 +104,7 @@ class Resource
     private $type;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -115,7 +115,7 @@ class Resource
     private $orderInWill;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -128,7 +128,7 @@ class Resource
     private $images;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -141,7 +141,7 @@ class Resource
     private $notes;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
@@ -151,7 +151,7 @@ class Resource
     private $transcript;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -163,7 +163,7 @@ class Resource
     protected $createUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
@@ -175,7 +175,7 @@ class Resource
     protected $createDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -188,7 +188,7 @@ class Resource
     protected $updateUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -401,5 +401,53 @@ class Resource
     public function getNotes()
     {
         return $this->notes;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return Resource
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return Resource
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
     }
 }

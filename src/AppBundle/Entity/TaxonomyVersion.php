@@ -9,10 +9,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * Regiment
+ * TaxonomyVersion
  *
- * @ORM\Table(name="regiment")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RegimentRepository")
+ * @ORM\Table(name="taxonomy_version")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TaxonomyVersionRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -20,7 +20,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_regiment",
+ *          "get_taxonomy_version",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +31,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_regiment",
+ *          "update_taxonomy_version",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +42,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_regiment",
+ *          "patch_taxonomy_version",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +53,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_regiment",
+ *          "remove_taxonomy_version",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -61,28 +61,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "links"}
  *     )
  * )
- * @Hateoas\Relation(
- *     "version",
- *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
- *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "versioning"}
- *     )
- * )
- * @Hateoas\Relation(
- *     "testators",
- *     embedded = @Hateoas\Embedded("expr(service('app.regiment').getTestators(object))"),
- *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content"}
- *     )
- * )
  */
-class Regiment
+class TaxonomyVersion
 {
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
-     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -92,36 +77,43 @@ class Regiment
     private $id;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     * @Assert\Type("bool")
+     *
+     * @ORM\Column(name="isValidated", type="boolean")
+     */
+    private $isValidated;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
-     *
      * @Assert\NotBlank()
-     * @Assert\Type("string")
      *
-     * @Gedmo\Versioned
-     *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="taxonomyType", type="string", length=255)
      */
-    private $name;
+    private $taxonomyType;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @var string
+     * @var int
+     * @Assert\NotBlank()
      *
-     * @Gedmo\Versioned
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="taxonomyId", type="integer")
      */
-    private $description;
+    private $taxonomyId;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
@@ -133,7 +125,19 @@ class Regiment
     protected $createUser;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -146,19 +150,7 @@ class Regiment
     protected $updateUser;
 
     /**
-     * @Serializer\Since("1.0")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
-     *
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="createDate", type="datetime", nullable=false)
-     */
-    protected $createDate;
-
-    /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -171,7 +163,7 @@ class Regiment
     protected $updateDate;
 
     /**
-     * @Serializer\Since("1.0")
+     * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
@@ -196,51 +188,75 @@ class Regiment
     }
 
     /**
-     * Set name
+     * Set isValidated
      *
-     * @param string $name
+     * @param boolean $isValidated
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
-    public function setName($name)
+    public function setIsValidated($isValidated)
     {
-        $this->name = $name;
+        $this->isValidated = $isValidated;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get isValidated
      *
-     * @return string
+     * @return bool
      */
-    public function getName()
+    public function getIsValidated()
     {
-        return $this->name;
+        return $this->isValidated;
     }
 
     /**
-     * Set description
+     * Set taxonomyType
      *
-     * @param string $description
+     * @param string $taxonomyType
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
-    public function setDescription($description)
+    public function setTaxonomyType($taxonomyType)
     {
-        $this->description = $description;
+        $this->taxonomyType = $taxonomyType;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get taxonomyType
      *
      * @return string
      */
-    public function getDescription()
+    public function getTaxonomyType()
     {
-        return $this->description;
+        return $this->taxonomyType;
+    }
+
+    /**
+     * Set taxonomyId
+     *
+     * @param integer $taxonomyId
+     *
+     * @return TaxonomyVersion
+     */
+    public function setTaxonomyId($taxonomyId)
+    {
+        $this->taxonomyId = $taxonomyId;
+
+        return $this;
+    }
+
+    /**
+     * Get taxonomyId
+     *
+     * @return int
+     */
+    public function getTaxonomyId()
+    {
+        return $this->taxonomyId;
     }
 
     /**
@@ -248,7 +264,7 @@ class Regiment
      *
      * @param \DateTime $createDate
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
     public function setCreateDate($createDate)
     {
@@ -272,7 +288,7 @@ class Regiment
      *
      * @param \DateTime $updateDate
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
     public function setUpdateDate($updateDate)
     {
@@ -296,7 +312,7 @@ class Regiment
      *
      * @param string $updateComment
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
     public function setUpdateComment($updateComment)
     {
@@ -320,7 +336,7 @@ class Regiment
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
     public function setCreateUser(\UserBundle\Entity\User $createUser = null)
     {
@@ -344,7 +360,7 @@ class Regiment
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Regiment
+     * @return TaxonomyVersion
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {

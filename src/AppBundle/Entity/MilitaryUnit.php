@@ -9,10 +9,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * Content
+ * MilitaryUnit
  *
- * @ORM\Table(name="content")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContentRepository")
+ * @ORM\Table(name="militaryUnit")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MilitaryUnitRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -20,7 +20,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_content",
+ *          "get_regiment",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +31,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_content",
+ *          "update_regiment",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +42,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_content",
+ *          "patch_regiment",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +53,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_content",
+ *          "remove_regiment",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -61,8 +61,22 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "version",
+ *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "versioning"}
+ *     )
+ * )
+ * @Hateoas\Relation(
+ *     "testators",
+ *     embedded = @Hateoas\Embedded("expr(service('app.militaryUnit').getTestators(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "content"}
+ *     )
+ * )
  */
-class Content
+class MilitaryUnit
 {
     /**
      * @Serializer\Since("0.1")
@@ -81,96 +95,78 @@ class Content
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
      *
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
-    private $title;
+    private $name;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
      *
      * @var string
      *
-     * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
      */
-    private $content;
+    private $country;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
-     * @Assert\Choice({"blogContent", "helpContent", "staticContent"})
      *
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="armyCorps", type="string", length=255, nullable=true)
      */
-    private $type;
+    private $armyCorps;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
-     * @Assert\Choice({"draft", "public", "private", "notIndexed"})
      *
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="regimentNumber", type="string", length=255, nullable=true)
      */
-    private $status;
+    private $regimentNumber;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\NotBlank()
-     *
-     * @var bool
-     *
-     * @ORM\Column(name="onHomepage", type="boolean")
-     */
-    private $onHomepage;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     *
-     * @var array
-     *
-     * @ORM\Column(name="tags", type="array", nullable=true)
-     */
-    private $tags;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\Url()
      *
-     * @ORM\Column(name="illustration", type="text", nullable=true)
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $illustration;
+    private $description;
 
     /**
      * @Serializer\Since("0.1")
@@ -188,18 +184,6 @@ class Content
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     *
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="createDate", type="datetime", nullable=false)
-     */
-    protected $createDate;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
@@ -208,6 +192,18 @@ class Content
      * @ORM\JoinColumn(nullable=true)
      */
     protected $updateUser;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
 
     /**
      * @Serializer\Since("0.1")
@@ -248,99 +244,51 @@ class Content
     }
 
     /**
-     * Set title
+     * Set name
      *
-     * @param string $title
+     * @param string $name
      *
-     * @return Content
+     * @return MilitaryUnit
      */
-    public function setTitle($title)
+    public function setName($name)
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get name
      *
      * @return string
      */
-    public function getTitle()
+    public function getName()
     {
-        return $this->title;
+        return $this->name;
     }
 
     /**
-     * Set content
+     * Set description
      *
-     * @param string $content
+     * @param string $description
      *
-     * @return Content
+     * @return MilitaryUnit
      */
-    public function setContent($content)
+    public function setDescription($description)
     {
-        $this->content = $content;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get content
+     * Get description
      *
      * @return string
      */
-    public function getContent()
+    public function getDescription()
     {
-        return $this->content;
-    }
-
-    /**
-     * Set type
-     *
-     * @param string $type
-     *
-     * @return Content
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return Content
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
+        return $this->description;
     }
 
     /**
@@ -348,7 +296,7 @@ class Content
      *
      * @param \DateTime $createDate
      *
-     * @return Content
+     * @return MilitaryUnit
      */
     public function setCreateDate($createDate)
     {
@@ -368,35 +316,11 @@ class Content
     }
 
     /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Content
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
-    }
-
-    /**
      * Set updateDate
      *
      * @param \DateTime $updateDate
      *
-     * @return Content
+     * @return MilitaryUnit
      */
     public function setUpdateDate($updateDate)
     {
@@ -420,7 +344,7 @@ class Content
      *
      * @param string $updateComment
      *
-     * @return Content
+     * @return MilitaryUnit
      */
     public function setUpdateComment($updateComment)
     {
@@ -440,11 +364,35 @@ class Content
     }
 
     /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return MilitaryUnit
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
      * Set updateUser
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Content
+     * @return MilitaryUnit
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {
@@ -464,74 +412,74 @@ class Content
     }
 
     /**
-     * Set onHomepage
+     * Set country
      *
-     * @param boolean $onHomepage
+     * @param string $country
      *
-     * @return Content
+     * @return MilitaryUnit
      */
-    public function setOnHomepage($onHomepage)
+    public function setCountry($country)
     {
-        $this->onHomepage = $onHomepage;
+        $this->country = $country;
 
         return $this;
     }
 
     /**
-     * Get onHomepage
-     *
-     * @return bool
-     */
-    public function getOnHomepage()
-    {
-        return $this->onHomepage;
-    }
-
-    /**
-     * Set tags
-     *
-     * @param array $tags
-     *
-     * @return Content
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return array
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
-     * Set illustration
-     *
-     * @param string $illustration
-     *
-     * @return Content
-     */
-    public function setIllustration($illustration)
-    {
-        $this->illustration = $illustration;
-
-        return $this;
-    }
-
-    /**
-     * Get illustration
+     * Get country
      *
      * @return string
      */
-    public function getIllustration()
+    public function getCountry()
     {
-        return $this->illustration;
+        return $this->country;
+    }
+
+    /**
+     * Set armyCorps
+     *
+     * @param string $armyCorps
+     *
+     * @return MilitaryUnit
+     */
+    public function setArmyCorps($armyCorps)
+    {
+        $this->armyCorps = $armyCorps;
+
+        return $this;
+    }
+
+    /**
+     * Get armyCorps
+     *
+     * @return string
+     */
+    public function getArmyCorps()
+    {
+        return $this->armyCorps;
+    }
+
+    /**
+     * Set regimentNumber
+     *
+     * @param string $regimentNumber
+     *
+     * @return MilitaryUnit
+     */
+    public function setRegimentNumber($regimentNumber)
+    {
+        $this->regimentNumber = $regimentNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get regimentNumber
+     *
+     * @return string
+     */
+    public function getRegimentNumber()
+    {
+        return $this->regimentNumber;
     }
 }
