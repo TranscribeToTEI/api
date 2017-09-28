@@ -268,6 +268,7 @@ class Place
         $this->name = new \Doctrine\Common\Collections\ArrayCollection();
         $this->frenchDepartement = new \Doctrine\Common\Collections\ArrayCollection();
         $this->frenchRegion = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->city = new \Doctrine\Common\Collections\ArrayCollection();
         $this->country = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -518,6 +519,40 @@ class Place
     }
 
     /**
+     * Add city
+     *
+     * @param \AppBundle\Entity\PlaceName $city
+     *
+     * @return Place
+     */
+    public function addCity(\AppBundle\Entity\PlaceName $city)
+    {
+        $this->city[] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Remove city
+     *
+     * @param \AppBundle\Entity\PlaceName $city
+     */
+    public function removeCity(\AppBundle\Entity\PlaceName $city)
+    {
+        $this->city->removeElement($city);
+    }
+
+    /**
+     * Get city
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
      * Add country
      *
      * @param \AppBundle\Entity\PlaceName $country
@@ -597,39 +632,5 @@ class Place
     public function getUpdateUser()
     {
         return $this->updateUser;
-    }
-
-    /**
-     * Add city
-     *
-     * @param \AppBundle\Entity\PlaceName $city
-     *
-     * @return Place
-     */
-    public function addCity(\AppBundle\Entity\PlaceName $city)
-    {
-        $this->city[] = $city;
-
-        return $this;
-    }
-
-    /**
-     * Remove city
-     *
-     * @param \AppBundle\Entity\PlaceName $city
-     */
-    public function removeCity(\AppBundle\Entity\PlaceName $city)
-    {
-        $this->city->removeElement($city);
-    }
-
-    /**
-     * Get city
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCity()
-    {
-        return $this->city;
     }
 }
