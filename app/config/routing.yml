@@ -54,6 +54,10 @@ places:
     type:     rest
     resource: AppBundle\Controller\PlaceController
 
+place-names:
+    type:     rest
+    resource: AppBundle\Controller\PlaceNameController
+
 military-units:
     type:     rest
     resource: AppBundle\Controller\MilitaryUnitController
@@ -61,6 +65,18 @@ military-units:
 transcripts:
     type:     rest
     resource: AppBundle\Controller\TranscriptController
+
+reference-items:
+    type:     rest
+    resource: AppBundle\Controller\ReferenceItemController
+
+printed-references:
+    type:     rest
+    resource: AppBundle\Controller\PrintedReferenceController
+
+manuscript-references:
+    type:     rest
+    resource: AppBundle\Controller\ManuscriptReferenceController
 
 contents:
     type:     rest

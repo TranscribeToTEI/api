@@ -95,10 +95,10 @@ class ReferenceItem
      * @Serializer\MaxDepth(1)
      * @Gedmo\Versioned
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ManuscripedReference")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ManuscriptReference")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $manuscripedReference;
+    protected $manuscriptReference;
 
     /**
      * @Serializer\Since("0.1")
@@ -272,27 +272,27 @@ class ReferenceItem
     }
 
     /**
-     * Set manuscripedReference
+     * Set manuscriptReference
      *
-     * @param \AppBundle\Entity\ManuscripedReference $manuscripedReference
+     * @param \AppBundle\Entity\ManuscriptReference $manuscriptReference
      *
      * @return ReferenceItem
      */
-    public function setManuscripedReference(\AppBundle\Entity\ManuscripedReference $manuscripedReference = null)
+    public function setManuscriptReference(\AppBundle\Entity\ManuscriptReference $manuscriptReference = null)
     {
-        $this->manuscripedReference = $manuscripedReference;
+        $this->manuscriptReference = $manuscriptReference;
 
         return $this;
     }
 
     /**
-     * Get manuscripedReference
+     * Get manuscriptReference
      *
-     * @return \AppBundle\Entity\ManuscripedReference
+     * @return \AppBundle\Entity\ManuscriptReference
      */
-    public function getManuscripedReference()
+    public function getManuscriptReference()
     {
-        return $this->manuscripedReference;
+        return $this->manuscriptReference;
     }
 
     /**

@@ -144,7 +144,7 @@ class PlaceName
      *
      * @Gedmo\Versioned
      *
-     * @ORM\Column(name="year", type="string", length=5)
+     * @ORM\Column(name="year", type="string", length=5, nullable=true)
      */
     private $year;
 

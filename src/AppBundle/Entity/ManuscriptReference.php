@@ -9,10 +9,10 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
- * ManuscripedReference
+ * ManuscriptReference
  *
- * @ORM\Table(name="manuscriped_reference")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ManuscripedReferenceRepository")
+ * @ORM\Table(name="manuscript_reference")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ManuscriptReferenceRepository")
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -20,7 +20,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_manuscriped_reference",
+ *          "get_manuscript_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +31,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_manuscriped_reference",
+ *          "update_manuscript_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +42,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_manuscriped_reference",
+ *          "patch_manuscript_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +53,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_manuscriped_reference",
+ *          "remove_manuscript_reference",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -62,7 +62,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  */
-class ManuscripedReference
+class ManuscriptReference
 {
     /**
      * @Serializer\Since("0.1")
@@ -218,7 +218,7 @@ class ManuscripedReference
      *
      * @param string $documentName
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setDocumentName($documentName)
     {
@@ -242,7 +242,7 @@ class ManuscripedReference
      *
      * @param string $institutionName
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setInstitutionName($institutionName)
     {
@@ -266,7 +266,7 @@ class ManuscripedReference
      *
      * @param string $collectionName
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setCollectionName($collectionName)
     {
@@ -290,7 +290,7 @@ class ManuscripedReference
      *
      * @param string $documentNumber
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setDocumentNumber($documentNumber)
     {
@@ -314,7 +314,7 @@ class ManuscripedReference
      *
      * @param string $url
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setUrl($url)
     {
@@ -338,7 +338,7 @@ class ManuscripedReference
      *
      * @param \DateTime $createDate
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setCreateDate($createDate)
     {
@@ -362,7 +362,7 @@ class ManuscripedReference
      *
      * @param \DateTime $updateDate
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setUpdateDate($updateDate)
     {
@@ -386,7 +386,7 @@ class ManuscripedReference
      *
      * @param string $updateComment
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setUpdateComment($updateComment)
     {
@@ -410,7 +410,7 @@ class ManuscripedReference
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setCreateUser(\UserBundle\Entity\User $createUser = null)
     {
@@ -434,7 +434,7 @@ class ManuscripedReference
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return ManuscripedReference
+     * @return ManuscriptReference
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {
