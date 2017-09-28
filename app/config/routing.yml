@@ -54,9 +54,9 @@ places:
     type:     rest
     resource: AppBundle\Controller\PlaceController
 
-regiments:
+military-units:
     type:     rest
-    resource: AppBundle\Controller\RegimentController
+    resource: AppBundle\Controller\MilitaryUnitController
 
 transcripts:
     type:     rest

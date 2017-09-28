@@ -290,16 +290,17 @@ class Testator
     private $deathMention;
 
     /**
+     * A testator can have multiple notices on Memoire des Hommes, so this is an array, not a string
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
-     * @Assert\Url()
+     *
      * @Gedmo\Versioned
      *
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="memoireDesHommes", type="string", length=255)
+     * @ORM\Column(name="memoireDesHommes", type="array")
      */
     private $memoireDesHommes;
 
@@ -737,7 +738,7 @@ class Testator
     /**
      * Set memoireDesHommes
      *
-     * @param string $memoireDesHommes
+     * @param array $memoireDesHommes
      *
      * @return Testator
      */
@@ -751,7 +752,7 @@ class Testator
     /**
      * Get memoireDesHommes
      *
-     * @return string
+     * @return array
      */
     public function getMemoireDesHommes()
     {
