@@ -21,12 +21,10 @@ namespace JMS\SerializerBundle\Tests\DependencyInjection;
 use JMS\Serializer\Metadata\PropertyMetadata;
 use JMS\Serializer\Naming\PropertyNamingStrategyInterface;
 use JMS\SerializerBundle\DependencyInjection\JMSSerializerExtension;
-use Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveParameterPlaceHoldersPass;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class NamingStrategyTest extends \PHPUnit_Framework_TestCase
+class NamingStrategyTest extends TestCase
 {
     /**
      *
@@ -37,13 +35,6 @@ class NamingStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new JMSSerializerExtension();
         $container = new ContainerBuilder();
-
-
-        $container->getCompilerPassConfig()->setOptimizationPasses(array(
-            new ResolveParameterPlaceHoldersPass(),
-            new ResolveDefinitionTemplatesPass(),
-        ));
-        $container->getCompilerPassConfig()->setRemovingPasses(array(new RemoveUnusedDefinitionsPass()));
 
         $container->setParameter('kernel.debug', true);
         $container->setParameter('kernel.cache_dir', sys_get_temp_dir() . '/serializer');

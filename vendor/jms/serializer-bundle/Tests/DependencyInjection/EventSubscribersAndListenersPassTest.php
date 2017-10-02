@@ -20,13 +20,12 @@ namespace JMS\SerializerBundle\Tests\DependencyInjection;
 
 use JMS\SerializerBundle\DependencyInjection\Compiler\RegisterEventListenersAndSubscribersPass;
 use JMS\SerializerBundle\DependencyInjection\JMSSerializerExtension;
-use Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveParameterPlaceHoldersPass;
+use JMS\SerializerBundle\Tests\DependencyInjection\Fixture\SimpleHandler;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-class EventSubscribersAndListenersPassTest extends \PHPUnit_Framework_TestCase
+class EventSubscribersAndListenersPassTest extends TestCase
 {
     /**
      * @param array $configs
@@ -36,12 +35,6 @@ class EventSubscribersAndListenersPassTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new JMSSerializerExtension();
         $container = new ContainerBuilder();
-
-        $container->getCompilerPassConfig()->setOptimizationPasses(array(
-            new ResolveParameterPlaceHoldersPass(),
-            new ResolveDefinitionTemplatesPass(),
-        ));
-        $container->getCompilerPassConfig()->setRemovingPasses(array(new RemoveUnusedDefinitionsPass()));
 
         $container->setParameter('kernel.debug', true);
         $container->setParameter('kernel.cache_dir', sys_get_temp_dir() . '/serializer');
@@ -65,6 +58,7 @@ class EventSubscribersAndListenersPassTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException RuntimeException
+     * @expectedExceptionMessage The tag "jms_serializer.event_listener" of service "my_listener" requires an attribute named "event".
      */
     public function testEventListenerMustHaveEventDefined()
     {
@@ -81,21 +75,40 @@ class EventSubscribersAndListenersPassTest extends \PHPUnit_Framework_TestCase
         $pass->process($container);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
-    public function testEventListenerMustBePublic()
+    public function testEventListenerCanBePrivate()
     {
         $container = $this->getContainer();
 
         $def = new Definition('Foo');
         $def->setPublic(false);
-        $def->addTag('jms_serializer.event_listener');
+        $def->addTag('jms_serializer.event_listener', ['event' => 'serializer.pre_serialize']);
 
         $container->setDefinition('my_listener', $def);
 
         $pass = new RegisterEventListenersAndSubscribersPass();
         $pass->process($container);
+
+        $dispatcher = $container->getDefinition('jms_serializer.event_dispatcher');
+        $methodCalls = $dispatcher->getMethodCalls();
+
+        $called = false;
+        foreach ($methodCalls as $call) {
+            if ($call[0] === 'setListeners') {
+                $called = true;
+                $this->assertEquals([
+                    'serializer.pre_serialize' => [
+                        [
+                            ['my_listener', 'onserializerpreserialize'],
+                            null,
+                            null
+                        ]
+                    ]], $call[1][0]);
+            }
+        }
+
+        if (!$called) {
+            $this->fail("The method setListeners was not invoked on the jms_serializer.event_dispatcher");
+        }
     }
 
     public function testEventListener()
@@ -207,12 +220,13 @@ class EventSubscribersAndListenersPassTest extends \PHPUnit_Framework_TestCase
         }
 
         if (!$called) {
-            $this->fail("The method setListeners was not invoked on the jms_serializer.event_dispatcher");
+            $this->fail('The method setListeners was not invoked on the jms_serializer.event_dispatcher');
         }
     }
 
     /**
      * @expectedException RuntimeException
+     * @expectedExceptionMessage The service "my_listener" (class: JMS\SerializerBundle\Tests\DependencyInjection\Fixture\VersionedObject) does not implement the EventSubscriberInterface.
      */
     public function testEventSubscriberInterface()
     {
@@ -227,21 +241,40 @@ class EventSubscribersAndListenersPassTest extends \PHPUnit_Framework_TestCase
         $pass->process($container);
     }
 
-    /**
-     * @expectedException RuntimeException
-     */
-    public function testEventSubscriberMustBePublic()
+    public function testEventSubscriberCanBePrivate()
     {
         $container = $this->getContainer();
 
-        $def = new Definition('JMS\SerializerBundle\Tests\DependencyInjection\Fixture\VersionedObject');
+        $def = new Definition(SimpleHandler::class);
         $def->setPublic(false);
         $def->addTag('jms_serializer.event_subscriber');
 
-        $container->setDefinition('my_listener', $def);
+        $container->setDefinition('my_subscriber', $def);
 
         $pass = new RegisterEventListenersAndSubscribersPass();
         $pass->process($container);
+
+        $dispatcher = $container->getDefinition('jms_serializer.event_dispatcher');
+        $methodCalls = $dispatcher->getMethodCalls();
+
+        $called = false;
+        foreach ($methodCalls as $call) {
+            if ($call[0] === 'setListeners') {
+                $called = true;
+                $this->assertEquals([
+                    'the-event-name' => [
+                        [
+                            ['my_subscriber', 'onEventName'],
+                            'some-class',
+                            'json'
+                        ]
+                    ]], $call[1][0]);
+            }
+        }
+
+        if (!$called) {
+            $this->fail('The method setListeners was not invoked on the jms_serializer.event_dispatcher');
+        }
     }
 }
 

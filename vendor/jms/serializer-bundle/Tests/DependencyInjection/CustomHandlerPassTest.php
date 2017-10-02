@@ -21,13 +21,12 @@ namespace JMS\SerializerBundle\Tests\DependencyInjection;
 use JMS\Serializer\Exception\RuntimeException;
 use JMS\SerializerBundle\DependencyInjection\Compiler\CustomHandlersPass;
 use JMS\SerializerBundle\DependencyInjection\JMSSerializerExtension;
-use Symfony\Component\DependencyInjection\Compiler\RemoveUnusedDefinitionsPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveParameterPlaceHoldersPass;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
-class CustomHandlerPassTest extends \PHPUnit_Framework_TestCase
+class CustomHandlerPassTest extends TestCase
 {
     /**
      * @param array $configs
@@ -37,12 +36,6 @@ class CustomHandlerPassTest extends \PHPUnit_Framework_TestCase
     {
         $loader = new JMSSerializerExtension();
         $container = new ContainerBuilder();
-
-        $container->getCompilerPassConfig()->setOptimizationPasses(array(
-            new ResolveParameterPlaceHoldersPass(),
-            new ResolveDefinitionTemplatesPass(),
-        ));
-        $container->getCompilerPassConfig()->setRemovingPasses(array(new RemoveUnusedDefinitionsPass()));
 
         $container->setParameter('kernel.debug', true);
         $container->setParameter('kernel.cache_dir', sys_get_temp_dir() . '/serializer');
@@ -78,9 +71,32 @@ class CustomHandlerPassTest extends \PHPUnit_Framework_TestCase
 
         $args = $container->getDefinition('jms_serializer.handler_registry')->getArguments();
 
-        $this->assertEquals([
+        $this->assertSame([
             2 => ['DateTime' => ['json' => ['my_service', 'deserializeDateTimeFromjson']]],
             1 => ['DateTime' => ['json' => ['my_service', 'serializeDateTimeTojson']]]
+        ], $args[1]);
+    }
+
+    public function testHandlerCanBePrivate()
+    {
+        $container = $this->getContainer();
+
+        $def = new Definition('Foo');
+        $def->setPublic(false);
+        $def->addTag('jms_serializer.handler', [
+            'type' => 'DateTime',
+            'format' => 'json',
+        ]);
+        $container->setDefinition('my_service', $def);
+
+        $pass = new CustomHandlersPass();
+        $pass->process($container);
+
+        $args = $container->getDefinition('jms_serializer.handler_registry')->getArguments();
+
+        $this->assertEquals([
+            2 => ['DateTime' => ['json' => [new Reference('my_service'), 'deserializeDateTimeFromjson']]],
+            1 => ['DateTime' => ['json' => [new Reference('my_service'), 'serializeDateTimeTojson']]]
         ], $args[1]);
     }
 
@@ -101,7 +117,7 @@ class CustomHandlerPassTest extends \PHPUnit_Framework_TestCase
 
         $args = $container->getDefinition('jms_serializer.handler_registry')->getArguments();
 
-        $this->assertEquals([
+        $this->assertSame([
             1 => ['DateTime' => ['json' => ['my_service', 'serializeDateTimeTojson']]]
         ], $args[1]);
     }
@@ -155,8 +171,27 @@ class CustomHandlerPassTest extends \PHPUnit_Framework_TestCase
 
         $args = $container->getDefinition('jms_serializer.handler_registry')->getArguments();
 
-        $this->assertEquals([
+        $this->assertSame([
             1 => ['DateTime' => ['json' => ['my_service', 'onDateTime']]]
+        ], $args[1]);
+    }
+
+    public function testSubscribingHandlerCanBePrivate()
+    {
+        $container = $this->getContainer();
+
+        $def = new Definition('JMS\SerializerBundle\Tests\DependencyInjection\Fixture\SubscribingHandler');
+        $def->addTag('jms_serializer.subscribing_handler');
+        $def->setPublic(false);
+        $container->setDefinition('my_service', $def);
+
+        $pass = new CustomHandlersPass();
+        $pass->process($container);
+
+        $args = $container->getDefinition('jms_serializer.handler_registry')->getArguments();
+
+        $this->assertEquals([
+            1 => ['DateTime' => ['json' => [new Reference('my_service'), 'onDateTime']]]
         ], $args[1]);
     }
 

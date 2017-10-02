@@ -250,7 +250,7 @@ class PlaceNameController extends FOSRestController
 
     /**
      * @Rest\Delete("/place-names/{id}")
-     * @Rest\View(statusCode=Response::HTTP_NO_PlaceName)
+     * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Doc\ApiDoc(
      *     section="PlaceNames",
      *     resource=true,

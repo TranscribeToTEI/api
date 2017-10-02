@@ -25,13 +25,11 @@ use JMS\SerializerBundle\Tests\DependencyInjection\Fixture\ObjectUsingExpression
 use JMS\SerializerBundle\Tests\DependencyInjection\Fixture\ObjectUsingExpressionProperties;
 use JMS\SerializerBundle\Tests\DependencyInjection\Fixture\SimpleObject;
 use JMS\SerializerBundle\Tests\DependencyInjection\Fixture\VersionedObject;
-use Symfony\Component\DependencyInjection\Compiler\ResolveDefinitionTemplatesPass;
-use Symfony\Component\DependencyInjection\Compiler\ResolveParameterPlaceHoldersPass;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\HttpKernel\KernelInterface;
 
-class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
+class JMSSerializerExtensionTest extends TestCase
 {
     protected function setUp()
     {
@@ -65,10 +63,10 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainerForConfig(array(array()));
 
-        $factory = $container->get('jms_serializer.configured_serialization_context_factory');
+        $factory = $container->get('jms_serializer.serialization_context_factory');
         $this->assertInstanceOf('JMS\Serializer\ContextFactory\SerializationContextFactoryInterface', $factory);
 
-        $factory = $container->get('jms_serializer.configured_deserialization_context_factory');
+        $factory = $container->get('jms_serializer.deserialization_context_factory');
         $this->assertInstanceOf('JMS\Serializer\ContextFactory\DeserializationContextFactoryInterface', $factory);
     }
 
@@ -76,7 +74,7 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
     {
         $container = $this->getContainerForConfig(array(array()));
 
-        $def = $container->getDefinition('jms_serializer.serializer');
+        $def = $container->getDefinition('jms_serializer');
         $calls = $def->getMethodCalls();
 
         $this->assertCount(2, $calls);
@@ -88,9 +86,6 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
         $serializationCall = $calls[1];
         $this->assertEquals('setDeserializationContextFactory', $serializationCall[0]);
         $this->assertEquals('jms_serializer.deserialization_context_factory', (string)$serializationCall[1][0]);
-
-        $this->assertEquals('jms_serializer.configured_deserialization_context_factory', (string)$container->getAlias('jms_serializer.deserialization_context_factory'));
-        $this->assertEquals('jms_serializer.configured_serialization_context_factory', (string)$container->getAlias('jms_serializer.serialization_context_factory'));
     }
 
     public function testSerializerContextFactoriesWithId()
@@ -106,33 +101,46 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $container = $this->getContainerForConfig(array($config));
+        $container = $this->getContainerForConfig(array($config), function(ContainerBuilder $containerBuilder){
+            $containerBuilder->setDefinition('foo', new Definition('stdClass'));
+            $containerBuilder->setDefinition('bar', new Definition('stdClass'));
+        });
 
-        $def = $container->getDefinition('jms_serializer.serializer');
+        $def = $container->getDefinition('jms_serializer');
         $calls = $def->getMethodCalls();
 
         $this->assertCount(2, $calls);
 
         $serializationCall = $calls[0];
         $this->assertEquals('setSerializationContextFactory', $serializationCall[0]);
-        $this->assertEquals('jms_serializer.serialization_context_factory', (string)$serializationCall[1][0]);
+        $this->assertEquals('foo', (string)$serializationCall[1][0]);
 
         $serializationCall = $calls[1];
         $this->assertEquals('setDeserializationContextFactory', $serializationCall[0]);
-        $this->assertEquals('jms_serializer.deserialization_context_factory', (string)$serializationCall[1][0]);
+        $this->assertEquals('bar', (string)$serializationCall[1][0]);
 
         $this->assertEquals('bar', (string)$container->getAlias('jms_serializer.deserialization_context_factory'));
         $this->assertEquals('foo', (string)$container->getAlias('jms_serializer.serialization_context_factory'));
+    }
+
+    public function testLoadWithoutTranslator()
+    {
+        $container = $this->getContainerForConfig(array(array()), function(ContainerBuilder $containerBuilder){
+            $containerBuilder->set('translator', null);
+        });
+
+        $def = $container->getDefinition('jms_serializer.form_error_handler');
+        $this->assertSame(null, $def->getArgument(0));
     }
 
     public function testConfiguringContextFactories()
     {
         $container = $this->getContainerForConfig(array(array()));
 
-        $def = $container->getDefinition('jms_serializer.configured_serialization_context_factory');
+        $def = $container->getDefinition('jms_serializer.serialization_context_factory');
         $this->assertCount(0, $def->getMethodCalls());
 
-        $def = $container->getDefinition('jms_serializer.configured_deserialization_context_factory');
+        $def = $container->getDefinition('jms_serializer.deserialization_context_factory');
         $this->assertCount(0, $def->getMethodCalls());
     }
 
@@ -159,8 +167,8 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
 
         $container = $this->getContainerForConfig(array($config));
         $services = [
-            'serialization' => 'jms_serializer.configured_serialization_context_factory',
-            'deserialization' => 'jms_serializer.configured_deserialization_context_factory',
+            'serialization' => 'jms_serializer.serialization_context_factory',
+            'deserialization' => 'jms_serializer.deserialization_context_factory',
         ];
         foreach ($services as $configKey => $serviceId) {
             $def = $container->getDefinition($serviceId);
@@ -196,8 +204,8 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
 
         $container = $this->getContainerForConfig(array($config));
         $services = [
-            'serialization' => 'jms_serializer.configured_serialization_context_factory',
-            'deserialization' => 'jms_serializer.configured_deserialization_context_factory',
+            'serialization' => 'jms_serializer.serialization_context_factory',
+            'deserialization' => 'jms_serializer.deserialization_context_factory',
         ];
         foreach ($services as $configKey => $serviceId) {
             $def = $container->getDefinition($serviceId);
@@ -217,7 +225,11 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
-        $container = $this->getContainerForConfig(array(array()));
+        $container = $this->getContainerForConfig(array(array()), function(ContainerBuilder $container) {
+            $container->getDefinition('jms_serializer.doctrine_object_constructor')->setPublic(true);
+            $container->getAlias('JMS\Serializer\SerializerInterface')->setPublic(true);
+            $container->getAlias('JMS\Serializer\ArrayTransformerInterface')->setPublic(true);
+        });
 
         $simpleObject = new SimpleObject('foo', 'bar');
         $versionedObject = new VersionedObject('foo', 'bar');
@@ -263,7 +275,9 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
                     'initialize_excluded' => true,
                 ],
             ],
-        )));
+        )), function($container){
+            $container->getDefinition('jms_serializer.doctrine_object_constructor')->setPublic(true);
+        });
 
         $this->assertTrue($container->getDefinition('jms_serializer.array_collection_handler')->getArgument(0));
 
@@ -285,7 +299,9 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
                     ]
                 ]
             ]
-        )));
+        )), function ($container){
+            $container->getDefinition('jms_serializer.metadata.file_locator')->setPublic(true);
+        });
 
         $fileLocatorDef = $container->getDefinition('jms_serializer.metadata.file_locator');
         $directories = $fileLocatorDef->getArgument(0);
@@ -466,17 +482,9 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($container->get('jms_serializer.xml_serialization_visitor')->isFormatOutput());
     }
 
-    private function getContainerForConfig(array $configs, KernelInterface $kernel = null)
+    private function getContainerForConfig(array $configs, callable $configurator = null)
     {
-        if (null === $kernel) {
-            $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\KernelInterface')->getMock();
-            $kernel
-                ->expects($this->any())
-                ->method('getBundles')
-                ->will($this->returnValue(array()));
-        }
-
-        $bundle = new JMSSerializerBundle($kernel);
+        $bundle = new JMSSerializerBundle();
         $extension = $bundle->getContainerExtension();
 
         $container = new ContainerBuilder();
@@ -484,6 +492,7 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
         $container->setParameter('kernel.cache_dir', sys_get_temp_dir() . '/serializer');
         $container->setParameter('kernel.bundles', array());
         $container->set('annotation_reader', new AnnotationReader());
+        $container->setDefinition('doctrine', new Definition(Registry::class));
         $container->set('translator', $this->getMockBuilder('Symfony\\Component\\Translation\\TranslatorInterface')->getMock());
         $container->set('debug.stopwatch', $this->getMockBuilder('Symfony\\Component\\Stopwatch\\Stopwatch')->getMock());
         $container->registerExtension($extension);
@@ -491,11 +500,10 @@ class JMSSerializerExtensionTest extends \PHPUnit_Framework_TestCase
 
         $bundle->build($container);
 
-        $container->getCompilerPassConfig()->setOptimizationPasses(array(
-            new ResolveParameterPlaceHoldersPass(),
-            new ResolveDefinitionTemplatesPass(),
-        ));
-        $container->getCompilerPassConfig()->setRemovingPasses(array());
+        if ($configurator) {
+            call_user_func($configurator, $container);
+        }
+
         $container->compile();
 
         return $container;

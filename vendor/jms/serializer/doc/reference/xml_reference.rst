@@ -39,9 +39,13 @@ XML Reference
                 <!-- You can also specify the type as element which is necessary if
                      your type contains "<" or ">" characters. -->
                 <type><![CDATA[]]></type>
-                <xml-list inline="true" entry-name="foobar" />
+                <xml-list inline="true" entry-name="foobar" namespace="http://www.w3.org/2005/Atom" skip-when-empty="true" />
                 <xml-map inline="true" key-attribute-name="foo" entry-name="bar" namespace="http://www.w3.org/2005/Atom" />
                 <xml-element cdata="false" namespace="http://www.w3.org/2005/Atom"/>
+                <groups>
+                    <value>foo</value>
+                    <value>bar</value>
+                </groups>
             </property>
             <callback-method name="foo" type="pre-serialize" />
             <callback-method name="bar" type="post-serialize" />
@@ -91,8 +95,12 @@ XML Reference
                 <!-- You can also specify the type as element which is necessary if
                      your type contains "<" or ">" characters. -->
                 <type><![CDATA[]]></type>
-                <xml-list inline="true" entry-name="foobar" />
-                <xml-map inline="true" key-attribute-name="foo" entry-name="bar" />
+                <groups>
+                    <value>foo</value>
+                    <value>bar</value>
+                </groups>
+                <xml-list inline="true" entry-name="foobar" namespace="http://www.w3.org/2005/Atom" skip-when-empty="true" />
+                <xml-map inline="true" key-attribute-name="foo" entry-name="bar" namespace="http://www.w3.org/2005/Atom" />
             </virtual-property>
             
         </class>
