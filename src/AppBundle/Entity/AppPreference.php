@@ -192,11 +192,9 @@ class AppPreference
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Assert\NotBlank()
-     *
      * @var bool
      *
-     * @ORM\Column(name="enableContact", type="boolean")
+     * @ORM\Column(name="enableContact", type="boolean", nullable=true)
      */
     private $enableContact;
 

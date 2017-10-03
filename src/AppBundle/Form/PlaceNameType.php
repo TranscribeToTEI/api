@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +20,7 @@ class PlaceNameType extends AbstractType
             ->add('date',           TextType::class,        array("required" => false))
             ->add('year',           TextType::class,        array("required" => false))
             ->add('placeType',      TextType::class,        array("required" => false))
+            ->add('updateComment',  TextType::class,        array("required" => true))
         ;
     }
     
@@ -28,7 +30,8 @@ class PlaceNameType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\PlaceName'
+            'data_class' => 'AppBundle\Entity\PlaceName',
+            'csrf_protection' => false
         ));
     }
 

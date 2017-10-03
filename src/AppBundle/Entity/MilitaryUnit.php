@@ -20,7 +20,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_regiment",
+ *          "get_military_unit",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +31,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_regiment",
+ *          "update_military_unit",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +42,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_regiment",
+ *          "patch_military_unit",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +53,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_regiment",
+ *          "remove_military_unit",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
