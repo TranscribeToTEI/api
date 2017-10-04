@@ -78,31 +78,51 @@ class PlaceName
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="name")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="names")
      * @ORM\JoinColumn(nullable=true)
      */
     private $placeName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchDepartement")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchDepartements")
      * @ORM\JoinColumn(nullable=true)
      */
     private $placeDepartement;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchRegion")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchRegions")
      * @ORM\JoinColumn(nullable=true)
      */
     private $placeRegion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="city")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="cities")
      * @ORM\JoinColumn(nullable=true)
      */
     private $placeCity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="country")
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "parent"})
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="countries")
      * @ORM\JoinColumn(nullable=true)
      */
     private $placeCountry;

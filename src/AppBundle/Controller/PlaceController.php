@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\PlaceName;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Place;
 
@@ -89,30 +90,7 @@ class PlaceController extends FOSRestController
      *     resource=true,
      *     description="Create a new place",
      *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "placeType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the place."
-     *         },
-     *         {
-     *             "name"="Place",
-     *             "placeType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the place."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "placeType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the place."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "placeType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the place."
-     *         }
+     *
      *     },
      *     statusCodes={
      *         201="Returned when created",
@@ -131,6 +109,26 @@ class PlaceController extends FOSRestController
 
         if ($form->isValid()) {
             $em->persist($place);
+            foreach($place->getNames() as $placeName) {
+                /** @var $placeName PlaceName */
+                $placeName->setPlaceName($place);
+            }
+            foreach($place->getFrenchDepartements() as $placeName) {
+                /** @var $placeName PlaceName */
+                $placeName->setPlaceDepartement($place);
+            }
+            foreach($place->getFrenchRegions() as $placeName) {
+                /** @var $placeName PlaceName */
+                $placeName->setPlaceRegion($place);
+            }
+            foreach($place->getCities() as $placeName) {
+                /** @var $placeName PlaceName */
+                $placeName->setPlaceCity($place);
+            }
+            foreach($place->getCountries() as $placeName) {
+                /** @var $placeName PlaceName */
+                $placeName->setPlaceCountry($place);
+            }
             $em->flush();
             return $place;
         } else {
@@ -146,30 +144,7 @@ class PlaceController extends FOSRestController
      *     resource=true,
      *     description="Update an existing place",
      *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "placeType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the place."
-     *         },
-     *         {
-     *             "name"="Place",
-     *             "placeType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the place."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "placeType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the place."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "placeType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the place."
-     *         }
+     *
      *     },
      *     statusCodes={
      *         200="Returned when updated",
@@ -191,30 +166,7 @@ class PlaceController extends FOSRestController
      *     resource=true,
      *     description="Update an existing place",
      *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "placeType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the place."
-     *         },
-     *         {
-     *             "name"="Place",
-     *             "placeType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the place."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "placeType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the place."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "placeType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the place."
-     *         }
+     *
      *     },
      *     statusCodes={
      *         200="Returned when updated",

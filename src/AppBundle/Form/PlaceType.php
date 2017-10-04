@@ -17,19 +17,41 @@ class PlaceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // Voir https://stackoverflow.com/questions/44952373/creating-new-entity-associate-with-an-existing-entity-in-entitytype-field
-            //->add('name',                       PlaceNameType::class,   array('required' => true))
-            ->add('name',                       CollectionType::class, array(
+            ->add('names',                       CollectionType::class, array(
+                "required" => true,
+                "allow_add" => true,
+                "allow_delete" => true,
+                "delete_empty" => true,
+                'entry_type'   => PlaceNameType::class
+            ))
+            ->add('frenchDepartements',                       CollectionType::class, array(
                 "required" => false,
                 "allow_add" => true,
                 "allow_delete" => true,
                 "delete_empty" => true,
                 'entry_type'   => PlaceNameType::class
             ))
-            ->add('frenchDepartement',          PlaceNameType::class,   array('required' => false))
-            ->add('frenchRegion',               PlaceNameType::class,   array('required' => false))
-            ->add('city',                       PlaceNameType::class,   array('required' => false))
-            ->add('country',                    PlaceNameType::class,   array('required' => false))
+            ->add('frenchRegions',                       CollectionType::class, array(
+                "required" => false,
+                "allow_add" => true,
+                "allow_delete" => true,
+                "delete_empty" => true,
+                'entry_type'   => PlaceNameType::class
+            ))
+            ->add('cities',                       CollectionType::class, array(
+                "required" => false,
+                "allow_add" => true,
+                "allow_delete" => true,
+                "delete_empty" => true,
+                'entry_type'   => PlaceNameType::class
+            ))
+            ->add('countries',                       CollectionType::class, array(
+                "required" => false,
+                "allow_add" => true,
+                "allow_delete" => true,
+                "delete_empty" => true,
+                'entry_type'   => PlaceNameType::class
+            ))
             ->add('description',                TextareaType::class,    array("required" => false))
             ->add('geonamesId',                 TextType::class,        array("required" => false))
             ->add('geographicalCoordinates',    TextType::class,        array("required" => false))

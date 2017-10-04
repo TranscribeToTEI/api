@@ -12,7 +12,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Request\ParamFetcher;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class EntityController extends FOSRestController
 {
@@ -100,6 +104,7 @@ class EntityController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function postEntitiesAction(Request $request)
     {

@@ -97,55 +97,55 @@ class Place
      * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(2)
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeName", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $name;
+    private $names;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(2)
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeDepartement", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $frenchDepartement;
+    private $frenchDepartements;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(2)
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeRegion", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $frenchRegion;
+    private $frenchRegions;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(2)
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeCity", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $city;
+    private $cities;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(2)
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeCountry", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    private $country;
+    private $countries;
 
     /**
      * @Serializer\Since("0.1")
@@ -265,11 +265,23 @@ class Place
      */
     public function __construct()
     {
-        $this->name = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->frenchDepartement = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->frenchRegion = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->city = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->country = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->names = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->frenchDepartements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->frenchRegions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->countries = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function set($property, $value) {
+        $this->{$property} = $value;
+
+        return $this;
+    }
+
+    public function add($property, $value) {
+        $this->{$property}[] = $value;
+
+        return $this;
     }
 
     /**
@@ -425,7 +437,7 @@ class Place
      */
     public function addName(\AppBundle\Entity\PlaceName $name)
     {
-        $this->name[] = $name;
+        $this->names[] = $name;
 
         return $this;
     }
@@ -437,17 +449,17 @@ class Place
      */
     public function removeName(\AppBundle\Entity\PlaceName $name)
     {
-        $this->name->removeElement($name);
+        $this->names->removeElement($name);
     }
 
     /**
-     * Get name
+     * Get names
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getName()
+    public function getNames()
     {
-        return $this->name;
+        return $this->names;
     }
 
     /**
@@ -459,7 +471,7 @@ class Place
      */
     public function addFrenchDepartement(\AppBundle\Entity\PlaceName $frenchDepartement)
     {
-        $this->frenchDepartement[] = $frenchDepartement;
+        $this->frenchDepartements[] = $frenchDepartement;
 
         return $this;
     }
@@ -471,17 +483,17 @@ class Place
      */
     public function removeFrenchDepartement(\AppBundle\Entity\PlaceName $frenchDepartement)
     {
-        $this->frenchDepartement->removeElement($frenchDepartement);
+        $this->frenchDepartements->removeElement($frenchDepartement);
     }
 
     /**
-     * Get frenchDepartement
+     * Get frenchDepartements
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFrenchDepartement()
+    public function getFrenchDepartements()
     {
-        return $this->frenchDepartement;
+        return $this->frenchDepartements;
     }
 
     /**
@@ -493,7 +505,7 @@ class Place
      */
     public function addFrenchRegion(\AppBundle\Entity\PlaceName $frenchRegion)
     {
-        $this->frenchRegion[] = $frenchRegion;
+        $this->frenchRegions[] = $frenchRegion;
 
         return $this;
     }
@@ -505,17 +517,17 @@ class Place
      */
     public function removeFrenchRegion(\AppBundle\Entity\PlaceName $frenchRegion)
     {
-        $this->frenchRegion->removeElement($frenchRegion);
+        $this->frenchRegions->removeElement($frenchRegion);
     }
 
     /**
-     * Get frenchRegion
+     * Get frenchRegions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFrenchRegion()
+    public function getFrenchRegions()
     {
-        return $this->frenchRegion;
+        return $this->frenchRegions;
     }
 
     /**
@@ -527,7 +539,7 @@ class Place
      */
     public function addCity(\AppBundle\Entity\PlaceName $city)
     {
-        $this->city[] = $city;
+        $this->cities[] = $city;
 
         return $this;
     }
@@ -539,17 +551,17 @@ class Place
      */
     public function removeCity(\AppBundle\Entity\PlaceName $city)
     {
-        $this->city->removeElement($city);
+        $this->cities->removeElement($city);
     }
 
     /**
-     * Get city
+     * Get cities
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCity()
+    public function getCities()
     {
-        return $this->city;
+        return $this->cities;
     }
 
     /**
@@ -561,7 +573,7 @@ class Place
      */
     public function addCountry(\AppBundle\Entity\PlaceName $country)
     {
-        $this->country[] = $country;
+        $this->countries[] = $country;
 
         return $this;
     }
@@ -573,17 +585,17 @@ class Place
      */
     public function removeCountry(\AppBundle\Entity\PlaceName $country)
     {
-        $this->country->removeElement($country);
+        $this->countries->removeElement($country);
     }
 
     /**
-     * Get country
+     * Get countries
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCountry()
+    public function getCountries()
     {
-        return $this->country;
+        return $this->countries;
     }
 
     /**

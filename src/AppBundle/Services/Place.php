@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services;
 
+use AppBundle\Entity\PlaceName;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
@@ -13,6 +14,16 @@ class Place
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    /**
+     * @param $place \AppBundle\Entity\Place
+     * @param $property string
+     * @return PlaceName[]
+     */
+    public function getNames($place, $property)
+    {
+        return $this->em->getRepository("AppBundle:PlaceName")->findBy(array($property => $place), array("createDate" => "DESC"));
     }
 
     /**
