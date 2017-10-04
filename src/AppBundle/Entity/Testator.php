@@ -228,7 +228,7 @@ class Testator
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(3)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
@@ -269,7 +269,7 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(3)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=false)

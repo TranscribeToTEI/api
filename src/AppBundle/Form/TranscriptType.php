@@ -16,9 +16,9 @@ class TranscriptType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content',        TextareaType::class,    array("required" => true))
-            ->add('status',         TextType::class,        array("required" => true))
-            ->add('updateComment',  TextType::class, array("required" => false))
+            ->add('content',        TextareaType::class,    array("required" => false))
+            ->add('status',         TextType::class,        array("required" => false))
+            ->add('updateComment',  TextType::class,        array("required" => false))
         ;
     }
     

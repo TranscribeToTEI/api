@@ -262,9 +262,9 @@ class Will
      *
      * @var string
      *
-     * @ORM\Column(name="envelopPhysDescSupport", type="string", length=255, nullable=true)
+     * @ORM\Column(name="envelopePhysDescSupport", type="string", length=255, nullable=true)
      */
-    private $envelopPhysDescSupport;
+    private $envelopePhysDescSupport;
 
     /**
      * @Serializer\Since("0.1")
@@ -273,9 +273,9 @@ class Will
      *
      * @var string
      *
-     * @ORM\Column(name="envelopPhysDescHeight", type="string", length=255, nullable=true)
+     * @ORM\Column(name="envelopePhysDescHeight", type="string", length=255, nullable=true)
      */
-    private $envelopPhysDescHeight;
+    private $envelopePhysDescHeight;
 
     /**
      * @Serializer\Since("0.1")
@@ -284,9 +284,9 @@ class Will
      *
      * @var string
      *
-     * @ORM\Column(name="envelopPhysDescWidth", type="string", length=255, nullable=true)
+     * @ORM\Column(name="envelopePhysDescWidth", type="string", length=255, nullable=true)
      */
-    private $envelopPhysDescWidth;
+    private $envelopePhysDescWidth;
 
     /**
      * @Serializer\Since("0.1")
@@ -295,9 +295,9 @@ class Will
      *
      * @var string
      *
-     * @ORM\Column(name="envelopPhysDescHand", type="string", length=255, nullable=true)
+     * @ORM\Column(name="envelopePhysDescHand", type="string", length=255, nullable=true)
      */
-    private $envelopPhysDescHand;
+    private $envelopePhysDescHand;
 
     /**
      * @Serializer\Since("0.1")
@@ -663,99 +663,99 @@ class Will
     }
 
     /**
-     * Set envelopPhysDescSupport
+     * Set envelopePhysDescSupport
      *
-     * @param string $envelopPhysDescSupport
+     * @param string $envelopePhysDescSupport
      *
      * @return Will
      */
-    public function setEnvelopPhysDescSupport($envelopPhysDescSupport)
+    public function setenvelopePhysDescSupport($envelopePhysDescSupport)
     {
-        $this->envelopPhysDescSupport = $envelopPhysDescSupport;
+        $this->envelopePhysDescSupport = $envelopePhysDescSupport;
 
         return $this;
     }
 
     /**
-     * Get envelopPhysDescSupport
+     * Get envelopePhysDescSupport
      *
      * @return string
      */
-    public function getEnvelopPhysDescSupport()
+    public function getenvelopePhysDescSupport()
     {
-        return $this->envelopPhysDescSupport;
+        return $this->envelopePhysDescSupport;
     }
 
     /**
-     * Set envelopPhysDescHeight
+     * Set envelopePhysDescHeight
      *
-     * @param string $envelopPhysDescHeight
+     * @param string $envelopePhysDescHeight
      *
      * @return Will
      */
-    public function setEnvelopPhysDescHeight($envelopPhysDescHeight)
+    public function setenvelopePhysDescHeight($envelopePhysDescHeight)
     {
-        $this->envelopPhysDescHeight = $envelopPhysDescHeight;
+        $this->envelopePhysDescHeight = $envelopePhysDescHeight;
 
         return $this;
     }
 
     /**
-     * Get envelopPhysDescHeight
+     * Get envelopePhysDescHeight
      *
      * @return string
      */
-    public function getEnvelopPhysDescHeight()
+    public function getenvelopePhysDescHeight()
     {
-        return $this->envelopPhysDescHeight;
+        return $this->envelopePhysDescHeight;
     }
 
     /**
-     * Set envelopPhysDescWidth
+     * Set envelopePhysDescWidth
      *
-     * @param string $envelopPhysDescWidth
+     * @param string $envelopePhysDescWidth
      *
      * @return Will
      */
-    public function setEnvelopPhysDescWidth($envelopPhysDescWidth)
+    public function setenvelopePhysDescWidth($envelopePhysDescWidth)
     {
-        $this->envelopPhysDescWidth = $envelopPhysDescWidth;
+        $this->envelopePhysDescWidth = $envelopePhysDescWidth;
 
         return $this;
     }
 
     /**
-     * Get envelopPhysDescWidth
+     * Get envelopePhysDescWidth
      *
      * @return string
      */
-    public function getEnvelopPhysDescWidth()
+    public function getenvelopePhysDescWidth()
     {
-        return $this->envelopPhysDescWidth;
+        return $this->envelopePhysDescWidth;
     }
 
     /**
-     * Set envelopPhysDescHand
+     * Set envelopePhysDescHand
      *
-     * @param string $envelopPhysDescHand
+     * @param string $envelopePhysDescHand
      *
      * @return Will
      */
-    public function setEnvelopPhysDescHand($envelopPhysDescHand)
+    public function setenvelopePhysDescHand($envelopePhysDescHand)
     {
-        $this->envelopPhysDescHand = $envelopPhysDescHand;
+        $this->envelopePhysDescHand = $envelopePhysDescHand;
 
         return $this;
     }
 
     /**
-     * Get envelopPhysDescHand
+     * Get envelopePhysDescHand
      *
      * @return string
      */
-    public function getEnvelopPhysDescHand()
+    public function getenvelopePhysDescHand()
     {
-        return $this->envelopPhysDescHand;
+        return $this->envelopePhysDescHand;
     }
 
     /**
