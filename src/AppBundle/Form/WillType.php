@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,12 +32,13 @@ class WillType extends AbstractType
             ->add('pagePhysDescHeight',         TextType::class,                                        array("required" => false))
             ->add('pagePhysDescWidth',          TextType::class,                                        array("required" => false))
             ->add('pagePhysDescHand',           TextType::class,                                        array("required" => false))
-            ->add('envelopePhysDescSupport',     TextType::class,                                        array("required" => false))
-            ->add('envelopePhysDescHeight',      TextType::class,                                        array("required" => false))
-            ->add('envelopePhysDescWidth',       TextType::class,                                        array("required" => false))
-            ->add('envelopePhysDescHand',        TextType::class,                                        array("required" => false))
+            ->add('envelopePhysDescSupport',    TextType::class,                                        array("required" => false))
+            ->add('envelopePhysDescHeight',     TextType::class,                                        array("required" => false))
+            ->add('envelopePhysDescWidth',      TextType::class,                                        array("required" => false))
+            ->add('envelopePhysDescHand',       TextType::class,                                        array("required" => false))
             ->add('hostingOrganization',        TextType::class,                                        array("required" => true))
             ->add('identificationUser',         TextType::class,                                        array("required" => true))
+            ->add('description',                TextareaType::class,                                    array("required" => false))
         ;
     }
     

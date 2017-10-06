@@ -324,6 +324,22 @@ class Will
     private $identificationUser;
 
     /**
+     * Use to add notes about the will
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+
+    /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
@@ -996,5 +1012,29 @@ class Will
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Will
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
