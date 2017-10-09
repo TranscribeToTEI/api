@@ -190,7 +190,7 @@ class Will
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(3)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
@@ -202,7 +202,7 @@ class Will
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "testator"})
      * @Gedmo\Versioned
-     * @Serializer\MaxDepth(2)
+     * @Serializer\MaxDepth(4)
      *
      * @Assert\NotBlank(message = "Le champ testateur ne peut pas être vide")
      *
