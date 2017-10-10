@@ -114,7 +114,6 @@ class MilitaryUnit
      *
      * @var string
      *
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      *
      * @Gedmo\Versioned
@@ -130,7 +129,6 @@ class MilitaryUnit
      *
      * @var string
      *
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      *
      * @Gedmo\Versioned
@@ -146,7 +144,6 @@ class MilitaryUnit
      *
      * @var string
      *
-     * @Assert\NotBlank()
      * @Assert\Type("string")
      *
      * @Gedmo\Versioned

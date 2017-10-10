@@ -27,6 +27,7 @@ class CreateAppPreferenceCommand extends ContainerAwareCommand
             // the "--help" option
             ->setHelp('This command allows you to personalize the preferences of the app')
             ->addArgument('title', InputArgument::REQUIRED, 'The title of the project.')
+            ->addArgument('systemEmail', InputArgument::REQUIRED, 'The email to use in the system.')
         ;
     }
 
@@ -48,6 +49,7 @@ class CreateAppPreferenceCommand extends ContainerAwareCommand
             $appPreference = $appReferenceRepository->findAll()[0];
         }
         $appPreference->setProjectTitle($input->getArgument('title'));
+        $appPreference->setSystemEmail($input->getArgument('systemEmail'));
         $em->persist($appPreference);
         $em->flush();
 

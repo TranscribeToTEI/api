@@ -14,7 +14,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
+
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,6 +26,8 @@ class MilitaryUnitController extends FOSRestController
     /**
      * @Rest\Get("/military-units")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     *
+     * @QueryParam(name="search", nullable=true, description="Run a search query in the military units")
      *
      * @Doc\ApiDoc(
      *     section="MilitaryUnits",
@@ -35,13 +39,20 @@ class MilitaryUnitController extends FOSRestController
      *     }
      * )
      */
-    public function getMilitaryUnitsAction(Request $request)
+    public function getMilitaryUnitsAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $search = $paramFetcher->get('search');
+
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:MilitaryUnit');
         /* @var $repository EntityRepository */
 
-        $militaryUnits = $repository->findAll();
-        /* @var $militaryUnits MilitaryUnit[] */
+        if($search != "") {
+            $militaryUnits = $repository->findBy(array("name" => $search));
+            /* @var $militaryUnits MilitaryUnit[] */
+        } else {
+            $militaryUnits = $repository->findAll();
+            /* @var $militaryUnits MilitaryUnit[] */
+        }
 
         return $militaryUnits;
     }

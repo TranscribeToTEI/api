@@ -15,7 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
+
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -25,6 +27,8 @@ class PlaceController extends FOSRestController
     /**
      * @Rest\Get("/places")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     *
+     * @QueryParam(name="search", nullable=true, description="Run a search query in the places")
      *
      * @Doc\ApiDoc(
      *     section="Places",
@@ -36,13 +40,24 @@ class PlaceController extends FOSRestController
      *     }
      * )
      */
-    public function getPlacesAction(Request $request)
+    public function getPlacesAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $search = $paramFetcher->get('search');
+
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Place');
         /* @var $repository EntityRepository */
 
-        $places = $repository->findAll();
-        /* @var $places Place[] */
+        if($search != "") {
+            /* @var $places Place[] */
+            $qb = $repository->createQueryBuilder('a')
+                        ->Join('a.names', 'n')
+                        ->andwhere('n.name =:name')
+                        ->setParameter('name', $search);
+            $places = $qb->getQuery()->getResult();
+        } else {
+            $places = $repository->findAll();
+            /* @var $places Place[] */
+        }
 
         return $places;
     }

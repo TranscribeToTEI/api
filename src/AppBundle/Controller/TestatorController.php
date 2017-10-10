@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use FOS\RestBundle\Request\ParamFetcher;
+
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -20,6 +25,8 @@ class TestatorController extends FOSRestController
     /**
      * @Rest\Get("/testators")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     *
+     * @QueryParam(name="search", nullable=true, description="Run a search query in the testators")
      *
      * @Doc\ApiDoc(
      *     section="Testators",
@@ -31,10 +38,17 @@ class TestatorController extends FOSRestController
      *     }
      * )
      */
-    public function getTestatorsAction(Request $request)
+    public function getTestatorsAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $testators = $this->getDoctrine()->getManager()->getRepository('AppBundle:Testator')->findAll();
-        /* @var $testators Testator[] */
+        $search = $paramFetcher->get('search');
+
+        if($search != "") {
+            $testators = $this->getDoctrine()->getManager()->getRepository('AppBundle:Testator')->findBy(array("name" => $search));
+            /* @var $testators Testator[] */
+        } else {
+            $testators = $this->getDoctrine()->getManager()->getRepository('AppBundle:Testator')->findAll();
+            /* @var $testators Testator[] */
+        }
 
         return $testators;
     }
