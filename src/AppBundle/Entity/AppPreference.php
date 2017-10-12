@@ -222,6 +222,42 @@ class AppPreference
      */
     private $contactEmail;
 
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="enableRegister", type="boolean", nullable=true)
+     */
+    private $enableRegister;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Choice({"selfAuthorization", "controlledAuthorization", "free", "forbidden"})
+     *
+     * @ORM\Column(name="taxonomyEditAccess", type="string", length=255, nullable=false)
+     */
+    private $taxonomyEditAccess;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="transcriptEditAccess", type="boolean", nullable=true)
+     */
+    private $transcriptEditAccess;
+
+
 
     /**
      * Get id
@@ -519,5 +555,77 @@ class AppPreference
     public function getContactEmail()
     {
         return $this->contactEmail;
+    }
+
+    /**
+     * Set enableRegister
+     *
+     * @param boolean $enableRegister
+     *
+     * @return AppPreference
+     */
+    public function setEnableRegister($enableRegister)
+    {
+        $this->enableRegister = $enableRegister;
+
+        return $this;
+    }
+
+    /**
+     * Get enableRegister
+     *
+     * @return boolean
+     */
+    public function getEnableRegister()
+    {
+        return $this->enableRegister;
+    }
+
+    /**
+     * Set taxonomyEditAccess
+     *
+     * @param string $taxonomyEditAccess
+     *
+     * @return AppPreference
+     */
+    public function setTaxonomyEditAccess($taxonomyEditAccess)
+    {
+        $this->taxonomyEditAccess = $taxonomyEditAccess;
+
+        return $this;
+    }
+
+    /**
+     * Get taxonomyEditAccess
+     *
+     * @return string
+     */
+    public function getTaxonomyEditAccess()
+    {
+        return $this->taxonomyEditAccess;
+    }
+
+    /**
+     * Set transcriptEditAccess
+     *
+     * @param boolean $transcriptEditAccess
+     *
+     * @return AppPreference
+     */
+    public function setTranscriptEditAccess($transcriptEditAccess)
+    {
+        $this->transcriptEditAccess = $transcriptEditAccess;
+
+        return $this;
+    }
+
+    /**
+     * Get transcriptEditAccess
+     *
+     * @return boolean
+     */
+    public function getTranscriptEditAccess()
+    {
+        return $this->transcriptEditAccess;
     }
 }
