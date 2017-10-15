@@ -63,7 +63,7 @@
            <p>Les notices, produites par les différents contributeurs et validées par l'équipe scientifique du projet, fournissent des éléments d'identification et d'histoire relatifs aux unités iltaires (régiments, bataillons) dans lesquelles les testateurs étaient incorporés lors de leur décès.</p>
         </projectDesc>
         <editorialDecl>
-           <p>Chaque notice contient : le nom de l'unité militaire sous sa forme normalisée selon la norme française AFNOR NF Z 44-061 (TODO CHECK), une forme du nom plus courte (qui est utilisée pour afficher la notice), et optionnellement, un historique rédigé de l'unité, ainsi que des références bibliographiques sur l'unité. Y sont également stockées les identifiants des personnes qui ont contribué à l'élaboration de la notice à la date de son export au sein du présent fichier.</p>
+           <p>Chaque notice contient : le nom de l'unité militaire sous sa forme normalisée selon la norme française AFNOR NF Z 44-061, une forme du nom plus courte (qui est utilisée pour afficher la notice),  et optionnellement, une forme abrégée du nom, un historique rédigé de l'unité, ainsi que des références bibliographiques sur l'unité. Y sont également stockées les identifiants des personnes qui ont contribué à l'élaboration de la notice à la date de son export au sein du présent fichier.</p>
         
            <p>La vue HTML de la notice dans la plate-forme de transcription ajoute automatiquement à ces informations le ou les liens vers la ou les notices des testateurs qui ont été incorporés dans l'unité décrite.</p>
            
@@ -97,7 +97,7 @@
               <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment d'infanterie (<num>68</num>)</orgName></orgName>
                  <!-- la forme courante du nom, telle qu'utilisée dans les métadonnées du testament-->
               <orgName type="proseForm">68<hi  rend="superscript">e</hi> régiment d'infanterie</orgName>
-            
+              <orgName type="abbreviatedForm">68<hi  rend="superscript">e</hi> RI</orgName>
               <note type="history">
                  <p></p>
                  <p></p>
@@ -107,6 +107,8 @@
            <org xml:id="o-0002" resp="#ML #JD">
               <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment de zouaves (<num>4</num>)</orgName></orgName>
               <orgName type="proseForm">4<hi  rend="superscript">e</hi> régiment de zouaves</orgName>
+              <orgName type="abbreviatedForm">4<hi  rend="superscript">e</hi> RZ</orgName>
+              
               <note type="history"><p></p></note>
              
            </org>
@@ -114,6 +116,7 @@
               <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment d'infanterie coloniale (<num>23</num>)</orgName>
               </orgName>
               <orgName type="proseForm">23<hi rend="superscript">e</hi> régiment d'infanterie coloniale</orgName>
+              <orgName type="abbreviatedForm">23<hi  rend="superscript">e</hi> RIC</orgName>
              
             
               <bibl>Article <title level="a">23e régiment d'infanterie coloniale</title> de <title level="m">Wikipédia en français</title>. Contenu soumis à la licence CC-BY-SA 3.0.
@@ -124,12 +127,14 @@
               </orgName>
               
               <orgName type="proseForm">1<hi rend="superscript">er</hi> bataillon de tirailleurs malgaches</orgName>
+              <orgName type="abbreviatedForm">1<hi  rend="superscript">er</hi> BTM</orgName>
               <note type="history"><p></p></note>
              
            </org>
            <org xml:id="o-0005" resp="#FC">
               <orgName type="fullIndexEntryForm"><orgName>France</orgName>. <orgName>Armée de terre</orgName>. <orgName>Régiment d'infanterie territoriale (<num>27</num>)</orgName>
                  <orgName type="proseForm">27<hi rend="superscript">e</hi> régiment d'infanterie territoriale</orgName>
+                 <orgName type="abbreviatedForm">27<hi  rend="superscript">e</hi> RIT</orgName>
                  
               </orgName>
            </org>

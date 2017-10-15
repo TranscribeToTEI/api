@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="FirstWorldWarWills-EditionOfWill-0001">
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="FirstWorldWarWills-EditionOfWill-1" xml:lang="fr">
    <!-- Ceci est un fichier XML pour tester la saisie de la transcription d'un testament conformément au schéma Relax NG élaboré pour le projet Testaments de Poilus -->
-   
+
    <!-- pour tester dans oXygen : Document > Valider > Configurer scénario de validation 
       puis déclarer l'association avec le schéma, et cocher la case "règles Schematron intégrées"-->
    <teiHeader>
       <!-- FC pour l'en-tête TEI, le modèle reste à faire. Tous les éléments TEI sont aujourd'hui disponibles -->
       <fileDesc>
          <titleStmt>
-            <title type="corpusTitle">Transcription collaborative de testaments de Poilus de la Grande Guerre</title>
-            <title type="fileTitle">Édition du testament de Fernand Lucien Jules Melchior Chatin (31 juillet
-               1914) conservé aux Archives nationales sous la cote MC/ET/XLVIII/1820 (minute du 20 janvier 1921)</title>
+            <title type="corpusTitle">Transcription collaborative de testaments de Poilus de la
+               Grande Guerre</title>
+            <title type="fileTitle">Édition du testament de Fernand Lucien Jules Melchior Chatin (31
+               juillet 1914) conservé aux Archives nationales sous la cote MC/ET/XLVIII/1820 (minute
+               du 20 janvier 1921)</title>
             <!-- mentions de responsabilité : le fichier TEI final doit stocker la liste des contributeurs : transcription, annotation, validation -->
             <respStmt>
                <resp>identification du testament</resp>
@@ -23,10 +25,8 @@
             </respStmt>-->
             <respStmt>
                <resp>transcription</resp>
-               <persName xml:id="toto"
-                  ><!--<surname>Dupont</surname><forename>Lily</forename>-->toto</persName>
-               <persName xml:id="MDurand"
-                  ><surname>Durand</surname><forename>Michel</forename></persName>
+               <persName xml:id="toto"><!--<surname>Dupont</surname><forename>Lily</forename>-->toto</persName>
+               <persName xml:id="MDurand"><surname>Durand</surname><forename>Michel</forename></persName>
             </respStmt>
             <respStmt>
                <resp>annotation</resp>
@@ -36,8 +36,7 @@
             </respStmt>
             <respStmt>
                <resp>validation</resp>
-               <persName xml:id="FClavaud"
-                  ><surname>Clavaud</surname><forename>Florence</forename></persName>
+               <persName xml:id="FClavaud"><surname>Clavaud</surname><forename>Florence</forename></persName>
             </respStmt>
             <funder><orgName>LabEx PATRIMA</orgName></funder>
             <funder><orgName>Mission du Centenaire de la Première Guerre Mondiale</orgName></funder>
@@ -52,7 +51,7 @@
                <licence>Licence CC-BY (à revoir)</licence>
             </availability>
          </publicationStmt>
-         
+
          <sourceDesc>
             <!-- description du document édité -->
             <msDesc>
@@ -70,18 +69,12 @@
                </msIdentifier>
                <msContents>
                   <summary>
-                     <p><date when="1914-07-31" type="willDate">1914, 31 juillet</date>. <placeName
-                           type="willPlace">Paris</placeName>.</p>
-                     <p><term type="willType">testament olographe</term> de <persName
-                        ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"><forename>Fernand</forename>
+                     <p><date when="1914-07-31" type="willDate">1914, 31 juillet</date>. <placeName type="willPlace">Paris</placeName>.</p>
+                     <p><term type="willType">testament olographe</term> de <persName ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"><forename>Fernand</forename>
                            <forename>Lucien</forename>
                            <forename>Jules</forename>
                            <forename>Melchior</forename>
-                           <surname>Chatin</surname></persName>, mort pour la France à <placeName
-                              ref="FirstWorldWarWills-ListOfPlaces#pl-0056" type="willAuthorDeathPlace">Maroeuil
-                           (Pas-de-Calais)</placeName>, le <date when="1915-01-10"
-                           type="willAuthorDeathDate">10 janvier 1915</date>.</p>
-                     
+                           <surname>Chatin</surname></persName>, mort pour la France à <placeName ref="FirstWorldWarWills-ListOfPlaces#pl-0056" type="willAuthorDeathPlace">Maroeuil (Pas-de-Calais)</placeName>, le <date when="1915-01-10" type="willAuthorDeathDate">10 janvier 1915</date>.</p>
                   </summary>
 
 
@@ -110,30 +103,81 @@
 
       </fileDesc>
       <profileDesc>
-         <creation>Fichier produit à partir des données saisies avant import initial dans la plate-forme, et de la transcription du testament qui a été produite directement dans la plate-forme, converties automatiquement en TEI</creation>
-         <langUsage><language ident="fre">français</language></langUsage>
-         
+         <creation>Fichier produit à partir des données saisies avant import initial dans la
+            plate-forme, et de la transcription du testament qui a été produite directement dans la
+            plate-forme, converties automatiquement en TEI</creation>
+         <langUsage>
+            <language ident="fre">français</language>
+         </langUsage>
+
       </profileDesc>
       <encodingDesc>
          <projectDesc>
-            <p>Description générale du projet de transcription collaborative etc.</p></projectDesc>
+            <p>Description générale du projet de transcription collaborative etc.</p>
+         </projectDesc>
          <editorialDecl>
-            <p>L'édition est séquencée par document (le testament et sa ou ses éventuelles enveloppes) : pour chacun d'entre eux, un fichier TEI est produit. Ce choix est adapté à la fois à la nature du corpus (une collection homogène de documents) et aux modalités du travail collaboratif. L’édition liste également, et inclut, l’intégralité des images numériques des documents, qui ont été produites par les Archives nationales et les Archives départementales des Yvelines. A un document correspondent plusieurs image snumériques, lesquelles correspondent en général chacune à une page du testament ou à un des côtés (recto ou verso ) d'une enveloppe. Parfois cependant, le document ayant été relié et étant solidaire des autres pièces composant la minute, il a fallu produire deux images complémentaires pour la même page.</p>
-            <p>Chaque document a reçu un numéro d’ordre qui reflète l'ordre chronologique dans lequel le travail d'identification a été mené, sans autre signification.</p><p>Chaque testament est décrit par une brève analyse donnant : sa date de temps et de lieu ; le nom de son auteur, les circonstances et la date du décès du Poilu ; une description matérielle du testament (type de papier, pagination, dimensions, matière de l’écriture) ; sa cote aux Archives nationales ou aux Archives départementales des Yvelines.</p>
-            
-            <p>Nous avons fait le choix de livrer au lecteur une édition lui permettant à la fois de lire une transcription imitative du texte, permettant de respecter le plus fidèlement possible l’écriture et la mise en page du Poilu, et de rendre compte ainsi de la matérialité du texte ; et une édition du texte définitif, modernisée (orthographe) et normalisée (harmonisation de l’écriture des dates, de la ponctuation et de la présentation, et résolution des abréviations  correction des fautes de syntaxe), qui permet une lecture plus fluide. Pour cette dernière, nous avons suivi les règles d’édition de l’École des Chartes (<bibl><author>Nougaret (Christine)</author>, <author>Parinet (Élisabeth)</author>, <respStmt>
-               <persName>Clavaud Florence</persName>
-               <resp> (collab.)</resp></respStmt>, <title level="a">L’édition critique des textes contemporains, XIXe-XXIe siècle</title>. Paris : École nationale des chartes, 2015.</bibl> .
-            </p>
-            <normalization><p></p></normalization>
-            <hyphenation><p></p></hyphenation>
-            <punctuation><p></p></punctuation>
-            <hyphenation><p></p></hyphenation>
+
+            <p>L'édition est séquencée par document (le testament et sa ou ses éventuelles
+               enveloppes) : pour chacun d'entre eux, un fichier TEI est produit. Ce choix est
+               adapté à la fois à la nature du corpus (une collection homogène de documents) et aux
+               modalités du travail collaboratif. L’édition liste également, et inclut,
+               l’intégralité des images numériques des documents, qui ont été produites par les
+               Archives nationales et les Archives départementales des Yvelines. A un document
+               correspondent plusieurs image snumériques, lesquelles correspondent en général
+               chacune à une page du testament ou à un des côtés (recto ou verso ) d'une enveloppe.
+               Parfois cependant, le document ayant été relié et étant solidaire des autres pièces
+               composant la minute, il a fallu produire deux images complémentaires pour la même
+               page.</p>
+            <p>Chaque document a reçu un numéro d’ordre qui reflète l'ordre chronologique dans
+               lequel le travail d'identification a été mené, sans autre signification.</p>
+            <p>Chaque testament est décrit par une brève analyse donnant : sa date de temps et de
+               lieu ; le nom de son auteur, les circonstances et la date du décès du Poilu ; une
+               description matérielle du testament (type de papier, pagination, dimensions, matière
+               de l’écriture) ; sa cote aux Archives nationales ou aux Archives départementales des
+               Yvelines.</p>
+
+            <p>Nous avons fait le choix de livrer au lecteur une édition lui permettant à la fois de
+               lire une transcription imitative du texte, permettant de respecter le plus fidèlement
+               possible l’écriture et la mise en page du Poilu, et de rendre compte ainsi de la
+               matérialité du texte ; et une édition du texte définitif, modernisée (orthographe) et
+               normalisée (harmonisation de l’écriture des dates, de la ponctuation et de la
+               présentation, et résolution des abréviations correction des fautes de syntaxe), qui
+               permet une lecture plus fluide. Pour cette dernière, nous avons suivi les règles
+               d’édition de l’École des Chartes (<bibl><author>Nougaret (Christine)</author>,
+                     <author>Parinet (Élisabeth)</author>, <respStmt>
+                     <persName>Clavaud Florence</persName>
+                     <resp> (collab.)</resp>
+                  </respStmt>, <title level="a">L’édition critique des textes contemporains,
+                     XIXe-XXIe siècle</title>. Paris : École nationale des chartes, 2015.</bibl> . </p>
+            <interpretation>
+               <p>Les expressions évoquant la vision de la mort et celles dénotant l'état d'esprit
+                  des testateurs ont fait l'objet d'un balisage renvoyant à une grille d'analyse
+                  contenant deux micro-vocabulaires. </p>
+            </interpretation>
+            <normalization>
+               <p/>
+            </normalization>
+            <hyphenation>
+               <p/>
+            </hyphenation>
+            <punctuation>
+               <p/>
+            </punctuation>
+            <hyphenation>
+               <p/>
+            </hyphenation>
          </editorialDecl>
-         <samplingDecl><p>L’édition porte sur les testaments olographes et leurs enveloppes éventuelles, si elles sont de la main du Poilu. Seules les parties du texte de la main du testateur sont transcrites. La présente édition ne concerne donc pas les éléments textuels ajoutés au testament lors de son ouverture au tribunal (pagination, paraphes, signature du juge...) ni les autres mentions hors teneur. Seul est donc édité le texte autographe tel que délimité par le bâtonnage du juge. </p></samplingDecl>
-       
+         <samplingDecl>
+            <p>L’édition porte sur les testaments olographes et leurs enveloppes éventuelles, si
+               elles sont de la main du Poilu. Seules les parties du texte de la main du testateur
+               sont transcrites. La présente édition ne concerne donc pas les éléments textuels
+               ajoutés au testament lors de son ouverture au tribunal (pagination, paraphes,
+               signature du juge...) ni les autres mentions hors teneur. Seul est donc édité le
+               texte autographe tel que délimité par le bâtonnage du juge. </p>
+         </samplingDecl>
+
          <variantEncoding method="parallel-segmentation" location="internal"/>
-         
+
          <appInfo>
             <application version="1.0" ident="TranscribeToTEI">
                <label>Transcribe To TEI</label>
@@ -141,7 +185,9 @@
             </application>
          </appInfo>
          <!-- TODO PREVOIR LIEN VERS LE SCHEMA  <schemaRef>-->
+
       </encodingDesc>
+
       <revisionDesc>
          <!-- le fichier TEI doit consigner la liste des principales étapes de travail -->
 
@@ -170,21 +216,21 @@
       <!-- la valeur de l'attr. type peut être "will-page", "will-envelope-recto", "will-envelope-verso" -->
       <!--  la valeur de l'attr. n est prise dans la colonne numéro du fichier de récolement ; dans le cas général on y trouve le numéro d'ordre logique, de 1 à n, de l'unité physique, testament avant enveloppe  -->
       <surface type="will-page" n="01">
-         <graphic url="TIFF/FRAN_Poilus_t-0001_01.tif" xml:id="testament-0001_vue-01_jpg"/>
-         <graphic url="JPEG/FRAN_Poilus_t-0001_01.jpg" xml:id="testament-0001_vue-01_tif"/>
+         <graphic url="TIFF/FRAN_Poilus_t-0001_01_A.tif" xml:id="testament-0001_vue-01_jpg"/>
+         <graphic url="JPEG/FRAN_Poilus_t-0001_01_L.jpg" xml:id="testament-0001_vue-01_tif"/>
       </surface>
       <!-- lorsqu'on a deux images complémentaires, reproduisant une partie de la même unité physique, on peut utiliser surfaceGrp -->
       <!-- ici l'attr. n a toujours pour valeur le numéro d'ordre de l'unité physique -->
       <surfaceGrp type="will-page" n="02">
 
          <surface type="will-page-part" n="02a">
-            <graphic url="JPEG/FRAN_Poilus_t-0001_02a.jpg" xml:id="testament-0001_vue-02a_jpg"> </graphic>
-            <graphic url="TIFF/FRAN_Poilus_t-0001_02a.tif" xml:id="testament-0001_vue-02a_tif"/>
+            <graphic url="JPEG/FRAN_Poilus_t-0001_02a_L.jpg" xml:id="testament-0001_vue-02a_jpg"> </graphic>
+            <graphic url="TIFF/FRAN_Poilus_t-0001_02a_A.tif" xml:id="testament-0001_vue-02a_tif"/>
          </surface>
          <surface type="will-page-part" n="02b">
-            <graphic url="JPEG/FRAN_Poilus_t-0001_02b.jpg" xml:id="testament-0001_vue-02b_jpg"/>
+            <graphic url="JPEG/FRAN_Poilus_t-0001_02b_L.jpg" xml:id="testament-0001_vue-02b_jpg"/>
 
-            <graphic url="TIFF/FRAN_Poilus_t-0001_02b.jpg" xml:id="testament-0001_vue-02b_tif"/>
+            <graphic url="TIFF/FRAN_Poilus_t-0001_02b_L.jpg" xml:id="testament-0001_vue-02b_tif"/>
 
 
          </surface>
@@ -211,8 +257,7 @@
 
             <dateline rend="centered"><placeName type="willPlace">Paris</placeName><choice>
 
-                  <orig><damage agent="stain" quantity="2" unit="cm"><gap reason="hidden"
-                     /></damage></orig>
+                  <orig><damage agent="stain" quantity="2" unit="cm"><gap reason="hidden"/></damage></orig>
                   <reg>,</reg>
                </choice> le <date type="willDate" when="1914-07-31"><choice>
                      <orig>trente et un</orig>
@@ -264,10 +309,10 @@
                </choice> à charge<lb/> pour mon frère André de remettre aux<lb/> personnes ci-après
                les <damage agent="stain"><supplied resp="#LDupont">legs</supplied>
                   <unclear>suivants</unclear></damage> :</p>
-            
+
             <!--<pb facs="../images/FRAN_0045_00307.jpg"/>-->
             <pb facs="#testament-0001_vue-02_jpg"/>
-            
+
             <list>
 
                <item>1° <choice>
@@ -294,8 +339,7 @@
                      <orig> - </orig>
                      <reg>.</reg>
 
-                  </choice> Je prie en outre<lb/> mon cher frère de remettre dès ma<lb/> mort <hi
-                     rend="underlined">et le plus vite possible</hi> à <choice>
+                  </choice> Je prie en outre<lb/> mon cher frère de remettre dès ma<lb/> mort <hi rend="underlined">et le plus vite possible</hi> à <choice>
                      <abbr>M<hi rend="superscript">me</hi></abbr>
                      <expan>M<ex>ada</ex>me</expan>
                   </choice><lb/> Anny Coker<choice>
@@ -327,8 +371,7 @@
                <item>3° <choice>
                      <orig>à</orig>
                      <reg>À</reg>
-                  </choice> mon frère Paul Chatin de Chastaing <ref xml:id="will-001-001"
-                     target="#will-001-footnote001"/><lb/> une somme de cinq mille francs et<lb/> ma
+                  </choice> mon frère Paul Chatin de Chastaing <ref xml:id="will-0001-001" target="#will-0001-footnote001"/><lb/> une somme de cinq mille francs et<lb/> ma
                   montre à sonnerie<choice>
                      <orig/>
                      <reg>.</reg>
@@ -355,8 +398,7 @@
                      <orig>à</orig>
                      <reg>À</reg>
                   </choice> mon vieil ami Morel mon fusil<lb/> calibre 12 percussion centrale <!--(de Warn--><!-- FC correction 21 mars 2°16--><app>
-                     <lem> (de Warn<damage agent="stain">er</damage><supplied reason="hidden"
-                           resp="#MDurand">er</supplied>)</lem>
+                     <lem> (de Warn<damage agent="stain">er</damage><supplied reason="hidden" resp="#MDurand">er</supplied>)</lem>
                      <note resp="#MDurand">Tache d’encre à la fin du mot.</note>
                   </app>
                   <choice>
@@ -377,9 +419,7 @@
                <space dim="vertical"/>
                <metamark function="separating" rend="horizontal-line"/>
             </list>
-            <p>Pour le reste de mes biens mon <damage agent="stain"><supplied resp="#LDupont"
-                     >frère</supplied></damage><lb/> André, dont je connais <unclear
-                  reason="quite-illegible">l’esprit de</unclear><lb/> sagesse et de bon sens, les
+            <p>Pour le reste de mes biens mon <damage agent="stain"><supplied resp="#LDupont">frère</supplied></damage><lb/> André, dont je connais <unclear reason="quite-illegible">l’esprit de</unclear><lb/> sagesse et de bon sens, les
                reçoit en<lb/> pleine propriété. Puisse-t-il en<lb/> jouir longtemps et heureux !</p>
             <dateline rend="centered">Fait à Paris<choice>
                   <orig/>
@@ -389,19 +429,16 @@
                   <reg>juillet</reg>
 
                </choice> 1914</dateline>
-            <signed rend="centered"><seg type="signature"><persName ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"
-                        ><forename>Fernand</forename> <surname>Chatin</surname></persName></seg></signed>
+            <signed rend="centered"><seg type="signature"><persName ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"><forename>Fernand</forename> <surname>Chatin</surname></persName></seg></signed>
 
             <postscript>
                <p><app>
                      <lem/>
                      <note/>
-                  </app>Ce testament annule tous ceux que j’aurais<lb/> pu faire auparavant. <seg
-                     type="signature"><persName ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"
-                           ><forename>Fernand</forename> <surname>Chatin</surname>
+                  </app>Ce testament annule tous ceux que j’aurais<lb/> pu faire auparavant. <seg type="signature"><persName ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"><forename>Fernand</forename> <surname>Chatin</surname>
                      </persName></seg>
                </p>
-              
+
             </postscript>
 
 
@@ -416,7 +453,7 @@
       <back>
          <div type="notes">
 
-            <note xml:id="will-001-footnote001" resp="#MDurand #FClavaud">Sur Paul Chatin de
+            <note xml:id="will-0001-footnote001" resp="#MDurand #FClavaud">Sur Paul Chatin de
                Chastaing, voir <bibl>une référence biblio avec un <title>titre</title></bibl>, et
                consulter <ref target="http://www.bnf.fr">une page web</ref>.</note>
          </div>

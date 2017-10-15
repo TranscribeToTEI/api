@@ -43,6 +43,7 @@ class User
         $preference->setTranscriptionDeskPosition("leftRead-centerHelp-rightImage");
         $preference->setTutorialStatus("todo");
         $preference->setSmartTEI(true);
+        $preference->setShowComplexEntry(true);
         $this->em->persist($preference);
         $this->em->flush();
         return $preference;

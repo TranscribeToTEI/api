@@ -28,7 +28,10 @@ class AppPreferenceType extends AbstractType
             ->add('twitterId',                  TextType::class,        array("required" => false))
             ->add('enableContact',              CheckboxType::class,    array("required" => false))
             ->add('systemEmail',                EmailType::class,       array("required" => true))
-            ->add('contactEmail',               EmailType::class,       array("required" => true))
+            ->add('contactEmail',               EmailType::class,       array("required" => false))
+            ->add('enableRegister',             CheckboxType::class,    array("required" => false))
+            ->add('transcriptEditAccess',       CheckboxType::class,    array("required" => false))
+            ->add('taxonomyEditAccess',         TextType::class,         array("required" => false))
         ;
     }
     

@@ -113,6 +113,17 @@ class Preference
     private $smartTEI;
 
     /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="showComplexEntry", type="boolean")
+     */
+    private $showComplexEntry;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -223,5 +234,29 @@ class Preference
     public function getSmartTEI()
     {
         return $this->smartTEI;
+    }
+
+    /**
+     * Set showComplexEntry
+     *
+     * @param boolean $showComplexEntry
+     *
+     * @return Preference
+     */
+    public function setShowComplexEntry($showComplexEntry)
+    {
+        $this->showComplexEntry = $showComplexEntry;
+
+        return $this;
+    }
+
+    /**
+     * Get showComplexEntry
+     *
+     * @return boolean
+     */
+    public function getShowComplexEntry()
+    {
+        return $this->showComplexEntry;
     }
 }

@@ -134,9 +134,10 @@
               
               <!-- le grade et le régiment d'incorporation si connus -->
               <!-- Grade + "au" + Regiment-->
-              
-              <affiliation>Soldat de 2<hi rend="superscript">e</hi> classe au <orgName ref="FirstWorldWarWills-ListOfMilitaryUnit#o-0005">27<hi rend="superscript">e</hi>
+              <!-- ici on ajoute aussi un exemple d'affiliations établies d'après diverses sources, et constituant des alternatives exclusives. -->
+              <affiliation exclude="#aff-001" xml:id="aff-001">Soldat de 2<hi rend="superscript">e</hi> classe au <orgName ref="FirstWorldWarWills-ListOfMilitaryUnit#o-0005">27<hi rend="superscript">e</hi>
                régiment d’infanterie territoriale</orgName>.</affiliation>
+              <affiliation xml:id="aff-002" exclude="#aff-001">blah <orgName>bla</orgName></affiliation>
               <!-- du texte libre pour inscrire en prose des éléments biographiques autres que ceux déjà fournis dans les autres éléments, ou précisant ces informations.-->
               <!-- initialement contiendra dans un § les informations contenues dans le champ "infos complémentaires", dans un <p>-->
               <note type="history">

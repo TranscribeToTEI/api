@@ -101,17 +101,17 @@
               l'URI du lieu dans geonames
               0 à n référénces bibliographiques -->
          
-           <place xml:id="pl-0001">
+           <place xml:id="pl-0001" type="city">
               <placeName>
                  <!-- optionnellement : @when-iso ; dans ce cas, 2e placeName avec @when-iso -->
-                 <settlement type="city">Ablain-Saint-Nazaire</settlement>
+              <settlement type="city">Ablain-Saint-Nazaire</settlement>
                  <!-- valeurs possibles de @type pour settlement : locality (= lieu-dit), city (= commune)-->
-                 <!-- valeurs possibles de @type pour geogName : mountain, forest, + ?-->
+                 <!-- valeurs possibles de @type pour geogName : mountain, forest, + cote?-->
                  <!-- si geogName, placeName peut alors aussi  contenir geogFeat -->
               </placeName>
              
               <location>
-                 <!-- country, region (avec un possible attr. type si country = France -->
+                 <!--cas classique d'une commune en France : country, region (avec un possible attr. type si country = France -->
                  <region type="FrenchDepartement">Pas-de-Calais</region>
                 
                  <region type="FrenchRegion">Nord-Pas-de-Calais-Picardie</region>
@@ -122,30 +122,36 @@
                  <geo>50.3932 2.7088</geo>
                                </location>
              <note type="history"><p></p></note>
+              <bibl><title></title></bibl>
               <idno type="geonamesURI">http://sws.geonames.org/3038763/</idno>
               
            </place>
-           <place xml:id="pl-0008">
+           <place xml:id="pl-0008" type="locality">
+              
               <placeName>
                  <settlement type="locality">Baleycourt</settlement>
               </placeName>
               <location>
-                 <placeName when-iso="1801/1970">
-                    <settlement type="city">Verdun-sur-Meuse</settlement>
-                 </placeName>
-                 <placeName when-iso="1970/">
-                    <settlement type="city">Verdun</settlement>
-                 </placeName>
+                 
+                 <!-- un lieu-dit dont la commune de rattachement a changé de nom -->
+                 <settlement type="city">
+                    <placeName when-iso="1801/1970">Verdun-sur-Meuse</placeName>
+                    <placeName when-iso="1970/">Verdun</placeName>
+                 </settlement>
+                 
                  <region type="FrenchDepartement">Meuse</region>
                  <region type="FrenchRegion">Alsace-Champagne-Ardenne-Lorraine</region>
+               
                  <country>France</country>
               </location>
               <location type="geographicalCoordinates">
                  <geo>49.1328 5.30437</geo>
               </location>
+              
               <idno type="geonamesURI">http://sws.geonames.org/3035245/</idno>
            </place>
-           <place xml:id="pl-0009">
+           <place xml:id="pl-0009" type="city">
+              <!-- une commune qui a changé de nom -->
               <placeName when-iso="1793/1801">
                  <settlement type="city">Bar sur Ornain</settlement>
               </placeName>
@@ -162,17 +168,40 @@
               </location>
               <idno type="GeonamesURI">http://sws.geonames.org/3034911/</idno>
            </place>
-           <place xml:id="pl-0015">
-              <placeName>
-                 <geogName type="forest">Bois-de-la-Grille</geogName>
+           <place xml:id="pl-0012" type="city">
+              <placeName when-iso="1793/">
+                 <settlement type="city">Bellemagny</settlement>
               </placeName>
+              <location when-iso="1871/1919-06-27">
+                 <region>Alsace</region>
+                 <country>Empire d’Allemagne</country>
+                 
+              </location>
+              <location when-iso="1919-06-28/">
+                
+                 <region type="FrenchRegion">Alsace-Champagne-Ardenne-Lorraine</region>
+                 <region type="FrenchDepartement">Haut-Rhin</region>
+                 <country>France</country>
+              </location>
+              
+              <location type="geographicalCoordinates">
+                 <geo>47.6888 7.0668</geo>
+              </location>
+              <idno type="geonamesURI">http://sws.geonames.org/3033680/</idno>
+           </place>
+           <place xml:id="pl-0015" type="forest">
+              <placeName><geogName type="forest">Bois-de-la-Grille</geogName></placeName>
+                
+              
               <location>
-                 <placeName when-iso="1793/1950">
-                    <settlement type="city">Moronvilliers</settlement>
-                 </placeName>
-                 <placeName when-iso="1950/">
-                    <settlement type="city">Pontfaverger-Moronvilliers</settlement>
-                 </placeName>
+                 <settlement type="city">
+                    <placeName when-iso="1793/1950">
+                       Moronvilliers
+                    </placeName>
+                    <placeName when-iso="1950/">Pontfaverger-Moronvilliers
+                    </placeName>
+                 </settlement>
+                
                  <region type="FrenchDepartement">Marne</region>
                  <region type="FrenchRegion">Alsace-Champagne-Ardenne-Lorraine</region>
                  <country>France</country>
@@ -182,13 +211,13 @@
               </location>
               <idno type="GeonamesURI">http://sws.geonames.org/2986186/</idno>
            </place>
-           <place xml:id="pl-0044">
+           <place xml:id="pl-0044" type="forest">
               <placeName>
-                 <geogName>Gruerie</geogName>, <geogFeat>bois</geogFeat> de la</placeName>
+                 <geogName type="forest">Gruerie, <geogFeat>bois</geogFeat> de la</geogName></placeName>
               <location>
-                 <placeName when-iso="1801/">
-                    <settlement type="city">Vienne-le-Château</settlement>
-                 </placeName>
+                 <settlement type="city"><placeName when-iso="1801/">Vienne-le-Château
+                 </placeName></settlement>
+                 
                  <region type="FrenchDepartement">Marne</region>
                  <region type="FrenchRegion">Alsace-Champagne-Ardenne-Lorraine</region>
                  <country>France</country>
@@ -196,11 +225,13 @@
               <location type="geographicalCoordinates">
                  <geo>49.19116 4.88725</geo>
               </location>
+              
               <idno type="GeonamesURI">http://sws.geonames.org/2969274/</idno>
+              
            </place>
-           <place xml:id="pl-0056">
+           <place xml:id="pl-0056" type="city">
               <placeName when-iso="1793/">
-                 <settlement type="city">Maroeuil</settlement>
+                <settlement type="city">Maroeuil</settlement>
               </placeName>
               <location>
                  <region type="FrenchDepartement">Pas-de-Calais</region>
@@ -212,9 +243,9 @@
               </location>
               <idno type="GeonamesURI">http://sws.geonames.org/2995586/</idno>
            </place>
-           <place xml:id="pl-0070">
+           <place xml:id="pl-0070" type="city">
               <placeName>
-                 <settlement type="city">Parchim</settlement>
+               <settlement type="city">Parchim</settlement>
               </placeName>
               <location>
                  <region>Mecklembourg-Poméranie-Occidentale</region>
@@ -225,7 +256,7 @@
               </location>
               <idno type="GeonamesURI">http://sws.geonames.org/2946821/</idno>
            </place>
-           <place xml:id="pl-0071">
+           <place xml:id="pl-0071" type="city">
               <placeName>
                  <settlement type="city">Paris</settlement>
               </placeName>

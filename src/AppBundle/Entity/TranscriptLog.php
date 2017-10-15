@@ -11,18 +11,17 @@ use AppBundle\Entity\Entity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * Resource
+ * TranscriptLog
  *
- * @ORM\Table(name="resource")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceRepository")
+ * @ORM\Table(name="transcript_log")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TranscriptLogRepository")
  *
  * @Serializer\ExclusionPolicy("all")
- * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_resource",
+ *          "get_transcript_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -33,7 +32,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_resource",
+ *          "update_transcript_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -44,7 +43,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_resource",
+ *          "patch_transcript_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -55,7 +54,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_resource",
+ *          "remove_transcript_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -64,7 +63,7 @@ use JMS\Serializer\Annotation as Serializer;
  *     )
  * )
  */
-class Resource
+class TranscriptLog
 {
     /**
      * @Serializer\Since("0.1")
@@ -82,71 +81,23 @@ class Resource
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "id"})
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity", inversedBy="resources")
-     * @ORM\JoinColumn(nullable=true)
+     * @var bool
+     * @Assert\NotNull()
+     * @Assert\Type("bool")
+     *
+     * @ORM\Column(name="isOpened", type="boolean")
      */
-    private $entity;
+    private $isOpened;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @Assert\NotBlank()
-     * @Assert\Choice({"page", "envelop", "codicil"})
-     *
-     * @var string
-     *
-     * @ORM\Column(name="type", type="string", length=255)
-     */
-    private $type;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @var int
-     *
-     * @ORM\Column(name="orderInWill", type="integer")
-     */
-    private $orderInWill;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type("array")
-     * @var array
-     *
-     * @ORM\Column(name="images", type="array", nullable=true)
-     */
-    private $images;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Assert\Type("string")
-     *
-     * @var string
-     *
-     * @ORM\Column(name="notes", type="text", nullable=true)
-     */
-    private $notes;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Transcript")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $transcript;
 
@@ -158,7 +109,7 @@ class Resource
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $createUser;
 
@@ -178,7 +129,6 @@ class Resource
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="update")
@@ -191,7 +141,6 @@ class Resource
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
      *
      * @var \DateTime
      *
@@ -212,51 +161,27 @@ class Resource
     }
 
     /**
-     * Set type
+     * Set isOpened
      *
-     * @param string $type
+     * @param boolean $isOpened
      *
-     * @return Resource
+     * @return TranscriptLog
      */
-    public function setType($type)
+    public function setIsOpened($isOpened)
     {
-        $this->type = $type;
+        $this->isOpened = $isOpened;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Get isOpened
      *
-     * @return string
+     * @return bool
      */
-    public function getType()
+    public function getIsOpened()
     {
-        return $this->type;
-    }
-
-    /**
-     * Set orderInWill
-     *
-     * @param integer $orderInWill
-     *
-     * @return Resource
-     */
-    public function setOrderInWill($orderInWill)
-    {
-        $this->orderInWill = $orderInWill;
-
-        return $this;
-    }
-
-    /**
-     * Get orderInWill
-     *
-     * @return integer
-     */
-    public function getOrderInWill()
-    {
-        return $this->orderInWill;
+        return $this->isOpened;
     }
 
     /**
@@ -264,7 +189,7 @@ class Resource
      *
      * @param \DateTime $createDate
      *
-     * @return Resource
+     * @return TranscriptLog
      */
     public function setCreateDate($createDate)
     {
@@ -284,131 +209,11 @@ class Resource
     }
 
     /**
-     * Set entity
-     *
-     * @param \AppBundle\Entity\Entity $entity
-     *
-     * @return Resource
-     */
-    public function setEntity(\AppBundle\Entity\Entity $entity = null)
-    {
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get entity
-     *
-     * @return \AppBundle\Entity\Entity
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Resource
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
-    }
-
-    /**
-     * Set transcript
-     *
-     * @param \AppBundle\Entity\Transcript $transcript
-     *
-     * @return Resource
-     */
-    public function setTranscript(\AppBundle\Entity\Transcript $transcript = null)
-    {
-        $this->transcript = $transcript;
-
-        return $this;
-    }
-
-    /**
-     * Get transcript
-     *
-     * @return \AppBundle\Entity\Transcript
-     */
-    public function getTranscript()
-    {
-        return $this->transcript;
-    }
-
-    /**
-     * Set images
-     *
-     * @param array $images
-     *
-     * @return Resource
-     */
-    public function setImages($images)
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
-    /**
-     * Get images
-     *
-     * @return array
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * Set notes
-     *
-     * @param string $notes
-     *
-     * @return Resource
-     */
-    public function setNotes($notes)
-    {
-        $this->notes = $notes;
-
-        return $this;
-    }
-
-    /**
-     * Get notes
-     *
-     * @return string
-     */
-    public function getNotes()
-    {
-        return $this->notes;
-    }
-
-    /**
      * Set updateDate
      *
      * @param \DateTime $updateDate
      *
-     * @return Resource
+     * @return TranscriptLog
      */
     public function setUpdateDate($updateDate)
     {
@@ -428,11 +233,59 @@ class Resource
     }
 
     /**
+     * Set transcript
+     *
+     * @param \AppBundle\Entity\Transcript $transcript
+     *
+     * @return TranscriptLog
+     */
+    public function setTranscript(\AppBundle\Entity\Transcript $transcript)
+    {
+        $this->transcript = $transcript;
+
+        return $this;
+    }
+
+    /**
+     * Get transcript
+     *
+     * @return \AppBundle\Entity\Transcript
+     */
+    public function getTranscript()
+    {
+        return $this->transcript;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return TranscriptLog
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
      * Set updateUser
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Resource
+     * @return TranscriptLog
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {
