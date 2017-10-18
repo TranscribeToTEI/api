@@ -83,6 +83,18 @@ class ReferenceItem
      * @Serializer\MaxDepth(1)
      * @Gedmo\Versioned
      *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $entity;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     * @Gedmo\Versioned
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PrintedReference")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -341,5 +353,29 @@ class ReferenceItem
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param \AppBundle\Entity\Entity $entity
+     *
+     * @return ReferenceItem
+     */
+    public function setEntity(\AppBundle\Entity\Entity $entity)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return \AppBundle\Entity\Entity
+     */
+    public function getEntity()
+    {
+        return $this->entity;
     }
 }

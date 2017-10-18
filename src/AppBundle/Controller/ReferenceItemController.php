@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
@@ -25,6 +26,8 @@ class ReferenceItemController extends FOSRestController
      * @Rest\Get("/reference-items")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
+     * @QueryParam(name="entity", nullable=true, description="Gets all bibliographical elements for an entity")
+     *
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
      *     resource=true,
@@ -35,13 +38,26 @@ class ReferenceItemController extends FOSRestController
      *     }
      * )
      */
-    public function getReferenceItemsAction(Request $request)
+    public function getReferenceItemsAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $id_entity = $paramFetcher->get('entity');
+
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:ReferenceItem');
         /* @var $repository EntityRepository */
 
-        $referenceItems = $repository->findAll();
-        /* @var $referenceItems ReferenceItem[] */
+        if($id_entity != "") {
+            $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findOneById($id_entity);
+
+            if($entity != null) {
+                $referenceItems = $repository->findBy(array("entity" => $entity));
+                /* @var $referenceItems ReferenceItem[] */
+            } else {
+                $referenceItems = null;
+            }
+        } else {
+            $referenceItems = $repository->findAll();
+            /* @var $referenceItems ReferenceItem[] */
+        }
 
         return $referenceItems;
     }

@@ -120,6 +120,7 @@ class PrintedReference
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
+     * @Assert\Choice({"Revue", "Monographie", "Ouvrage collectif"})
      * @var string
      *
      * @ORM\Column(name="containerType", type="string", length=255, nullable=true)
