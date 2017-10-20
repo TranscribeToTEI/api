@@ -630,6 +630,17 @@ class UserController extends FOSRestController
      *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The user unique identifier.",
+     *         },
+     *         {
+     *             "name"="roles",
+     *             "dataType"="array",
+     *             "description"="The list of roles.",
+     *         },
+     *         {
+     *             "name"="action",
+     *             "dataType"="string",
+     *             "requirements"="promote|demote|set",
+     *             "description"="The list of roles.",
      *         }
      *     },
      *     statusCodes={
@@ -640,39 +651,66 @@ class UserController extends FOSRestController
      */
     public function setRoleAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
-        /* @var $user User */
+        $user_id = $request->get('id');
+        $roles = $request->get('roles');
+        $action = $request->get('action');
 
-        if($user == null) {
-            return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
+        $em = $this->getDoctrine()->getManager();
+        $iUser = $em->getRepository('UserBundle:User')->find($user_id);
+        /* @var $iUser User */
+        if($iUser === null) {return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);}
+        /** @var $access Access */
+        $access = $em->getRepository('UserBundle:Access')->findOneBy(array('user' => $iUser));
+        $setTaxoTrue = false;
+        $emailNotification = false;
+
+        $allowedRoles = ['ROLE_USER', 'ROLE_MODO', 'ROLE_TAXONOMY_EDIT'];
+        if($action == "set") {
+            $iUser->setRoles($roles);
+
+            if(in_array("ROLE_TAXONOMY_EDIT", $roles)) {
+                $setTaxoTrue = true;
+            }
+
+            $emailNotification = true;
+        } else {
+            foreach ($roles as $role) {
+                if (in_array($role, $allowedRoles)) {
+                    if ($action == "promote") {
+                        $iUser->addRole($role);
+                        $emailNotification = true;
+                        if ($role == 'ROLE_TAXONOMY_EDIT') {$setTaxoTrue = true;}
+                    } elseif ($action == "demote") {
+                        $iUser->removeRole($role);
+
+                        if ($role == 'ROLE_TAXONOMY_EDIT') {
+                            $access->setIsTaxonomyAccess(false);
+                        }
+                    }
+
+                }
+            }
         }
 
-        $allowedRoles = ['ROLE_MODO', 'ROLE_TAXONOMY_EDIT'];
-        if(in_array($request->get('role'), $allowedRoles)) {
-            $user->addRole($request->get('role'));
+        if($setTaxoTrue == true) {
+            $access->setTaxonomyRequest(null);
+            $access->setIsTaxonomyAccess(true);
+        }
 
-            if($request->get('role') == 'ROLE_TAXONOMY_EDIT') {
-                /** @var $access Access */
-                $access = $em->getRepository('UserBundle:Access')->findOneBy(array('user' => $user));
-                $access->setTaxonomyRequest(null);
-                $access->setIsTaxonomyAccess(true);
-            }
-            $em->flush();
-
-            // Email notification :
+        if($emailNotification == true) {
             $message = \Swift_Message::newInstance()
                 ->setSubject('Votre compte dispose d\'un nouveau role - Testaments de Poilus')
                 ->setFrom('testaments-de-poilus@huma-num.fr')
-                ->setTo($user->getEmail())
+                ->setTo($iUser->getEmail())
                 ->setBody($this->renderView(
                     'UserBundle:SetRole:emailPromote.html.twig',
-                    array('user'=> $user, 'role' => $request->get('role'))))
-            ;
+                    array('user' => $iUser, 'roles' => $roles)));
             $this->get('mailer')->send($message);
         }
 
-        return $user;
+        $em->flush();
+
+        return $iUser;
     }
 
     /**
@@ -717,6 +755,6 @@ class UserController extends FOSRestController
         $user->setPicture($fileName.'.'.$info['extension']);
         $em->flush();
 
-        return new JsonResponse($user);
+        return $user;
     }
 }

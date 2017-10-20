@@ -1,6 +1,6 @@
 Cher•e {{ user.name }},
 
-Votre compte vient d'obtenir le rôle suivant : {{ role }}. Vous avez désormais accès aux droits et actions liés.
+Les droits de votre compte viennent d'être modifiés. Vous disposez à présent des rôles suivant : {% for role in roles %}{% if loop.index > 1 %}, {% endif %}{{ role }}{% endfor %}. Vous avez désormais accès aux droits et actions liés.
 
 Bonne journée,
 L'équipe de Testaments de Poilus

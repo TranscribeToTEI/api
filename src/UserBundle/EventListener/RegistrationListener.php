@@ -39,6 +39,7 @@ class RegistrationListener implements EventSubscriberInterface
     {
         /** @var $user User */
         $user = $this->em->getRepository("UserBundle:User")->find($event->getUser()->getId());
+
         $this->user->setPreference($user);
         $this->user->setAccess($user);
     }
