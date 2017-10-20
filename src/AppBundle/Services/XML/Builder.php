@@ -2,6 +2,8 @@
 
 namespace AppBundle\Services\XML;
 
+use AppBundle\Entity\Entity;
+use AppBundle\Entity\Resource;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -42,9 +44,17 @@ class Builder
         $teiHeader = $this->buildTeiHeader($doc, $entity);
         $teiHeader = $TEI->appendChild($teiHeader);
 
+        /* -- Building facsimile -- */
+        $facsimile = $doc->createElement('facsimile');
+        $facsimile->setAttribute('xml:base', 'https://testaments-de-poilus.huma-num.fr/api/web/images/data/testament_'.$this->getIntIdToStrId($entity->getWillNumber(), 4).'/');
+        $facsimile = $TEI->appendChild($facsimile);
+        foreach($this->buildFacsimile($doc, $entity) as $elem) {
+            $facsimile->appendChild($elem);
+        }
+
         /* -- Building text -- */
         $text = $doc->createElement('text');
-        $text->setAttribute('xml:id', 'will-'.$entity->getWill()->getId());
+        $text->setAttribute('xml:id', 'will-'.$this->getIntIdToStrId($entity->getWillNumber(), 4));
         $text = $TEI->appendChild($text);
 
         $body = $doc->createElement('body');
@@ -62,7 +72,7 @@ class Builder
 
         if($generate == true) {
             /* -- File generation -- */
-            $filename = $entity->getId().".xml";
+            $filename = "testament-FR".$entity->getWill()->getHostingOrganization()."_".$this->getIntIdToStrId($entity->getWillNumber(), 4).".xml";
             $doc->save("download/".$filename);
             return $filename;
         } else {
@@ -207,8 +217,8 @@ class Builder
         switch ($context) {
             case "identification":
                 $respText = new \DOMText("Identification du testament");
-                $persNameText = new \DOMText($entity->getIdentificationUser());
-                $persNameId = $this->getIdFromName($entity->getIdentificationUser());
+                $persNameText = new \DOMText($entity->getWill()->getIdentificationUser());
+                $persNameId = $this->getIdFromName($entity->getWill()->getIdentificationUser());
                 break;
             default:
                 $respText = new \DOMText('Error');
@@ -305,10 +315,10 @@ class Builder
 
         $institution = $doc->createElement('institution');
         $collection = $doc->createElement('collection');
-        if($entity->getHostingOrganization() == "AN") {
+        if($entity->getWill()->getHostingOrganization() == "AN") {
             $institution->appendChild(new \DOMText('Archives nationales'));
             $collection->appendChild(new \DOMText('Minutier central des notaires de Paris'));
-        } elseif($entity->getHostingOrganization() == "AD78") {
+        } elseif($entity->getWill()->getHostingOrganization() == "AD78") {
             $institution->appendChild(new \DOMText('Archives départementales des Yvelines'));
             $collection->appendChild(new \DOMText('TO DEFINE'));
         } else {
@@ -317,10 +327,10 @@ class Builder
         }
 
         $idno = $doc->createElement('idno');
-        $idno->appendChild(new \DOMText($entity->getWill()->getCallNumber().', minute du '.$entity->getWill()->getMinuteDate()->format('d-m-y').' (dépôt du testament de '.$entity->getWill()->getTestator()->getName().')'));
+        $idno->appendChild(new \DOMText($entity->getWill()->getCallNumber().', minute du '.$entity->getWill()->getMinuteDate().' (dépôt du testament de '.$entity->getWill()->getTestator()->getName().')'));
 
         $msName = $doc->createElement('msName');
-        $msName->appendChild(new \DOMText('Testament de '.$entity->getWill()->getTestator()->getName().' ('.$entity->getWill()->getWillWritingDate()->format('d-m-y').')'));
+        $msName->appendChild(new \DOMText('Testament de '.$entity->getWill()->getTestator()->getName().' ('.$entity->getWill()->getWillWritingDate().')'));
 
         $msIdentifier->appendChild($institution);
         $msIdentifier->appendChild($collection);
@@ -337,14 +347,14 @@ class Builder
 
             if($entity->getWill()->getWillWritingDate() != null) {
                 $date = $doc->createElement('date');
-                $date->appendChild(new \DOMText($entity->getWill()->getWillWritingDate()->format('d-m-Y')));
+                $date->appendChild(new \DOMText($entity->getWill()->getWillWritingDate()));
                 $pDate->appendChild($date);
                 $pDate->appendChild(new \DOMText("."));
             }
 
             if($entity->getWill()->getWillWritingPlace() != null) {
                 $placeName = $doc->createElement('placeName');
-                $placeName->appendChild(new \DOMText($entity->getWill()->getWillWritingPlace()->getName()));
+                $placeName->appendChild(new \DOMText($entity->getWill()->getWillWritingPlace()->getNames()[0]->getName()));
                 $pDate->appendChild($placeName);
                 $pDate->appendChild(new \DOMText("."));
             }
@@ -367,8 +377,8 @@ class Builder
         $supportDesc = $doc->createElement('supportDesc');
         // -> Support
         $support = $doc->createElement('support');
-        if($entity->getPhysDescSupport() != null) {
-            $support->appendChild(new \DOMText($entity->getPhysDescSupport()));
+        if($entity->getWill()->getPagePhysDescSupport() != null) {
+            $support->appendChild(new \DOMText($entity->getWill()->getPagePhysDescSupport()));
         }
         $supportDesc->appendChild($support);
 
@@ -381,14 +391,14 @@ class Builder
         $dimensions->setAttribute('unit', 'cm');
         // ---> Height
         $height = $doc->createElement('height');
-        if($entity->getPhysDescHeight() != null) {
-            $height->appendChild(new \DOMText($entity->getPhysDescHeight()));
+        if($entity->getWill()->getPagePhysDescHeight() != null) {
+            $height->appendChild(new \DOMText($entity->getWill()->getPagePhysDescHeight()));
         }
         $dimensions->appendChild($height);
         // ---> Width
         $width = $doc->createElement('width');
-        if($entity->getPhysDescWidth() != null) {
-            $width->appendChild(new \DOMText($entity->getPhysDescWidth()));
+        if($entity->getWill()->getPagePhysDescWidth() != null) {
+            $width->appendChild(new \DOMText($entity->getWill()->getPagePhysDescWidth()));
         }
         $dimensions->appendChild($width);
         $objectDesc->appendChild($supportDesc);
@@ -396,9 +406,9 @@ class Builder
 
         // -> HandDesc
         $handDesc = $doc->createElement('handDesc');
-        if($entity->getPhysDescHand() != null) {
+        if($entity->getWill()->getPagePhysDescHand() != null) {
             $pHand = $doc->createElement('p');
-            $pHand->appendChild(new \DOMText($entity->getPhysDescHand()));
+            $pHand->appendChild(new \DOMText($entity->getWill()->getPagePhysDescHand()));
             $handDesc->appendChild($pHand);
         }
 
@@ -512,7 +522,7 @@ class Builder
             $elements[] = new \DOMText(" à ");
             $placeName = $doc->createElement('placeName');
             $placeName->setAttribute('ref', '#pl-'.$entity->getWill()->getTestator()->getPlaceOfDeath()->getId());
-            $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeath()->getName()));
+            $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeath()->getNames()[0]->getName()));
             $elements[] = $placeName;
         }
         if($entity->getWill()->getTestator()->getPlaceOfDeath() != null && $entity->getWill()->getTestator()->getDateOfDeath() != null) {
@@ -522,9 +532,9 @@ class Builder
             $elements[] = new \DOMText(" le ");
 
             $date = $doc->createElement('date');
-            $date->setAttribute('when', $entity->getWill()->getTestator()->getDateOfDeath()->format('d-m-Y'));
+            $date->setAttribute('when', $entity->getWill()->getTestator()->getDateOfDeath());
             $date->setAttribute('type', 'willAuthorDeathDate');
-            $date->appendChild(new \DOMText($entity->getWill()->getTestator()->getDateOfDeath()->format('d-m-Y')));
+            $date->appendChild(new \DOMText($entity->getWill()->getTestator()->getDateOfDeath()));
             $elements[] = $date;
         }
         $elements[] = new \DOMText(".");
@@ -541,6 +551,7 @@ class Builder
 
         foreach($entity->getResources() as $resource) {
             /** @var $resource \AppBundle\Entity\Resource */
+            $text .= "<pb facs=\"#testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$this->getIntIdToStrId($resource->getOrderInWill(), 2)."_jpg\"/>";
             if($resource->getTranscript()->getContent() != null) {
                 $text .= $resource->getTranscript()->getContent();
             }
@@ -548,6 +559,52 @@ class Builder
 
         $text .= "</div>";
         return $text;
+    }
+
+    /**
+     * @param $doc \DOMDocument
+     * @param $entity \AppBundle\Entity\Entity
+     * @return array
+     */
+    private function buildFacsimile($doc, $entity) {
+        $listSurfaces = array();
+        foreach ($entity->getResources() as $resource) {
+            /** @var $resource \AppBundle\Entity\Resource */
+
+            if(count($resource->getImages()) > 1) {
+                $surfaceGrp = $doc->createElement('surfaceGrp');
+                $surfaceGrp->setAttribute('type', $this->getResourceTypeFormat($resource));
+                $surfaceGrp->setAttribute('n', $this->getIntIdToStrId($resource->getOrderInWill(), 2));
+
+                foreach ($resource->getImages() as $image) {
+                    $surface = $doc->createElement('surface');
+                    $surface->setAttribute('type', $this->getResourceTypeFormat($resource));
+                    $surface->setAttribute('n', $image);
+                    $surface = $surfaceGrp->appendChild($surface);
+
+                    $graphic = $doc->createElement('graphic');
+                    $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$image."_L.jpg");
+                    $graphic->setAttribute('xml:id', "testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$image."_jpg");
+                    $surface->appendChild($graphic);
+                }
+
+                $listSurfaces[] = $surfaceGrp;
+            } else {
+                $surface = $doc->createElement('surface');
+                $surface->setAttribute('type', $this->getResourceTypeFormat($resource));
+                $surface->setAttribute('n', $resource->getImages()[0]);
+
+                $graphic = $doc->createElement('graphic');
+                $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$resource->getImages()[0]."_L.jpg");
+                $graphic->setAttribute('xml:id', "testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$resource->getImages()[0]."_jpg");
+                $surface->appendChild($graphic);
+
+                $listSurfaces[] = $surface;
+            }
+
+        }
+
+        return $listSurfaces;
     }
 
     /**
@@ -572,4 +629,44 @@ class Builder
 
         return $id;
     }
+
+    /**
+     * @param $intId int
+     * @param $length int
+     * @return string
+     */
+    private function getIntIdToStrId($intId, $length) {
+        $strId = "";
+        $strIdConvert = strval($intId);
+
+        if(strlen($strIdConvert) < $length) {
+            for($i = strlen($strIdConvert); $i < $length; $i++) {
+                $strId .= "0";
+            }
+            $strId .= $strIdConvert;
+        } else {
+            $strId = $strIdConvert;
+        }
+
+        return $strId;
+    }
+
+    /**
+     * @param $resource \AppBundle\Entity\Resource
+     * @return string
+     */
+    private function getResourceTypeFormat($resource) {
+        $formatType = null;
+
+        if(count($resource->getImages()) == 1 && $resource->getType() == "page") {
+            $formatType = "will-page";
+        } elseif(count($resource->getImages()) > 1 && $resource->getType() == "page") {
+            $formatType = "will-page-part";
+        } else {
+            $formatType = "unknown";
+        }
+
+        return $formatType;
+    }
+
 }

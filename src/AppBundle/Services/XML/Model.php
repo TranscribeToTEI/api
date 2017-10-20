@@ -83,6 +83,26 @@ class Model
 
     /**
      * @param $element_name string
+     * @return bool
+     */
+    public function getTextAllowed($element_name)
+    {
+        $textAllowed = false;
+        $doc = new \DOMDocument('1.0');
+        $doc->load($this->model);
+        $xpath = new \DOMXPath($doc);
+        $xpath->registerNameSpace('tei', 'http://www.tei-c.org/ns/1.0');
+        $elements = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:content/tei:textNode|//tei:elementSpec[@ident="'.$element_name.'"]/tei:content/tei:alternate/tei:textNode|//tei:elementSpec[@ident="'.$element_name.'"]/tei:content/tei:alternate/tei:sequence/tei:textNode|//tei:elementSpec[@ident="'.$element_name.'"]/tei:content/tei:alternate/tei:alternate/tei:textNode|//tei:elementSpec[@ident="'.$element_name.'"]/tei:content/tei:sequence/tei:textNode|//tei:elementSpec[@ident="'.$element_name.'"]/tei:content/tei:sequence/tei:alternate/tei:textNode');
+
+        if($elements->length > 0) {
+            $textAllowed = true;
+        }
+
+        return $textAllowed;
+    }
+
+    /**
+     * @param $element_name string
      * @return array
      */
     public function getAttributes($element_name)

@@ -30,7 +30,7 @@ class ModelController extends FOSRestController
      *
      * @QueryParam(name="element", nullable=false, description="Name of the element required")
      * @QueryParam(name="elements", nullable=false, requirements="true", description="Query every elements info")
-     * @QueryParam(name="info", nullable=false, requirements="full|doc|content|attributes", description="Type of information required")
+     * @QueryParam(name="info", nullable=false, requirements="full|doc|content|attributes|textAllowed", description="Type of information required")
      *
      * @Doc\ApiDoc(
      *     section="Model",
@@ -85,11 +85,14 @@ class ModelController extends FOSRestController
             return $modelService->getContent($element);
         } elseif ($info == 'attributes') {
             return $modelService->getAttributes($element);
+        } elseif ($info == 'textAllowed') {
+            return $modelService->getTextAllowed($element);
         } elseif ($info == 'full') {
             return [
                 "doc" => $modelService->getDoc($element),
                 "content" => $modelService->getContent($element),
-                "attributes" => $modelService->getAttributes($element)
+                "attributes" => $modelService->getAttributes($element),
+                "textAllowed" => $modelService->getTextAllowed($element)
             ];
         }
     }

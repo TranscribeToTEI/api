@@ -674,4 +674,49 @@ class UserController extends FOSRestController
 
         return $user;
     }
+
+    /**
+     * @Rest\Post("/users-avatar")
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     *
+     * @QueryParam(name="id", nullable=false, description="Identifier of the user")
+     *
+     * @Doc\ApiDoc(
+     *     section="Users",
+     *     resource=true,
+     *     description="Upload an avatar for a user",
+     *     statusCodes={
+     *         201="Returned when created",
+     *         400="Returned when a violation is raised by validation"
+     *     }
+     * )
+     */
+    public function postAvatarsAction(Request $request, ParamFetcher $paramFetcher)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $id = $paramFetcher->get('id');
+
+        /** @var $user User */
+        $user = $em->getRepository('UserBundle:User')->findOneById($id);
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        /* Upload logic */
+        $uploadedFile = $request->files->get('picture');
+        $directory = __DIR__.'/../../../web/uploads/';
+        $uploadedFile->move($directory, $uploadedFile->getClientOriginalName());
+
+        $file = fopen($directory.$uploadedFile->getClientOriginalName(), 'r');
+        $fileName = uniqid();
+        $info = pathinfo($directory.$uploadedFile->getClientOriginalName());
+        rename($directory.$uploadedFile->getClientOriginalName(), $directory.$fileName.'.'.$info['extension']);
+        fclose($file);
+
+        /* User edition */
+        $user->setPicture($fileName.'.'.$info['extension']);
+        $em->flush();
+
+        return new JsonResponse($user);
+    }
 }

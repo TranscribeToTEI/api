@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Testament MC/ET/XXXIII/1848</title>
+        <respStmt>
+          <resp>Identification du testament</resp>
+          <persName xml:id="CNougaret">Christine Nougaret</persName>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Project Testaments de Poilus</publisher>
+        <pubPlace>Paris</pubPlace>
+        <date when="2017-10-20" type="otherDate"/>
+      </publicationStmt>
+      <sourceDesc>
+        <msDesc>
+          <msIdentifier>
+            <institution>Archives nationales</institution>
+            <collection>Minutier central des notaires de Paris</collection>
+            <idno>MC/ET/XXXIII/1848, minute du 29 juillet 1915 (d&#xE9;p&#xF4;t du testament de C&#xE9;leste Camille Herpin)</idno>
+            <msName>Testament de C&#xE9;leste Camille Herpin (2 ao&#xFB;t 1914)</msName>
+          </msIdentifier>
+          <physDesc>
+            <objectDesc>
+              <supportDesc>
+                <support>Papier timbr&#xE9;</support>
+              </supportDesc>
+            </objectDesc>
+            <handDesc>
+              <p>encre</p>
+            </handDesc>
+          </physDesc>
+        </msDesc>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc>
+      <change when="2017-10-15" who="1">validation</change>
+    </revisionDesc>
+  </teiHeader>
+  <facsimile xml:base="https://testaments-de-poilus.huma-num.fr/api/web/images/data/testament_9999/">
+    <surface type="will-page" n="01">
+      <graphic url="JPEG/FRAN_Poilus_t-9999_01_L.jpg" xml:id="testament-9999_vue-01_jpg"/>
+    </surface>
+    <surface type="unknown" n="02">
+      <graphic url="JPEG/FRAN_Poilus_t-9999_02_L.jpg" xml:id="testament-9999_vue-02_jpg"/>
+    </surface>
+  </facsimile>
+  <text xml:id="will-11">
+    <body>
+      <div type="will"><pb facs="#testament-9999_vue-1_jpg"/><dateline rend="centered"><placeName type="willPlace">Paris</placeName> le <date when="1914-08-02" type="willDate">2 <choice><orig>Aout</orig><reg>ao&#xFB;t</reg></choice> 1914</date></dateline>
+<space/>
+<p>Ceci est <choice><sic>mais derni&#xE8;res<lb/>
+</sic><corr>ma derni&#xE8;re</corr></choice> volonte, en cas de d&#xE9;c&#xE8;s<choice><orig/><reg>.</reg></choice></p>
+<p>Je l&#xE8;gue toute ma<lb/>
+chambre <choice><orig>a</orig><reg>&#xE0;</reg></choice> <persName>Mademoiselle<lb/>
+Cl&#xE9;mence Pradayrolle</persName><lb/>
+<choice><sic>sof tout mes &#xE9;fets</sic><corr>sauf tous mes effets</corr></choice> qui<lb/>
+me <choice><sic>cons&#xE8;rne</sic><corr>concernent</corr></choice><choice><orig/><reg>,</reg></choice> que je l&#xE8;gue<lb/>
+<choice><orig>a</orig><reg>&#xE0;</reg></choice> mon cousin <persName>Marcel<lb/>
+Aumasson</persName>.</p>
+<signed rend="right"><persName ref="#p-0010">C <surname>Herpin</surname></persName></signed>
+<dateline>Fait <choice><orig>a</orig><reg>&#xE0;</reg></choice> Paris le 2 <choice><orig>Aout</orig><reg>ao&#xFB;t</reg></choice><lb/>1914</dateline><pb facs="#testament-9999_vue-2_jpg"/></div>
+    </body>
+  </text>
+</TEI>

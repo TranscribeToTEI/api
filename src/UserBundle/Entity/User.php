@@ -127,7 +127,6 @@ class User extends BaseUser
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
-     * @Assert\Url()
      *
      * @ORM\Column(name="picture", type="text", nullable=true)
      */

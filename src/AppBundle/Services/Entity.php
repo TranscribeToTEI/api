@@ -52,8 +52,8 @@ class Entity
                 } else {
                     if ($transcriptStatus == "validation" and ($status == "validation" or $status == "validated")) {
                         $status = $transcriptStatus;
-                    } elseif ($transcriptStatus == "transcription" and ($status == "transcription" or $status == "validation" or $status == "validated")) {
-                        $status = $transcriptStatus;
+                    } elseif (($transcriptStatus == "transcription" and $status == "todo") or ($transcriptStatus == "todo" and $status == "transcription")) {
+                        $status = "transcription";
                     } else {
                         $status = $transcriptStatus;
                     }
