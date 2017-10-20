@@ -33,6 +33,7 @@ class Builder
         /* -- Definition of DOMDocument -- */
         /** @var $doc \DOMDocument */
         $doc = new \DOMDocument('1.0');
+        $doc->encoding = 'UTF-8';
         $doc->formatOutput = true;
 
         /* -- Definition of the root element: TEI -- */
