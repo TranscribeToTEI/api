@@ -93,13 +93,25 @@ class Preference
      * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
-     * @Assert\Choice({"todo", "done", "notInterested"})
+     * @Assert\Choice({"todo", "inProgress", "done", "notInterested"})
      *
      * @var string
      *
      * @ORM\Column(name="tutorial_status", type="string", length=255)
      */
     private $tutorialStatus;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var int
+     *
+     * @ORM\Column(name="tutorialProgress", type="integer", nullable=true)
+     */
+    private $tutorialProgress;
+
 
     /**
      * @Serializer\Since("0.1")
@@ -258,5 +270,29 @@ class Preference
     public function getShowComplexEntry()
     {
         return $this->showComplexEntry;
+    }
+
+    /**
+     * Set tutorialProgress
+     *
+     * @param integer $tutorialProgress
+     *
+     * @return Preference
+     */
+    public function setTutorialProgress($tutorialProgress)
+    {
+        $this->tutorialProgress = $tutorialProgress;
+
+        return $this;
+    }
+
+    /**
+     * Get tutorialProgress
+     *
+     * @return integer
+     */
+    public function getTutorialProgress()
+    {
+        return $this->tutorialProgress;
     }
 }

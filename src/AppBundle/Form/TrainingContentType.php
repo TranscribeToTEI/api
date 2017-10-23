@@ -18,13 +18,15 @@ class TrainingContentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title',          TextType::class,        array("required" => true))
-            ->add('pageType',       TextType::class,        array("required" => true))
-            ->add('pageStatus',     TextType::class,        array("required" => true))
-            ->add('content',        TextareaType::class,    array("required" => false))
-            ->add('illustration',   UrlType::class,         array("required" => false))
-            ->add('updateComment',  TextType::class,        array("required" => true))
-            ->add('orderInTraining',IntegerType::class,     array("required" => false))
+            ->add('title',                      TextType::class,        array("required" => true))
+            ->add('pageType',                   TextType::class,        array("required" => true))
+            ->add('pageStatus',                 TextType::class,        array("required" => true))
+            ->add('content',                    TextareaType::class,    array("required" => false))
+            ->add('illustration',               TextType::class,        array("required" => false))
+            ->add('videoContainer',             TextareaType::class,    array("required" => false))
+            ->add('updateComment',              TextType::class,        array("required" => true))
+            ->add('orderInTraining',            IntegerType::class,     array("required" => false))
+            ->add('editorialResponsibility',    \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'UserBundle:User'))
         ;
     }
     

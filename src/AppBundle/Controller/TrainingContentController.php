@@ -27,6 +27,8 @@ class TrainingContentController extends FOSRestController
      *
      * @QueryParam(name="status", nullable=true, description="Name of the status required")
      * @QueryParam(name="type", nullable=true, description="Name of the type required")
+     * @QueryParam(name="order", nullable=true, description="Order index of the content required")
+     * @QueryParam(name="orderInTraining", nullable=true, description="Are the results ordered by training order")
      *
      * @Doc\ApiDoc(
      *     section="TrainingContents",
@@ -42,6 +44,8 @@ class TrainingContentController extends FOSRestController
     {
         $status = $paramFetcher->get('status');
         $type = $paramFetcher->get('type');
+        $order = $paramFetcher->get('order');
+        $orderInTraining = $paramFetcher->get('orderInTraining');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:TrainingContent');
         /* @var $repository EntityRepository */
@@ -49,8 +53,12 @@ class TrainingContentController extends FOSRestController
         $query = [];
         if($status != "") {$query["status"] = $status;}
         if($type != "") {$query["type"] = $type;}
+        if($order != "") {$query["orderInTraining"] = $order;}
 
-        $trainingContents = $repository->findBy($query);
+        $order = [];
+        if($orderInTraining == "ASC" or $orderInTraining == "DESC") {$order["orderInTraining"] = $orderInTraining;}
+
+        $trainingContents = $repository->findBy($query, $order);
         /* @var $trainingContents TrainingContent[] */
 
         return $trainingContents;

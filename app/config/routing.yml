@@ -86,6 +86,10 @@ training-contents:
     type:     rest
     resource: AppBundle\Controller\TrainingContentController
 
+media-contents:
+    type:     rest
+    resource: AppBundle\Controller\MediaContentController
+
 contact:
     type:     rest
     resource: AppBundle\Controller\ContactController

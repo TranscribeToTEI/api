@@ -145,12 +145,22 @@ class TrainingContent
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\Url()
      *
      * @ORM\Column(name="illustration", type="text", nullable=true)
      */
     private $illustration;
 
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="videoContainer", type="text", nullable=true)
+     */
+    private $videoContainer;
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
@@ -161,6 +171,17 @@ class TrainingContent
      * @ORM\Column(name="orderInTraining", type="integer")
      */
     private $orderInTraining;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(1)
+     *
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $editorialResponsibility;
 
     /**
      * @Serializer\Since("0.1")
@@ -236,6 +257,22 @@ class TrainingContent
     {
         return $this->id;
     }
+
+    /**
+     * Set
+     *
+     * @param string $field
+     * @param string $value
+     *
+     * @return TrainingContent
+     */
+    public function set($field, $value)
+    {
+        $this->{$field} = $value;
+
+        return $this;
+    }
+
 
     /**
      * Set title
@@ -499,5 +536,53 @@ class TrainingContent
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set videoContainer
+     *
+     * @param string $videoContainer
+     *
+     * @return TrainingContent
+     */
+    public function setVideoContainer($videoContainer)
+    {
+        $this->videoContainer = $videoContainer;
+
+        return $this;
+    }
+
+    /**
+     * Get videoContainer
+     *
+     * @return string
+     */
+    public function getVideoContainer()
+    {
+        return $this->videoContainer;
+    }
+
+    /**
+     * Set editorialResponsibility
+     *
+     * @param \UserBundle\Entity\User $editorialResponsibility
+     *
+     * @return TrainingContent
+     */
+    public function setEditorialResponsibility(\UserBundle\Entity\User $editorialResponsibility = null)
+    {
+        $this->editorialResponsibility = $editorialResponsibility;
+
+        return $this;
+    }
+
+    /**
+     * Get editorialResponsibility
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getEditorialResponsibility()
+    {
+        return $this->editorialResponsibility;
     }
 }
