@@ -14,8 +14,8 @@ class ReferenceItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('printedReference')
-            ->add('manuscriptReference')
+            ->add('printedReference',   \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:PrintedReference'))
+            ->add('manuscriptReference',\Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:ManuscriptReference'))
         ;
     }
     

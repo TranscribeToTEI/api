@@ -82,6 +82,10 @@ contents:
     type:     rest
     resource: AppBundle\Controller\ContentController
 
+training-contents:
+    type:     rest
+    resource: AppBundle\Controller\TrainingContentController
+
 contact:
     type:     rest
     resource: AppBundle\Controller\ContactController
