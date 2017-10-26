@@ -21,6 +21,7 @@ class PrintedReferenceType extends AbstractType
             ->add('containerType',              TextType::class,        array("required" => false))
             ->add('url',                        TextType::class,        array("required" => false))
             ->add('otherInformation',           TextType::class,        array("required" => false))
+            ->add('updateComment',              TextType::class,        array("required" => true))
         ;
     }
     

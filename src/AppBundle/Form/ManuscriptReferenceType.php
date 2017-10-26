@@ -20,6 +20,7 @@ class ManuscriptReferenceType extends AbstractType
             ->add('collectionName',             TextType::class,        array("required" => false))
             ->add('documentNumber',             TextType::class,        array("required" => true))
             ->add('url',                        TextType::class,        array("required" => false))
+            ->add('updateComment',              TextType::class,        array("required" => true))
         ;
     }
     

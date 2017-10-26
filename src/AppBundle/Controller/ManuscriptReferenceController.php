@@ -81,7 +81,7 @@ class ManuscriptReferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\Post("/manuscriptReferences")
+     * @Rest\Post("/manuscript-references")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      *
      * @Doc\ApiDoc(

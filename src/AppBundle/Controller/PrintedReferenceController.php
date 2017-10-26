@@ -139,7 +139,7 @@ class PrintedReferenceController extends FOSRestController
 
     /**
      * @Rest\View()
-     * @Rest\Patch("/printedreferences/{id}")
+     * @Rest\Patch("/printed-references/{id}")
      * @Doc\ApiDoc(
      *     section="PrintedReferences",
      *     resource=true,
