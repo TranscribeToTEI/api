@@ -104,6 +104,21 @@ class TrainingContent
      *
      * @var string
      *
+     * @ORM\Column(name="internalGoal", type="text")
+     */
+    private $internalGoal;
+
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\NotBlank()
+     *
+     * @var string
+     *
      * @ORM\Column(name="content", type="text")
      */
     private $content;
@@ -161,6 +176,7 @@ class TrainingContent
      * @ORM\Column(name="videoContainer", type="text", nullable=true)
      */
     private $videoContainer;
+
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
@@ -168,7 +184,7 @@ class TrainingContent
      *
      * @var int
      *
-     * @ORM\Column(name="orderInTraining", type="integer")
+     * @ORM\Column(name="orderInTraining", type="integer", nullable=true)
      */
     private $orderInTraining;
 
@@ -182,6 +198,186 @@ class TrainingContent
      * @ORM\JoinColumn(nullable=true)
      */
     protected $editorialResponsibility;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="exerciseHeader", type="text", nullable=true)
+     */
+    private $exerciseHeader;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="exerciseImageToTranscribe", type="text", nullable=true)
+     */
+    private $exerciseImageToTranscribe;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsSmartTEI", type="boolean", nullable=true)
+     */
+    private $exerciseIsSmartTEI;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsAttributesManagement", type="boolean", nullable=true)
+     */
+    private $exerciseIsAttributesManagement;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var array
+     *
+     * @ORM\Column(name="exerciseTagsList", type="array", nullable=true)
+     */
+    private $exerciseTagsList;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsLiveRender", type="boolean", nullable=true)
+     */
+    private $exerciseIsLiveRender;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsHelp", type="boolean", nullable=true)
+     */
+    private $exerciseIsHelp;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsDocumentation", type="boolean", nullable=true)
+     */
+    private $exerciseIsDocumentation;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsTaxonomy", type="boolean", nullable=true)
+     */
+    private $exerciseIsTaxonomy;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsBibliography", type="boolean", nullable=true)
+     */
+    private $exerciseIsBibliography;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsNotes", type="boolean", nullable=true)
+     */
+    private $exerciseIsNotes;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsVersioning", type="boolean", nullable=true)
+     */
+    private $exerciseIsVersioning;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="exerciseIsComplexFields", type="boolean", nullable=true)
+     */
+    private $exerciseIsComplexFields;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="exerciseCorrectionTranscript", type="text", nullable=true)
+     */
+    private $exerciseCorrectionTranscript;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="exerciseCorrectionErrorsToAvoid", type="text", nullable=true)
+     */
+    private $exerciseCorrectionErrorsToAvoid;
 
     /**
      * @Serializer\Since("0.1")
@@ -584,5 +780,389 @@ class TrainingContent
     public function getEditorialResponsibility()
     {
         return $this->editorialResponsibility;
+    }
+
+    /**
+     * Set exerciseImageToTranscribe
+     *
+     * @param string $exerciseImageToTranscribe
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseImageToTranscribe($exerciseImageToTranscribe)
+    {
+        $this->exerciseImageToTranscribe = $exerciseImageToTranscribe;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseImageToTranscribe
+     *
+     * @return string
+     */
+    public function getExerciseImageToTranscribe()
+    {
+        return $this->exerciseImageToTranscribe;
+    }
+
+    /**
+     * Set exerciseIsSmartTEI
+     *
+     * @param boolean $exerciseIsSmartTEI
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsSmartTEI($exerciseIsSmartTEI)
+    {
+        $this->exerciseIsSmartTEI = $exerciseIsSmartTEI;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsSmartTEI
+     *
+     * @return boolean
+     */
+    public function getExerciseIsSmartTEI()
+    {
+        return $this->exerciseIsSmartTEI;
+    }
+
+    /**
+     * Set exerciseIsAttributesManagement
+     *
+     * @param boolean $exerciseIsAttributesManagement
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsAttributesManagement($exerciseIsAttributesManagement)
+    {
+        $this->exerciseIsAttributesManagement = $exerciseIsAttributesManagement;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsAttributesManagement
+     *
+     * @return boolean
+     */
+    public function getExerciseIsAttributesManagement()
+    {
+        return $this->exerciseIsAttributesManagement;
+    }
+
+    /**
+     * Set exerciseTagsList
+     *
+     * @param array $exerciseTagsList
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseTagsList($exerciseTagsList)
+    {
+        $this->exerciseTagsList = $exerciseTagsList;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseTagsList
+     *
+     * @return array
+     */
+    public function getExerciseTagsList()
+    {
+        return $this->exerciseTagsList;
+    }
+
+    /**
+     * Set exerciseIsLiveRender
+     *
+     * @param boolean $exerciseIsLiveRender
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsLiveRender($exerciseIsLiveRender)
+    {
+        $this->exerciseIsLiveRender = $exerciseIsLiveRender;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsLiveRender
+     *
+     * @return boolean
+     */
+    public function getExerciseIsLiveRender()
+    {
+        return $this->exerciseIsLiveRender;
+    }
+
+    /**
+     * Set exerciseIsHelp
+     *
+     * @param boolean $exerciseIsHelp
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsHelp($exerciseIsHelp)
+    {
+        $this->exerciseIsHelp = $exerciseIsHelp;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsHelp
+     *
+     * @return boolean
+     */
+    public function getExerciseIsHelp()
+    {
+        return $this->exerciseIsHelp;
+    }
+
+    /**
+     * Set exerciseIsDocumentation
+     *
+     * @param boolean $exerciseIsDocumentation
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsDocumentation($exerciseIsDocumentation)
+    {
+        $this->exerciseIsDocumentation = $exerciseIsDocumentation;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsDocumentation
+     *
+     * @return boolean
+     */
+    public function getExerciseIsDocumentation()
+    {
+        return $this->exerciseIsDocumentation;
+    }
+
+    /**
+     * Set exerciseIsTaxonomy
+     *
+     * @param boolean $exerciseIsTaxonomy
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsTaxonomy($exerciseIsTaxonomy)
+    {
+        $this->exerciseIsTaxonomy = $exerciseIsTaxonomy;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsTaxonomy
+     *
+     * @return boolean
+     */
+    public function getExerciseIsTaxonomy()
+    {
+        return $this->exerciseIsTaxonomy;
+    }
+
+    /**
+     * Set exerciseIsBibliography
+     *
+     * @param boolean $exerciseIsBibliography
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsBibliography($exerciseIsBibliography)
+    {
+        $this->exerciseIsBibliography = $exerciseIsBibliography;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsBibliography
+     *
+     * @return boolean
+     */
+    public function getExerciseIsBibliography()
+    {
+        return $this->exerciseIsBibliography;
+    }
+
+    /**
+     * Set exerciseIsNotes
+     *
+     * @param boolean $exerciseIsNotes
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsNotes($exerciseIsNotes)
+    {
+        $this->exerciseIsNotes = $exerciseIsNotes;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsNotes
+     *
+     * @return boolean
+     */
+    public function getExerciseIsNotes()
+    {
+        return $this->exerciseIsNotes;
+    }
+
+    /**
+     * Set exerciseIsVersioning
+     *
+     * @param boolean $exerciseIsVersioning
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsVersioning($exerciseIsVersioning)
+    {
+        $this->exerciseIsVersioning = $exerciseIsVersioning;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsVersioning
+     *
+     * @return boolean
+     */
+    public function getExerciseIsVersioning()
+    {
+        return $this->exerciseIsVersioning;
+    }
+
+    /**
+     * Set exerciseIsComplexFields
+     *
+     * @param boolean $exerciseIsComplexFields
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseIsComplexFields($exerciseIsComplexFields)
+    {
+        $this->exerciseIsComplexFields = $exerciseIsComplexFields;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseIsComplexFields
+     *
+     * @return boolean
+     */
+    public function getExerciseIsComplexFields()
+    {
+        return $this->exerciseIsComplexFields;
+    }
+
+    /**
+     * Set exerciseCorrectionTranscript
+     *
+     * @param string $exerciseCorrectionTranscript
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseCorrectionTranscript($exerciseCorrectionTranscript)
+    {
+        $this->exerciseCorrectionTranscript = $exerciseCorrectionTranscript;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseCorrectionTranscript
+     *
+     * @return string
+     */
+    public function getExerciseCorrectionTranscript()
+    {
+        return $this->exerciseCorrectionTranscript;
+    }
+
+    /**
+     * Set exerciseCorrectionErrorsToAvoid
+     *
+     * @param string $exerciseCorrectionErrorsToAvoid
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseCorrectionErrorsToAvoid($exerciseCorrectionErrorsToAvoid)
+    {
+        $this->exerciseCorrectionErrorsToAvoid = $exerciseCorrectionErrorsToAvoid;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseCorrectionErrorsToAvoid
+     *
+     * @return string
+     */
+    public function getExerciseCorrectionErrorsToAvoid()
+    {
+        return $this->exerciseCorrectionErrorsToAvoid;
+    }
+
+    /**
+     * Set internalGoal
+     *
+     * @param string $internalGoal
+     *
+     * @return TrainingContent
+     */
+    public function setInternalGoal($internalGoal)
+    {
+        $this->internalGoal = $internalGoal;
+
+        return $this;
+    }
+
+    /**
+     * Get internalGoal
+     *
+     * @return string
+     */
+    public function getInternalGoal()
+    {
+        return $this->internalGoal;
+    }
+
+    /**
+     * Set exerciseHeader
+     *
+     * @param string $exerciseHeader
+     *
+     * @return TrainingContent
+     */
+    public function setExerciseHeader($exerciseHeader)
+    {
+        $this->exerciseHeader = $exerciseHeader;
+
+        return $this;
+    }
+
+    /**
+     * Get exerciseHeader
+     *
+     * @return string
+     */
+    public function getExerciseHeader()
+    {
+        return $this->exerciseHeader;
     }
 }

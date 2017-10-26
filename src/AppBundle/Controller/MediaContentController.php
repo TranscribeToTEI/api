@@ -28,7 +28,7 @@ class MediaContentController extends FOSRestController
      *
      * @QueryParam(name="type", nullable=false, requirements="TrainingContent", description="Type of entity to rely to the media")
      * @QueryParam(name="id", nullable=false, description="Identifier of the entity to rely to the media")
-     * @QueryParam(name="field", nullable=false, requirements="illustration", description="Field of the entity where to store the media")
+     * @QueryParam(name="field", nullable=false, requirements="illustration|exerciseImageToTranscribe", description="Field of the entity where to store the media")
      *
      * @Doc\ApiDoc(
      *     section="Media",
