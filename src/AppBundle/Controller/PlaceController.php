@@ -112,7 +112,7 @@ class PlaceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postPlacesAction(Request $request)
     {
@@ -166,7 +166,7 @@ class PlaceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updatePlaceAction(Request $request)
     {
@@ -188,7 +188,7 @@ class PlaceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchPlaceAction(Request $request)
     {

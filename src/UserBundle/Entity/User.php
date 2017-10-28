@@ -132,6 +132,12 @@ class User extends BaseUser
      */
     private $picture;
 
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+        $this->roles = array('ROLE_USER');
+    }
 
     /**
      * Get id

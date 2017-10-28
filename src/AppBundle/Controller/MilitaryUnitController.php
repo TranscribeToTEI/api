@@ -130,7 +130,7 @@ class MilitaryUnitController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postMilitaryUnitsAction(Request $request)
     {
@@ -187,7 +187,7 @@ class MilitaryUnitController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updateMilitaryUnitAction(Request $request)
     {
@@ -232,7 +232,7 @@ class MilitaryUnitController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchMilitaryUnitAction(Request $request)
     {

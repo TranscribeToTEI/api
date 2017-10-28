@@ -29,6 +29,8 @@ class LogsController extends FOSRestController
      * @Rest\Get("/logs")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
+     * @QueryParam(name="entityTypes", nullable=false, description="List of the required entity types, spliced by coma")
+     *
      * @Doc\ApiDoc(
      *     section="Logs",
      *     resource=true,
@@ -43,10 +45,17 @@ class LogsController extends FOSRestController
     {
         /** @var $em EntityManager */
         $em = $this->getDoctrine()->getManager();
-        /** @var $repo LogEntryRepository */
-        $repo = $em->getRepository('Gedmo\Loggable\Entity\LogEntry'); // we use default log entry class
-        $logs = $repo->findAll();
+        $loggableEntities = explode(',', $paramFetcher->get('entityTypes'));
+        $versions = array();
 
-        return new JsonResponse($logs, Response::HTTP_OK);
+        foreach($loggableEntities as $entityType) {
+            foreach($em->getRepository('AppBundle:'.$entityType)->findAll() as $entity) {
+                foreach($this->get('app.versioning')->getVersions($entity) as $version) {
+                    $versions[] = ['log' => $version, 'entity' => /*$entity*/null, 'type' => $entityType];
+                }
+            }
+        }
+
+        return $versions;
     }
 }
