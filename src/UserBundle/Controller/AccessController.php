@@ -160,6 +160,7 @@ class AccessController extends FOSRestController
 
     private function updateAccess(Request $request, $clearMissing)
     {
+        $isRequestValidation = false;
         $em = $this->getDoctrine()->getManager();
         $access = $em->getRepository('UserBundle:Access')->find($request->get('id'));
         /* @var $access Access */
@@ -170,11 +171,27 @@ class AccessController extends FOSRestController
             throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
+        if($access->getTaxonomyRequest() != null and $access->getIsTaxonomyAccess() == false) {
+            $isRequestValidation = true;
+        }
+
         $form = $this->createForm(AccessType::class, $access);
         $form->submit($request->request->all(), $clearMissing);
         if ($form->isValid()) {
             $em->merge($access);
             $em->flush();
+
+            if($isRequestValidation == false and $access->getTaxonomyRequest() == null and $access->getIsTaxonomyAccess() == false) {
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Information concernant votre compte - Testaments de Poilus')
+                    ->setFrom('testaments-de-poilus@huma-num.fr')
+                    ->setTo($access->getUser()->getEmail())
+                    ->setBody($this->renderView(
+                        'UserBundle:SetRole:emailNoPromote.html.twig',
+                        array('user' => $access->getUser())));
+                $this->get('mailer')->send($message);
+            }
+
             return $access;
         } else {
             return $form;
