@@ -101,6 +101,20 @@ class Content
      *
      * @var string
      *
+     * @ORM\Column(name="abstract", type="text")
+     */
+    private $abstract;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\NotBlank()
+     *
+     * @var string
+     *
      * @ORM\Column(name="content", type="text")
      */
     private $content;
@@ -166,7 +180,6 @@ class Content
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\Url()
      *
      * @ORM\Column(name="illustration", type="text", nullable=true)
      */
@@ -245,6 +258,21 @@ class Content
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set
+     *
+     * @param string $field
+     * @param string $value
+     *
+     * @return Content
+     */
+    public function set($field, $value)
+    {
+        $this->{$field} = $value;
+
+        return $this;
     }
 
     /**
@@ -533,5 +561,29 @@ class Content
     public function getIllustration()
     {
         return $this->illustration;
+    }
+
+    /**
+     * Set abstract
+     *
+     * @param string $abstract
+     *
+     * @return Content
+     */
+    public function setAbstract($abstract)
+    {
+        $this->abstract = $abstract;
+
+        return $this;
+    }
+
+    /**
+     * Get abstract
+     *
+     * @return string
+     */
+    public function getAbstract()
+    {
+        return $this->abstract;
     }
 }

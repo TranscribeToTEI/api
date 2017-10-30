@@ -22,6 +22,7 @@ class ContentType extends AbstractType
         $builder
             ->add('title',          TextType::class,        array("required" => true))
             ->add('content',        TextareaType::class,    array("required" => true))
+            ->add('abstract',        TextareaType::class,    array("required" => true))
             ->add('type',           TextType::class,        array("required" => true))
             ->add('status',         TextType::class,        array("required" => false))
             ->add('onHomepage',     TextType::class,        array("required" => true))
