@@ -36,4 +36,26 @@ class Transcript
     {
         return $this->em->getRepository('AppBundle:Resource')->findOneBy(array('transcript' => $transcript));
     }
+
+    /**
+     * @param $transcript \AppBundle\Entity\Transcript
+     * @return bool
+     */
+    public function isOpened($transcript)
+    {
+        /** @var $resource \AppBundle\Entity\Resource */
+        $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isOpened' => false));
+
+        return ($transcriptLog !== null) ? false : true;
+    }
+
+    /**
+     * @param $transcript \AppBundle\Entity\Transcript
+     * @return array
+     */
+    public function getLogs($transcript)
+    {
+        /** @var $resource \AppBundle\Entity\Resource */
+        return $this->em->getRepository("AppBundle:TranscriptLog")->findBy(array("transcript" => $transcript));
+    }
 }

@@ -75,6 +75,20 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "parent"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "isOpened",
+ *     embedded = @Hateoas\Embedded("expr(service('app.transcript').isOpened(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "parent"}
+ *     )
+ * )
+ * @Hateoas\Relation(
+ *     "logs",
+ *     embedded = @Hateoas\Embedded("expr(service('app.transcript').getLogs(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "parent"}
+ *     )
+ * )
  */
 class Transcript
 {

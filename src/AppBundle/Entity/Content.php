@@ -242,6 +242,7 @@ class Content
      * @Gedmo\Versioned
      *
      * @Assert\Type("string")
+     * @Assert\NotBlank()
      *
      * @var string
      *

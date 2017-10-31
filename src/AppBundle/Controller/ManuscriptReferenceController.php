@@ -82,7 +82,7 @@ class ManuscriptReferenceController extends FOSRestController
 
     /**
      * @Rest\Post("/manuscript-references")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Manuscript-references",
@@ -96,7 +96,7 @@ class ManuscriptReferenceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postManuscriptReferencesAction(Request $request)
     {
@@ -116,7 +116,7 @@ class ManuscriptReferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/manuscript-references/{id}")
      * @Doc\ApiDoc(
      *     section="ManuscriptReferences",
@@ -130,7 +130,7 @@ class ManuscriptReferenceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updateManuscriptReferenceAction(Request $request)
     {
@@ -138,7 +138,7 @@ class ManuscriptReferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/manuscript-references/{id}")
      * @Doc\ApiDoc(
      *     section="ManuscriptReferences",
@@ -152,7 +152,7 @@ class ManuscriptReferenceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchManuscriptReferenceAction(Request $request)
     {

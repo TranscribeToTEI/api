@@ -79,7 +79,7 @@ class EntityController extends FOSRestController
 
     /**
      * @Rest\Post("/entities")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Entities",
@@ -129,7 +129,7 @@ class EntityController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/entities/{id}")
      * @Doc\ApiDoc(
      *     section="Entities",
@@ -155,7 +155,7 @@ class EntityController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/entities/{id}")
      * @Doc\ApiDoc(
      *     section="Entities",

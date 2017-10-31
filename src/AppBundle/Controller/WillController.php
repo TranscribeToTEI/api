@@ -74,7 +74,7 @@ class WillController extends FOSRestController
 
     /**
      * @Rest\Post("/wills")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Wills",
@@ -142,7 +142,7 @@ class WillController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/wills/{id}")
      * @Doc\ApiDoc(
      *     section="Wills",
@@ -198,7 +198,7 @@ class WillController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/wills/{id}")
      * @Doc\ApiDoc(
      *     section="Wills",

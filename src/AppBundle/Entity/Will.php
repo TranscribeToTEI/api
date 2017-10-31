@@ -403,7 +403,6 @@ class Will
      */
     private $updateComment;
 
-
     /**
      * Get id
      *

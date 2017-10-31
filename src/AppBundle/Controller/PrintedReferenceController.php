@@ -82,7 +82,7 @@ class PrintedReferenceController extends FOSRestController
 
     /**
      * @Rest\Post("/printed-references")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="PrintedReferences",
@@ -96,7 +96,7 @@ class PrintedReferenceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postPrintedReferencesAction(Request $request)
     {
@@ -116,7 +116,7 @@ class PrintedReferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/printed-references/{id}")
      * @Doc\ApiDoc(
      *     section="PrintedReferences",
@@ -130,7 +130,7 @@ class PrintedReferenceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updatePrintedReferenceAction(Request $request)
     {
@@ -138,7 +138,7 @@ class PrintedReferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/printed-references/{id}")
      * @Doc\ApiDoc(
      *     section="PrintedReferences",
@@ -152,7 +152,7 @@ class PrintedReferenceController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchPrintedReferenceAction(Request $request)
     {

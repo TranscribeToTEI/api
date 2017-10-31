@@ -101,7 +101,7 @@ class AppPreferenceController extends FOSRestController
 
     /**
      * @Rest\Post("/app-preference")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="AppPreferences",
@@ -158,7 +158,7 @@ class AppPreferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/app-preference/{id}")
      * @Doc\ApiDoc(
      *     section="AppPreferences",
@@ -203,7 +203,7 @@ class AppPreferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/app-preference/{id}")
      * @Doc\ApiDoc(
      *     section="AppPreferences",

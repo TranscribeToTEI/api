@@ -22,13 +22,12 @@ class WillSubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args)
     {
-        if(get_class($args->getEntity()) == "Will") {
+        if(get_class($args->getEntity()) == "AppBundle\Entity\Will") {
             /** @var $em EntityManager */
             /** @var $will Will */
             /** @var $resource Resource */
 
             $will = $args->getEntity();
-            $em = $args->getEntityManager();
 
             $title = "Testament " . $will->getCallNumber() . ", minute du " . $will->getMinuteDate();
 

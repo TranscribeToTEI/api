@@ -91,7 +91,7 @@ class TranscriptController extends FOSRestController
 
     /**
      * @Rest\Post("/transcripts")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Transcripts",
@@ -129,7 +129,7 @@ class TranscriptController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/transcripts/{id}")
      * @Doc\ApiDoc(
      *     section="Transcripts",
@@ -155,7 +155,7 @@ class TranscriptController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/transcripts/{id}")
      * @Doc\ApiDoc(
      *     section="Transcripts",

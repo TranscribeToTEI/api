@@ -93,7 +93,7 @@ class MilitaryUnitController extends FOSRestController
 
     /**
      * @Rest\Post("/military-units")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="MilitaryUnits",
@@ -150,7 +150,7 @@ class MilitaryUnitController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/military-units/{id}")
      * @Doc\ApiDoc(
      *     section="MilitaryUnits",
@@ -195,7 +195,7 @@ class MilitaryUnitController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/military-units/{id}")
      * @Doc\ApiDoc(
      *     section="MilitaryUnits",

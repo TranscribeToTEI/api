@@ -85,7 +85,7 @@ class ResourceController extends FOSRestController
 
     /**
      * @Rest\Post("/resources")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      * 
      * @Doc\ApiDoc(
      *     section="Resources",
@@ -133,7 +133,7 @@ class ResourceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/resources/{id}")
      * @Doc\ApiDoc(
      *     section="Resources",
@@ -165,7 +165,7 @@ class ResourceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/resources/{id}")
      * @Doc\ApiDoc(
      *     section="Resources",

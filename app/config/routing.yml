@@ -66,6 +66,10 @@ transcripts:
     type:     rest
     resource: AppBundle\Controller\TranscriptController
 
+transcript-logs:
+    type:     rest
+    resource: AppBundle\Controller\TranscriptLogController
+
 reference-items:
     type:     rest
     resource: AppBundle\Controller\ReferenceItemController

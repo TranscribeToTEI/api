@@ -105,7 +105,7 @@ class ContentController extends FOSRestController
 
     /**
      * @Rest\Post("/contents")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Contents",
@@ -162,7 +162,7 @@ class ContentController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/contents/{id}")
      * @Doc\ApiDoc(
      *     section="Contents",
@@ -207,7 +207,7 @@ class ContentController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/contents/{id}")
      * @Doc\ApiDoc(
      *     section="Contents",

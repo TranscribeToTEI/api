@@ -100,7 +100,7 @@ class TrainingContentController extends FOSRestController
 
     /**
      * @Rest\Post("/training-contents")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="TrainingContents",
@@ -134,7 +134,7 @@ class TrainingContentController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/training-contents/{id}")
      * @Doc\ApiDoc(
      *     section="TrainingContents",
@@ -156,7 +156,7 @@ class TrainingContentController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/training-contents/{id}")
      * @Doc\ApiDoc(
      *     section="TrainingContents",

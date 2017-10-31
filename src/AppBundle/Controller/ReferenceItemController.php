@@ -98,7 +98,7 @@ class ReferenceItemController extends FOSRestController
 
     /**
      * @Rest\Post("/reference-items")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
@@ -112,7 +112,7 @@ class ReferenceItemController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postReferenceItemsAction(Request $request)
     {
@@ -132,7 +132,7 @@ class ReferenceItemController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/reference-items/{id}")
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
@@ -146,7 +146,7 @@ class ReferenceItemController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updateReferenceItemAction(Request $request)
     {
@@ -154,7 +154,7 @@ class ReferenceItemController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/reference-items/{id}")
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
@@ -168,7 +168,7 @@ class ReferenceItemController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_TAXONOMY_EDIT')")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchReferenceItemAction(Request $request)
     {

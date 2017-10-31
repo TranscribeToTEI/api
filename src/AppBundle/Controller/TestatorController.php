@@ -90,7 +90,7 @@ class TestatorController extends FOSRestController
 
     /**
      * @Rest\Post("/testators")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Testators",
@@ -201,7 +201,7 @@ class TestatorController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/testators/{id}")
      * @Doc\ApiDoc(
      *     section="Testators",
@@ -300,7 +300,7 @@ class TestatorController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/testators/{id}")
      * @Doc\ApiDoc(
      *     section="Testators",

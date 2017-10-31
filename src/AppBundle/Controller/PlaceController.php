@@ -98,7 +98,7 @@ class PlaceController extends FOSRestController
 
     /**
      * @Rest\Post("/places")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Places",
@@ -152,7 +152,7 @@ class PlaceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/places/{id}")
      * @Doc\ApiDoc(
      *     section="Places",
@@ -174,7 +174,7 @@ class PlaceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/places/{id}")
      * @Doc\ApiDoc(
      *     section="Places",
