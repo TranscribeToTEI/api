@@ -47,7 +47,7 @@ class Model
             $documentation['gloss'][] = ["date" => $gloss->getAttribute('versionDate'), "content" => $gloss->nodeValue];
         }
 
-        $exemplums = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:exemplum/example:egXML');
+        $exemplums = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:exemplum');
         if($exemplums->length > 0) {
             /** @var $exemplum \DOMNode */
             foreach($exemplums as $eKey => $exemplum) {
@@ -123,10 +123,21 @@ class Model
                     $type = $valLists[0]->getAttribute('type');
                 }
 
+                $teiGloss = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:gloss');
+                $gloss = null;
+                if($teiGloss->length > 0) {
+                    $gloss = $teiGloss[0]->nodeValue;
+                }
+
+
                 $teiDesc = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:desc');
                 $desc = null;
                 if($teiDesc->length > 0) {
                     $desc = $teiDesc[0]->nodeValue;
+                }
+                $teiDescWill = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:desc[@type="wills-ui"]');
+                if($teiDescWill->length > 0) {
+                    $desc = $teiDescWill[0]->nodeValue;
                 }
 
                 $teiValDesc = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:valDesc');
@@ -150,6 +161,7 @@ class Model
 
                 $arrayAttr[$attribute->getAttribute('ident')] = [
                     "id" => $attribute->getAttribute('ident'),
+                    "label" => $gloss,
                     "usage" => $attribute->getAttribute('usage'),
                     "type" => $type,
                     "desc" => $desc,

@@ -82,6 +82,10 @@ manuscript-references:
     type:     rest
     resource: AppBundle\Controller\ManuscriptReferenceController
 
+notes:
+    type:     rest
+    resource: AppBundle\Controller\NoteController
+
 contents:
     type:     rest
     resource: AppBundle\Controller\ContentController
