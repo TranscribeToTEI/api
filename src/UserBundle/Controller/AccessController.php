@@ -25,7 +25,7 @@ class AccessController extends FOSRestController
      * @Rest\Get("/accesses")
      * @QueryParam(name="user", nullable=true, description="User is required")
      *
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Accesses",
@@ -59,7 +59,7 @@ class AccessController extends FOSRestController
 
     /**
      * @Rest\Get("/accesses/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Accesses",
      *     resource=true,
@@ -93,7 +93,7 @@ class AccessController extends FOSRestController
 
     /**
      * @Rest\Post("/accesses")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Accesses",
@@ -123,7 +123,7 @@ class AccessController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/accesses/{id}")
      * @Doc\ApiDoc(
      *     section="Accesses",
@@ -141,7 +141,7 @@ class AccessController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/accesses/{id}")
      * @Doc\ApiDoc(
      *     section="Accesses",

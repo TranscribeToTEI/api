@@ -25,7 +25,7 @@ class PreferenceController extends FOSRestController
      * @Rest\Get("/preferences")
      * @QueryParam(name="user", nullable=true, description="User is required")
      *
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Preferences",
@@ -54,7 +54,7 @@ class PreferenceController extends FOSRestController
 
     /**
      * @Rest\Get("/preferences/{id}")
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
      *     section="Preferences",
      *     resource=true,
@@ -88,7 +88,7 @@ class PreferenceController extends FOSRestController
 
     /**
      * @Rest\Post("/preferences")
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
      *     section="Preferences",
@@ -118,7 +118,7 @@ class PreferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/preferences/{id}")
      * @Doc\ApiDoc(
      *     section="Preferences",
@@ -136,7 +136,7 @@ class PreferenceController extends FOSRestController
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/preferences/{id}")
      * @Doc\ApiDoc(
      *     section="Preferences",
