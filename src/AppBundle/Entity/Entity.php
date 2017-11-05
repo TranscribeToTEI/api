@@ -119,6 +119,19 @@ class Entity
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @Assert\NotBlank()
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="isShown", type="boolean")
+     */
+    private $isShown;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
      *
@@ -358,5 +371,29 @@ class Entity
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set isShown
+     *
+     * @param boolean $isShown
+     *
+     * @return Entity
+     */
+    public function setIsShown($isShown)
+    {
+        $this->isShown = $isShown;
+
+        return $this;
+    }
+
+    /**
+     * Get isShown
+     *
+     * @return boolean
+     */
+    public function getIsShown()
+    {
+        return $this->isShown;
     }
 }

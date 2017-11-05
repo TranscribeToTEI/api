@@ -344,6 +344,20 @@ class Testator
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\NotBlank()
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="isOfficialVersion", type="boolean", options={"default" : false})
+     */
+    private $isOfficialVersion;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
      *
@@ -1031,5 +1045,29 @@ class Testator
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set isOfficialVersion
+     *
+     * @param boolean $isOfficialVersion
+     *
+     * @return Testator
+     */
+    public function setIsOfficialVersion($isOfficialVersion)
+    {
+        $this->isOfficialVersion = $isOfficialVersion;
+
+        return $this;
+    }
+
+    /**
+     * Get isOfficialVersion
+     *
+     * @return boolean
+     */
+    public function getIsOfficialVersion()
+    {
+        return $this->isOfficialVersion;
     }
 }

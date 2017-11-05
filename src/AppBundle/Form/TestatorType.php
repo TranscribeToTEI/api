@@ -34,15 +34,16 @@ class TestatorType extends AbstractType
             ->add('yearOfDeath',        TextType::class,                                        array("required" => true))
             ->add('placeOfDeath',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Place'))
             ->add('deathMention',       TextType::class,                                        array("required" => true))
-            ->add('memoireDesHommes',   CollectionType::class, array(
-                'entry_type'   => UrlType::class,
-                'allow_add'  => true,
-                'allow_delete' => true,
-                "required" => true))
+            ->add('memoireDesHommes',   CollectionType::class,                                  array(
+                                                                                                            'entry_type'   => UrlType::class,
+                                                                                                            'allow_add'  => true,
+                                                                                                            'allow_delete' => true,
+                                                                                                            "required" => true))
             ->add('militaryUnit',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:MilitaryUnit'))
             ->add('rank',               TextType::class,                                        array("required" => false))
             ->add('description',        TextareaType::class,                                    array("required" => false))
             ->add('updateComment',      TextType::class,                                        array("required" => true))
+            ->add('isOfficialVersion',  TextType::class,                                        array("required" => false))
         ;
     }
     

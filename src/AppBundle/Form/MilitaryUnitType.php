@@ -16,12 +16,13 @@ class MilitaryUnitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',           TextType::class,        array("required" => true))
-            ->add('country',        TextType::class,        array("required" => false))
-            ->add('armyCorps',      TextType::class,        array("required" => false))
-            ->add('regimentNumber', TextType::class,        array("required" => false))
-            ->add('description',    TextareaType::class,    array("required" => false))
-            ->add('updateComment',  TextType::class,        array("required" => true))
+            ->add('name',                       TextType::class,        array("required" => true))
+            ->add('country',                    TextType::class,        array("required" => false))
+            ->add('armyCorps',                  TextType::class,        array("required" => false))
+            ->add('regimentNumber',             TextType::class,        array("required" => false))
+            ->add('description',                TextareaType::class,    array("required" => false))
+            ->add('updateComment',              TextType::class,        array("required" => true))
+            ->add('isOfficialVersion',          TextType::class,        array("required" => false))
         ;
     }
     

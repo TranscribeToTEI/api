@@ -39,6 +39,7 @@ class WillType extends AbstractType
             ->add('hostingOrganization',        TextType::class,                                        array("required" => true))
             ->add('identificationUser',         TextType::class,                                        array("required" => true))
             ->add('description',                TextareaType::class,                                    array("required" => false))
+            ->add('isOfficialVersion',          TextType::class,                                        array("required" => false))
         ;
     }
     

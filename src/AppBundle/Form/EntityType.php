@@ -17,15 +17,16 @@ class EntityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('willNumber',                 IntegerType::class, array("required" => true))
-            ->add('will',                       WillType::class, array("required" => false))
-            ->add('resources',                  CollectionType::class, array(
-                "required" => false,
-                "allow_add" => true,
-                "allow_delete" => true,
-                "delete_empty" => true,
-                'entry_type'   => ResourceType::class
-            ))
+            ->add('willNumber',                 IntegerType::class,     array("required" => true))
+            ->add('will',                       WillType::class,        array("required" => false))
+            ->add('resources',                  CollectionType::class,  array(
+                                                                                        "required" => false,
+                                                                                        "allow_add" => true,
+                                                                                        "allow_delete" => true,
+                                                                                        "delete_empty" => true,
+                                                                                        'entry_type'   => ResourceType::class
+                                                                                    ))
+            ->add('isShown',                    TextType::class,        array("required" => true))
         ;
     }
     

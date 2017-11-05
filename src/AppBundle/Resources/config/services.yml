@@ -73,16 +73,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: fos_comment.comment.pre_persist, method: onCommentPrePersist }
 
-
-    app.listener.will:
-        class: AppBundle\EventListener\WillSubscriber
+    app.listener.entity:
+        class: AppBundle\EventListener\EntitySubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
-
-    #app.listener.entity:
-    #    class: AppBundle\EventListener\EntitySubscriber
-    #    tags:
-    #        - { name: doctrine.event_subscriber, connection: default }
 
     # Commands
     app.command.test.email:

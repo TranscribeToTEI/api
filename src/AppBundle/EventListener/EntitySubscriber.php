@@ -3,8 +3,11 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\Comment\Thread;
+use AppBundle\Entity\Entity;
 use AppBundle\Entity\Resource;
+use AppBundle\Entity\Testator;
 use AppBundle\Entity\Transcript;
+use AppBundle\Entity\Will;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
@@ -16,32 +19,34 @@ class EntitySubscriber implements EventSubscriber
     {
         return array(
             'prePersist',
-            'postFlush',
         );
     }
 
     public function prePersist(LifecycleEventArgs $args)
     {
-        /** @var $em EntityManager */
-        /** @var $transcript Transcript */
-        /** @var $resource Resource */
+        if(get_class($args->getEntity()) == "AppBundle\Entity\Testator") {
+            /** @var $em EntityManager */
+            /** @var $testator Testator */
+            /** @var $resource Resource */
 
-        $entity = $args->getEntity();
-        $em = $args->getEntityManager();
-    }
-
-    public function postFlush(PostFlushEventArgs $args)
-    {
-        /*$em = $args->getEntityManager();
-        foreach ($em->getUnitOfWork()->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof Transcript) {
-                $thread = new Thread();
-                $thread->setCommentable(true);
-                $thread->setId('transcript-'.$entity->getId());
-                $thread->setPermalink('http://testament-de-poilus.huma-num.fr/thread/transcript-'.$entity->getId());
-                $em->persist($thread);
-            }
+            $testator = $args->getEntity();
+            $testator->setDeathMention('mort pour la France');
         }
-        $em->flush();*/
+
+        if(get_class($args->getEntity()) == "AppBundle\Entity\Will") {
+            /** @var $em EntityManager */
+            /** @var $will Will */
+            /** @var $resource Resource */
+
+            $will = $args->getEntity();
+
+            $title = "Testament " . $will->getCallNumber() . ", minute du " . $will->getMinuteDate();
+
+            if ($will->getTestator() != null) {
+                $title .= " - " . $will->getTestator()->getName();
+            }
+
+            $will->setTitle($title);
+        }
     }
 }
