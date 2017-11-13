@@ -61,6 +61,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "version",
+ *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "versioning"}
+ *     )
+ * )
  */
 class Content
 {
@@ -155,11 +162,9 @@ class Content
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
-     *
      * @var bool
      *
-     * @ORM\Column(name="onHomepage", type="boolean")
+     * @ORM\Column(name="onHomepage", type="boolean", nullable=true)
      */
     private $onHomepage;
 
@@ -184,6 +189,17 @@ class Content
      * @ORM\Column(name="illustration", type="text", nullable=true)
      */
     private $illustration;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="enableComments", type="boolean", nullable=true)
+     */
+    private $enableComments;
 
     /**
      * @Serializer\Since("0.1")
@@ -246,7 +262,7 @@ class Content
      *
      * @var string
      *
-     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
      */
     private $updateComment;
 
@@ -586,5 +602,29 @@ class Content
     public function getAbstract()
     {
         return $this->abstract;
+    }
+
+    /**
+     * Set enableComments
+     *
+     * @param boolean $enableComments
+     *
+     * @return Content
+     */
+    public function setEnableComments($enableComments)
+    {
+        $this->enableComments = $enableComments;
+
+        return $this;
+    }
+
+    /**
+     * Get enableComments
+     *
+     * @return boolean
+     */
+    public function getEnableComments()
+    {
+        return $this->enableComments;
     }
 }

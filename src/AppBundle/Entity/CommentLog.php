@@ -5,22 +5,23 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
+use AppBundle\Entity\Entity;
+use JMS\Serializer\Annotation as Serializer;
+
 /**
- * ManuscriptReference
+ * CommentLog
  *
- * @ORM\Table(name="manuscript_reference")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ManuscriptReferenceRepository")
+ * @ORM\Table(name="comment_log")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentLogRepository")
  *
  * @Serializer\ExclusionPolicy("all")
- * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_manuscript_reference",
+ *          "get_comment_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -31,7 +32,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_manuscript_reference",
+ *          "update_comment_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -42,7 +43,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_manuscript_reference",
+ *          "patch_comment_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -53,7 +54,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_manuscript_reference",
+ *          "remove_comment_log",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -62,12 +63,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  */
-class ManuscriptReference
+class CommentLog
 {
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "id"})
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -80,63 +82,67 @@ class ManuscriptReference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
      *
-     * @var string
+     * @var bool
+     * @Assert\NotNull()
+     * @Assert\Type("bool")
      *
-     * @ORM\Column(name="documentName", type="string", length=255, nullable=true)
+     * @ORM\Column(name="isReadByAdmin", type="boolean")
      */
-    private $documentName;
+    private $isReadByAdmin;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
-     * @var string
+     * @var bool
+     * @Assert\NotNull()
+     * @Assert\Type("bool")
      *
-     * @ORM\Column(name="institutionName", type="string", length=255)
+     * @ORM\Column(name="isPrivateThread", type="boolean")
      */
-    private $institutionName;
+    private $isPrivateThread;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
      *
-     * @var string
+     * @var bool
+     * @Assert\NotNull()
+     * @Assert\Type("bool")
      *
-     * @ORM\Column(name="collectionName", type="string", length=255, nullable=true)
+     * @ORM\Column(name="isReadByRecipient", type="boolean")
      */
-    private $collectionName;
+    private $isReadByRecipient;
+
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
-     * @Assert\NotBlank()
      * @var string
      *
-     * @ORM\Column(name="documentNumber", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comment\Thread")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $documentNumber;
+    private $thread;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comment\Comment")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $url;
+    private $comment;
 
     /**
      * @Serializer\Since("0.1")
@@ -146,7 +152,7 @@ class ManuscriptReference
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $createUser;
 
@@ -166,7 +172,6 @@ class ManuscriptReference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="update")
@@ -179,7 +184,6 @@ class ManuscriptReference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
      *
      * @var \DateTime
      *
@@ -187,20 +191,6 @@ class ManuscriptReference
      * @ORM\Column(name="updateDate", type="datetime", nullable=false)
      */
     protected $updateDate;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\Type("string")
-     *
-     * @var string
-     *
-     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
-     */
-    private $updateComment;
 
 
     /**
@@ -214,123 +204,75 @@ class ManuscriptReference
     }
 
     /**
-     * Set documentName
+     * Set isReadByAdmin
      *
-     * @param string $documentName
+     * @param boolean $isReadByAdmin
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
-    public function setDocumentName($documentName)
+    public function setIsReadByAdmin($isReadByAdmin)
     {
-        $this->documentName = $documentName;
+        $this->isReadByAdmin = $isReadByAdmin;
 
         return $this;
     }
 
     /**
-     * Get documentName
+     * Get isReadByAdmin
      *
-     * @return string
+     * @return boolean
      */
-    public function getDocumentName()
+    public function getIsReadByAdmin()
     {
-        return $this->documentName;
+        return $this->isReadByAdmin;
     }
 
     /**
-     * Set institutionName
+     * Set isPrivateThread
      *
-     * @param string $institutionName
+     * @param boolean $isPrivateThread
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
-    public function setInstitutionName($institutionName)
+    public function setIsPrivateThread($isPrivateThread)
     {
-        $this->institutionName = $institutionName;
+        $this->isPrivateThread = $isPrivateThread;
 
         return $this;
     }
 
     /**
-     * Get institutionName
+     * Get isPrivateThread
      *
-     * @return string
+     * @return boolean
      */
-    public function getInstitutionName()
+    public function getIsPrivateThread()
     {
-        return $this->institutionName;
+        return $this->isPrivateThread;
     }
 
     /**
-     * Set collectionName
+     * Set isReadByRecipient
      *
-     * @param string $collectionName
+     * @param boolean $isReadByRecipient
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
-    public function setCollectionName($collectionName)
+    public function setIsReadByRecipient($isReadByRecipient)
     {
-        $this->collectionName = $collectionName;
+        $this->isReadByRecipient = $isReadByRecipient;
 
         return $this;
     }
 
     /**
-     * Get collectionName
+     * Get isReadByRecipient
      *
-     * @return string
+     * @return boolean
      */
-    public function getCollectionName()
+    public function getIsReadByRecipient()
     {
-        return $this->collectionName;
-    }
-
-    /**
-     * Set documentNumber
-     *
-     * @param string $documentNumber
-     *
-     * @return ManuscriptReference
-     */
-    public function setDocumentNumber($documentNumber)
-    {
-        $this->documentNumber = $documentNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get documentNumber
-     *
-     * @return string
-     */
-    public function getDocumentNumber()
-    {
-        return $this->documentNumber;
-    }
-
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return ManuscriptReference
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-
-        return $this;
-    }
-
-    /**
-     * Get url
-     *
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->url;
+        return $this->isReadByRecipient;
     }
 
     /**
@@ -338,7 +280,7 @@ class ManuscriptReference
      *
      * @param \DateTime $createDate
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
     public function setCreateDate($createDate)
     {
@@ -362,7 +304,7 @@ class ManuscriptReference
      *
      * @param \DateTime $updateDate
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
     public function setUpdateDate($updateDate)
     {
@@ -382,27 +324,51 @@ class ManuscriptReference
     }
 
     /**
-     * Set updateComment
+     * Set thread
      *
-     * @param string $updateComment
+     * @param \AppBundle\Entity\Comment\Thread $thread
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
-    public function setUpdateComment($updateComment)
+    public function setThread(\AppBundle\Entity\Comment\Thread $thread = null)
     {
-        $this->updateComment = $updateComment;
+        $this->thread = $thread;
 
         return $this;
     }
 
     /**
-     * Get updateComment
+     * Get thread
      *
-     * @return string
+     * @return \AppBundle\Entity\Comment\Thread
      */
-    public function getUpdateComment()
+    public function getThread()
     {
-        return $this->updateComment;
+        return $this->thread;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param \AppBundle\Entity\Comment\Comment $comment
+     *
+     * @return CommentLog
+     */
+    public function setComment(\AppBundle\Entity\Comment\Comment $comment = null)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return \AppBundle\Entity\Comment\Comment
+     */
+    public function getComment()
+    {
+        return $this->comment;
     }
 
     /**
@@ -410,9 +376,9 @@ class ManuscriptReference
      *
      * @param \UserBundle\Entity\User $createUser
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    public function setCreateUser(\UserBundle\Entity\User $createUser)
     {
         $this->createUser = $createUser;
 
@@ -434,7 +400,7 @@ class ManuscriptReference
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return ManuscriptReference
+     * @return CommentLog
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {

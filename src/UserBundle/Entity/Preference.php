@@ -120,7 +120,7 @@ class Preference
      *
      * @var bool
      *
-     * @ORM\Column(name="smartTEI", type="boolean")
+     * @ORM\Column(name="smartTEI", type="boolean", nullable=true)
      */
     private $smartTEI;
 
@@ -131,9 +131,20 @@ class Preference
      *
      * @var bool
      *
-     * @ORM\Column(name="showComplexEntry", type="boolean")
+     * @ORM\Column(name="showComplexEntry", type="boolean", nullable=true)
      */
     private $showComplexEntry;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="creditActions", type="boolean", nullable=true)
+     */
+    private $creditActions;
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -294,5 +305,29 @@ class Preference
     public function getTutorialProgress()
     {
         return $this->tutorialProgress;
+    }
+
+    /**
+     * Set creditActions
+     *
+     * @param boolean $creditActions
+     *
+     * @return Preference
+     */
+    public function setCreditActions($creditActions)
+    {
+        $this->creditActions = $creditActions;
+
+        return $this;
+    }
+
+    /**
+     * Get creditActions
+     *
+     * @return boolean
+     */
+    public function getCreditActions()
+    {
+        return $this->creditActions;
     }
 }

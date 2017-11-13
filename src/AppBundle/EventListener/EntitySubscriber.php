@@ -2,7 +2,9 @@
 
 namespace AppBundle\EventListener;
 
+use AppBundle\Entity\Comment\Comment;
 use AppBundle\Entity\Comment\Thread;
+use AppBundle\Entity\CommentLog;
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
@@ -18,7 +20,7 @@ class EntitySubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist',
+            'prePersist'
         );
     }
 
@@ -47,6 +49,22 @@ class EntitySubscriber implements EventSubscriber
             }
 
             $will->setTitle($title);
+        }
+
+        if(get_class($args->getEntity()) == "AppBundle\Entity\Comment\Comment") {
+            /** @var $em EntityManager */
+            /** @var $comment Comment */
+            /** @var $commentLog CommentLog */
+
+            $comment = $args->getEntity();
+
+            $commentLog = new CommentLog();
+            $commentLog->setThread($comment->getThread());
+            $commentLog->setComment($comment);
+            $commentLog->setIsReadByAdmin(false);
+            $commentLog->setIsPrivateThread(false);
+            $commentLog->setIsReadByRecipient(false);
+            $args->getEntityManager()->persist($commentLog);
         }
     }
 }

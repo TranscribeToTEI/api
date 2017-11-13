@@ -55,8 +55,8 @@ class PlaceType extends AbstractType
             ->add('description',                TextareaType::class,    array("required" => false))
             ->add('geonamesId',                 TextType::class,        array("required" => false))
             ->add('geographicalCoordinates',    TextType::class,        array("required" => false))
-            ->add('updateComment',              TextType::class,        array("required" => true))
             ->add('isOfficialVersion',          TextType::class,        array("required" => false))
+            ->add('updateComment',              TextType::class,        array("required" => true))
         ;
     }
     

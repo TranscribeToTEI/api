@@ -192,7 +192,7 @@ class Transcript
      *
      * @var string
      *
-     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
      */
     private $updateComment;
 

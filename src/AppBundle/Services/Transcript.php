@@ -43,8 +43,20 @@ class Transcript
      */
     public function isOpened($transcript)
     {
-        /** @var $resource \AppBundle\Entity\Resource */
+        /** @var $transcriptLog \AppBundle\Entity\TranscriptLog */
         $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isOpened' => false));
+
+        if($transcriptLog !== null) {
+            $datetimeLog = new \DateTime($transcriptLog->getCreateDate()->format('y-M-d H:i:s'));
+            $datetimeNow = new \DateTime('now');
+            $interval = $datetimeLog->diff($datetimeNow);
+
+            if(intval($interval->format('%h')) > 1) {
+                $transcriptLog->setIsOpened(false);
+                $this->em->flush();
+                $transcriptLog = null;
+            }
+        }
 
         return ($transcriptLog !== null) ? false : true;
     }

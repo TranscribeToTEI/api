@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -42,8 +43,8 @@ class TestatorType extends AbstractType
             ->add('militaryUnit',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:MilitaryUnit'))
             ->add('rank',               TextType::class,                                        array("required" => false))
             ->add('description',        TextareaType::class,                                    array("required" => false))
+            ->add('isOfficialVersion',  CheckboxType::class,                                    array("required" => false))
             ->add('updateComment',      TextType::class,                                        array("required" => true))
-            ->add('isOfficialVersion',  TextType::class,                                        array("required" => false))
         ;
     }
     

@@ -70,6 +70,10 @@ transcript-logs:
     type:     rest
     resource: AppBundle\Controller\TranscriptLogController
 
+comment-logs:
+    type:     rest
+    resource: AppBundle\Controller\CommentLogController
+
 reference-items:
     type:     rest
     resource: AppBundle\Controller\ReferenceItemController

@@ -192,9 +192,9 @@ class TrainingContent
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Serializer\MaxDepth(1)
+     * @Serializer\MaxDepth(2)
      *
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $editorialResponsibility;
@@ -439,7 +439,7 @@ class TrainingContent
      *
      * @var string
      *
-     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
      */
     private $updateComment;
 
@@ -757,31 +757,7 @@ class TrainingContent
     {
         return $this->videoContainer;
     }
-
-    /**
-     * Set editorialResponsibility
-     *
-     * @param \UserBundle\Entity\User $editorialResponsibility
-     *
-     * @return TrainingContent
-     */
-    public function setEditorialResponsibility(\UserBundle\Entity\User $editorialResponsibility = null)
-    {
-        $this->editorialResponsibility = $editorialResponsibility;
-
-        return $this;
-    }
-
-    /**
-     * Get editorialResponsibility
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getEditorialResponsibility()
-    {
-        return $this->editorialResponsibility;
-    }
-
+    
     /**
      * Set exerciseImageToTranscribe
      *
@@ -1164,5 +1140,46 @@ class TrainingContent
     public function getExerciseHeader()
     {
         return $this->exerciseHeader;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->editorialResponsibility = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add editorialResponsibility
+     *
+     * @param \UserBundle\Entity\User $editorialResponsibility
+     *
+     * @return TrainingContent
+     */
+    public function addEditorialResponsibility(\UserBundle\Entity\User $editorialResponsibility)
+    {
+        $this->editorialResponsibility[] = $editorialResponsibility;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorialResponsibility
+     *
+     * @param \UserBundle\Entity\User $editorialResponsibility
+     */
+    public function removeEditorialResponsibility(\UserBundle\Entity\User $editorialResponsibility)
+    {
+        $this->editorialResponsibility->removeElement($editorialResponsibility);
+    }
+
+    /**
+     * Get editorialResponsibility
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEditorialResponsibility()
+    {
+        return $this->editorialResponsibility;
     }
 }

@@ -22,7 +22,14 @@ class TrainingContentType extends AbstractType
         $builder
             ->add('title',                              TextType::class,        array("required" => true))
             ->add('internalGoal',                       TextareaType::class,    array("required" => true))
-            ->add('editorialResponsibility',            \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'UserBundle:User'))
+            ->add('editorialResponsibility',            CollectionType::class,  array(
+                                                                                                'entry_type'   => \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,
+                                                                                                'entry_options'  => array(
+                                                                                                    'class' => 'UserBundle:User'
+                                                                                                ),
+                                                                                                'allow_add'  => true,
+                                                                                                'allow_delete' => true,
+                                                                                                "required" => false))
             ->add('pageType',                           TextType::class,        array("required" => true))
             ->add('pageStatus',                         TextType::class,        array("required" => true))
             ->add('updateComment',                      TextType::class,        array("required" => true))

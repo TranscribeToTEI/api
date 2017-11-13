@@ -26,9 +26,9 @@ class MediaContentController extends FOSRestController
      * @Rest\Post("/media-contents")
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      *
-     * @QueryParam(name="type", nullable=false, requirements="Content|TrainingContent", description="Type of entity to rely to the media")
+     * @QueryParam(name="type", nullable=false, requirements="Testator|Content|TrainingContent", description="Type of entity to rely to the media")
      * @QueryParam(name="id", nullable=true, description="Identifier of the entity to rely to the media")
-     * @QueryParam(name="field", nullable=false, requirements="illustration|exerciseImageToTranscribe", description="Field of the entity where to store the media")
+     * @QueryParam(name="field", nullable=false, requirements="picture|illustration|exerciseImageToTranscribe", description="Field of the entity where to store the media")
      *
      * @Doc\ApiDoc(
      *     section="Media",

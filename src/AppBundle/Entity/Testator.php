@@ -347,7 +347,17 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
+     * @var string
+     *
+     * @ORM\Column(name="picture", type="text", nullable=true)
+     */
+    private $picture;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
      * @var bool
      *
@@ -429,12 +439,28 @@ class Testator
     {
         return $this->id;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->wills = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set
+     *
+     * @param string $field
+     * @param string $value
+     *
+     * @return Testator
+     */
+    public function set($field, $value)
+    {
+        $this->{$field} = $value;
+
+        return $this;
     }
 
     /**
@@ -1069,5 +1095,29 @@ class Testator
     public function getIsOfficialVersion()
     {
         return $this->isOfficialVersion;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param string $picture
+     *
+     * @return Testator
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

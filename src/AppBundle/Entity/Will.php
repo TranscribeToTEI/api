@@ -344,8 +344,6 @@ class Will
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
-     *
      * @var bool
      *
      * @ORM\Column(name="isOfficialVersion", type="boolean", options={"default" : false})
@@ -413,7 +411,7 @@ class Will
      *
      * @var string
      *
-     * @ORM\Column(name="updateComment", type="string", length=255, nullable=true)
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=true)
      */
     private $updateComment;
 

@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,7 +32,12 @@ class AppPreferenceType extends AbstractType
             ->add('contactEmail',               EmailType::class,       array("required" => false))
             ->add('enableRegister',             CheckboxType::class,    array("required" => false))
             ->add('transcriptEditAccess',       CheckboxType::class,    array("required" => false))
-            ->add('taxonomyEditAccess',         TextType::class,         array("required" => false))
+            ->add('taxonomyEditAccess',         TextType::class,        array("required" => false))
+            ->add('taxonomyAskQuestion',        TextareaType::class,    array("required" => false))
+            ->add('taxonomyAccessProposal',     TextareaType::class,    array("required" => false))
+            ->add('infoContentEditTaxonomy',    TextareaType::class,    array("required" => false))
+            ->add('infoContact',                TextareaType::class,    array("required" => false))
+            ->add('updateComment',              TextareaType::class,    array("required" => false))
         ;
     }
     

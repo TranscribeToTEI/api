@@ -44,6 +44,7 @@ class User
         $preference->setTutorialStatus("todo");
         $preference->setSmartTEI(true);
         $preference->setShowComplexEntry(true);
+        $preference->setCreditActions(true);
         $this->em->persist($preference);
         $this->em->flush();
         return $preference;

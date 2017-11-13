@@ -40,6 +40,7 @@ class WillType extends AbstractType
             ->add('identificationUser',         TextType::class,                                        array("required" => true))
             ->add('description',                TextareaType::class,                                    array("required" => false))
             ->add('isOfficialVersion',          TextType::class,                                        array("required" => false))
+            ->add('updateComment',              TextType::class,                                        array("required" => false))
         ;
     }
     

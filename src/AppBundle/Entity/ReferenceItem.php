@@ -84,9 +84,45 @@ class ReferenceItem
      * @Gedmo\Versioned
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $entity;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     * @Gedmo\Versioned
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Testator")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $testator;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     * @Gedmo\Versioned
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $place;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     * @Gedmo\Versioned
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MilitaryUnit")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $militaryUnit;
 
     /**
      * @Serializer\Since("0.1")
@@ -172,7 +208,7 @@ class ReferenceItem
      *
      * @var string
      *
-     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
      */
     private $updateComment;
 
@@ -377,5 +413,77 @@ class ReferenceItem
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Set testator
+     *
+     * @param \AppBundle\Entity\Testator $testator
+     *
+     * @return ReferenceItem
+     */
+    public function setTestator(\AppBundle\Entity\Testator $testator = null)
+    {
+        $this->testator = $testator;
+
+        return $this;
+    }
+
+    /**
+     * Get testator
+     *
+     * @return \AppBundle\Entity\Testator
+     */
+    public function getTestator()
+    {
+        return $this->testator;
+    }
+
+    /**
+     * Set place
+     *
+     * @param \AppBundle\Entity\Place $place
+     *
+     * @return ReferenceItem
+     */
+    public function setPlace(\AppBundle\Entity\Place $place = null)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set militaryUnit
+     *
+     * @param \AppBundle\Entity\MilitaryUnit $militaryUnit
+     *
+     * @return ReferenceItem
+     */
+    public function setMilitaryUnit(\AppBundle\Entity\MilitaryUnit $militaryUnit = null)
+    {
+        $this->militaryUnit = $militaryUnit;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnit
+     *
+     * @return \AppBundle\Entity\MilitaryUnit
+     */
+    public function getMilitaryUnit()
+    {
+        return $this->militaryUnit;
     }
 }

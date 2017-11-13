@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -22,10 +23,11 @@ class ContentType extends AbstractType
         $builder
             ->add('title',          TextType::class,        array("required" => true))
             ->add('content',        TextareaType::class,    array("required" => true))
-            ->add('abstract',        TextareaType::class,    array("required" => true))
+            ->add('abstract',       TextareaType::class,    array("required" => true))
             ->add('type',           TextType::class,        array("required" => true))
             ->add('status',         TextType::class,        array("required" => false))
-            ->add('onHomepage',     TextType::class,        array("required" => true))
+            ->add('onHomepage',     CheckboxType::class,    array("required" => false))
+            ->add('enableComments', CheckboxType::class,    array("required" => false))
             ->add('updateComment',  TextType::class,        array("required" => true))
             ->add('tags',           CollectionType::class,
                 array(
@@ -35,7 +37,7 @@ class ContentType extends AbstractType
                     'allow_delete' => true
                 )
             )
-            ->add('illustration',   UrlType::class,        array("required" => false))
+            ->add('illustration',   TextType::class,        array("required" => false))
         ;
     }
     

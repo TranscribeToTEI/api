@@ -192,8 +192,6 @@ class Place
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
-     *
      * @var bool
      *
      * @ORM\Column(name="isOfficialVersion", type="boolean", options={"default" : false})
@@ -260,7 +258,7 @@ class Place
      *
      * @var string
      *
-     * @ORM\Column(name="updateComment", type="string", length=255, nullable=false)
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
      */
     private $updateComment;
 

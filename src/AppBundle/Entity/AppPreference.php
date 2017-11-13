@@ -15,6 +15,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AppPreferenceRepository")
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
@@ -256,6 +257,95 @@ class AppPreference
      * @ORM\Column(name="transcriptEditAccess", type="boolean", nullable=true)
      */
     private $transcriptEditAccess;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="infoContentEditTaxonomy", type="text", nullable=true)
+     */
+    private $infoContentEditTaxonomy;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="taxonomyAccessProposal", type="text", nullable=true)
+     */
+    private $taxonomyAccessProposal;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="taxonomyAskQuestion", type="text", nullable=true)
+     */
+    private $taxonomyAskQuestion;
+
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="infoContact", type="text", nullable=true)
+     */
+    private $infoContact;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
+     *
+     * @Gedmo\Blameable(on="update")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=false)
+     */
+    protected $updateDate;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=true)
+     */
+    private $updateComment;
 
 
 
@@ -627,5 +717,173 @@ class AppPreference
     public function getTranscriptEditAccess()
     {
         return $this->transcriptEditAccess;
+    }
+
+    /**
+     * Set infoContentEditTaxonomy
+     *
+     * @param string $infoContentEditTaxonomy
+     *
+     * @return AppPreference
+     */
+    public function setInfoContentEditTaxonomy($infoContentEditTaxonomy)
+    {
+        $this->infoContentEditTaxonomy = $infoContentEditTaxonomy;
+
+        return $this;
+    }
+
+    /**
+     * Get infoContentEditTaxonomy
+     *
+     * @return string
+     */
+    public function getInfoContentEditTaxonomy()
+    {
+        return $this->infoContentEditTaxonomy;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     *
+     * @return AppPreference
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return AppPreference
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \UserBundle\Entity\User $updateUser
+     *
+     * @return AppPreference
+     */
+    public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+
+    /**
+     * Set infoContact
+     *
+     * @param string $infoContact
+     *
+     * @return AppPreference
+     */
+    public function setInfoContact($infoContact)
+    {
+        $this->infoContact = $infoContact;
+
+        return $this;
+    }
+
+    /**
+     * Get infoContact
+     *
+     * @return string
+     */
+    public function getInfoContact()
+    {
+        return $this->infoContact;
+    }
+
+    /**
+     * Set taxonomyAskQuestion
+     *
+     * @param string $taxonomyAskQuestion
+     *
+     * @return AppPreference
+     */
+    public function setTaxonomyAskQuestion($taxonomyAskQuestion)
+    {
+        $this->taxonomyAskQuestion = $taxonomyAskQuestion;
+
+        return $this;
+    }
+
+    /**
+     * Get taxonomyAskQuestion
+     *
+     * @return string
+     */
+    public function getTaxonomyAskQuestion()
+    {
+        return $this->taxonomyAskQuestion;
+    }
+
+    /**
+     * Set taxonomyAccessProposal
+     *
+     * @param string $taxonomyAccessProposal
+     *
+     * @return AppPreference
+     */
+    public function setTaxonomyAccessProposal($taxonomyAccessProposal)
+    {
+        $this->taxonomyAccessProposal = $taxonomyAccessProposal;
+
+        return $this;
+    }
+
+    /**
+     * Get taxonomyAccessProposal
+     *
+     * @return string
+     */
+    public function getTaxonomyAccessProposal()
+    {
+        return $this->taxonomyAccessProposal;
     }
 }
