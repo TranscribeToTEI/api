@@ -62,6 +62,10 @@ military-units:
     type:     rest
     resource: AppBundle\Controller\MilitaryUnitController
 
+hosting-organizations:
+    type:     rest
+    resource: AppBundle\Controller\HostingOrganizationController
+
 transcripts:
     type:     rest
     resource: AppBundle\Controller\TranscriptController

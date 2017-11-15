@@ -79,14 +79,23 @@ class TaxonomyVersion
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     * @Serializer\MaxDepth(1)
      *
-     * @var bool
-     * @Assert\Type("bool")
-     *
-     * @ORM\Column(name="isValidated", type="boolean")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $isValidated;
+    protected $reviewBy;
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @var int
+     *
+     * @ORM\Column(name="versionId", type="integer")
+     */
+    private $versionId;
 
     /**
      * @Serializer\Since("0.1")
@@ -104,13 +113,34 @@ class TaxonomyVersion
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
      *
-     * @var int
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="taxonomyId", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Testator")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $taxonomyId;
+    protected $testator;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $place;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MilitaryUnit")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $militaryUnit;
 
     /**
      * @Serializer\Since("0.1")
@@ -162,20 +192,6 @@ class TaxonomyVersion
      */
     protected $updateDate;
 
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
-     *
-     * @Assert\Type("string")
-     *
-     * @var string
-     *
-     * @ORM\Column(name="updateComment", type="text", length=255, nullable=false)
-     */
-    private $updateComment;
-
 
     /**
      * Get id
@@ -185,30 +201,6 @@ class TaxonomyVersion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set isValidated
-     *
-     * @param boolean $isValidated
-     *
-     * @return TaxonomyVersion
-     */
-    public function setIsValidated($isValidated)
-    {
-        $this->isValidated = $isValidated;
-
-        return $this;
-    }
-
-    /**
-     * Get isValidated
-     *
-     * @return bool
-     */
-    public function getIsValidated()
-    {
-        return $this->isValidated;
     }
 
     /**
@@ -233,30 +225,6 @@ class TaxonomyVersion
     public function getTaxonomyType()
     {
         return $this->taxonomyType;
-    }
-
-    /**
-     * Set taxonomyId
-     *
-     * @param integer $taxonomyId
-     *
-     * @return TaxonomyVersion
-     */
-    public function setTaxonomyId($taxonomyId)
-    {
-        $this->taxonomyId = $taxonomyId;
-
-        return $this;
-    }
-
-    /**
-     * Get taxonomyId
-     *
-     * @return int
-     */
-    public function getTaxonomyId()
-    {
-        return $this->taxonomyId;
     }
 
     /**
@@ -308,27 +276,99 @@ class TaxonomyVersion
     }
 
     /**
-     * Set updateComment
+     * Set reviewBy
      *
-     * @param string $updateComment
+     * @param \UserBundle\Entity\User $reviewBy
      *
      * @return TaxonomyVersion
      */
-    public function setUpdateComment($updateComment)
+    public function setReviewBy(\UserBundle\Entity\User $reviewBy = null)
     {
-        $this->updateComment = $updateComment;
+        $this->reviewBy = $reviewBy;
 
         return $this;
     }
 
     /**
-     * Get updateComment
+     * Get reviewBy
      *
-     * @return string
+     * @return \UserBundle\Entity\User
      */
-    public function getUpdateComment()
+    public function getReviewBy()
     {
-        return $this->updateComment;
+        return $this->reviewBy;
+    }
+
+    /**
+     * Set testator
+     *
+     * @param \AppBundle\Entity\Testator $testator
+     *
+     * @return TaxonomyVersion
+     */
+    public function setTestator(\AppBundle\Entity\Testator $testator = null)
+    {
+        $this->testator = $testator;
+
+        return $this;
+    }
+
+    /**
+     * Get testator
+     *
+     * @return \AppBundle\Entity\Testator
+     */
+    public function getTestator()
+    {
+        return $this->testator;
+    }
+
+    /**
+     * Set place
+     *
+     * @param \AppBundle\Entity\Place $place
+     *
+     * @return TaxonomyVersion
+     */
+    public function setPlace(\AppBundle\Entity\Place $place = null)
+    {
+        $this->place = $place;
+
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set militaryUnit
+     *
+     * @param \AppBundle\Entity\MilitaryUnit $militaryUnit
+     *
+     * @return TaxonomyVersion
+     */
+    public function setMilitaryUnit(\AppBundle\Entity\MilitaryUnit $militaryUnit = null)
+    {
+        $this->militaryUnit = $militaryUnit;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnit
+     *
+     * @return \AppBundle\Entity\MilitaryUnit
+     */
+    public function getMilitaryUnit()
+    {
+        return $this->militaryUnit;
     }
 
     /**
@@ -377,5 +417,29 @@ class TaxonomyVersion
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set versionId
+     *
+     * @param integer $versionId
+     *
+     * @return TaxonomyVersion
+     */
+    public function setVersionId($versionId)
+    {
+        $this->versionId = $versionId;
+
+        return $this;
+    }
+
+    /**
+     * Get versionId
+     *
+     * @return integer
+     */
+    public function getVersionId()
+    {
+        return $this->versionId;
     }
 }

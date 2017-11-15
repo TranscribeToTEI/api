@@ -152,7 +152,7 @@ class CommentLog
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
 

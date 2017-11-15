@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,7 +27,7 @@ class EntityType extends AbstractType
                                                                                         "delete_empty" => true,
                                                                                         'entry_type'   => ResourceType::class
                                                                                     ))
-            ->add('isShown',                    TextType::class,        array("required" => true))
+            ->add('isShown',                    CheckboxType::class,    array("required" => false))
         ;
     }
     

@@ -7,25 +7,30 @@ use AppBundle\Entity\Comment\Thread;
 use AppBundle\Entity\CommentLog;
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Resource;
+use AppBundle\Entity\TaxonomyVersion;
 use AppBundle\Entity\Testator;
 use AppBundle\Entity\Transcript;
 use AppBundle\Entity\Will;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
+use Doctrine\ORM\Event\PreFlushEventArgs;
 
 class EntitySubscriber implements EventSubscriber
 {
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist'
+            'prePersist',
+            'postUpdate'
         );
     }
 
     public function prePersist(LifecycleEventArgs $args)
     {
+        /* Testator death place mangement */
         if(get_class($args->getEntity()) == "AppBundle\Entity\Testator") {
             /** @var $em EntityManager */
             /** @var $testator Testator */
@@ -35,6 +40,7 @@ class EntitySubscriber implements EventSubscriber
             $testator->setDeathMention('mort pour la France');
         }
 
+        /* Will title management */
         if(get_class($args->getEntity()) == "AppBundle\Entity\Will") {
             /** @var $em EntityManager */
             /** @var $will Will */
@@ -51,6 +57,7 @@ class EntitySubscriber implements EventSubscriber
             $will->setTitle($title);
         }
 
+        /* Comment Log management */
         if(get_class($args->getEntity()) == "AppBundle\Entity\Comment\Comment") {
             /** @var $em EntityManager */
             /** @var $comment Comment */
@@ -65,6 +72,54 @@ class EntitySubscriber implements EventSubscriber
             $commentLog->setIsPrivateThread(false);
             $commentLog->setIsReadByRecipient(false);
             $args->getEntityManager()->persist($commentLog);
+        }
+
+    }
+
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+        /*$em = $args->getEntityManager();
+        $uow = $em->getUnitOfWork();
+        $updatedEntities = $uow->getScheduledEntityUpdates();
+
+        foreach($updatedEntities as $entity) {
+            if (get_class($entity) == "AppBundle\Entity\Testator" or get_class($entity) == "AppBundle\Entity\Place" or get_class($entity) == "AppBundle\Entity\MilitaryUnit") {
+                $this->postTaxonomyVersion($em, $entity);
+            }
+        }*/
+        $this->postTaxonomyVersion($args->getEntityManager(), $args->getEntity());
+    }
+
+    private function postTaxonomyVersion($em, $entity) {
+        /* Taxonomy Log management */
+        if(get_class($entity) == "AppBundle\Entity\Testator" or get_class($entity) == "AppBundle\Entity\Place" or get_class($entity) == "AppBundle\Entity\MilitaryUnit") {
+            /** @var $em EntityManager */
+            /** @var $taxonomyLog TaxonomyVersion */
+
+            $logEntries = $em->getRepository('Gedmo\Loggable\Entity\LogEntry')->getLogEntries($entity);
+            $version = null;
+            foreach ($logEntries as $logEntry) {
+                if($version == null) {
+                    $version = $logEntry->getVersion();
+                }
+            }
+
+            $taxonomyLog = new TaxonomyVersion();
+            $taxonomyLog->setReviewBy(null);
+            $taxonomyLog->setVersionId($version);
+            if(get_class($entity) == "AppBundle\Entity\Testator") {
+                $taxonomyLog->setTaxonomyType('testator');
+                $taxonomyLog->setTestator($entity);
+            } elseif(get_class($entity) == "AppBundle\Entity\Place") {
+                $taxonomyLog->setTaxonomyType('place');
+                $taxonomyLog->setPlace($entity);
+            } elseif(get_class($entity) == "AppBundle\Entity\MilitaryUnit") {
+                $taxonomyLog->setTaxonomyType('military-unit');
+                $taxonomyLog->setMilitaryUnit($entity);
+            }
+
+            $em->persist($taxonomyLog);
+            $em->flush();
         }
     }
 }

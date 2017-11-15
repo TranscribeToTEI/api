@@ -303,12 +303,10 @@ class Will
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
      *
-     * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({"AN", "AD78"})
-     *
-     * @ORM\Column(name="hostingOrganization", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HostingOrganization")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $hostingOrganization;
 
@@ -786,30 +784,6 @@ class Will
     }
 
     /**
-     * Set hostingOrganization
-     *
-     * @param string $hostingOrganization
-     *
-     * @return Will
-     */
-    public function setHostingOrganization($hostingOrganization)
-    {
-        $this->hostingOrganization = $hostingOrganization;
-
-        return $this;
-    }
-
-    /**
-     * Get hostingOrganization
-     *
-     * @return string
-     */
-    public function getHostingOrganization()
-    {
-        return $this->hostingOrganization;
-    }
-
-    /**
      * Set identificationUser
      *
      * @param string $identificationUser
@@ -1071,5 +1045,29 @@ class Will
     public function getIsOfficialVersion()
     {
         return $this->isOfficialVersion;
+    }
+
+    /**
+     * Set hostingOrganization
+     *
+     * @param \AppBundle\Entity\HostingOrganization $hostingOrganization
+     *
+     * @return Will
+     */
+    public function setHostingOrganization(\AppBundle\Entity\HostingOrganization $hostingOrganization = null)
+    {
+        $this->hostingOrganization = $hostingOrganization;
+
+        return $this;
+    }
+
+    /**
+     * Get hostingOrganization
+     *
+     * @return \AppBundle\Entity\HostingOrganization
+     */
+    public function getHostingOrganization()
+    {
+        return $this->hostingOrganization;
     }
 }

@@ -330,7 +330,6 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("has_role('IS_AUTHENTICATED_FULLY')")
      */
     public function removeUserAction(Request $request)
     {
@@ -339,8 +338,74 @@ class UserController extends FOSRestController
         /* @var $user User */
 
         if($user AND ($this->get('security.token_storage')->getToken()->getUser() == $user OR $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))) {
+            $proviUser = $user;
+
+            foreach($em->getRepository('UserBundle:Preference')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
+            foreach($em->getRepository('UserBundle:Access')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
+            foreach($em->getRepository('UserBundle:AccessToken')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
+            foreach($em->getRepository('UserBundle:RefreshToken')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
+
+            foreach($em->getRepository('AppBundle:Comment')->findBy(array('author' => $user)) as $item) {$item->setAuthor(null);}
+            foreach($em->getRepository('AppBundle:AppPreference')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:CommentLog')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:CommentLog')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Entity')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Entity')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:ManuscriptReference')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:ManuscriptReference')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:MilitaryUnit')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:MilitaryUnit')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Note')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Note')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Place')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Place')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:PlaceName')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:PlaceName')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:PrintedReference')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:PrintedReference')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:ReferenceItem')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:ReferenceItem')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Resource')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Resource')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:TaxonomyVersion')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:TaxonomyVersion')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:TaxonomyVersion')->findBy(array('reviewBy' => $user)) as $item) {$item->setReviewBy(null);}
+            foreach($em->getRepository('AppBundle:Testator')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Testator')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:TrainingContent')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:TrainingContent')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Transcript')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Transcript')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:TranscriptLog')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:TranscriptLog')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Will')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Will')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+
+
+
+            foreach($em->getRepository('AppBundle:TrainingContent')->findAll() as $item) {
+                foreach($item->getEditorialResponsibility() as $iUser) {
+                    if($iUser === $user) {
+                        $item->removeEditorialResponsibility($user);
+                    }
+                }
+            }
+
+
+
             $em->remove($user);
             $em->flush();
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Suppression de compte - Testaments de Poilus')
+                ->setFrom('testaments-de-poilus@huma-num.fr')
+                ->setTo($user->getEmail())
+                ->setBody($this->renderView(
+                    'UserBundle:SetRole:emailPromote.html.twig',
+                    array('user' => $proviUser)));
+            $this->get('mailer')->send($message);
         } else {
             // User need to be the user requested or an admin
             throw $this->createAccessDeniedException('Unable to access this page!');

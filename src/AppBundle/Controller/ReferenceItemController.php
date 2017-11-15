@@ -27,6 +27,9 @@ class ReferenceItemController extends FOSRestController
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="entity", nullable=true, description="Gets all bibliographical elements for an entity")
+     * @QueryParam(name="testator", nullable=true, description="Gets all bibliographical elements for a testator")
+     * @QueryParam(name="place", nullable=true, description="Gets all bibliographical elements for a place")
+     * @QueryParam(name="military-unit", nullable=true, description="Gets all bibliographical elements for a military unit")
      *
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
@@ -41,15 +44,33 @@ class ReferenceItemController extends FOSRestController
     public function getReferenceItemsAction(Request $request, ParamFetcher $paramFetcher)
     {
         $id_entity = $paramFetcher->get('entity');
+        $id_testator = $paramFetcher->get('testator');
+        $id_place = $paramFetcher->get('place');
+        $id_militaryUnit = $paramFetcher->get('military-unit');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:ReferenceItem');
         /* @var $repository EntityRepository */
 
-        if($id_entity != "") {
-            $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findOneById($id_entity);
+        if($id_entity != "" or $id_testator != "" or $id_place != "" or $id_militaryUnit != "") {
+            if($id_entity != "") {
+                $abstractEntity = "entity";
+                $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findOneById($id_entity);
+            } elseif($id_testator != "") {
+                $abstractEntity = "testator";
+                $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:Testator')->findOneById($id_testator);
+            } elseif($id_place != "") {
+                $abstractEntity = "place";
+                $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findOneById($id_place);
+            } elseif($id_militaryUnit != "") {
+                $abstractEntity = "militaryUnit";
+                $entity = $this->getDoctrine()->getManager()->getRepository('AppBundle:MilitaryUnit')->findOneById($id_militaryUnit);
+            } else {
+                $abstractEntity = null;
+                $entity = null;
+            }
 
             if($entity != null) {
-                $referenceItems = $repository->findBy(array("entity" => $entity));
+                $referenceItems = $repository->findBy(array($abstractEntity => $entity));
                 /* @var $referenceItems ReferenceItem[] */
             } else {
                 $referenceItems = null;

@@ -8,21 +8,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-use AppBundle\Entity\Will;
-use AppBundle\Entity\Resource;
-
 /**
- * Entity
+ * HostingOrganization
  *
- * @ORM\Table(name="entity")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EntityRepository")
+ * @ORM\Table(name="hosting_organization")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\HostingOrganizationRepository")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @Serializer\ExclusionPolicy("all")
+ * @Gedmo\Loggable
  *
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_entity",
+ *          "get_hosting_organization",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -33,7 +32,7 @@ use AppBundle\Entity\Resource;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_entity",
+ *          "update_hosting_organization",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -44,7 +43,7 @@ use AppBundle\Entity\Resource;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_entity",
+ *          "patch_hosting_organization",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -55,7 +54,7 @@ use AppBundle\Entity\Resource;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_entity",
+ *          "remove_hosting_organization",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -63,15 +62,8 @@ use AppBundle\Entity\Resource;
  *          groups={"full", "links"}
  *     )
  * )
- * @Hateoas\Relation(
- *     "status",
- *     embedded = @Hateoas\Embedded("expr(service('app.entity').getStatus(object))"),
- *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content"}
- *     )
- * )
  */
-class Entity
+class HostingOrganization
 {
     /**
      * @Serializer\Since("0.1")
@@ -91,44 +83,28 @@ class Entity
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
+     * @var string
      * @Assert\NotBlank()
+     * @Assert\Type("string")
      *
-     * @ORM\Column(name="willNumber", type="integer", nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
-    private $willNumber;
+    private $name;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\NotBlank()
+     * @Assert\Type("string")
+     *
+     * @ORM\Column(name="code", type="string", length=10, unique=true)
      */
-    private $will;
+    private $code;
 
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Resource", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $resources;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Assert\NotNull()
-     * @Assert\Type("bool")
-     *
-     * @var bool
-     *
-     * @ORM\Column(name="isShown", type="boolean")
-     */
-    private $isShown;
 
     /**
      * @Serializer\Since("0.1")
@@ -147,7 +123,7 @@ class Entity
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
-     * @var \DateTime
+     * @var \Datetime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
@@ -159,6 +135,7 @@ class Entity
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
+     * @Gedmo\Versioned
      *
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -170,6 +147,7 @@ class Entity
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
      *
      * @var \DateTime
      *
@@ -177,6 +155,20 @@ class Entity
      * @ORM\Column(name="updateDate", type="datetime", nullable=false)
      */
     protected $updateDate;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=true)
+     */
+    private $updateComment;
 
 
     /**
@@ -188,12 +180,53 @@ class Entity
     {
         return $this->id;
     }
+
     /**
-     * Constructor
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return HostingOrganization
      */
-    public function __construct()
+    public function setName($name)
     {
-        $this->resources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return HostingOrganization
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
     }
 
     /**
@@ -201,7 +234,7 @@ class Entity
      *
      * @param \DateTime $createDate
      *
-     * @return Entity
+     * @return HostingOrganization
      */
     public function setCreateDate($createDate)
     {
@@ -221,117 +254,11 @@ class Entity
     }
 
     /**
-     * Set will
-     *
-     * @param \AppBundle\Entity\Will $will
-     *
-     * @return Entity
-     */
-    public function setWill(\AppBundle\Entity\Will $will = null)
-    {
-        $this->will = $will;
-
-        return $this;
-    }
-
-    /**
-     * Get will
-     *
-     * @return \AppBundle\Entity\Will
-     */
-    public function getWill()
-    {
-        return $this->will;
-    }
-
-    /**
-     * Add resource
-     *
-     * @param \AppBundle\Entity\Resource $resource
-     *
-     * @return Entity
-     */
-    public function addResource(\AppBundle\Entity\Resource $resource)
-    {
-        $this->resources[] = $resource;
-
-        return $this;
-    }
-
-    /**
-     * Remove resource
-     *
-     * @param \AppBundle\Entity\Resource $resource
-     */
-    public function removeResource(\AppBundle\Entity\Resource $resource)
-    {
-        $this->resources->removeElement($resource);
-    }
-
-    /**
-     * Get resources
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getResources()
-    {
-        return $this->resources;
-    }
-
-    /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Entity
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
-    }
-
-    /**
-     * Set willNumber
-     *
-     * @param integer $willNumber
-     *
-     * @return Entity
-     */
-    public function setWillNumber($willNumber)
-    {
-        $this->willNumber = $willNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get willNumber
-     *
-     * @return integer
-     */
-    public function getWillNumber()
-    {
-        return $this->willNumber;
-    }
-
-    /**
      * Set updateDate
      *
      * @param \DateTime $updateDate
      *
-     * @return Entity
+     * @return HostingOrganization
      */
     public function setUpdateDate($updateDate)
     {
@@ -351,11 +278,59 @@ class Entity
     }
 
     /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return HostingOrganization
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return HostingOrganization
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
      * Set updateUser
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Entity
+     * @return HostingOrganization
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {
@@ -372,29 +347,5 @@ class Entity
     public function getUpdateUser()
     {
         return $this->updateUser;
-    }
-
-    /**
-     * Set isShown
-     *
-     * @param boolean $isShown
-     *
-     * @return Entity
-     */
-    public function setIsShown($isShown)
-    {
-        $this->isShown = $isShown;
-
-        return $this;
-    }
-
-    /**
-     * Get isShown
-     *
-     * @return boolean
-     */
-    public function getIsShown()
-    {
-        return $this->isShown;
     }
 }
