@@ -46,6 +46,10 @@ wills:
     type:     rest
     resource: AppBundle\Controller\WillController
 
+will-types:
+    type:     rest
+    resource: AppBundle\Controller\WillTypeController
+
 testators:
     type:     rest
     resource: AppBundle\Controller\TestatorController

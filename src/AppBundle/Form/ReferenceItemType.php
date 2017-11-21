@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,8 @@ class ReferenceItemType extends AbstractType
             ->add('militaryUnit',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:MilitaryUnit'))
             ->add('printedReference',   \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:PrintedReference'))
             ->add('manuscriptReference',\Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:ManuscriptReference'))
-            ->add('updateComment',      TextType::class,                                        array("required" => true))
+            ->add('updateComment',      TextareaType::class,                                    array("required" => true))
+            ->add('freeReference',      TextareaType::class,                                    array("required" => false))
         ;
     }
     

@@ -73,7 +73,7 @@ class Builder
 
         if($generate == true) {
             /* -- File generation -- */
-            $filename = "testament-FR".$entity->getWill()->getHostingOrganization()."_".$this->getIntIdToStrId($entity->getWillNumber(), 4).".xml";
+            $filename = "testament-FR".$entity->getWill()->getHostingOrganization()->getCode()."_".$this->getIntIdToStrId($entity->getWillNumber(), 4).".xml";
             $doc->save("download/".$filename);
             return $filename;
         } else {
@@ -316,10 +316,10 @@ class Builder
 
         $institution = $doc->createElement('institution');
         $collection = $doc->createElement('collection');
-        if($entity->getWill()->getHostingOrganization() == "AN") {
+        if($entity->getWill()->getHostingOrganization()->getCode() == "AN") {
             $institution->appendChild(new \DOMText('Archives nationales'));
             $collection->appendChild(new \DOMText('Minutier central des notaires de Paris'));
-        } elseif($entity->getWill()->getHostingOrganization() == "AD78") {
+        } elseif($entity->getWill()->getHostingOrganization()->getCode() == "AD78") {
             $institution->appendChild(new \DOMText('Archives départementales des Yvelines'));
             $collection->appendChild(new \DOMText('TO DEFINE'));
         } else {
@@ -328,10 +328,10 @@ class Builder
         }
 
         $idno = $doc->createElement('idno');
-        $idno->appendChild(new \DOMText($entity->getWill()->getCallNumber().', minute du '.$entity->getWill()->getMinuteDate().' (dépôt du testament de '.$entity->getWill()->getTestator()->getName().')'));
+        $idno->appendChild(new \DOMText($entity->getWill()->getCallNumber().', minute du '.$entity->getWill()->getMinuteDateString().' (dépôt du testament de '.$entity->getWill()->getTestator()->getName().')'));
 
         $msName = $doc->createElement('msName');
-        $msName->appendChild(new \DOMText('Testament de '.$entity->getWill()->getTestator()->getName().' ('.$entity->getWill()->getWillWritingDate().')'));
+        $msName->appendChild(new \DOMText('Testament de '.$entity->getWill()->getTestator()->getName().' ('.$entity->getWill()->getWillWritingDateString().')'));
 
         $msIdentifier->appendChild($institution);
         $msIdentifier->appendChild($collection);
@@ -343,19 +343,19 @@ class Builder
         $msContents = $doc->createElement('msContents');
         $summary = $doc->createElement('summary');
 
-        if($entity->getWill()->getWillWritingDate() != null && $entity->getWill()->getWillWritingPlace() != null) {
+        if($entity->getWill()->getWillWritingDateString() != null && $entity->getWill()->getWillWritingPlaceNormalized() != null) {
             $pDate = $doc->createElement('p');
 
-            if($entity->getWill()->getWillWritingDate() != null) {
+            if($entity->getWill()->getWillWritingDateString() != null) {
                 $date = $doc->createElement('date');
-                $date->appendChild(new \DOMText($entity->getWill()->getWillWritingDate()));
+                $date->appendChild(new \DOMText($entity->getWill()->getWillWritingDateString()));
                 $pDate->appendChild($date);
                 $pDate->appendChild(new \DOMText("."));
             }
 
-            if($entity->getWill()->getWillWritingPlace() != null) {
+            if($entity->getWill()->getWillWritingPlaceNormalized() != null) {
                 $placeName = $doc->createElement('placeName');
-                $placeName->appendChild(new \DOMText($entity->getWill()->getWillWritingPlace()->getNames()[0]->getName()));
+                $placeName->appendChild(new \DOMText($entity->getWill()->getWillWritingPlaceNormalized()->getNames()[0]->getName()));
                 $pDate->appendChild($placeName);
                 $pDate->appendChild(new \DOMText("."));
             }
@@ -526,16 +526,16 @@ class Builder
             $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeath()->getNames()[0]->getName()));
             $elements[] = $placeName;
         }
-        if($entity->getWill()->getTestator()->getPlaceOfDeath() != null && $entity->getWill()->getTestator()->getDateOfDeath() != null) {
+        if($entity->getWill()->getTestator()->getPlaceOfDeath() != null && $entity->getWill()->getTestator()->getDateOfDeathString() != null) {
             $elements[] = new \DOMText(", ");
         }
-        if($entity->getWill()->getTestator()->getDateOfDeath() != null) {
+        if($entity->getWill()->getTestator()->getDateOfDeathString() != null) {
             $elements[] = new \DOMText(" le ");
 
             $date = $doc->createElement('date');
-            $date->setAttribute('when', $entity->getWill()->getTestator()->getDateOfDeath());
+            $date->setAttribute('when', $entity->getWill()->getTestator()->getDateOfDeathString());
             $date->setAttribute('type', 'willAuthorDeathDate');
-            $date->appendChild(new \DOMText($entity->getWill()->getTestator()->getDateOfDeath()));
+            $date->appendChild(new \DOMText($entity->getWill()->getTestator()->getDateOfDeathString()));
             $elements[] = $date;
         }
         $elements[] = new \DOMText(".");
@@ -584,7 +584,7 @@ class Builder
                     $surface = $surfaceGrp->appendChild($surface);
 
                     $graphic = $doc->createElement('graphic');
-                    $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$image."_L.jpg");
+                    $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()->getCode()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$image."_L.jpg");
                     $graphic->setAttribute('xml:id', "testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$image."_jpg");
                     $surface->appendChild($graphic);
                 }
@@ -596,7 +596,7 @@ class Builder
                 $surface->setAttribute('n', $resource->getImages()[0]);
 
                 $graphic = $doc->createElement('graphic');
-                $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$resource->getImages()[0]."_L.jpg");
+                $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()->getCode()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$resource->getImages()[0]."_L.jpg");
                 $graphic->setAttribute('xml:id', "testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$resource->getImages()[0]."_jpg");
                 $surface->appendChild($graphic);
 

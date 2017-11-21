@@ -24,7 +24,8 @@ class EntitySubscriber implements EventSubscriber
     {
         return array(
             'prePersist',
-            'postUpdate'
+            'postUpdate',
+            'preRemove'
         );
     }
 
@@ -48,7 +49,7 @@ class EntitySubscriber implements EventSubscriber
 
             $will = $args->getEntity();
 
-            $title = "Testament " . $will->getCallNumber() . ", minute du " . $will->getMinuteDate();
+            $title = "Testament " . $will->getCallNumber() . ", minute du " . $will->getMinuteDateString();
 
             if ($will->getTestator() != null) {
                 $title .= " - " . $will->getTestator()->getName();
@@ -72,6 +73,31 @@ class EntitySubscriber implements EventSubscriber
             $commentLog->setIsPrivateThread(false);
             $commentLog->setIsReadByRecipient(false);
             $args->getEntityManager()->persist($commentLog);
+        }
+
+    }
+
+    public function preRemove(LifecycleEventArgs $args)
+    {
+        /* Remove Transcript > Need to remove all the associated logs */
+        if(get_class($args->getEntity()) == "AppBundle\Entity\Transcript") {
+            /** @var $em EntityManager */
+            /** @var $transcript Transcript */
+
+            $transcript = $args->getEntity();
+            $logs = $args->getEntityManager()->getRepository('AppBundle:TranscriptLog')->findBy(array('transcript' => $transcript));
+            foreach ($logs as $log) {$args->getEntityManager()->remove($log);}
+            $args->getEntityManager()->flush();
+        }
+
+        if(get_class($args->getEntity()) == "AppBundle\Entity\Resource") {
+            /** @var $em EntityManager */
+            /** @var $resource Resource */
+
+            $resource = $args->getEntity();
+            $transcript = $resource->getTranscript();
+            $logs = $args->getEntityManager()->getRepository('AppBundle:TranscriptLog')->findBy(array('transcript' => $transcript));
+            foreach ($logs as $log) {$args->getEntityManager()->remove($log);}
         }
 
     }

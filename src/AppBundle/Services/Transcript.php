@@ -47,11 +47,11 @@ class Transcript
         $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isOpened' => false));
 
         if($transcriptLog !== null) {
-            $datetimeLog = new \DateTime($transcriptLog->getCreateDate()->format('y-M-d H:i:s'));
+            $datetimeLog = new \DateTime($transcriptLog->getUpdateDate()->format('y-M-d H:i:s'));
             $datetimeNow = new \DateTime('now');
             $interval = $datetimeLog->diff($datetimeNow);
 
-            if(intval($interval->format('%h')) > 1) {
+            if(intval($interval->format('%h')) > 1 or intval($interval->format('%d')) > 1 or intval($interval->format('%M')) > 1 or intval($interval->format('%y')) > 1) {
                 $transcriptLog->setIsOpened(false);
                 $this->em->flush();
                 $transcriptLog = null;

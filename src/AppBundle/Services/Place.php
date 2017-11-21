@@ -33,11 +33,11 @@ class Place
     {
         /** @var $testator Testator */
         foreach($this->getTestators($place) as $testator) {
-            if($testator->getPlaceOfDeath() === $place) {
-                $testator->setPlaceOfDeath(null);
+            if($testator->getPlaceOfDeathNormalized() === $place) {
+                $testator->setPlaceOfDeathNormalized(null);
             }
-            if($testator->getPlaceOfBirth() === $place) {
-                $testator->setPlaceOfBirth(null);
+            if($testator->getPlaceOfBirthNormalized() === $place) {
+                $testator->setPlaceOfBirthNormalized(null);
             }
         }
 
@@ -53,8 +53,8 @@ class Place
         $repositoryTestators = $this->em->getRepository('AppBundle:Testator');
 
         $qb = $repositoryTestators->createQueryBuilder('t')
-                                  ->where('t.placeOfBirth = :place')
-                                  ->orWhere('t.placeOfDeath = :place')
+                                  ->where('t.placeOfBirthNormalized = :place')
+                                  ->orWhere('t.placeOfDeathNormalized = :place')
                                   ->setParameter('place', $place);
 
         return $qb->getQuery()->getResult();

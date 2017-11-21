@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,6 +19,9 @@ class HostingOrganizationType extends AbstractType
         $builder
             ->add('name',           TextType::class,        array('required' => true))
             ->add('code',           TextType::class,        array('required' => true))
+            ->add('website',        UrlType::class,         array('required' => false))
+            ->add('description',    TextareaType::class,    array('required' => false))
+            ->add('logo',           TextType::class,        array('required' => false))
             ->add('updateComment',  TextareaType::class,    array('required' => false))
         ;
     }

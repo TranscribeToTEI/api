@@ -345,7 +345,7 @@ class UserController extends FOSRestController
             foreach($em->getRepository('UserBundle:AccessToken')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
             foreach($em->getRepository('UserBundle:RefreshToken')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
 
-            foreach($em->getRepository('AppBundle:Comment')->findBy(array('author' => $user)) as $item) {$item->setAuthor(null);}
+            foreach($em->getRepository('AppBundle:Comment\Comment')->findBy(array('author' => $user)) as $item) {$item->setAuthor(null);}
             foreach($em->getRepository('AppBundle:AppPreference')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:CommentLog')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:CommentLog')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
@@ -382,6 +382,8 @@ class UserController extends FOSRestController
             foreach($em->getRepository('AppBundle:Will')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:WillType')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:WillType')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
 
 
 

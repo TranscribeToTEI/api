@@ -5,16 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 
-use AppBundle\Entity\Entity;
-use JMS\Serializer\Annotation as Serializer;
-
 /**
- * Resource
+ * WillType
  *
- * @ORM\Table(name="resource")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceRepository")
+ * @ORM\Table(name="will_type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\WillTypeRepository")
+ * @ORM\HasLifecycleCallbacks()
  *
  * @Serializer\ExclusionPolicy("all")
  * @Gedmo\Loggable
@@ -22,7 +21,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "self",
  *      href = @Hateoas\Route(
- *          "get_resource",
+ *          "get_will_type",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -33,7 +32,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "modify",
  *      href = @Hateoas\Route(
- *          "update_resource",
+ *          "update_will_type",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -44,7 +43,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "patch",
  *      href = @Hateoas\Route(
- *          "patch_resource",
+ *          "patch_will_type",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -55,7 +54,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @Hateoas\Relation(
  *      "delete",
  *      href = @Hateoas\Route(
- *          "remove_resource",
+ *          "remove_will_type",
  *          parameters = { "id" = "expr(object.getId())" },
  *          absolute = true
  *      ),
@@ -64,7 +63,7 @@ use JMS\Serializer\Annotation as Serializer;
  *     )
  * )
  */
-class Resource
+class WillType
 {
     /**
      * @Serializer\Since("0.1")
@@ -82,79 +81,34 @@ class Resource
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity", inversedBy="resources")
-     * @ORM\JoinColumn(nullable=true)
+     * @var string
+     * @Assert\NotBlank(message = "Le nom du type de testament ne peut pas être vide")
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      */
-    private $entity;
+    private $name;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\Choice({"page", "envelop", "codicil"})
+     * @Gedmo\Versioned
      *
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $type;
+    private $description;
 
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @var int
-     *
-     * @ORM\Column(name="orderInWill", type="integer")
-     */
-    private $orderInWill;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Assert\NotBlank()
-     * @Assert\Type("array")
-     * @var array
-     *
-     * @ORM\Column(name="images", type="array", nullable=true)
-     */
-    private $images;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @Assert\Type("string")
-     *
-     * @var string
-     *
-     * @ORM\Column(name="notes", type="text", nullable=true)
-     */
-    private $notes;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $transcript;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Serializer\MaxDepth(2)
+     * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -167,7 +121,7 @@ class Resource
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
-     * @var \DateTime
+     * @var \Datetime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="createDate", type="datetime", nullable=false)
@@ -178,8 +132,8 @@ class Resource
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
-     * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
+     * @Gedmo\Versioned
      *
      * @Gedmo\Blameable(on="update")
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -200,6 +154,20 @@ class Resource
      */
     protected $updateDate;
 
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\Type("string")
+     *
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="text", length=255, nullable=true)
+     */
+    private $updateComment;
+
 
     /**
      * Get id
@@ -212,51 +180,51 @@ class Resource
     }
 
     /**
-     * Set type
+     * Set name
      *
-     * @param string $type
+     * @param string $name
      *
-     * @return Resource
+     * @return WillType
      */
-    public function setType($type)
+    public function setName($name)
     {
-        $this->type = $type;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Get name
      *
      * @return string
      */
-    public function getType()
+    public function getName()
     {
-        return $this->type;
+        return $this->name;
     }
 
     /**
-     * Set orderInWill
+     * Set description
      *
-     * @param integer $orderInWill
+     * @param string $description
      *
-     * @return Resource
+     * @return WillType
      */
-    public function setOrderInWill($orderInWill)
+    public function setDescription($description)
     {
-        $this->orderInWill = $orderInWill;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get orderInWill
+     * Get description
      *
-     * @return integer
+     * @return string
      */
-    public function getOrderInWill()
+    public function getDescription()
     {
-        return $this->orderInWill;
+        return $this->description;
     }
 
     /**
@@ -264,7 +232,7 @@ class Resource
      *
      * @param \DateTime $createDate
      *
-     * @return Resource
+     * @return WillType
      */
     public function setCreateDate($createDate)
     {
@@ -284,131 +252,11 @@ class Resource
     }
 
     /**
-     * Set entity
-     *
-     * @param \AppBundle\Entity\Entity $entity
-     *
-     * @return Resource
-     */
-    public function setEntity(\AppBundle\Entity\Entity $entity = null)
-    {
-        $this->entity = $entity;
-
-        return $this;
-    }
-
-    /**
-     * Get entity
-     *
-     * @return \AppBundle\Entity\Entity
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
-
-    /**
-     * Set createUser
-     *
-     * @param \UserBundle\Entity\User $createUser
-     *
-     * @return Resource
-     */
-    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
-    {
-        $this->createUser = $createUser;
-
-        return $this;
-    }
-
-    /**
-     * Get createUser
-     *
-     * @return \UserBundle\Entity\User
-     */
-    public function getCreateUser()
-    {
-        return $this->createUser;
-    }
-
-    /**
-     * Set transcript
-     *
-     * @param \AppBundle\Entity\Transcript $transcript
-     *
-     * @return Resource
-     */
-    public function setTranscript(\AppBundle\Entity\Transcript $transcript = null)
-    {
-        $this->transcript = $transcript;
-
-        return $this;
-    }
-
-    /**
-     * Get transcript
-     *
-     * @return \AppBundle\Entity\Transcript
-     */
-    public function getTranscript()
-    {
-        return $this->transcript;
-    }
-
-    /**
-     * Set images
-     *
-     * @param array $images
-     *
-     * @return Resource
-     */
-    public function setImages($images)
-    {
-        $this->images = $images;
-
-        return $this;
-    }
-
-    /**
-     * Get images
-     *
-     * @return array
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * Set notes
-     *
-     * @param string $notes
-     *
-     * @return Resource
-     */
-    public function setNotes($notes)
-    {
-        $this->notes = $notes;
-
-        return $this;
-    }
-
-    /**
-     * Get notes
-     *
-     * @return string
-     */
-    public function getNotes()
-    {
-        return $this->notes;
-    }
-
-    /**
      * Set updateDate
      *
      * @param \DateTime $updateDate
      *
-     * @return Resource
+     * @return WillType
      */
     public function setUpdateDate($updateDate)
     {
@@ -428,11 +276,59 @@ class Resource
     }
 
     /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     *
+     * @return WillType
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \UserBundle\Entity\User $createUser
+     *
+     * @return WillType
+     */
+    public function setCreateUser(\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
      * Set updateUser
      *
      * @param \UserBundle\Entity\User $updateUser
      *
-     * @return Resource
+     * @return WillType
      */
     public function setUpdateUser(\UserBundle\Entity\User $updateUser = null)
     {

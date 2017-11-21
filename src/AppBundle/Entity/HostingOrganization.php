@@ -105,6 +105,44 @@ class HostingOrganization
      */
     private $code;
 
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="text", nullable=true)
+     */
+    private $logo;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Assert\Url()
+     * @Assert\Type("string")
+     *
+     * @ORM\Column(name="website", type="string", length=255, nullable=false)
+     */
+    private $website;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
 
     /**
      * @Serializer\Since("0.1")
@@ -179,6 +217,21 @@ class HostingOrganization
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set
+     *
+     * @param string $field
+     * @param string $value
+     *
+     * @return HostingOrganization
+     */
+    public function set($field, $value)
+    {
+        $this->{$field} = $value;
+
+        return $this;
     }
 
     /**
@@ -347,5 +400,77 @@ class HostingOrganization
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     *
+     * @return HostingOrganization
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set website
+     *
+     * @param string $website
+     *
+     * @return HostingOrganization
+     */
+    public function setWebsite($website)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return HostingOrganization
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

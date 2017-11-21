@@ -118,6 +118,19 @@ class Testator
      *
      * @var string
      *
+     * @ORM\Column(name="indexName", type="string", length=255)
+     */
+    private $indexName;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Assert\NotBlank()
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
      * @ORM\Column(name="surname", type="string", length=255)
      */
     private $surname;
@@ -131,9 +144,22 @@ class Testator
      *
      * @var string
      *
-     * @ORM\Column(name="firstnames", type="string", length=255)
+     * @ORM\Column(name="firstnames", type="text")
      */
     private $firstnames;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Assert\NotBlank()
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="otherNames", type="text", nullable=true)
+     */
+    private $otherNames;
 
     /**
      * @Serializer\Since("0.1")
@@ -143,7 +169,7 @@ class Testator
      *
      * @var string
      *
-     * @ORM\Column(name="profession", type="string", length=255, nullable=true)
+     * @ORM\Column(name="profession", type="text", nullable=true)
      */
     private $profession;
 
@@ -167,18 +193,6 @@ class Testator
      *
      * @var string
      *
-     * @ORM\Column(name="addressStreet", type="string", length=255, nullable=true)
-     */
-    private $addressStreet;
-
-    /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Groups({"full", "content"})
-     * @Serializer\Expose
-     * @Gedmo\Versioned
-     *
-     * @var string
-     *
      * @ORM\Column(name="addressDistrict", type="string", length=255, nullable=true)
      */
     private $addressDistrict;
@@ -191,7 +205,19 @@ class Testator
      *
      * @var string
      *
-     * @ORM\Column(name="addressCity", type="string", length=255, nullable=true)
+     * @ORM\Column(name="addressStreet", type="string", length=255, nullable=true)
+     */
+    private $addressStreet;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     * @Serializer\MaxDepth(3)
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $addressCity;
 
@@ -199,15 +225,54 @@ class Testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Assert\NotBlank()
-     *
      * @Gedmo\Versioned
      *
      * @var string
+     * @Assert\NotBlank()
      *
-     * @ORM\Column(name="dateOfBirth", type="string", length=255)
+     * @ORM\Column(name="addressString", type="text", nullable=true)
      */
-    private $dateOfBirth;
+    private $addressString;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @Assert\NotBlank(message = "La date de naissance du testament ne peut pas être vide")
+     * @var string
+     *
+     * @ORM\Column(name="dateOfBirthString", type="text", nullable=false)
+     */
+    private $dateOfBirthString;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     * @Assert\NotNull(message = "La date de naissance normalisée du testament ne peut pas être vide")
+     *
+     * @ORM\Column(name="dateOfBirthNormalized", type="date", nullable=false)
+     */
+    private $dateOfBirthNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     *
+     * @ORM\Column(name="dateOfBirthEndNormalized", type="date", nullable=true)
+     */
+    private $dateOfBirthEndNormalized;
 
     /**
      * The field is used to index dates in search
@@ -233,21 +298,60 @@ class Testator
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $placeOfBirth;
+    private $placeOfBirthNormalized;
 
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Assert\NotBlank()
-     *
      * @Gedmo\Versioned
      *
      * @var string
+     * @Assert\NotBlank()
      *
-     * @ORM\Column(name="dateOfDeath", type="string", length=255)
+     * @ORM\Column(name="placeOfBirthString", type="text", nullable=true)
      */
-    private $dateOfDeath;
+    private $placeOfBirthString;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     * @Assert\NotBlank()
+     *
+     * @ORM\Column(name="dateOfDeathString", type="text", nullable=false)
+     */
+    private $dateOfDeathString;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     * @Assert\NotNull(message = "La date de décès normalisée du testament ne peut pas être vide")
+     *
+     * @ORM\Column(name="dateOfDeathNormalized", type="date", nullable=false)
+     */
+    private $dateOfDeathNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     *
+     * @ORM\Column(name="dateOfDeathEndNormalized", type="date", nullable=true)
+     */
+    private $dateOfDeathEndNormalized;
 
     /**
      * The field is used to index dates in search
@@ -274,7 +378,20 @@ class Testator
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $placeOfDeath;
+    private $placeOfDeathNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     * @Assert\NotBlank()
+     *
+     * @ORM\Column(name="placeOfDeathString", type="text", nullable=false)
+     */
+    private $placeOfDeathString;
 
     /**
      * @Serializer\Since("0.1")
@@ -314,7 +431,19 @@ class Testator
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MilitaryUnit")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $militaryUnit;
+    private $militaryUnitNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="militaryUnitString", type="text", nullable=true)
+     */
+    private $militaryUnitString;
 
     /**
      * @Serializer\Since("0.1")
@@ -441,14 +570,6 @@ class Testator
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->wills = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Set
      *
      * @param string $field
@@ -461,6 +582,13 @@ class Testator
         $this->{$field} = $value;
 
         return $this;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->wills = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -485,6 +613,30 @@ class Testator
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set indexName
+     *
+     * @param string $indexName
+     *
+     * @return Testator
+     */
+    public function setIndexName($indexName)
+    {
+        $this->indexName = $indexName;
+
+        return $this;
+    }
+
+    /**
+     * Get indexName
+     *
+     * @return string
+     */
+    public function getIndexName()
+    {
+        return $this->indexName;
     }
 
     /**
@@ -536,6 +688,30 @@ class Testator
     }
 
     /**
+     * Set otherNames
+     *
+     * @param string $otherNames
+     *
+     * @return Testator
+     */
+    public function setOtherNames($otherNames)
+    {
+        $this->otherNames = $otherNames;
+
+        return $this;
+    }
+
+    /**
+     * Get otherNames
+     *
+     * @return string
+     */
+    public function getOtherNames()
+    {
+        return $this->otherNames;
+    }
+
+    /**
      * Set profession
      *
      * @param string $profession
@@ -584,30 +760,6 @@ class Testator
     }
 
     /**
-     * Set addressStreet
-     *
-     * @param string $addressStreet
-     *
-     * @return Testator
-     */
-    public function setAddressStreet($addressStreet)
-    {
-        $this->addressStreet = $addressStreet;
-
-        return $this;
-    }
-
-    /**
-     * Get addressStreet
-     *
-     * @return string
-     */
-    public function getAddressStreet()
-    {
-        return $this->addressStreet;
-    }
-
-    /**
      * Set addressDistrict
      *
      * @param string $addressDistrict
@@ -632,51 +784,123 @@ class Testator
     }
 
     /**
-     * Set addressCity
+     * Set addressStreet
      *
-     * @param string $addressCity
+     * @param string $addressStreet
      *
      * @return Testator
      */
-    public function setAddressCity($addressCity)
+    public function setAddressStreet($addressStreet)
     {
-        $this->addressCity = $addressCity;
+        $this->addressStreet = $addressStreet;
 
         return $this;
     }
 
     /**
-     * Get addressCity
+     * Get addressStreet
      *
      * @return string
      */
-    public function getAddressCity()
+    public function getAddressStreet()
     {
-        return $this->addressCity;
+        return $this->addressStreet;
     }
 
     /**
-     * Set dateOfBirth
+     * Set addressString
      *
-     * @param string $dateOfBirth
+     * @param string $addressString
      *
      * @return Testator
      */
-    public function setDateOfBirth($dateOfBirth)
+    public function setAddressString($addressString)
     {
-        $this->dateOfBirth = $dateOfBirth;
+        $this->addressString = $addressString;
 
         return $this;
     }
 
     /**
-     * Get dateOfBirth
+     * Get addressString
      *
      * @return string
      */
-    public function getDateOfBirth()
+    public function getAddressString()
     {
-        return $this->dateOfBirth;
+        return $this->addressString;
+    }
+
+    /**
+     * Set dateOfBirthString
+     *
+     * @param string $dateOfBirthString
+     *
+     * @return Testator
+     */
+    public function setDateOfBirthString($dateOfBirthString)
+    {
+        $this->dateOfBirthString = $dateOfBirthString;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfBirthString
+     *
+     * @return string
+     */
+    public function getDateOfBirthString()
+    {
+        return $this->dateOfBirthString;
+    }
+
+    /**
+     * Set dateOfBirthNormalized
+     *
+     * @param \DateTime $dateOfBirthNormalized
+     *
+     * @return Testator
+     */
+    public function setDateOfBirthNormalized($dateOfBirthNormalized)
+    {
+        $this->dateOfBirthNormalized = $dateOfBirthNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfBirthNormalized
+     *
+     * @return \DateTime
+     */
+    public function getDateOfBirthNormalized()
+    {
+        return $this->dateOfBirthNormalized;
+    }
+
+    /**
+     * Set dateOfBirthEndNormalized
+     *
+     * @param \DateTime $dateOfBirthEndNormalized
+     *
+     * @return Testator
+     */
+    public function setDateOfBirthEndNormalized($dateOfBirthEndNormalized)
+    {
+        $this->dateOfBirthEndNormalized = $dateOfBirthEndNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfBirthEndNormalized
+     *
+     * @return \DateTime
+     */
+    public function getDateOfBirthEndNormalized()
+    {
+        return $this->dateOfBirthEndNormalized;
     }
 
     /**
@@ -704,27 +928,99 @@ class Testator
     }
 
     /**
-     * Set dateOfDeath
+     * Set placeOfBirthString
      *
-     * @param string $dateOfDeath
+     * @param string $placeOfBirthString
      *
      * @return Testator
      */
-    public function setDateOfDeath($dateOfDeath)
+    public function setPlaceOfBirthString($placeOfBirthString)
     {
-        $this->dateOfDeath = $dateOfDeath;
+        $this->placeOfBirthString = $placeOfBirthString;
 
         return $this;
     }
 
     /**
-     * Get dateOfDeath
+     * Get placeOfBirthString
      *
      * @return string
      */
-    public function getDateOfDeath()
+    public function getPlaceOfBirthString()
     {
-        return $this->dateOfDeath;
+        return $this->placeOfBirthString;
+    }
+
+    /**
+     * Set dateOfDeathString
+     *
+     * @param string $dateOfDeathString
+     *
+     * @return Testator
+     */
+    public function setDateOfDeathString($dateOfDeathString)
+    {
+        $this->dateOfDeathString = $dateOfDeathString;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfDeathString
+     *
+     * @return string
+     */
+    public function getDateOfDeathString()
+    {
+        return $this->dateOfDeathString;
+    }
+
+    /**
+     * Set dateOfDeathNormalized
+     *
+     * @param \DateTime $dateOfDeathNormalized
+     *
+     * @return Testator
+     */
+    public function setDateOfDeathNormalized($dateOfDeathNormalized)
+    {
+        $this->dateOfDeathNormalized = $dateOfDeathNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfDeathNormalized
+     *
+     * @return \DateTime
+     */
+    public function getDateOfDeathNormalized()
+    {
+        return $this->dateOfDeathNormalized;
+    }
+
+    /**
+     * Set dateOfDeathEndNormalized
+     *
+     * @param \DateTime $dateOfDeathEndNormalized
+     *
+     * @return Testator
+     */
+    public function setDateOfDeathEndNormalized($dateOfDeathEndNormalized)
+    {
+        $this->dateOfDeathEndNormalized = $dateOfDeathEndNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get dateOfDeathEndNormalized
+     *
+     * @return \DateTime
+     */
+    public function getDateOfDeathEndNormalized()
+    {
+        return $this->dateOfDeathEndNormalized;
     }
 
     /**
@@ -749,6 +1045,30 @@ class Testator
     public function getYearOfDeath()
     {
         return $this->yearOfDeath;
+    }
+
+    /**
+     * Set placeOfDeathString
+     *
+     * @param string $placeOfDeathString
+     *
+     * @return Testator
+     */
+    public function setPlaceOfDeathString($placeOfDeathString)
+    {
+        $this->placeOfDeathString = $placeOfDeathString;
+
+        return $this;
+    }
+
+    /**
+     * Get placeOfDeathString
+     *
+     * @return string
+     */
+    public function getPlaceOfDeathString()
+    {
+        return $this->placeOfDeathString;
     }
 
     /**
@@ -800,6 +1120,30 @@ class Testator
     }
 
     /**
+     * Set militaryUnitString
+     *
+     * @param string $militaryUnitString
+     *
+     * @return Testator
+     */
+    public function setMilitaryUnitString($militaryUnitString)
+    {
+        $this->militaryUnitString = $militaryUnitString;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnitString
+     *
+     * @return string
+     */
+    public function getMilitaryUnitString()
+    {
+        return $this->militaryUnitString;
+    }
+
+    /**
      * Set rank
      *
      * @param string $rank
@@ -845,6 +1189,54 @@ class Testator
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param string $picture
+     *
+     * @return Testator
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * Set isOfficialVersion
+     *
+     * @param boolean $isOfficialVersion
+     *
+     * @return Testator
+     */
+    public function setIsOfficialVersion($isOfficialVersion)
+    {
+        $this->isOfficialVersion = $isOfficialVersion;
+
+        return $this;
+    }
+
+    /**
+     * Get isOfficialVersion
+     *
+     * @return boolean
+     */
+    public function getIsOfficialVersion()
+    {
+        return $this->isOfficialVersion;
     }
 
     /**
@@ -954,75 +1346,99 @@ class Testator
     }
 
     /**
-     * Set placeOfBirth
+     * Set addressCity
      *
-     * @param \AppBundle\Entity\Place $placeOfBirth
+     * @param \AppBundle\Entity\Place $addressCity
      *
      * @return Testator
      */
-    public function setPlaceOfBirth(\AppBundle\Entity\Place $placeOfBirth = null)
+    public function setAddressCity(\AppBundle\Entity\Place $addressCity = null)
     {
-        $this->placeOfBirth = $placeOfBirth;
+        $this->addressCity = $addressCity;
 
         return $this;
     }
 
     /**
-     * Get placeOfBirth
+     * Get addressCity
      *
      * @return \AppBundle\Entity\Place
      */
-    public function getPlaceOfBirth()
+    public function getAddressCity()
     {
-        return $this->placeOfBirth;
+        return $this->addressCity;
     }
 
     /**
-     * Set placeOfDeath
+     * Set placeOfBirthNormalized
      *
-     * @param \AppBundle\Entity\Place $placeOfDeath
+     * @param \AppBundle\Entity\Place $placeOfBirthNormalized
      *
      * @return Testator
      */
-    public function setPlaceOfDeath(\AppBundle\Entity\Place $placeOfDeath)
+    public function setPlaceOfBirthNormalized(\AppBundle\Entity\Place $placeOfBirthNormalized = null)
     {
-        $this->placeOfDeath = $placeOfDeath;
+        $this->placeOfBirthNormalized = $placeOfBirthNormalized;
 
         return $this;
     }
 
     /**
-     * Get placeOfDeath
+     * Get placeOfBirthNormalized
      *
      * @return \AppBundle\Entity\Place
      */
-    public function getPlaceOfDeath()
+    public function getPlaceOfBirthNormalized()
     {
-        return $this->placeOfDeath;
+        return $this->placeOfBirthNormalized;
     }
 
     /**
-     * Set militaryUnit
+     * Set placeOfDeathNormalized
      *
-     * @param \AppBundle\Entity\MilitaryUnit $militaryUnit
+     * @param \AppBundle\Entity\Place $placeOfDeathNormalized
      *
      * @return Testator
      */
-    public function setMilitaryUnit(\AppBundle\Entity\MilitaryUnit $militaryUnit = null)
+    public function setPlaceOfDeathNormalized(\AppBundle\Entity\Place $placeOfDeathNormalized)
     {
-        $this->militaryUnit = $militaryUnit;
+        $this->placeOfDeathNormalized = $placeOfDeathNormalized;
 
         return $this;
     }
 
     /**
-     * Get militaryUnit
+     * Get placeOfDeathNormalized
+     *
+     * @return \AppBundle\Entity\Place
+     */
+    public function getPlaceOfDeathNormalized()
+    {
+        return $this->placeOfDeathNormalized;
+    }
+
+    /**
+     * Set militaryUnitNormalized
+     *
+     * @param \AppBundle\Entity\MilitaryUnit $militaryUnitNormalized
+     *
+     * @return Testator
+     */
+    public function setMilitaryUnitNormalized(\AppBundle\Entity\MilitaryUnit $militaryUnitNormalized = null)
+    {
+        $this->militaryUnitNormalized = $militaryUnitNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnitNormalized
      *
      * @return \AppBundle\Entity\MilitaryUnit
      */
-    public function getMilitaryUnit()
+    public function getMilitaryUnitNormalized()
     {
-        return $this->militaryUnit;
+        return $this->militaryUnitNormalized;
     }
 
     /**
@@ -1071,53 +1487,5 @@ class Testator
     public function getUpdateUser()
     {
         return $this->updateUser;
-    }
-
-    /**
-     * Set isOfficialVersion
-     *
-     * @param boolean $isOfficialVersion
-     *
-     * @return Testator
-     */
-    public function setIsOfficialVersion($isOfficialVersion)
-    {
-        $this->isOfficialVersion = $isOfficialVersion;
-
-        return $this;
-    }
-
-    /**
-     * Get isOfficialVersion
-     *
-     * @return boolean
-     */
-    public function getIsOfficialVersion()
-    {
-        return $this->isOfficialVersion;
-    }
-
-    /**
-     * Set picture
-     *
-     * @param string $picture
-     *
-     * @return Testator
-     */
-    public function setPicture($picture)
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
-    /**
-     * Get picture
-     *
-     * @return string
-     */
-    public function getPicture()
-    {
-        return $this->picture;
     }
 }

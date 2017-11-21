@@ -151,6 +151,18 @@ class ReferenceItem
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="freeReference", type="text", nullable=true)
+     */
+    private $freeReference;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
      *

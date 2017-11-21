@@ -20,31 +20,41 @@ class TestatorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',               TextType::class,                                        array("required" => true))
-            ->add('surname',            TextType::class,                                        array("required" => true))
-            ->add('firstnames',         TextType::class,                                        array("required" => true))
-            ->add('profession',         TextType::class,                                        array("required" => false))
-            ->add('addressNumber',      TextType::class,                                        array("required" => false))
-            ->add('addressStreet',      TextType::class,                                        array("required" => false))
-            ->add('addressDistrict',    TextType::class,                                        array("required" => false))
-            ->add('addressCity',        TextType::class,                                        array("required" => false))
-            ->add('dateOfBirth',        TextType::class,                                        array("required" => true))
-            ->add('yearOfBirth',        TextType::class,                                        array("required" => true))
-            ->add('placeOfBirth',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Place'))
-            ->add('dateOfDeath',        TextType::class,                                        array("required" => true))
-            ->add('yearOfDeath',        TextType::class,                                        array("required" => true))
-            ->add('placeOfDeath',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Place'))
-            ->add('deathMention',       TextType::class,                                        array("required" => true))
-            ->add('memoireDesHommes',   CollectionType::class,                                  array(
-                                                                                                            'entry_type'   => UrlType::class,
-                                                                                                            'allow_add'  => true,
-                                                                                                            'allow_delete' => true,
-                                                                                                            "required" => true))
-            ->add('militaryUnit',       \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:MilitaryUnit'))
-            ->add('rank',               TextType::class,                                        array("required" => false))
-            ->add('description',        TextareaType::class,                                    array("required" => false))
-            ->add('isOfficialVersion',  CheckboxType::class,                                    array("required" => false))
-            ->add('updateComment',      TextType::class,                                        array("required" => true))
+            ->add('name',                       TextType::class,                                        array("required" => true))
+            ->add('indexName',                  TextType::class,                                        array("required" => false))
+            ->add('surname',                    TextType::class,                                        array("required" => true))
+            ->add('firstnames',                 TextareaType::class,                                    array("required" => true))
+            ->add('otherNames',                 TextareaType::class,                                    array("required" => false))
+            ->add('profession',                 TextareaType::class,                                    array("required" => false))
+            ->add('addressNumber',              TextType::class,                                        array("required" => false))
+            ->add('addressStreet',              TextType::class,                                        array("required" => false))
+            ->add('addressDistrict',            TextType::class,                                        array("required" => false))
+            ->add('addressCity',                \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:Place'))
+            ->add('address',                    TextareaType::class,                                    array("required" => false))
+            ->add('dateOfBirthString',          TextareaType::class,                                    array("required" => true))
+            ->add('dateOfBirthNormalized',      DateType::class,                                        array("required" => true))
+            ->add('dateOfBirthEndNormalized',   DateType::class,                                        array("required" => false))
+            ->add('yearOfBirth',                TextType::class,                                        array("required" => true))
+            ->add('placeOfBirthNormalized',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Place'))
+            ->add('placeOfBirthString',         TextareaType::class,                                    array("required" => true))
+            ->add('dateOfDeathString',          TextareaType::class,                                    array("required" => true))
+            ->add('dateOfDeathNormalized',      DateType::class,                                        array("required" => true))
+            ->add('dateOfDeathEndNormalized',   DateType::class,                                        array("required" => false))
+            ->add('yearOfDeath',                TextType::class,                                        array("required" => true))
+            ->add('placeOfDeathNormalized',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Place'))
+            ->add('placeOfDeathString',         TextareaType::class,                                    array("required" => true))
+            ->add('deathMention',               TextType::class,                                        array("required" => true))
+            ->add('memoireDesHommes',           CollectionType::class,                                  array(
+                                                                                                                        'entry_type'   => TextType::class,
+                                                                                                                        'allow_add'  => true,
+                                                                                                                        'allow_delete' => true,
+                                                                                                                        "required" => true))
+            ->add('militaryUnitNormalized',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:MilitaryUnit'))
+            ->add('militaryUnitString',         TextareaType::class,                                    array("required" => false))
+            ->add('rank',                       TextType::class,                                        array("required" => false))
+            ->add('description',                TextareaType::class,                                    array("required" => false))
+            ->add('isOfficialVersion',          CheckboxType::class,                                    array("required" => false))
+            ->add('updateComment',              TextType::class,                                        array("required" => true))
         ;
     }
     

@@ -101,9 +101,35 @@ class Will
      * @var string
      * @Assert\NotBlank(message = "La côte ne peut pas être vide")
      *
-     * @ORM\Column(name="callNumber", type="string", length=255)
+     * @ORM\Column(name="callNumber", type="string", length=255, nullable=false)
      */
     private $callNumber;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     * @Assert\NotBlank(message = "Le numéro d'étude notariale ne peut pas être vide")
+     *
+     * @ORM\Column(name="notaryNumber", type="string", length=255, nullable=false)
+     */
+    private $notaryNumber;
+
+    /**
+     * Identification number of lawyers
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="crpcenNumber", type="string", length=255, nullable=true)
+     */
+    private $crpcenNumber;
 
     /**
      * @Serializer\Since("0.1")
@@ -127,7 +153,7 @@ class Will
      * @var string
      * @Assert\NotBlank(message = "Le titre ne peut pas être vide")
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
 
@@ -140,9 +166,36 @@ class Will
      * @var string
      * @Assert\NotBlank(message = "La date de la minute ne peut pas être vide")
      *
-     * @ORM\Column(name="minuteDate", type="string", length=255)
+     * @ORM\Column(name="minuteDateString", type="text", nullable=false)
      */
-    private $minuteDate;
+    private $minuteDateString;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     * @Assert\NotNull(message = "La date normalisée de la minute ne peut pas être vide")
+     *
+     * @ORM\Column(name="minuteDateNormalized", type="date", nullable=false)
+     */
+    private $minuteDateNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     *
+     * @ORM\Column(name="minuteDateEndNormalized", type="date", nullable=true)
+     */
+    private $minuteDateEndNormalized;
 
     /**
      * The field is used to index dates in search
@@ -154,7 +207,7 @@ class Will
      *
      * @Gedmo\Versioned
      *
-     * @ORM\Column(name="minuteYear", type="string", length=5)
+     * @ORM\Column(name="minuteYear", type="string", length=5, nullable=false)
      */
     private $minuteYear;
 
@@ -167,9 +220,36 @@ class Will
      * @var string
      * @Assert\NotBlank(message = "La date d'écriture du testament ne peut pas être vide")
      *
-     * @ORM\Column(name="willWritingDate", type="string", length=255)
+     * @ORM\Column(name="willWritingDateString", type="text", nullable=false)
      */
-    private $willWritingDate;
+    private $willWritingDateString;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     * @Assert\NotNull(message = "La date d'écriture normalisée du testament ne peut pas être vide")
+     *
+     * @ORM\Column(name="willWritingDateNormalized", type="date", nullable=false)
+     */
+    private $willWritingDateNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var \DateTime
+     * @Assert\Date()
+     *
+     * @ORM\Column(name="willWritingDateEndNormalized", type="date", nullable=true)
+     */
+    private $willWritingDateEndNormalized;
 
     /**
      * The field is used to index dates in search
@@ -195,7 +275,19 @@ class Will
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $willWritingPlace;
+    private $willWritingPlaceNormalized;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="willWritingPlaceString", type="text", nullable=true)
+     */
+    private $willWritingPlaceString;
 
     /**
      * @Serializer\Since("0.1")
@@ -262,6 +354,17 @@ class Will
      *
      * @var string
      *
+     * @ORM\Column(name="pagePhysDescNumber", type="string", length=255, nullable=true)
+     */
+    private $pagePhysDescNumber;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
      * @ORM\Column(name="envelopePhysDescSupport", type="string", length=255, nullable=true)
      */
     private $envelopePhysDescSupport;
@@ -303,6 +406,72 @@ class Will
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="codicilPhysDescSupport", type="string", length=255, nullable=true)
+     */
+    private $codicilPhysDescSupport;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="codicilPhysDescHeight", type="string", length=255, nullable=true)
+     */
+    private $codicilPhysDescHeight;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="codicilPhysDescWidth", type="string", length=255, nullable=true)
+     */
+    private $codicilPhysDescWidth;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="codicilPhysDescHand", type="string", length=255, nullable=true)
+     */
+    private $codicilPhysDescHand;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @ORM\Column(name="codicilPhysDescNumber", type="string", length=255, nullable=true)
+     */
+    private $codicilPhysDescNumber;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\WillType")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $willType;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HostingOrganization")
@@ -335,6 +504,21 @@ class Will
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * Use to additional comments notes about the will
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="additionalComments", type="text", nullable=true)
+     */
+    private $additionalComments;
 
     /**
      * @Serializer\Since("0.1")
@@ -448,6 +632,54 @@ class Will
     }
 
     /**
+     * Set notaryNumber
+     *
+     * @param string $notaryNumber
+     *
+     * @return Will
+     */
+    public function setNotaryNumber($notaryNumber)
+    {
+        $this->notaryNumber = $notaryNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get notaryNumber
+     *
+     * @return string
+     */
+    public function getNotaryNumber()
+    {
+        return $this->notaryNumber;
+    }
+
+    /**
+     * Set crpcenNumber
+     *
+     * @param string $crpcenNumber
+     *
+     * @return Will
+     */
+    public function setCrpcenNumber($crpcenNumber)
+    {
+        $this->crpcenNumber = $crpcenNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get crpcenNumber
+     *
+     * @return string
+     */
+    public function getCrpcenNumber()
+    {
+        return $this->crpcenNumber;
+    }
+
+    /**
      * Set minuteLink
      *
      * @param string $minuteLink
@@ -496,27 +728,75 @@ class Will
     }
 
     /**
-     * Set minuteDate
+     * Set minuteDateString
      *
-     * @param string $minuteDate
+     * @param string $minuteDateString
      *
      * @return Will
      */
-    public function setMinuteDate($minuteDate)
+    public function setMinuteDateString($minuteDateString)
     {
-        $this->minuteDate = $minuteDate;
+        $this->minuteDateString = $minuteDateString;
 
         return $this;
     }
 
     /**
-     * Get minuteDate
+     * Get minuteDateString
      *
      * @return string
      */
-    public function getMinuteDate()
+    public function getMinuteDateString()
     {
-        return $this->minuteDate;
+        return $this->minuteDateString;
+    }
+
+    /**
+     * Set minuteDateNormalized
+     *
+     * @param \DateTime $minuteDateNormalized
+     *
+     * @return Will
+     */
+    public function setMinuteDateNormalized($minuteDateNormalized)
+    {
+        $this->minuteDateNormalized = $minuteDateNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get minuteDateNormalized
+     *
+     * @return \DateTime
+     */
+    public function getMinuteDateNormalized()
+    {
+        return $this->minuteDateNormalized;
+    }
+
+    /**
+     * Set minuteDateEndNormalized
+     *
+     * @param \DateTime $minuteDateEndNormalized
+     *
+     * @return Will
+     */
+    public function setMinuteDateEndNormalized($minuteDateEndNormalized)
+    {
+        $this->minuteDateEndNormalized = $minuteDateEndNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get minuteDateEndNormalized
+     *
+     * @return \DateTime
+     */
+    public function getMinuteDateEndNormalized()
+    {
+        return $this->minuteDateEndNormalized;
     }
 
     /**
@@ -544,27 +824,75 @@ class Will
     }
 
     /**
-     * Set willWritingDate
+     * Set willWritingDateString
      *
-     * @param string $willWritingDate
+     * @param string $willWritingDateString
      *
      * @return Will
      */
-    public function setWillWritingDate($willWritingDate)
+    public function setWillWritingDateString($willWritingDateString)
     {
-        $this->willWritingDate = $willWritingDate;
+        $this->willWritingDateString = $willWritingDateString;
 
         return $this;
     }
 
     /**
-     * Get willWritingDate
+     * Get willWritingDateString
      *
      * @return string
      */
-    public function getWillWritingDate()
+    public function getWillWritingDateString()
     {
-        return $this->willWritingDate;
+        return $this->willWritingDateString;
+    }
+
+    /**
+     * Set willWritingDateNormalized
+     *
+     * @param \DateTime $willWritingDateNormalized
+     *
+     * @return Will
+     */
+    public function setWillWritingDateNormalized($willWritingDateNormalized)
+    {
+        $this->willWritingDateNormalized = $willWritingDateNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get willWritingDateNormalized
+     *
+     * @return \DateTime
+     */
+    public function getWillWritingDateNormalized()
+    {
+        return $this->willWritingDateNormalized;
+    }
+
+    /**
+     * Set willWritingDateEndNormalized
+     *
+     * @param \DateTime $willWritingDateEndNormalized
+     *
+     * @return Will
+     */
+    public function setWillWritingDateEndNormalized($willWritingDateEndNormalized)
+    {
+        $this->willWritingDateEndNormalized = $willWritingDateEndNormalized;
+
+        return $this;
+    }
+
+    /**
+     * Get willWritingDateEndNormalized
+     *
+     * @return \DateTime
+     */
+    public function getWillWritingDateEndNormalized()
+    {
+        return $this->willWritingDateEndNormalized;
     }
 
     /**
@@ -589,6 +917,30 @@ class Will
     public function getWillWritingYear()
     {
         return $this->willWritingYear;
+    }
+
+    /**
+     * Set willWritingPlaceString
+     *
+     * @param string $willWritingPlaceString
+     *
+     * @return Will
+     */
+    public function setWillWritingPlaceString($willWritingPlaceString)
+    {
+        $this->willWritingPlaceString = $willWritingPlaceString;
+
+        return $this;
+    }
+
+    /**
+     * Get willWritingPlaceString
+     *
+     * @return string
+     */
+    public function getWillWritingPlaceString()
+    {
+        return $this->willWritingPlaceString;
     }
 
     /**
@@ -688,13 +1040,37 @@ class Will
     }
 
     /**
+     * Set pagePhysDescNumber
+     *
+     * @param string $pagePhysDescNumber
+     *
+     * @return Will
+     */
+    public function setPagePhysDescNumber($pagePhysDescNumber)
+    {
+        $this->pagePhysDescNumber = $pagePhysDescNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get pagePhysDescNumber
+     *
+     * @return string
+     */
+    public function getPagePhysDescNumber()
+    {
+        return $this->pagePhysDescNumber;
+    }
+
+    /**
      * Set envelopePhysDescSupport
      *
      * @param string $envelopePhysDescSupport
      *
      * @return Will
      */
-    public function setenvelopePhysDescSupport($envelopePhysDescSupport)
+    public function setEnvelopePhysDescSupport($envelopePhysDescSupport)
     {
         $this->envelopePhysDescSupport = $envelopePhysDescSupport;
 
@@ -706,7 +1082,7 @@ class Will
      *
      * @return string
      */
-    public function getenvelopePhysDescSupport()
+    public function getEnvelopePhysDescSupport()
     {
         return $this->envelopePhysDescSupport;
     }
@@ -718,7 +1094,7 @@ class Will
      *
      * @return Will
      */
-    public function setenvelopePhysDescHeight($envelopePhysDescHeight)
+    public function setEnvelopePhysDescHeight($envelopePhysDescHeight)
     {
         $this->envelopePhysDescHeight = $envelopePhysDescHeight;
 
@@ -730,7 +1106,7 @@ class Will
      *
      * @return string
      */
-    public function getenvelopePhysDescHeight()
+    public function getEnvelopePhysDescHeight()
     {
         return $this->envelopePhysDescHeight;
     }
@@ -742,7 +1118,7 @@ class Will
      *
      * @return Will
      */
-    public function setenvelopePhysDescWidth($envelopePhysDescWidth)
+    public function setEnvelopePhysDescWidth($envelopePhysDescWidth)
     {
         $this->envelopePhysDescWidth = $envelopePhysDescWidth;
 
@@ -754,7 +1130,7 @@ class Will
      *
      * @return string
      */
-    public function getenvelopePhysDescWidth()
+    public function getEnvelopePhysDescWidth()
     {
         return $this->envelopePhysDescWidth;
     }
@@ -766,7 +1142,7 @@ class Will
      *
      * @return Will
      */
-    public function setenvelopePhysDescHand($envelopePhysDescHand)
+    public function setEnvelopePhysDescHand($envelopePhysDescHand)
     {
         $this->envelopePhysDescHand = $envelopePhysDescHand;
 
@@ -778,9 +1154,129 @@ class Will
      *
      * @return string
      */
-    public function getenvelopePhysDescHand()
+    public function getEnvelopePhysDescHand()
     {
         return $this->envelopePhysDescHand;
+    }
+
+    /**
+     * Set codicilPhysDescSupport
+     *
+     * @param string $codicilPhysDescSupport
+     *
+     * @return Will
+     */
+    public function setCodicilPhysDescSupport($codicilPhysDescSupport)
+    {
+        $this->codicilPhysDescSupport = $codicilPhysDescSupport;
+
+        return $this;
+    }
+
+    /**
+     * Get codicilPhysDescSupport
+     *
+     * @return string
+     */
+    public function getCodicilPhysDescSupport()
+    {
+        return $this->codicilPhysDescSupport;
+    }
+
+    /**
+     * Set codicilPhysDescHeight
+     *
+     * @param string $codicilPhysDescHeight
+     *
+     * @return Will
+     */
+    public function setCodicilPhysDescHeight($codicilPhysDescHeight)
+    {
+        $this->codicilPhysDescHeight = $codicilPhysDescHeight;
+
+        return $this;
+    }
+
+    /**
+     * Get codicilPhysDescHeight
+     *
+     * @return string
+     */
+    public function getCodicilPhysDescHeight()
+    {
+        return $this->codicilPhysDescHeight;
+    }
+
+    /**
+     * Set codicilPhysDescWidth
+     *
+     * @param string $codicilPhysDescWidth
+     *
+     * @return Will
+     */
+    public function setCodicilPhysDescWidth($codicilPhysDescWidth)
+    {
+        $this->codicilPhysDescWidth = $codicilPhysDescWidth;
+
+        return $this;
+    }
+
+    /**
+     * Get codicilPhysDescWidth
+     *
+     * @return string
+     */
+    public function getCodicilPhysDescWidth()
+    {
+        return $this->codicilPhysDescWidth;
+    }
+
+    /**
+     * Set codicilPhysDescHand
+     *
+     * @param string $codicilPhysDescHand
+     *
+     * @return Will
+     */
+    public function setCodicilPhysDescHand($codicilPhysDescHand)
+    {
+        $this->codicilPhysDescHand = $codicilPhysDescHand;
+
+        return $this;
+    }
+
+    /**
+     * Get codicilPhysDescHand
+     *
+     * @return string
+     */
+    public function getCodicilPhysDescHand()
+    {
+        return $this->codicilPhysDescHand;
+    }
+
+    /**
+     * Set codicilPhysDescNumber
+     *
+     * @param string $codicilPhysDescNumber
+     *
+     * @return Will
+     */
+    public function setCodicilPhysDescNumber($codicilPhysDescNumber)
+    {
+        $this->codicilPhysDescNumber = $codicilPhysDescNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get codicilPhysDescNumber
+     *
+     * @return string
+     */
+    public function getCodicilPhysDescNumber()
+    {
+        return $this->codicilPhysDescNumber;
     }
 
     /**
@@ -805,6 +1301,78 @@ class Will
     public function getIdentificationUser()
     {
         return $this->identificationUser;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Will
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set additionalComments
+     *
+     * @param string $additionalComments
+     *
+     * @return Will
+     */
+    public function setAdditionalComments($additionalComments)
+    {
+        $this->additionalComments = $additionalComments;
+
+        return $this;
+    }
+
+    /**
+     * Get additionalComments
+     *
+     * @return string
+     */
+    public function getAdditionalComments()
+    {
+        return $this->additionalComments;
+    }
+
+    /**
+     * Set isOfficialVersion
+     *
+     * @param boolean $isOfficialVersion
+     *
+     * @return Will
+     */
+    public function setIsOfficialVersion($isOfficialVersion)
+    {
+        $this->isOfficialVersion = $isOfficialVersion;
+
+        return $this;
+    }
+
+    /**
+     * Get isOfficialVersion
+     *
+     * @return boolean
+     */
+    public function getIsOfficialVersion()
+    {
+        return $this->isOfficialVersion;
     }
 
     /**
@@ -904,27 +1472,27 @@ class Will
     }
 
     /**
-     * Set willWritingPlace
+     * Set willWritingPlaceNormalized
      *
-     * @param \AppBundle\Entity\Place $willWritingPlace
+     * @param \AppBundle\Entity\Place $willWritingPlaceNormalized
      *
      * @return Will
      */
-    public function setWillWritingPlace(\AppBundle\Entity\Place $willWritingPlace = null)
+    public function setWillWritingPlaceNormalized(\AppBundle\Entity\Place $willWritingPlaceNormalized = null)
     {
-        $this->willWritingPlace = $willWritingPlace;
+        $this->willWritingPlaceNormalized = $willWritingPlaceNormalized;
 
         return $this;
     }
 
     /**
-     * Get willWritingPlace
+     * Get willWritingPlaceNormalized
      *
      * @return \AppBundle\Entity\Place
      */
-    public function getWillWritingPlace()
+    public function getWillWritingPlaceNormalized()
     {
-        return $this->willWritingPlace;
+        return $this->willWritingPlaceNormalized;
     }
 
     /**
@@ -949,6 +1517,54 @@ class Will
     public function getTestator()
     {
         return $this->testator;
+    }
+
+    /**
+     * Set willType
+     *
+     * @param \AppBundle\Entity\WillType $willType
+     *
+     * @return Will
+     */
+    public function setWillType(\AppBundle\Entity\WillType $willType = null)
+    {
+        $this->willType = $willType;
+
+        return $this;
+    }
+
+    /**
+     * Get willType
+     *
+     * @return \AppBundle\Entity\WillType
+     */
+    public function getWillType()
+    {
+        return $this->willType;
+    }
+
+    /**
+     * Set hostingOrganization
+     *
+     * @param \AppBundle\Entity\HostingOrganization $hostingOrganization
+     *
+     * @return Will
+     */
+    public function setHostingOrganization(\AppBundle\Entity\HostingOrganization $hostingOrganization = null)
+    {
+        $this->hostingOrganization = $hostingOrganization;
+
+        return $this;
+    }
+
+    /**
+     * Get hostingOrganization
+     *
+     * @return \AppBundle\Entity\HostingOrganization
+     */
+    public function getHostingOrganization()
+    {
+        return $this->hostingOrganization;
     }
 
     /**
@@ -997,77 +1613,5 @@ class Will
     public function getUpdateUser()
     {
         return $this->updateUser;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Will
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set isOfficialVersion
-     *
-     * @param boolean $isOfficialVersion
-     *
-     * @return Will
-     */
-    public function setIsOfficialVersion($isOfficialVersion)
-    {
-        $this->isOfficialVersion = $isOfficialVersion;
-
-        return $this;
-    }
-
-    /**
-     * Get isOfficialVersion
-     *
-     * @return boolean
-     */
-    public function getIsOfficialVersion()
-    {
-        return $this->isOfficialVersion;
-    }
-
-    /**
-     * Set hostingOrganization
-     *
-     * @param \AppBundle\Entity\HostingOrganization $hostingOrganization
-     *
-     * @return Will
-     */
-    public function setHostingOrganization(\AppBundle\Entity\HostingOrganization $hostingOrganization = null)
-    {
-        $this->hostingOrganization = $hostingOrganization;
-
-        return $this;
-    }
-
-    /**
-     * Get hostingOrganization
-     *
-     * @return \AppBundle\Entity\HostingOrganization
-     */
-    public function getHostingOrganization()
-    {
-        return $this->hostingOrganization;
     }
 }
