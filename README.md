@@ -12,3 +12,4 @@ La structure de Testaments de Poilus est basée sur une API développée en Symf
 La documentation générique à propos de Symfony 3.3 est disponible à https://symfony.com/doc/3.3/index.html
 
 ## Documentation
+[Accéder à la documentation](doc/index.md)
