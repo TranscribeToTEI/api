@@ -33,6 +33,9 @@ class HostingOrganizationController extends FOSRestController
      *     section="HostingOrganizations",
      *     resource=true,
      *     description="Get the list of all hosting organizations",
+     *     parameters={
+     *         { "name"="search", "dataType"="string", "description"="Run a search query in the hosting organizations", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -67,7 +70,7 @@ class HostingOrganizationController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "militaryUnitType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The hosting organization unique identifier.",
      *         }
@@ -99,20 +102,8 @@ class HostingOrganizationController extends FOSRestController
      *     section="HostingOrganizations",
      *     resource=true,
      *     description="Create a new hosting organization",
-     *     requirements={
-     *         {
-     *             "name"="Name",
-     *             "militaryUnitType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the hosting organization."
-     *         },
-     *         {
-     *             "name"="Code",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,10}",
-     *             "description"="The text of the hosting organization."
-     *         }
-     *     },
+     *     input="AppBundle\Form\HostingOrganizationType",
+     *     output="AppBundle\Entity\HostingOrganization",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -144,20 +135,8 @@ class HostingOrganizationController extends FOSRestController
      *     section="HostingOrganizations",
      *     resource=true,
      *     description="Update an existing hosting organization",
-     *     requirements={
-     *         {
-     *             "name"="Name",
-     *             "militaryUnitType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the hosting organization."
-     *         },
-     *         {
-     *             "name"="Code",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,10}",
-     *             "description"="The text of the hosting organization."
-     *         }
-     *     },
+     *     input="AppBundle\Form\HostingOrganizationType",
+     *     output="AppBundle\Entity\HostingOrganization",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -177,20 +156,8 @@ class HostingOrganizationController extends FOSRestController
      *     section="HostingOrganizations",
      *     resource=true,
      *     description="Update an existing hosting organization",
-     *     requirements={
-     *         {
-     *             "name"="Name",
-     *             "militaryUnitType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the hosting organization."
-     *         },
-     *         {
-     *             "name"="Code",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,10}",
-     *             "description"="The text of the hosting organization."
-     *         }
-     *     },
+     *     input="AppBundle\Form\HostingOrganizationType",
+     *     output="AppBundle\Entity\HostingOrganization",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -232,7 +199,7 @@ class HostingOrganizationController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "militaryUnitType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The militaryUnit unique identifier.",
      *         }

@@ -80,44 +80,8 @@ class WillController extends FOSRestController
      *     section="Wills",
      *     resource=true,
      *     description="Create a new will",
-     *     requirements={
-     *         {
-     *             "name"="title",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the will, can be a concatenation of the will number and the testator."
-     *         },
-     *         {
-     *             "name"="number",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The number (cote) of the will."
-     *         },
-     *         {
-     *             "name"="minute_date",
-     *             "dataType"="date",
-     *             "requirement"="Date",
-     *             "description"="The date of the minute."
-     *         },
-     *         {
-     *             "name"="will_writing_date",
-     *             "dataType"="date",
-     *             "requirement"="Date",
-     *             "description"="The writing date of the will."
-     *         },
-     *         {
-     *             "name"="will_writing_place",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The writing place of the will."
-     *         },
-     *         {
-     *             "name"="testator",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The writing place of the will."
-     *         }
-     *     },
+     *     input="AppBundle\Form\WillType",
+     *     output="AppBundle\Entity\Will",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -148,44 +112,8 @@ class WillController extends FOSRestController
      *     section="Wills",
      *     resource=true,
      *     description="Update an existing will",
-     *     requirements={
-     *         {
-     *             "name"="title",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the will, can be a concatenation of the will number and the testator."
-     *         },
-     *         {
-     *             "name"="number",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The number (cote) of the will."
-     *         },
-     *         {
-     *             "name"="minute_date",
-     *             "dataType"="date",
-     *             "requirement"="Date",
-     *             "description"="The date of the minute."
-     *         },
-     *         {
-     *             "name"="will_writing_date",
-     *             "dataType"="date",
-     *             "requirement"="Date",
-     *             "description"="The writing date of the will."
-     *         },
-     *         {
-     *             "name"="will_writing_place",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The writing place of the will."
-     *         },
-     *         {
-     *             "name"="testator",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The writing place of the will."
-     *         }
-     *     },
+     *     input="AppBundle\Form\WillType",
+     *     output="AppBundle\Entity\Will",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -204,44 +132,8 @@ class WillController extends FOSRestController
      *     section="Wills",
      *     resource=true,
      *     description="Update an existing will",
-     *     requirements={
-     *         {
-     *             "name"="title",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the will, can be a concatenation of the will number and the testator."
-     *         },
-     *         {
-     *             "name"="number",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The number (cote) of the will."
-     *         },
-     *         {
-     *             "name"="minute_date",
-     *             "dataType"="date",
-     *             "requirement"="Date",
-     *             "description"="The date of the minute."
-     *         },
-     *         {
-     *             "name"="will_writing_date",
-     *             "dataType"="date",
-     *             "requirement"="Date",
-     *             "description"="The writing date of the will."
-     *         },
-     *         {
-     *             "name"="will_writing_place",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The writing place of the will."
-     *         },
-     *         {
-     *             "name"="testator",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The writing place of the will."
-     *         }
-     *     },
+     *     input="AppBundle\Form\WillType",
+     *     output="AppBundle\Entity\Will",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"

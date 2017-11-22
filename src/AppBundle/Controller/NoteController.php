@@ -33,6 +33,9 @@ class NoteController extends FOSRestController
      *     section="Notes",
      *     resource=true,
      *     description="Get the list of all notes",
+     *     parameters={
+     *         { "name"="transcript", "dataType"="integer", "description"="All notes from a transcript id", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -67,7 +70,7 @@ class NoteController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "noteType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The note unique identifier.",
      *         }
@@ -99,9 +102,8 @@ class NoteController extends FOSRestController
      *     section="Notes",
      *     resource=true,
      *     description="Create a new note",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\NoteType",
+     *     output="AppBundle\Entity\Note",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -133,9 +135,8 @@ class NoteController extends FOSRestController
      *     section="Notes",
      *     resource=true,
      *     description="Update an existing note",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\NoteType",
+     *     output="AppBundle\Entity\Note",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -155,9 +156,8 @@ class NoteController extends FOSRestController
      *     section="Notes",
      *     resource=true,
      *     description="Update an existing note",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\NoteType",
+     *     output="AppBundle\Entity\Note",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -199,7 +199,7 @@ class NoteController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "noteType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The note unique identifier.",
      *         }

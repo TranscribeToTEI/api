@@ -32,6 +32,9 @@ class TranscriptController extends FOSRestController
      *     section="Transcripts",
      *     resource=true,
      *     description="Get the list of all transcripts",
+     *     parameters={
+     *         { "name"="status", "dataType"="string", "description"="Name of the status required", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -64,7 +67,7 @@ class TranscriptController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "transcriptType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The transcript unique identifier.",
      *         }
@@ -97,14 +100,8 @@ class TranscriptController extends FOSRestController
      *     section="Transcripts",
      *     resource=true,
      *     description="Create a new transcript",
-     *     requirements={
-     *         {
-     *             "name"="content",
-     *             "transcriptType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The content of the transcript."
-     *         }
-     *     },
+     *     input="AppBundle\Form\TranscriptType",
+     *     output="AppBundle\Entity\Transcript",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -135,14 +132,8 @@ class TranscriptController extends FOSRestController
      *     section="Transcripts",
      *     resource=true,
      *     description="Update an existing transcript",
-     *     requirements={
-     *         {
-     *             "name"="content",
-     *             "transcriptType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The content of the transcript."
-     *         }
-     *     },
+     *     input="AppBundle\Form\TranscriptType",
+     *     output="AppBundle\Entity\Transcript",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -161,14 +152,8 @@ class TranscriptController extends FOSRestController
      *     section="Transcripts",
      *     resource=true,
      *     description="Update an existing transcript",
-     *     requirements={
-     *         {
-     *             "name"="content",
-     *             "transcriptType"="",
-     *             "requirement"="",
-     *             "description"="The content of the transcript."
-     *         }
-     *     },
+     *     input="AppBundle\Form\TranscriptType",
+     *     output="AppBundle\Entity\Transcript",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -206,14 +191,8 @@ class TranscriptController extends FOSRestController
      *     section="Transcripts",
      *     resource=true,
      *     description="Remove a transcript",
-     *     requirements={
-     *         {
-     *             "name"="id",
-     *             "transcriptType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The transcript unique identifier.",
-     *         }
-     *     },
+     *     input="AppBundle\Form\TranscriptType",
+     *     output="AppBundle\Entity\Transcript",
      *     statusCodes={
      *         204="Returned when deleted",
      *         400="Returned when a violation is raised by validation"

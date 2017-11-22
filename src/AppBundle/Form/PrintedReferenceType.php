@@ -18,7 +18,7 @@ class PrintedReferenceType extends AbstractType
             ->add('authors',                    TextType::class,        array("required" => true))
             ->add('referenceTitle',             TextType::class,        array("required" => true))
             ->add('containerTitle',             TextType::class,        array("required" => false))
-            ->add('containerType',              TextType::class,        array("required" => false))
+            ->add('containerType',              TextType::class,        array("required" => false, "description" => "Allowed values: \"Revue\", \"Monographie\", \"Ouvrage collectif\""))
             ->add('url',                        TextType::class,        array("required" => false))
             ->add('otherInformation',           TextType::class,        array("required" => false))
             ->add('updateComment',              TextType::class,        array("required" => true))

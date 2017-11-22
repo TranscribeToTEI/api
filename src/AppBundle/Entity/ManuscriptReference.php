@@ -77,6 +77,8 @@ class ManuscriptReference
     private $id;
 
     /**
+     * The name of your manuscript document
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -89,6 +91,8 @@ class ManuscriptReference
     private $documentName;
 
     /**
+     * The institution hosting the document
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -102,6 +106,8 @@ class ManuscriptReference
     private $institutionName;
 
     /**
+     * The name of the collection in which is your document
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -114,6 +120,8 @@ class ManuscriptReference
     private $collectionName;
 
     /**
+     * The number of your document
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -122,11 +130,13 @@ class ManuscriptReference
      * @Assert\NotBlank()
      * @var string
      *
-     * @ORM\Column(name="documentNumber", type="string", length=255)
+     * @ORM\Column(name="documentNumber", type="string", length=255, nullable=false)
      */
     private $documentNumber;
 
     /**
+     * If your document is available on the web, you can provide here its URL
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

@@ -36,6 +36,11 @@ class ModelController extends FOSRestController
      *     section="Model",
      *     resource=true,
      *     description="Get information about the validation model",
+     *     parameters={
+     *         { "name"="element", "dataType"="string", "description"="Name of the element required", "required"=false },
+     *         { "name"="elements", "dataType"="string", "description"="Query every elements info", "required"=false },
+     *         { "name"="info", "dataType"="string", "description"="Type of information required", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"

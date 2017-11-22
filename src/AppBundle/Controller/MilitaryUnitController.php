@@ -33,6 +33,9 @@ class MilitaryUnitController extends FOSRestController
      *     section="MilitaryUnits",
      *     resource=true,
      *     description="Get the list of all military units",
+     *     parameters={
+     *         { "name"="search", "dataType"="string", "description"="Run a search query in the military units", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -67,7 +70,7 @@ class MilitaryUnitController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "militaryUnitType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The military unit unique identifier.",
      *         }
@@ -99,32 +102,8 @@ class MilitaryUnitController extends FOSRestController
      *     section="MilitaryUnits",
      *     resource=true,
      *     description="Create a new military unit",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "militaryUnitType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the military unit."
-     *         },
-     *         {
-     *             "name"="MilitaryUnit",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the military unit."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the military unit."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the military unit."
-     *         }
-     *     },
+     *     input="AppBundle\Form\MilitaryUnitType",
+     *     output="AppBundle\Entity\MilitaryUnit",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -156,32 +135,8 @@ class MilitaryUnitController extends FOSRestController
      *     section="MilitaryUnits",
      *     resource=true,
      *     description="Update an existing military unit",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "militaryUnitType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the military unit."
-     *         },
-     *         {
-     *             "name"="MilitaryUnit",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the military unit."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the military unit."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the military unit."
-     *         }
-     *     },
+     *     input="AppBundle\Form\MilitaryUnitType",
+     *     output="AppBundle\Entity\MilitaryUnit",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -201,32 +156,8 @@ class MilitaryUnitController extends FOSRestController
      *     section="MilitaryUnits",
      *     resource=true,
      *     description="Update an existing military unit",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "militaryUnitType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the military unit."
-     *         },
-     *         {
-     *             "name"="MilitaryUnit",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the military unit."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the military unit."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "militaryUnitType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the military unit."
-     *         }
-     *     },
+     *     input="AppBundle\Form\MilitaryUnitType",
+     *     output="AppBundle\Entity\MilitaryUnit",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -268,7 +199,7 @@ class MilitaryUnitController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "militaryUnitType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The militaryUnit unique identifier.",
      *         }

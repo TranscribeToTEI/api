@@ -79,6 +79,8 @@ class CommentLog
     private $id;
 
     /**
+     * Has the comment been read by an admin?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -92,6 +94,8 @@ class CommentLog
     private $isReadByAdmin;
 
     /**
+     * Is the comment part of a private thread?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -105,6 +109,7 @@ class CommentLog
     private $isPrivateThread;
 
     /**
+     * If the comment is part of a private thread, has it been read by the recipient?
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -117,8 +122,9 @@ class CommentLog
      */
     private $isReadByRecipient;
 
-
     /**
+     * The thread of the comment
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -132,6 +138,8 @@ class CommentLog
     private $thread;
 
     /**
+     * The comment logged
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

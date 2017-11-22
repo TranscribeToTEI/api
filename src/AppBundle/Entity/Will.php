@@ -82,6 +82,8 @@ class Will
     private $id;
 
     /**
+     * The entity aggregating the will
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -93,6 +95,8 @@ class Will
     private $entity;
 
     /**
+     * The number at the archives of the will
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -106,6 +110,8 @@ class Will
     private $callNumber;
 
     /**
+     * The notary number for the collection hosting the will
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -119,7 +125,8 @@ class Will
     private $notaryNumber;
 
     /**
-     * Identification number of lawyers
+     * Identification number of the lawyer who received the will
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -132,6 +139,8 @@ class Will
     private $crpcenNumber;
 
     /**
+     * Link of the minute at the archives
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -145,6 +154,8 @@ class Will
     private $minuteLink;
 
     /**
+     * Title computed for the will, this is an automatic aggregation
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -158,6 +169,8 @@ class Will
     private $title;
 
     /**
+     * Full date of the minute (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -171,6 +184,8 @@ class Will
     private $minuteDateString;
 
     /**
+     * Normalized date of the minute
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -185,6 +200,8 @@ class Will
     private $minuteDateNormalized;
 
     /**
+     * If the date of the minute is an interval, fill here the end date of the interval
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -198,7 +215,8 @@ class Will
     private $minuteDateEndNormalized;
 
     /**
-     * The field is used to index dates in search
+     * The year of the minute, used for index
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -212,6 +230,8 @@ class Will
     private $minuteYear;
 
     /**
+     * Full date of the will writing date (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -225,6 +245,8 @@ class Will
     private $willWritingDateString;
 
     /**
+     * Normalized will writing date
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -239,6 +261,8 @@ class Will
     private $willWritingDateNormalized;
 
     /**
+     * If the will writing date is an interval, fill here the end date
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -252,7 +276,8 @@ class Will
     private $willWritingDateEndNormalized;
 
     /**
-     * The field is used to index dates in search
+     * The year of the will writing date, used for index
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -266,6 +291,8 @@ class Will
     private $willWritingYear;
 
     /**
+     * Normalized will writing place
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -278,6 +305,8 @@ class Will
     private $willWritingPlaceNormalized;
 
     /**
+     * Full will writing place (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -290,6 +319,8 @@ class Will
     private $willWritingPlaceString;
 
     /**
+     * The testator who wrote the will
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "testator"})
@@ -304,6 +335,8 @@ class Will
     private $testator;
 
     /**
+     * Support of the pages of the will
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -315,6 +348,8 @@ class Will
     private $pagePhysDescSupport;
 
     /**
+     * Height of the pages of the will (in centimeters)
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -326,6 +361,7 @@ class Will
     private $pagePhysDescHeight;
 
     /**
+     * Width of the pages of the will (in centimeters)
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -337,6 +373,8 @@ class Will
     private $pagePhysDescWidth;
 
     /**
+     * Type of hand writing for the page of the will
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -348,6 +386,8 @@ class Will
     private $pagePhysDescHand;
 
     /**
+     * Number of pages of the will (in centimeters)
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -359,6 +399,7 @@ class Will
     private $pagePhysDescNumber;
 
     /**
+     * Type of support of the will's envelop
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -370,6 +411,8 @@ class Will
     private $envelopePhysDescSupport;
 
     /**
+     * Height of the will's envelop
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -381,6 +424,8 @@ class Will
     private $envelopePhysDescHeight;
 
     /**
+     * Width of the will's envelop
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -392,6 +437,8 @@ class Will
     private $envelopePhysDescWidth;
 
     /**
+     * Type of hand writing for the will's envelop
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -403,6 +450,8 @@ class Will
     private $envelopePhysDescHand;
 
     /**
+     * Type of support for the will's codicil
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -414,6 +463,8 @@ class Will
     private $codicilPhysDescSupport;
 
     /**
+     * Height of the will's codicil
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -425,6 +476,8 @@ class Will
     private $codicilPhysDescHeight;
 
     /**
+     * Width of the will's codicil
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -436,6 +489,8 @@ class Will
     private $codicilPhysDescWidth;
 
     /**
+     * Type of hand writing of the will's codicil
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -447,6 +502,8 @@ class Will
     private $codicilPhysDescHand;
 
     /**
+     * Number of pages of the codicil
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -458,6 +515,8 @@ class Will
     private $codicilPhysDescNumber;
 
     /**
+     * The type of will (related to WillType)
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -469,6 +528,8 @@ class Will
     private $willType;
 
     /**
+     * The hosting organization of the will
+     * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -480,15 +541,17 @@ class Will
     private $hostingOrganization;
 
     /**
+     * Users who contribute to identify the will and its metadata before the transcription process
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      *
      * @var string
      *
-     * @ORM\Column(name="identificationUser", type="string", length=255, nullable=true)
+     * @ORM\Column(name="identificationUsers", type="text", nullable=true)
      */
-    private $identificationUser;
+    private $identificationUsers;
 
     /**
      * Use to add notes about the will
@@ -521,6 +584,8 @@ class Will
     private $additionalComments;
 
     /**
+     * Is the current version an official version of the project team?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -531,7 +596,6 @@ class Will
      * @ORM\Column(name="isOfficialVersion", type="boolean", options={"default" : false})
      */
     private $isOfficialVersion;
-
 
     /**
      * @Serializer\Since("0.1")
@@ -1280,27 +1344,27 @@ class Will
     }
 
     /**
-     * Set identificationUser
+     * Set identificationUsers
      *
-     * @param string $identificationUser
+     * @param string $identificationUsers
      *
      * @return Will
      */
-    public function setIdentificationUser($identificationUser)
+    public function setidentificationUsers($identificationUsers)
     {
-        $this->identificationUser = $identificationUser;
+        $this->identificationUsers = $identificationUsers;
 
         return $this;
     }
 
     /**
-     * Get identificationUser
+     * Get identificationUsers
      *
      * @return string
      */
-    public function getIdentificationUser()
+    public function getidentificationUsers()
     {
-        return $this->identificationUser;
+        return $this->identificationUsers;
     }
 
     /**

@@ -25,41 +25,22 @@ class AppPreferenceController extends FOSRestController
      * @Rest\Get("/app-preference")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
-     * @QueryParam(name="status", description="Name of the status required")
-     * @QueryParam(name="type", description="")
-     * @QueryParam(name="date", description="")
-     * @QueryParam(name="limit", requirements="\d+", description="")
-     *
      * @Doc\ApiDoc(
      *     section="AppPreferences",
      *     resource=true,
-     *     description="Get the list of all app-preference",
+     *     description="AppPreference allows to reach platform parameters. It should be only one value of config.",
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function getAppPreferencesAction(Request $request, ParamFetcher $paramFetcher)
+    public function getAppPreferencesAction(Request $request)
     {
-        $status = $paramFetcher->get('status');
-        $type = $paramFetcher->get('type');
-        $date = $paramFetcher->get('date');
-        $limit = $paramFetcher->get('limit');
-
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:AppPreference');
         /* @var $repository EntityRepository */
 
-        $query = [];
-        if($status != "") {$query["status"] = $status;}
-        if($type != "") {$query["type"] = $type;}
-
-        $order = [];
-        if($date == "ASC" or $date == "DESC") {$order["createDate"] = $date;}
-
-        if($limit == "" or $limit == null) {$limit = 100;}
-
-        $appPreferences = $repository->findBy($query, $order, $limit);
+        $appPreferences = $repository->findAll();
         /* @var $appPreferences AppPreference[] */
 
         return $appPreferences;
@@ -71,13 +52,13 @@ class AppPreferenceController extends FOSRestController
      * @Doc\ApiDoc(
      *     section="AppPreferences",
      *     resource=true,
-     *     description="Return one appPreference",
+     *     description="Return one AppPreference entity",
      *     requirements={
      *         {
      *             "name"="id",
-     *             "appPreferenceType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
-     *             "description"="The appPreference unique identifier.",
+     *             "description"="The AppPreference unique identifier.",
      *         }
      *     },
      *     statusCodes={
@@ -106,33 +87,9 @@ class AppPreferenceController extends FOSRestController
      * @Doc\ApiDoc(
      *     section="AppPreferences",
      *     resource=true,
-     *     description="Create a new appPreference",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "appPreferenceType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the appPreference."
-     *         },
-     *         {
-     *             "name"="AppPreference",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the appPreference."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the appPreference."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the appPreference."
-     *         }
-     *     },
+     *     description="Create a new AppPreference",
+     *     input="AppBundle\Form\AppPreferenceType",
+     *     output="AppBundle\Entity\AppPreference",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -164,32 +121,8 @@ class AppPreferenceController extends FOSRestController
      *     section="AppPreferences",
      *     resource=true,
      *     description="Update an existing appPreference",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "appPreferenceType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the appPreference."
-     *         },
-     *         {
-     *             "name"="AppPreference",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the appPreference."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the appPreference."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the appPreference."
-     *         }
-     *     },
+     *     input="AppBundle\Form\AppPreferenceType",
+     *     output="AppBundle\Entity\AppPreference",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -209,32 +142,8 @@ class AppPreferenceController extends FOSRestController
      *     section="AppPreferences",
      *     resource=true,
      *     description="Update an existing appPreference",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "appPreferenceType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the appPreference."
-     *         },
-     *         {
-     *             "name"="AppPreference",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the appPreference."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the appPreference."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "appPreferenceType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the appPreference."
-     *         }
-     *     },
+     *     input="AppBundle\Form\AppPreferenceType",
+     *     output="AppBundle\Entity\AppPreference",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -276,7 +185,7 @@ class AppPreferenceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "appPreferenceType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The appPreference unique identifier.",
      *         }

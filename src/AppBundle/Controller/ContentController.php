@@ -26,16 +26,23 @@ class ContentController extends FOSRestController
      * @Rest\Get("/contents")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
-     * @QueryParam(name="status", description="Name of the status required")
-     * @QueryParam(name="type", description="")
-     * @QueryParam(name="date", description="")
-     * @QueryParam(name="limit", requirements="\d+", description="")
-     * @QueryParam(name="onhomepage", description="")
+     * @QueryParam(name="status", requirements="draft|public|private|notIndexed", nullable=true, description="Name of the status required")
+     * @QueryParam(name="type", requirements="blogContent|helpContent|staticContent", nullable=true, description="Type of content")
+     * @QueryParam(name="date", requirements="ASC|DESC", nullable=true, description="Sorting order")
+     * @QueryParam(name="limit", requirements="\d*", nullable=true, description="Limit of results")
+     * @QueryParam(name="onhomepage", requirements="true|false", nullable=true, description="homepage contents")
      *
      * @Doc\ApiDoc(
      *     section="Contents",
      *     resource=true,
      *     description="Get the list of all contents",
+     *     parameters={
+     *         { "name"="status", "dataType"="string", "description"="Name of the status required", "required"=false },
+     *         { "name"="type", "dataType"="string", "description"="Type of content", "required"=false },
+     *         { "name"="date", "dataType"="string", "description"="Sorting order", "required"=false },
+     *         { "name"="limit", "dataType"="integer", "description"="Limit of results", "required"=false },
+     *         { "name"="onhomepage", "dataType"="bool", "description"="homepage contents", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -79,7 +86,7 @@ class ContentController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "contentType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The content unique identifier.",
      *         }
@@ -111,32 +118,8 @@ class ContentController extends FOSRestController
      *     section="Contents",
      *     resource=true,
      *     description="Create a new content",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "contentType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the content."
-     *         },
-     *         {
-     *             "name"="Content",
-     *             "contentType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the content."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "contentType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the content."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "contentType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the content."
-     *         }
-     *     },
+     *     input="AppBundle\Form\ContentType",
+     *     output="AppBundle\Entity\Content",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -168,32 +151,8 @@ class ContentController extends FOSRestController
      *     section="Contents",
      *     resource=true,
      *     description="Update an existing content",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "contentType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the content."
-     *         },
-     *         {
-     *             "name"="Content",
-     *             "contentType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the content."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "contentType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the content."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "contentType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the content."
-     *         }
-     *     },
+     *     input="AppBundle\Form\ContentType",
+     *     output="AppBundle\Entity\Content",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -213,32 +172,8 @@ class ContentController extends FOSRestController
      *     section="Contents",
      *     resource=true,
      *     description="Update an existing content",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "contentType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the content."
-     *         },
-     *         {
-     *             "name"="Content",
-     *             "contentType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the content."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "contentType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the content."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "contentType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the content."
-     *         }
-     *     },
+     *     input="AppBundle\Form\ContentType",
+     *     output="AppBundle\Entity\Content",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -280,7 +215,7 @@ class ContentController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "contentType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The content unique identifier.",
      *         }

@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,8 +20,8 @@ class PlaceNameType extends AbstractType
             ->add('name',           TextType::class,        array("required" => true))
             ->add('date',           TextType::class,        array("required" => false))
             ->add('year',           TextType::class,        array("required" => false))
-            ->add('placeType',      TextType::class,        array("required" => false))
-            ->add('updateComment',  TextType::class,        array("required" => true))
+            ->add('placeType',      TextType::class,        array("required" => false, "description" => "Allowed values: \"Commune\", \"Localité\", \"Autre lieu habité\", \"Forêt\", \"Colline\", \"Autre lieu géographique\""))
+            ->add('updateComment',  TextareaType::class,    array("required" => true))
         ;
     }
     

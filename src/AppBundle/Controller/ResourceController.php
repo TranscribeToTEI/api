@@ -32,6 +32,9 @@ class ResourceController extends FOSRestController
      *     section="Resources",
      *     resource=true,
      *     description="Get the list of all resources",
+     *     parameters={
+     *         { "name"="transcript", "dataType"="integer", "description"="Identifier of the transcript related to the resource.", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -91,24 +94,8 @@ class ResourceController extends FOSRestController
      *     section="Resources",
      *     resource=true,
      *     description="Create a new resource",
-     *     requirements={
-     *         {
-     *             "name"="entity",
-     *             "description"="The entity aggregating the will."
-     *         },
-     *         {
-     *             "name"="type",
-     *             "description"="The type of resource (page, envelope)."
-     *         },
-     *         {
-     *             "name"="orderInWill",
-     *             "description"="The position of the resource in the order of the resources of the will."
-     *         },
-     *         {
-     *             "name"="transcript",
-     *             "description"="The transcript of the resource."
-     *         }
-     *     },
+     *     input="AppBundle\Form\ResourceType",
+     *     output="AppBundle\Entity\Resource",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -139,20 +126,8 @@ class ResourceController extends FOSRestController
      *     section="Resources",
      *     resource=true,
      *     description="Update an existing resource",
-     *     requirements={
-     *         {
-     *             "name"="type",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of resource (page, envelope)."
-     *         },
-     *         {
-     *             "name"="order_in_will",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The position of the resource in the order of the resources of the will."
-     *         }
-     *     },
+     *     input="AppBundle\Form\ResourceType",
+     *     output="AppBundle\Entity\Resource",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -171,20 +146,8 @@ class ResourceController extends FOSRestController
      *     section="Resources",
      *     resource=true,
      *     description="Update an existing resource",
-     *     requirements={
-     *         {
-     *             "name"="type",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of resource (page, envelope)."
-     *         },
-     *         {
-     *             "name"="order_in_will",
-     *             "dataType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The position of the resource in the order of the resources of the will."
-     *         }
-     *     },
+     *     input="AppBundle\Form\ResourceType",
+     *     output="AppBundle\Entity\Resource",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"

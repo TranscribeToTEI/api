@@ -32,7 +32,7 @@ class AppPreferenceType extends AbstractType
             ->add('contactEmail',               EmailType::class,       array("required" => false))
             ->add('enableRegister',             CheckboxType::class,    array("required" => false))
             ->add('transcriptEditAccess',       CheckboxType::class,    array("required" => false))
-            ->add('taxonomyEditAccess',         TextType::class,        array("required" => false))
+            ->add('taxonomyEditAccess',         TextType::class,        array("required" => false, "description" => "Allowed values: \"selfAuthorization\", \"controlledAuthorization\", \"free\", \"forbidden\""))
             ->add('taxonomyAskQuestion',        TextareaType::class,    array("required" => false))
             ->add('taxonomyAccessProposal',     TextareaType::class,    array("required" => false))
             ->add('infoContentEditTaxonomy',    TextareaType::class,    array("required" => false))

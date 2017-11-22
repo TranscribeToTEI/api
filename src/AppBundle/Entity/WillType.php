@@ -79,6 +79,8 @@ class WillType
     private $id;
 
     /**
+     * Name of the will type
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -92,6 +94,8 @@ class WillType
     private $name;
 
     /**
+     * Description of the will type
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -102,7 +106,6 @@ class WillType
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-
 
     /**
      * @Serializer\Since("0.1")

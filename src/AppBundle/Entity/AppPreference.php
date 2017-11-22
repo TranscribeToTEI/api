@@ -78,6 +78,8 @@ class AppPreference
     private $id;
 
     /**
+     * The title of your application.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -91,7 +93,7 @@ class AppPreference
     private $projectTitle;
 
     /**
-     * Refers to the help homepage in the navbar of the project
+     * The content which is the Help Home Content in your application.
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
@@ -104,7 +106,7 @@ class AppPreference
     private $helpHomeContent;
 
     /**
-     * Refers to the help homepage in the transcription tool of the project
+     * The content which is the Help Home Content in the transcription interface of your application.
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
@@ -117,7 +119,8 @@ class AppPreference
     private $helpInsideHomeContent;
 
     /**
-     * Refers to the discover page in the navbar of the project
+     * The content which is the Discover Home Content in your application.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -129,7 +132,8 @@ class AppPreference
     private $discoverHomeContent;
 
     /**
-     * Refers to the about page in the footer of the project
+     * The content which is the About Content in your application.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -141,7 +145,8 @@ class AppPreference
     private $aboutContent;
 
     /**
-     * Refers to the legal notices page in the footer of the project
+     * The content which is the Legal Notices Content in your application.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -153,7 +158,8 @@ class AppPreference
     private $legalNoticesContent;
 
     /**
-     * Refers to the credits page in the footer of the project
+     * The content which is the Credits Content in your application.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -165,6 +171,8 @@ class AppPreference
     private $creditsContent;
 
     /**
+     * If your project has a Facebook Page, fill the id of this page here.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -177,6 +185,8 @@ class AppPreference
     private $facebookPageId;
 
     /**
+     * If your project has a Twitter account, fill the id of this account here.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -189,6 +199,8 @@ class AppPreference
     private $twitterId;
 
     /**
+     * Do you enable the contact page on your website?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -200,6 +212,8 @@ class AppPreference
     private $enableContact;
 
     /**
+     * The email address of the system (use for the registration email, or other).
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -212,6 +226,8 @@ class AppPreference
     private $systemEmail;
 
     /**
+     * The email address of the contact form (if enabled).
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -224,6 +240,8 @@ class AppPreference
     private $contactEmail;
 
     /**
+     * Do you enable registration of users ?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -235,6 +253,8 @@ class AppPreference
     private $enableRegister;
 
     /**
+     * The type of access of the taxonomy bundle for the users.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -248,6 +268,8 @@ class AppPreference
     private $taxonomyEditAccess;
 
     /**
+     * Do you allow users to edit transcriptions?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -259,6 +281,8 @@ class AppPreference
     private $transcriptEditAccess;
 
     /**
+     * This text will be displayed above taxonomy edit forms.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -271,6 +295,8 @@ class AppPreference
     private $infoContentEditTaxonomy;
 
     /**
+     * The text will be displayed if the users doesn't have taxonomy edit access.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -283,6 +309,8 @@ class AppPreference
     private $taxonomyAccessProposal;
 
     /**
+     * The text will be displayed above the form of taxonomy edit access.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -294,8 +322,9 @@ class AppPreference
      */
     private $taxonomyAskQuestion;
 
-
     /**
+     * The text will be displayed above your contact form (if enabled).
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -334,6 +363,8 @@ class AppPreference
     protected $updateDate;
 
     /**
+     * Internal info messages for edition.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})

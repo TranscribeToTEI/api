@@ -106,6 +106,8 @@ class Transcript
     private $id;
 
     /**
+     * This is the content of your transcription
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -118,6 +120,8 @@ class Transcript
     private $content;
 
     /**
+     * The status of the transcript
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

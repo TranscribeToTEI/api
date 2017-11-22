@@ -24,7 +24,7 @@ class ContentType extends AbstractType
             ->add('title',          TextType::class,        array("required" => true))
             ->add('content',        TextareaType::class,    array("required" => true))
             ->add('abstract',       TextareaType::class,    array("required" => true))
-            ->add('type',           TextType::class,        array("required" => true))
+            ->add('type',           TextType::class,        array("required" => true, "description" => "Allowed values: \"blogContent\", \"helpContent\", \"staticContent\""))
             ->add('status',         TextType::class,        array("required" => false))
             ->add('onHomepage',     CheckboxType::class,    array("required" => false))
             ->add('enableComments', CheckboxType::class,    array("required" => false))

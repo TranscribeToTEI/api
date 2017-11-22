@@ -56,7 +56,7 @@ class ManuscriptReferenceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "manuscriptReferenceType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The manuscript reference unique identifier.",
      *         }
@@ -88,9 +88,8 @@ class ManuscriptReferenceController extends FOSRestController
      *     section="Manuscript-references",
      *     resource=true,
      *     description="Create a new manuscript reference",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\ManuscriptReferenceType",
+     *     output="AppBundle\Entity\ManuscriptReference",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -122,9 +121,8 @@ class ManuscriptReferenceController extends FOSRestController
      *     section="ManuscriptReferences",
      *     resource=true,
      *     description="Update an existing manuscript reference",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\ManuscriptReferenceType",
+     *     output="AppBundle\Entity\ManuscriptReference",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -144,9 +142,8 @@ class ManuscriptReferenceController extends FOSRestController
      *     section="ManuscriptReferences",
      *     resource=true,
      *     description="Update an existing manuscript reference",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\ManuscriptReferenceType",
+     *     output="AppBundle\Entity\ManuscriptReference",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -188,7 +185,7 @@ class ManuscriptReferenceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "manuscriptReferenceType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The manuscript reference unique identifier.",
      *         }

@@ -34,6 +34,11 @@ class MediaContentController extends FOSRestController
      *     section="Media",
      *     resource=true,
      *     description="Upload an image for a content",
+     *     parameters={
+     *         { "name"="type", "dataType"="string", "description"="Type of entity to rely to the media", "required"=true },
+     *         { "name"="id", "dataType"="integer", "description"="Identifier of the entity to rely to the media", "required"=false },
+     *         { "name"="field", "dataType"="string", "description"="Field of the entity where to store the media", "required"=true },
+     *     },
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"

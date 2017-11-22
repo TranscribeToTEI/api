@@ -78,6 +78,8 @@ class TrainingContent
     private $id;
 
     /**
+     * The title of your training content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -95,6 +97,7 @@ class TrainingContent
     private $title;
 
     /**
+     * You can explain here the goal of your training content. This text will be only display to other admins.
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -110,6 +113,8 @@ class TrainingContent
 
 
     /**
+     * In case of static training content, this is your main text context. In case of exercise, this is the presentation of the exercise.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -124,6 +129,8 @@ class TrainingContent
     private $content;
 
     /**
+     * The type of training content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -139,6 +146,8 @@ class TrainingContent
     private $pageType;
 
     /**
+     * The status of your training content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -154,6 +163,8 @@ class TrainingContent
     private $pageStatus;
 
     /**
+     * You can define a picture, which will be used in page of presentation in case of exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -166,6 +177,8 @@ class TrainingContent
     private $illustration;
 
     /**
+     * You can use video, which will be display under your main text content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -178,6 +191,8 @@ class TrainingContent
     private $videoContainer;
 
     /**
+     * The training order define the position of this training content inside the training process
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -189,6 +204,8 @@ class TrainingContent
     private $orderInTraining;
 
     /**
+     * You can define users who are responsable of this training content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
@@ -200,6 +217,8 @@ class TrainingContent
     protected $editorialResponsibility;
 
     /**
+     * This text will be display above your exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -212,6 +231,8 @@ class TrainingContent
     private $exerciseHeader;
 
     /**
+     * This image will be used by the transcription interface during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -224,6 +245,8 @@ class TrainingContent
     private $exerciseImageToTranscribe;
 
     /**
+     * Allowing SmartTEI during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -236,6 +259,8 @@ class TrainingContent
     private $exerciseIsSmartTEI;
 
     /**
+     * Allowing attributes management during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -248,6 +273,8 @@ class TrainingContent
     private $exerciseIsAttributesManagement;
 
     /**
+     * List of the allowed tags during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -260,6 +287,8 @@ class TrainingContent
     private $exerciseTagsList;
 
     /**
+     * Allowing live render during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -272,6 +301,8 @@ class TrainingContent
     private $exerciseIsLiveRender;
 
     /**
+     * Allowing help contents during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -284,6 +315,8 @@ class TrainingContent
     private $exerciseIsHelp;
 
     /**
+     * Allowing documentation access during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -296,6 +329,8 @@ class TrainingContent
     private $exerciseIsDocumentation;
 
     /**
+     * Allowing taxonomy access during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -308,6 +343,8 @@ class TrainingContent
     private $exerciseIsTaxonomy;
 
     /**
+     * Allowing bibliography mangement during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -320,6 +357,8 @@ class TrainingContent
     private $exerciseIsBibliography;
 
     /**
+     * Allowing notes management during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -332,6 +371,8 @@ class TrainingContent
     private $exerciseIsNotes;
 
     /**
+     * Allowing versioning access during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -344,6 +385,8 @@ class TrainingContent
     private $exerciseIsVersioning;
 
     /**
+     * Allowing complex fields access during the exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -356,6 +399,8 @@ class TrainingContent
     private $exerciseIsComplexFields;
 
     /**
+     * This text is the correct transcript of your exercise
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -368,6 +413,8 @@ class TrainingContent
     private $exerciseCorrectionTranscript;
 
     /**
+     * This text should be an explanation of the errors to avoid to users
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

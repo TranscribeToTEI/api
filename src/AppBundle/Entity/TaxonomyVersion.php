@@ -77,6 +77,8 @@ class TaxonomyVersion
     private $id;
 
     /**
+     * The user who reviewed the version. If null, meaning nobody reviewed it
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
@@ -87,7 +89,10 @@ class TaxonomyVersion
      * @ORM\JoinColumn(nullable=true)
      */
     protected $reviewBy;
+
     /**
+     * Version of the entity reviewed
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -98,6 +103,8 @@ class TaxonomyVersion
     private $versionId;
 
     /**
+     * Type of the entity reviewed
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -110,6 +117,8 @@ class TaxonomyVersion
     private $taxonomyType;
 
     /**
+     * Related testator if relevant
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -121,6 +130,8 @@ class TaxonomyVersion
     protected $testator;
 
     /**
+     * Related place if relevant
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -132,6 +143,8 @@ class TaxonomyVersion
     protected $place;
 
     /**
+     * Related military unit if relevant
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

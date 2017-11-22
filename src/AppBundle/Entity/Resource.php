@@ -80,6 +80,8 @@ class Resource
     private $id;
 
     /**
+     * Entity related to the resource
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -90,6 +92,8 @@ class Resource
     private $entity;
 
     /**
+     * Type of the resource
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -104,6 +108,7 @@ class Resource
     private $type;
 
     /**
+     * The order of the resource in the will
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -115,6 +120,8 @@ class Resource
     private $orderInWill;
 
     /**
+     * The images of the resource
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -128,6 +135,8 @@ class Resource
     private $images;
 
     /**
+     * Any other information about the resource
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -141,6 +150,8 @@ class Resource
     private $notes;
 
     /**
+     * Related transcript to the resource
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

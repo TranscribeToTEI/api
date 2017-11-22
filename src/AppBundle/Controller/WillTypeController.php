@@ -80,19 +80,8 @@ class WillTypeController extends FOSRestController
      *     section="WillTypes",
      *     resource=true,
      *     description="Create a new will type",
-     *     requirements={
-     *         {
-     *             "name"="name",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the will type"
-     *         },
-     *         {
-     *             "name"="description",
-     *             "dataType"="string",
-     *             "description"="The description of the will type."
-     *         }
-     *     },
+     *     input="AppBundle\Form\WillTypeType",
+     *     output="AppBundle\Entity\WillType",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -123,19 +112,8 @@ class WillTypeController extends FOSRestController
      *     section="WillTypes",
      *     resource=true,
      *     description="Update an existing will type",
-     *     requirements={
-     *         {
-     *             "name"="name",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the will type"
-     *         },
-     *         {
-     *             "name"="description",
-     *             "dataType"="string",
-     *             "description"="The description of the will type."
-     *         }
-     *     },
+     *     input="AppBundle\Form\WillTypeType",
+     *     output="AppBundle\Entity\WillType",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -154,19 +132,8 @@ class WillTypeController extends FOSRestController
      *     section="WillTypes",
      *     resource=true,
      *     description="Update an existing will type",
-     *     requirements={
-     *         {
-     *             "name"="name",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the will type"
-     *         },
-     *         {
-     *             "name"="description",
-     *             "dataType"="string",
-     *             "description"="The description of the will type."
-     *         }
-     *     },
+     *     input="AppBundle\Form\WillTypeType",
+     *     output="AppBundle\Entity\WillType",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"

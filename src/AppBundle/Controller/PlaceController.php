@@ -34,6 +34,9 @@ class PlaceController extends FOSRestController
      *     section="Places",
      *     resource=true,
      *     description="Get the list of all places",
+     *     parameters={
+     *         { "name"="search", "dataType"="string", "description"="Run a search query in the places", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -72,7 +75,7 @@ class PlaceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "placeType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The place unique identifier.",
      *         }
@@ -104,9 +107,8 @@ class PlaceController extends FOSRestController
      *     section="Places",
      *     resource=true,
      *     description="Create a new place",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\PlaceType",
+     *     output="AppBundle\Entity\Place",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -158,9 +160,8 @@ class PlaceController extends FOSRestController
      *     section="Places",
      *     resource=true,
      *     description="Update an existing place",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\PlaceType",
+     *     output="AppBundle\Entity\Place",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -180,9 +181,8 @@ class PlaceController extends FOSRestController
      *     section="Places",
      *     resource=true,
      *     description="Update an existing place",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\PlaceType",
+     *     output="AppBundle\Entity\Place",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -224,7 +224,7 @@ class PlaceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "placeType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The place unique identifier.",
      *         }

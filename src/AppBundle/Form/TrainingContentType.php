@@ -30,8 +30,8 @@ class TrainingContentType extends AbstractType
                                                                                                 'allow_add'  => true,
                                                                                                 'allow_delete' => true,
                                                                                                 "required" => false))
-            ->add('pageType',                           TextType::class,        array("required" => true))
-            ->add('pageStatus',                         TextType::class,        array("required" => true))
+            ->add('pageType',                           TextType::class,        array("required" => true, "description" => "Allowed values: \"presentation\", \"exercise\""))
+            ->add('pageStatus',                         TextType::class,        array("required" => true, "description" => "Allowed values: \"draft\", \"public\", \"notIndexed\""))
             ->add('updateComment',                      TextType::class,        array("required" => true))
             ->add('orderInTraining',                    IntegerType::class,     array("required" => false))
             ->add('content',                            TextareaType::class,    array("required" => true))

@@ -77,6 +77,8 @@ class PrintedReference
     private $id;
 
     /**
+     * Authors of the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -90,6 +92,8 @@ class PrintedReference
     private $authors;
 
     /**
+     * Title of the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -103,6 +107,7 @@ class PrintedReference
     private $referenceTitle;
 
     /**
+     * Title of the container (book, revue, etc) of the reference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -115,6 +120,8 @@ class PrintedReference
     private $containerTitle;
 
     /**
+     * Type of the container of the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -128,6 +135,8 @@ class PrintedReference
     private $containerType;
 
     /**
+     * URL of the reference if there is one
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -140,6 +149,8 @@ class PrintedReference
     private $url;
 
     /**
+     * Other information to note
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

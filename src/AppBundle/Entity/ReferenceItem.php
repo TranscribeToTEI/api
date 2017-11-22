@@ -77,6 +77,8 @@ class ReferenceItem
     private $id;
 
     /**
+     * Entity related to the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -89,6 +91,8 @@ class ReferenceItem
     protected $entity;
 
     /**
+     * Testator related to the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -101,6 +105,8 @@ class ReferenceItem
     protected $testator;
 
     /**
+     * Place related to the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -113,6 +119,8 @@ class ReferenceItem
     protected $place;
 
     /**
+     * Military Unit related to the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -125,6 +133,7 @@ class ReferenceItem
     protected $militaryUnit;
 
     /**
+     * The PrintedReference entity of the reference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -137,6 +146,8 @@ class ReferenceItem
     protected $printedReference;
 
     /**
+     * The ManuscriptReference entity of the reference
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -149,6 +160,8 @@ class ReferenceItem
     protected $manuscriptReference;
 
     /**
+     * If your reference isn't structured, you can push here the reference information
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

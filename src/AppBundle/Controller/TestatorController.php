@@ -32,6 +32,9 @@ class TestatorController extends FOSRestController
      *     section="Testators",
      *     resource=true,
      *     description="Get the list of all testators",
+     *     parameters={
+     *         { "name"="search", "dataType"="string", "description"="Run a search query in the testators", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -96,86 +99,8 @@ class TestatorController extends FOSRestController
      *     section="Testators",
      *     resource=true,
      *     description="Create a new testator",
-     *     requirements={
-     *         {
-     *             "name"="name",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the testator in natural language."
-     *         },
-     *         {
-     *             "name"="surname",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The surname of the testator. If the person is noble, reject the particle at the end of the name."
-     *         },
-     *         {
-     *             "name"="firstnames",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The list of the firstnames of the testator."
-     *         },
-     *         {
-     *             "name"="profession",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The profession of the testator."
-     *         },
-     *         {
-     *             "name"="address",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The address of the testator."
-     *         },
-     *         {
-     *             "name"="date_of_birth",
-     *             "dataType"="date",
-     *             "requirement"="",
-     *             "description"="The date of birth of the testator."
-     *         },
-     *         {
-     *             "name"="place_of_birth",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The place of birth of the testator."
-     *         },
-     *         {
-     *             "name"="date_of_death",
-     *             "dataType"="date",
-     *             "requirement"="",
-     *             "description"="The date of death of the testator."
-     *         },
-     *         {
-     *             "name"="place_of_death",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The place of death of the testator."
-     *         },
-     *         {
-     *             "name"="death_mention",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="Like 'Mort pour la France'."
-     *         },
-     *         {
-     *             "name"="memoire_des_hommes",
-     *             "dataType"="url",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
-     *         },
-     *         {
-     *             "name"="militaryUnit",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the militaryUnit of the testator."
-     *         },
-     *         {
-     *             "name"="rank",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The rank in the army of the testator."
-     *         }
-     *     },
+     *     input="AppBundle\Form\TestatorType",
+     *     output="AppBundle\Entity\Testator",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -207,86 +132,8 @@ class TestatorController extends FOSRestController
      *     section="Testators",
      *     resource=true,
      *     description="Update an existing testator",
-     *     requirements={
-     *         {
-     *             "name"="name",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the testator in natural language."
-     *         },
-     *         {
-     *             "name"="surname",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The surname of the testator. If the person is noble, reject the particle at the end of the name."
-     *         },
-     *         {
-     *             "name"="firstnames",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The list of the firstnames of the testator."
-     *         },
-     *         {
-     *             "name"="profession",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The profession of the testator."
-     *         },
-     *         {
-     *             "name"="address",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The address of the testator."
-     *         },
-     *         {
-     *             "name"="date_of_birth",
-     *             "dataType"="date",
-     *             "requirement"="",
-     *             "description"="The date of birth of the testator."
-     *         },
-     *         {
-     *             "name"="place_of_birth",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The place of birth of the testator."
-     *         },
-     *         {
-     *             "name"="date_of_death",
-     *             "dataType"="date",
-     *             "requirement"="",
-     *             "description"="The date of death of the testator."
-     *         },
-     *         {
-     *             "name"="place_of_death",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The place of death of the testator."
-     *         },
-     *         {
-     *             "name"="death_mention",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="Like 'Mort pour la France'."
-     *         },
-     *         {
-     *             "name"="memoire_des_hommes",
-     *             "dataType"="url",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
-     *         },
-     *         {
-     *             "name"="militaryUnit",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the militaryUnit of the testator."
-     *         },
-     *         {
-     *             "name"="rank",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The rank in the army of the testator."
-     *         }
-     *     },
+     *     input="AppBundle\Form\TestatorType",
+     *     output="AppBundle\Entity\Testator",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -306,86 +153,8 @@ class TestatorController extends FOSRestController
      *     section="Testators",
      *     resource=true,
      *     description="Update an existing testator",
-     *     requirements={
-     *         {
-     *             "name"="name",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the testator in natural language."
-     *         },
-     *         {
-     *             "name"="surname",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The surname of the testator. If the person is noble, reject the particle at the end of the name."
-     *         },
-     *         {
-     *             "name"="firstnames",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The list of the firstnames of the testator."
-     *         },
-     *         {
-     *             "name"="profession",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The profession of the testator."
-     *         },
-     *         {
-     *             "name"="address",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The address of the testator."
-     *         },
-     *         {
-     *             "name"="date_of_birth",
-     *             "dataType"="date",
-     *             "requirement"="",
-     *             "description"="The date of birth of the testator."
-     *         },
-     *         {
-     *             "name"="place_of_birth",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The place of birth of the testator."
-     *         },
-     *         {
-     *             "name"="date_of_death",
-     *             "dataType"="date",
-     *             "requirement"="",
-     *             "description"="The date of death of the testator."
-     *         },
-     *         {
-     *             "name"="place_of_death",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The place of death of the testator."
-     *         },
-     *         {
-     *             "name"="death_mention",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="Like 'Mort pour la France'."
-     *         },
-     *         {
-     *             "name"="memoire_des_hommes",
-     *             "dataType"="url",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The link to the soldier notice in Mémoire des Hommes of the testator."
-     *         },
-     *         {
-     *             "name"="militaryUnit",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The name of the militaryUnit of the testator."
-     *         },
-     *         {
-     *             "name"="rank",
-     *             "dataType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The rank in the army of the testator."
-     *         }
-     *     },
+     *     input="AppBundle\Form\TestatorType",
+     *     output="AppBundle\Entity\Testator",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"

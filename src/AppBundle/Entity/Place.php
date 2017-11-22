@@ -92,6 +92,8 @@ class Place
     private $id;
 
     /**
+     * Names of the place > Related to PlaceName entities
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -104,6 +106,8 @@ class Place
     private $names;
 
     /**
+     * Departements (relevant for France) of your place > Related to PlaceName entities
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -115,6 +119,7 @@ class Place
     private $frenchDepartements;
 
     /**
+     * Regions (relevant for France) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -126,6 +131,7 @@ class Place
     private $frenchRegions;
 
     /**
+     * Cities (relevant for places which are not city) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -137,6 +143,7 @@ class Place
     private $cities;
 
     /**
+     * Countries of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -148,6 +155,7 @@ class Place
     private $countries;
 
     /**
+     * Description of your place
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -161,6 +169,8 @@ class Place
     private $description;
 
     /**
+     * Geonames identifier of your place
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -174,6 +184,8 @@ class Place
     private $geonamesId;
 
     /**
+     * Geographical coordinates of your place
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -187,6 +199,8 @@ class Place
     private $geographicalCoordinates;
 
     /**
+     * Is the current version an official version of your project team
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

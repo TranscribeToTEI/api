@@ -87,6 +87,8 @@ class Note
     private $id;
 
     /**
+     * Content of your note
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -98,6 +100,8 @@ class Note
     private $content;
 
     /**
+     * Transcription related to your note
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

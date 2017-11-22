@@ -87,6 +87,8 @@ class Entity
     private $id;
 
     /**
+     * The digitization number of your will
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -98,6 +100,8 @@ class Entity
     private $willNumber;
 
     /**
+     * The will inside the abstract entity
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -108,6 +112,8 @@ class Entity
     private $will;
 
     /**
+     * The resources inside the abstract entity
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -117,6 +123,8 @@ class Entity
     private $resources;
 
     /**
+     * Is the entity shown to the users (are they able to see the pictures?)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

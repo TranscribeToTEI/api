@@ -34,6 +34,12 @@ class TrainingContentController extends FOSRestController
      *     section="TrainingContents",
      *     resource=true,
      *     description="Get the list of all training-contents",
+     *     parameters={
+     *         { "name"="status", "dataType"="string", "description"="Name of the status required", "required"=false },
+     *         { "name"="type", "dataType"="string", "description"="Name of the type required", "required"=false },
+     *         { "name"="order", "dataType"="string", "description"="Order index of the content required", "required"=false },
+     *         { "name"="orderInTraining", "dataType"="string", "description"="Are the results ordered by training order", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -74,7 +80,7 @@ class TrainingContentController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "trainingContentType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The trainingContent unique identifier.",
      *         }
@@ -106,9 +112,8 @@ class TrainingContentController extends FOSRestController
      *     section="TrainingContents",
      *     resource=true,
      *     description="Create a new trainingContent",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\TrainingContentType",
+     *     output="AppBundle\Entity\TrainingContent",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -140,9 +145,8 @@ class TrainingContentController extends FOSRestController
      *     section="TrainingContents",
      *     resource=true,
      *     description="Update an existing trainingContent",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\TrainingContentType",
+     *     output="AppBundle\Entity\TrainingContent",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -162,9 +166,8 @@ class TrainingContentController extends FOSRestController
      *     section="TrainingContents",
      *     resource=true,
      *     description="Update an existing trainingContent",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\TrainingContentType",
+     *     output="AppBundle\Entity\TrainingContent",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -206,7 +209,7 @@ class TrainingContentController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "trainingContentType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The trainingContent unique identifier.",
      *         }

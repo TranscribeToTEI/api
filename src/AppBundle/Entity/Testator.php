@@ -87,6 +87,8 @@ class Testator
     private $id;
 
     /**
+     * Wills of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "wills"})
@@ -97,6 +99,8 @@ class Testator
     private $wills;
 
     /**
+     * Name of the testator (concatenation of the firstnames and the surname)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -110,6 +114,8 @@ class Testator
     private $name;
 
     /**
+     * Name of indexation of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -123,6 +129,8 @@ class Testator
     private $indexName;
 
     /**
+     * Surname of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -136,6 +144,8 @@ class Testator
     private $surname;
 
     /**
+     * Firstnames of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -149,6 +159,8 @@ class Testator
     private $firstnames;
 
     /**
+     * Other names of the testator (pseudo...)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -162,6 +174,8 @@ class Testator
     private $otherNames;
 
     /**
+     * Profession of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -174,6 +188,8 @@ class Testator
     private $profession;
 
     /**
+     * Address number of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Groups({"full", "content"})
      * @Serializer\Expose
@@ -186,18 +202,8 @@ class Testator
     private $addressNumber;
 
     /**
-     * @Serializer\Since("0.1")
-     * @Serializer\Groups({"full", "content"})
-     * @Serializer\Expose
-     * @Gedmo\Versioned
+     * Address street of the testator
      *
-     * @var string
-     *
-     * @ORM\Column(name="addressDistrict", type="string", length=255, nullable=true)
-     */
-    private $addressDistrict;
-
-    /**
      * @Serializer\Since("0.1")
      * @Serializer\Groups({"full", "content"})
      * @Serializer\Expose
@@ -210,6 +216,22 @@ class Testator
     private $addressStreet;
 
     /**
+     * Address district of the testator
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Expose
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="addressDistrict", type="string", length=255, nullable=true)
+     */
+    private $addressDistrict;
+
+    /**
+     * Address city of the testator, linked to a place
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -222,6 +244,7 @@ class Testator
     private $addressCity;
 
     /**
+     * Full address of the testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -235,6 +258,8 @@ class Testator
     private $addressString;
 
     /**
+     * Full date of birth of the testator (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -248,6 +273,8 @@ class Testator
     private $dateOfBirthString;
 
     /**
+     * Normalized date of birth
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -262,6 +289,8 @@ class Testator
     private $dateOfBirthNormalized;
 
     /**
+     * If date of birth is an interval, end of the interval
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -275,6 +304,8 @@ class Testator
     private $dateOfBirthEndNormalized;
 
     /**
+     * Year of birth (for index)
+     *
      * The field is used to index dates in search
      * @Serializer\Since("0.1")
      * @Serializer\Expose
@@ -289,6 +320,8 @@ class Testator
     private $yearOfBirth;
 
     /**
+     * Normalized place of birth (related to a place)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -301,6 +334,8 @@ class Testator
     private $placeOfBirthNormalized;
 
     /**
+     * Full place of birth (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -314,6 +349,8 @@ class Testator
     private $placeOfBirthString;
 
     /**
+     * Full date of death (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -327,6 +364,8 @@ class Testator
     private $dateOfDeathString;
 
     /**
+     * Normalized date of death
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -341,6 +380,8 @@ class Testator
     private $dateOfDeathNormalized;
 
     /**
+     * If date of death is an interval, end of the interval
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -354,7 +395,8 @@ class Testator
     private $dateOfDeathEndNormalized;
 
     /**
-     * The field is used to index dates in search
+     * Year of death, used for index
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -368,12 +410,15 @@ class Testator
     private $yearOfDeath;
 
     /**
+     * Normalized place of death (related to a place)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Assert\NotBlank()
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
+     *
+     * @Assert\NotBlank()
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
      * @ORM\JoinColumn(nullable=false)
@@ -381,6 +426,8 @@ class Testator
     private $placeOfDeathNormalized;
 
     /**
+     * Full place of death (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -394,6 +441,8 @@ class Testator
     private $placeOfDeathString;
 
     /**
+     * Death mention of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -407,7 +456,8 @@ class Testator
     private $deathMention;
 
     /**
-     * A testator can have multiple notices on Memoire des Hommes, so this is an array, not a string
+     * A testator can have multiple notices on Memoire des Hommes, so this is an array, not a string. If there is no link found, provide the search date of the link.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -422,6 +472,8 @@ class Testator
     private $memoireDesHommes;
 
     /**
+     * Normalized military unit of the testator (linked to military unit)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -434,6 +486,8 @@ class Testator
     private $militaryUnitNormalized;
 
     /**
+     * Full military unit of the testator (string)
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -446,6 +500,8 @@ class Testator
     private $militaryUnitString;
 
     /**
+     * Rank of the testator in his military unit
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -458,6 +514,8 @@ class Testator
     private $rank;
 
     /**
+     * Biography of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -471,6 +529,8 @@ class Testator
     private $description;
 
     /**
+     * Picture of the testator
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -483,6 +543,7 @@ class Testator
     private $picture;
 
     /**
+     * Is the current version an official version of the project team
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

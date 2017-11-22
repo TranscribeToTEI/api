@@ -17,7 +17,7 @@ class TranscriptType extends AbstractType
     {
         $builder
             ->add('content',        TextareaType::class,    array("required" => false))
-            ->add('status',         TextType::class,        array("required" => false))
+            ->add('status',         TextType::class,        array("required" => false, "description" => "Allowed values: \"todo\", \"transcription\", \"validation\", \"validated\""))
             ->add('updateComment',  TextType::class,        array("required" => false))
         ;
     }

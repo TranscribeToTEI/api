@@ -79,6 +79,8 @@ class HostingOrganization
     private $id;
 
     /**
+     * The name of the institution
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -92,12 +94,13 @@ class HostingOrganization
     private $name;
 
     /**
+     * The short code of the institution. E.g.: for "Archives nationales" > "AN"
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      *
      * @var string
-     * @Assert\NotBlank()
      * @Assert\NotBlank()
      * @Assert\Type("string")
      *
@@ -106,6 +109,8 @@ class HostingOrganization
     private $code;
 
     /**
+     * Logo of the institution
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -118,6 +123,8 @@ class HostingOrganization
     private $logo;
 
     /**
+     * URL of the website of the association
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -131,6 +138,8 @@ class HostingOrganization
     private $website;
 
     /**
+     * Description of the institution
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -142,7 +151,6 @@ class HostingOrganization
      * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
-
 
     /**
      * @Serializer\Since("0.1")

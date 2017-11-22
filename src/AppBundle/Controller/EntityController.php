@@ -85,20 +85,8 @@ class EntityController extends FOSRestController
      *     section="Entities",
      *     resource=true,
      *     description="Create a new entity",
-     *     requirements={
-     *         {
-     *             "name"="will",
-     *             "dataType"="entity",
-     *             "requirement"="",
-     *             "description"="The will of the entity."
-     *         },
-     *         {
-     *             "name"="resources",
-     *             "dataType"="array",
-     *             "requirement"="",
-     *             "description"="The list of resources of the entity."
-     *         }
-     *     },
+     *     input="AppBundle\Form\EntityType",
+     *     output="AppBundle\Entity\Entity",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -135,14 +123,8 @@ class EntityController extends FOSRestController
      *     section="Entities",
      *     resource=true,
      *     description="Update an existing entity",
-     *     requirements={
-     *         {
-     *             "name"="resources",
-     *             "dataType"="array",
-     *             "requirement"="",
-     *             "description"="The list of resources of the entity."
-     *         }
-     *     },
+     *     input="AppBundle\Form\EntityType",
+     *     output="AppBundle\Entity\Entity",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -161,14 +143,8 @@ class EntityController extends FOSRestController
      *     section="Entities",
      *     resource=true,
      *     description="Update an existing entity",
-     *     requirements={
-     *         {
-     *             "name"="resources",
-     *             "dataType"="array",
-     *             "requirement"="",
-     *             "description"="The list of resources of the entity."
-     *         }
-     *     },
+     *     input="AppBundle\Form\EntityType",
+     *     output="AppBundle\Entity\Entity",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"

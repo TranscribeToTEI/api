@@ -32,6 +32,10 @@ class TranscriptLogController extends FOSRestController
      *     section="TranscriptLogs",
      *     resource=true,
      *     description="Get the list of all transcript logs",
+     *     parameters={
+     *         { "name"="transcript", "dataType"="string", "description"="Identifier of a specific transcript", "required"=false },
+     *         { "name"="isOpened", "dataType"="string", "description"="Return boolean if the transcript is opened", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -74,14 +78,8 @@ class TranscriptLogController extends FOSRestController
      *     section="TranscriptLogs",
      *     resource=true,
      *     description="Return one printed reference",
-     *     requirements={
-     *         {
-     *             "name"="id",
-     *             "transcriptLogType"="integer",
-     *             "requirement"="\d+",
-     *             "description"="The transcript log unique identifier.",
-     *         }
-     *     },
+     *     input="AppBundle\Form\TranscriptLogType",
+     *     output="AppBundle\Entity\TranscriptLog",
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -109,9 +107,8 @@ class TranscriptLogController extends FOSRestController
      *     section="TranscriptLogs",
      *     resource=true,
      *     description="Create a new transcript log",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\TranscriptLogType",
+     *     output="AppBundle\Entity\TranscriptLog",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -143,9 +140,8 @@ class TranscriptLogController extends FOSRestController
      *     section="TranscriptLogs",
      *     resource=true,
      *     description="Update an existing transcript log",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\TranscriptLogType",
+     *     output="AppBundle\Entity\TranscriptLog",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -165,9 +161,8 @@ class TranscriptLogController extends FOSRestController
      *     section="TranscriptLogs",
      *     resource=true,
      *     description="Update an existing transcript log",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\TranscriptLogType",
+     *     output="AppBundle\Entity\TranscriptLog",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -209,7 +204,7 @@ class TranscriptLogController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "transcriptLogType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The transcript log unique identifier.",
      *         }

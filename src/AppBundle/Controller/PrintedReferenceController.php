@@ -56,7 +56,7 @@ class PrintedReferenceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "printedReferenceType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The printed reference unique identifier.",
      *         }
@@ -88,9 +88,8 @@ class PrintedReferenceController extends FOSRestController
      *     section="PrintedReferences",
      *     resource=true,
      *     description="Create a new printed reference",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\PrintedReferenceType",
+     *     output="AppBundle\Entity\PrintedRefence",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -122,9 +121,8 @@ class PrintedReferenceController extends FOSRestController
      *     section="PrintedReferences",
      *     resource=true,
      *     description="Update an existing printed reference",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\PrintedReferenceType",
+     *     output="AppBundle\Entity\PrintedRefence",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -144,9 +142,8 @@ class PrintedReferenceController extends FOSRestController
      *     section="PrintedReferences",
      *     resource=true,
      *     description="Update an existing printed reference",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\PrintedReferenceType",
+     *     output="AppBundle\Entity\PrintedRefence",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -188,7 +185,7 @@ class PrintedReferenceController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "printedReferenceType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The printed reference unique identifier.",
      *         }

@@ -35,6 +35,12 @@ class ReferenceItemController extends FOSRestController
      *     section="ReferenceItems",
      *     resource=true,
      *     description="Get the list of all reference items",
+     *     parameters={
+     *         { "name"="entity", "dataType"="string", "description"="Gets all bibliographical elements for an entity", "required"=false },
+     *         { "name"="testator", "dataType"="string", "description"="Gets all bibliographical elements for a testator", "required"=false },
+     *         { "name"="place", "dataType"="string", "description"="Gets all bibliographical elements for a place", "required"=false },
+     *         { "name"="military-unit", "dataType"="string", "description"="Gets all bibliographical elements for a military unit", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
@@ -93,7 +99,7 @@ class ReferenceItemController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "referenceItemType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The reference item unique identifier.",
      *         }
@@ -125,9 +131,8 @@ class ReferenceItemController extends FOSRestController
      *     section="ReferenceItems",
      *     resource=true,
      *     description="Create a new reference item",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\ReferenceItemType",
+     *     output="AppBundle\Entity\ReferenceItem",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -159,9 +164,8 @@ class ReferenceItemController extends FOSRestController
      *     section="ReferenceItems",
      *     resource=true,
      *     description="Update an existing reference item",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\ReferenceItemType",
+     *     output="AppBundle\Entity\ReferenceItem",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -181,9 +185,8 @@ class ReferenceItemController extends FOSRestController
      *     section="ReferenceItems",
      *     resource=true,
      *     description="Update an existing reference item",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\ReferenceItemType",
+     *     output="AppBundle\Entity\ReferenceItem",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -225,7 +228,7 @@ class ReferenceItemController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "referenceItemType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The referenceItem unique identifier.",
      *         }

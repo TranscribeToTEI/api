@@ -85,6 +85,7 @@ class Content
     private $id;
 
     /**
+     * The title of your content. Should be simple and easy to understand.
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -99,6 +100,8 @@ class Content
     private $title;
 
     /**
+     * The summary of your content. Try to write less than 300 characters.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -113,6 +116,8 @@ class Content
     private $abstract;
 
     /**
+     * The text of your content.
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -127,6 +132,8 @@ class Content
     private $content;
 
     /**
+     * The type of content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -142,6 +149,8 @@ class Content
     private $type;
 
     /**
+     * The status of your content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -157,6 +166,8 @@ class Content
     private $status;
 
     /**
+     * Is the content on homepage of your project ?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -169,6 +180,8 @@ class Content
     private $onHomepage;
 
     /**
+     * Tags of the content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      *
@@ -179,6 +192,8 @@ class Content
     private $tags;
 
     /**
+     * Illustration of the content
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -191,6 +206,8 @@ class Content
     private $illustration;
 
     /**
+     * Do you allow comments on this content ?
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

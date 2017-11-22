@@ -35,6 +35,9 @@ class ThreadController extends FOSRestController
      *     section="Threads",
      *     resource=true,
      *     description="List of threads",
+     *     parameters={
+     *         { "name"="user", "dataType"="integer", "description"="Id of user requested", "required"=false },
+     *     },
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"

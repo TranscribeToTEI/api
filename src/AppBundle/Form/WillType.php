@@ -50,7 +50,7 @@ class WillType extends AbstractType
             ->add('codicilPhysDescNumber',      TextType::class,                                        array("required" => false))
             ->add('willType',                   \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:WillType'))
             ->add('hostingOrganization',        \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:HostingOrganization'))
-            ->add('identificationUser',         TextType::class,                                        array("required" => true))
+            ->add('identificationUsers',        TextareaType::class,                                    array("required" => true))
             ->add('description',                TextareaType::class,                                    array("required" => false))
             ->add('isOfficialVersion',          TextType::class,                                        array("required" => false))
             ->add('updateComment',              TextType::class,                                        array("required" => false))

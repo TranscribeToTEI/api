@@ -78,6 +78,8 @@ class PlaceName
     private $id;
 
     /**
+     * Related place
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -88,6 +90,7 @@ class PlaceName
     private $placeName;
 
     /**
+     * Related departement
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -98,6 +101,8 @@ class PlaceName
     private $placeDepartement;
 
     /**
+     * Related region
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -108,6 +113,8 @@ class PlaceName
     private $placeRegion;
 
     /**
+     * Related city
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -118,6 +125,8 @@ class PlaceName
     private $placeCity;
 
     /**
+     * Related country
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "parent"})
@@ -128,6 +137,8 @@ class PlaceName
     private $placeCountry;
 
     /**
+     * Place name
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -142,6 +153,7 @@ class PlaceName
     private $name;
 
     /**
+     * Using starting date of this name
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -155,6 +167,8 @@ class PlaceName
     private $date;
 
     /**
+     * Using starting year of this name
+     *
      * The field is used to index dates in search
      * @Serializer\Since("0.1")
      * @Serializer\Expose
@@ -169,6 +183,8 @@ class PlaceName
     private $year;
 
     /**
+     * Place type when the period of this place name
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})

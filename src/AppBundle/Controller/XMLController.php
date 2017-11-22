@@ -35,6 +35,11 @@ class XMLController extends FOSRestController
      *     section="XML",
      *     resource=true,
      *     description="Validate or export transcripts from the API",
+     *     parameters={
+     *         { "name"="context", "dataType"="string", "description"="Context of the request", "required"=true },
+     *         { "name"="type", "dataType"="string", "description"="Type of the object to submit", "required"=true },
+     *         { "name"="id", "dataType"="integer", "description"="Id of the object to submit", "required"=true },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"

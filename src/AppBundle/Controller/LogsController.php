@@ -35,6 +35,9 @@ class LogsController extends FOSRestController
      *     section="Logs",
      *     resource=true,
      *     description="Access to logs of T2T",
+     *     parameters={
+     *         { "name"="entityTypes", "dataType"="string", "description"="List of the required entity types, spliced by coma", "required"=true },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"

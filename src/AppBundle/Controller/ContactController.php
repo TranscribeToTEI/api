@@ -28,7 +28,7 @@ class ContactController extends FOSRestController
      * @Rest\View(statusCode=Response::HTTP_OK)
      *
      * @Doc\ApiDoc(
-     *     section="Contents",
+     *     section="Contacts",
      *     resource=true,
      *     description="Create a new content",
      *     statusCodes={

@@ -28,7 +28,7 @@ class CommentLogController extends FOSRestController
      * @QueryParam(name="private", nullable=true, description="Identifier of a specific comment")
      *
      * @Doc\ApiDoc(
-     *     section="commentLogs",
+     *     section="CommentLogs",
      *     resource=true,
      *     description="Get the list of all comment logs",
      *     statusCodes={
@@ -48,6 +48,8 @@ class CommentLogController extends FOSRestController
             $commentLogs = $repository->findAll();
             /* @var $commentLogs CommentLog[] */
             return $commentLogs;
+        } else {
+            return new JsonResponse(null);
         }
 
     }
@@ -56,13 +58,13 @@ class CommentLogController extends FOSRestController
      * @Rest\Get("/comment-logs/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Doc\ApiDoc(
-     *     section="commentLogs",
+     *     section="CommentLogs",
      *     resource=true,
      *     description="Return one printed reference",
      *     requirements={
      *         {
      *             "name"="id",
-     *             "commentLogType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The comment log unique identifier.",
      *         }
@@ -90,12 +92,11 @@ class CommentLogController extends FOSRestController
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/comment-logs/{id}")
      * @Doc\ApiDoc(
-     *     section="commentLogs",
+     *     section="CommentLogs",
      *     resource=true,
      *     description="Update an existing comment log",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\CommentLogType",
+     *     output="AppBundle\Entity\CommentLog",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -112,12 +113,11 @@ class CommentLogController extends FOSRestController
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/comment-logs/{id}")
      * @Doc\ApiDoc(
-     *     section="commentLogs",
+     *     section="CommentLogs",
      *     resource=true,
      *     description="Update an existing comment log",
-     *     requirements={
-     *
-     *     },
+     *     input="AppBundle\Form\CommentLogType",
+     *     output="AppBundle\Entity\CommentLog",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -153,13 +153,13 @@ class CommentLogController extends FOSRestController
      * @Rest\Delete("/comment-logs/{id}")
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
      * @Doc\ApiDoc(
-     *     section="commentLogs",
+     *     section="CommentLogs",
      *     resource=true,
      *     description="Remove a comment log",
      *     requirements={
      *         {
      *             "name"="id",
-     *             "commentLogType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The comment log unique identifier.",
      *         }

@@ -57,7 +57,7 @@ class PlaceNameController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "placeNameType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The place name unique identifier.",
      *         }
@@ -89,32 +89,8 @@ class PlaceNameController extends FOSRestController
      *     section="PlaceNames",
      *     resource=true,
      *     description="Create a new place name",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "placeNameType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the place name."
-     *         },
-     *         {
-     *             "name"="PlaceName",
-     *             "placeNameType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the place name."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "placeNameType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the place name."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "placeNameType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the place name."
-     *         }
-     *     },
+     *     input="AppBundle\Form\PlaceNameType",
+     *     output="AppBundle\Entity\PlaceName",
      *     statusCodes={
      *         201="Returned when created",
      *         400="Returned when a violation is raised by validation"
@@ -146,32 +122,8 @@ class PlaceNameController extends FOSRestController
      *     section="PlaceNames",
      *     resource=true,
      *     description="Update an existing place name",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "placeNameType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the place name."
-     *         },
-     *         {
-     *             "name"="PlaceName",
-     *             "placeNameType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the place name."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "placeNameType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the place name."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "placeNameType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the place name."
-     *         }
-     *     },
+     *     input="AppBundle\Form\PlaceNameType",
+     *     output="AppBundle\Entity\PlaceName",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -191,32 +143,8 @@ class PlaceNameController extends FOSRestController
      *     section="PlaceNames",
      *     resource=true,
      *     description="Update an existing place name",
-     *     requirements={
-     *         {
-     *             "name"="Title",
-     *             "placeNameType"="string",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The title of the place name."
-     *         },
-     *         {
-     *             "name"="PlaceName",
-     *             "placeNameType"="text",
-     *             "requirement"="\S+",
-     *             "description"="The text of the place name."
-     *         },
-     *         {
-     *             "name"="Type",
-     *             "placeNameType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The type of the place name."
-     *         },
-     *         {
-     *             "name"="Status",
-     *             "placeNameType"="text",
-     *             "requirement"="\S{0,255}",
-     *             "description"="The status of the place name."
-     *         }
-     *     },
+     *     input="AppBundle\Form\PlaceNameType",
+     *     output="AppBundle\Entity\PlaceName",
      *     statusCodes={
      *         200="Returned when updated",
      *         400="Returned when a violation is raised by validation"
@@ -258,7 +186,7 @@ class PlaceNameController extends FOSRestController
      *     requirements={
      *         {
      *             "name"="id",
-     *             "placeNameType"="integer",
+     *             "dataType"="integer",
      *             "requirement"="\d+",
      *             "description"="The place name unique identifier.",
      *         }

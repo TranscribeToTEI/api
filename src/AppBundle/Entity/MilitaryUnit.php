@@ -92,6 +92,8 @@ class MilitaryUnit
     private $id;
 
     /**
+     * Name of the military unit
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -108,6 +110,8 @@ class MilitaryUnit
     private $name;
 
     /**
+     * Country in which is your military unit
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -123,6 +127,8 @@ class MilitaryUnit
     private $country;
 
     /**
+     * Army corps in which is your military unit
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -138,6 +144,8 @@ class MilitaryUnit
     private $armyCorps;
 
     /**
+     * Regiment number of your military unit
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -153,6 +161,8 @@ class MilitaryUnit
     private $regimentNumber;
 
     /**
+     * Description of your military unit
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
@@ -166,6 +176,8 @@ class MilitaryUnit
     private $description;
 
     /**
+     * Is the current version of the entity is an official version, provided by the team of the project
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
