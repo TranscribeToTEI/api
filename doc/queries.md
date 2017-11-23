@@ -1,24 +1,6 @@
 # Liste des formulaires spécifiques d’API
 
-*Obtenir un token de session utilisateur :*
-
-    {
-        "grant_type": "password",
-        "client_id": "",
-        "client_secret": "",
-        "username": "",
-        "password": ""
-    }
-
-*Rafraichir un token de session utilisateur :*
-
-    {
-        "grant_type": "refresh_token",
-        "client_id": "",
-        "client_secret": "",
-        "refresh_token": "
-    }
-
+## Utilisateurs
 *Enregistrer un nouvel utilisateur :*
     
     {"fos_user_registration_form":
@@ -31,24 +13,7 @@
             "name": ""
         }
     }
-
-*Créer un nouveau fil de commentaires :*
     
-    {"fos_comment_thread":
-        {
-            "id": "test",
-            "permalink": "http://test.com/test"
-        }
-    }
-
-*Poster un nouveau commentaire :*
-
-    {"fos_comment_comment":
-        {
-            "body": "premier commentaire"
-        }
-    }
-
 *Réinitialiser un mot de passe :*
     
     {"fos_user_resetting_form":
@@ -71,3 +36,42 @@
             }
         }
     }
+
+## Sessions utilisateur
+*Obtenir un token de session utilisateur :*
+
+    {
+        "grant_type": "password",
+        "client_id": "",
+        "client_secret": "",
+        "username": "",
+        "password": ""
+    }
+
+*Rafraichir un token de session utilisateur :*
+
+    {
+        "grant_type": "refresh_token",
+        "client_id": "",
+        "client_secret": "",
+        "refresh_token": "
+    }
+
+## Systèmes de commentaires
+*Créer un nouveau fil de commentaires :*
+    
+    {"fos_comment_thread":
+        {
+            "id": "test",
+            "permalink": "http://test.com/test"
+        }
+    }
+
+*Poster un nouveau commentaire :*
+
+    {"fos_comment_comment":
+        {
+            "body": "premier commentaire"
+        }
+    }
+
