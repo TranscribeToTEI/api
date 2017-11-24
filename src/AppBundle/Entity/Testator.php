@@ -265,10 +265,9 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @Assert\NotBlank(message = "La date de naissance du testament ne peut pas être vide")
      * @var string
      *
-     * @ORM\Column(name="dateOfBirthString", type="text", nullable=false)
+     * @ORM\Column(name="dateOfBirthString", type="text", nullable=true)
      */
     private $dateOfBirthString;
 
@@ -282,9 +281,8 @@ class Testator
      *
      * @var \DateTime
      * @Assert\Date()
-     * @Assert\NotNull(message = "La date de naissance normalisée du testament ne peut pas être vide")
      *
-     * @ORM\Column(name="dateOfBirthNormalized", type="date", nullable=false)
+     * @ORM\Column(name="dateOfBirthNormalized", type="date", nullable=true)
      */
     private $dateOfBirthNormalized;
 

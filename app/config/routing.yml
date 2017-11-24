@@ -26,6 +26,10 @@ fos_comment_api:
     prefix: /
     defaults: { _format: html }
 
+data-interface:
+    type:     rest
+    resource: AppBundle\Controller\DataInterfaceController
+
 app-preferences:
     type:     rest
     resource: AppBundle\Controller\AppPreferenceController
