@@ -218,8 +218,8 @@ class Builder
         switch ($context) {
             case "identification":
                 $respText = new \DOMText("Identification du testament");
-                $persNameText = new \DOMText($entity->getWill()->getIdentificationUser());
-                $persNameId = $this->getIdFromName($entity->getWill()->getIdentificationUser());
+                $persNameText = new \DOMText($entity->getWill()->getIdentificationUsers());
+                $persNameId = $this->getIdFromName($entity->getWill()->getIdentificationUsers());
                 break;
             default:
                 $respText = new \DOMText('Error');
