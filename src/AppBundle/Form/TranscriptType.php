@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,9 +17,11 @@ class TranscriptType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('content',        TextareaType::class,    array("required" => false))
-            ->add('status',         TextType::class,        array("required" => false, "description" => "Allowed values: \"todo\", \"transcription\", \"validation\", \"validated\""))
-            ->add('updateComment',  TextType::class,        array("required" => false))
+            ->add('content',                    TextareaType::class,                                    array("required" => false))
+            ->add('status',                     TextType::class,                                        array("required" => false, "description" => "Allowed values: \"todo\", \"transcription\", \"validation\", \"validated\""))
+            ->add('updateComment',              TextType::class,                                        array("required" => false))
+            ->add('continueBefore',             CheckboxType::class,                                    array("required" => false))
+            ->add('continueAfter',              CheckboxType::class,                                    array("required" => false))
         ;
     }
     

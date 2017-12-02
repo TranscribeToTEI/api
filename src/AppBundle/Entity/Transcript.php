@@ -137,6 +137,34 @@ class Transcript
     private $status;
 
     /**
+     * If continueBefore is true, meaning the paragraph (or other) started on the previous page continues here.
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="continueBefore", type="boolean", options={"default" : false})
+     */
+    private $continueBefore;
+
+    /**
+     * If continueBefore is true, meaning the paragraph (or other) started on this page continues on the next one.
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="continueAfter", type="boolean", options={"default" : false})
+     */
+    private $continueAfter;
+
+    /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
@@ -377,5 +405,53 @@ class Transcript
     public function getUpdateComment()
     {
         return $this->updateComment;
+    }
+
+    /**
+     * Set continueBefore
+     *
+     * @param boolean $continueBefore
+     *
+     * @return Transcript
+     */
+    public function setContinueBefore($continueBefore)
+    {
+        $this->continueBefore = $continueBefore;
+
+        return $this;
+    }
+
+    /**
+     * Get continueBefore
+     *
+     * @return boolean
+     */
+    public function getContinueBefore()
+    {
+        return $this->continueBefore;
+    }
+
+    /**
+     * Set continueAfter
+     *
+     * @param boolean $continueAfter
+     *
+     * @return Transcript
+     */
+    public function setContinueAfter($continueAfter)
+    {
+        $this->continueAfter = $continueAfter;
+
+        return $this;
+    }
+
+    /**
+     * Get continueAfter
+     *
+     * @return boolean
+     */
+    public function getContinueAfter()
+    {
+        return $this->continueAfter;
     }
 }

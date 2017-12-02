@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\MilitaryUnitRepository;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\MilitaryUnit;
 
@@ -47,7 +48,7 @@ class MilitaryUnitController extends FOSRestController
         $search = $paramFetcher->get('search');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:MilitaryUnit');
-        /* @var $repository EntityRepository */
+        /* @var $repository MilitaryUnitRepository */
 
         if($search != "") {
             $militaryUnits = $repository->findBy(array("name" => $search));

@@ -18,7 +18,7 @@ class NoteType extends AbstractType
         $builder
             ->add('content',        TextareaType::class,                                    array("required" => true))
             ->add('transcript',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Transcript'))
-            ->add('updateComment',  TextType::class,        array("required" => true))
+            ->add('updateComment',  TextType::class,                                        array("required" => true))
         ;
     }
     

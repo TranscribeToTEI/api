@@ -105,6 +105,7 @@ class Note
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Transcript")
      * @ORM\JoinColumn(nullable=false)

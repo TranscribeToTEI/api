@@ -33,9 +33,11 @@ class Model
             /** @var $description \DOMNode */
             foreach($descriptions as $dKey => $description) {
                 if($description->getAttribute('type') == "wills-ui") {
-                    $documentation["projectDescription"] = $description->nodeValue;
+                    $documentation["projectDescription"] = $this->removeBreakLine($description->nodeValue);
+                } elseif($description->getAttribute('type') == "wills-ui-complexTag-info") {
+                    $documentation["complexTagInfo"] = $this->removeBreakLine($doc->saveXML($description));
                 } else {
-                    $documentation["descriptions"][] = ["date" => $description->getAttribute('versionDate'), "content" => $description->nodeValue];
+                    $documentation["descriptions"][] = ["date" => $description->getAttribute('versionDate'), "content" => $this->removeBreakLine($description->nodeValue)];
                 }
             }
 
@@ -44,14 +46,29 @@ class Model
         $gloss = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:gloss');
         if($gloss->length > 0) {
             $gloss = $gloss[0];
-            $documentation['gloss'][] = ["date" => $gloss->getAttribute('versionDate'), "content" => $gloss->nodeValue];
+            $documentation['gloss'][] = ["date" => $gloss->getAttribute('versionDate'), "content" => $this->removeBreakLine($gloss->nodeValue)];
         }
 
         $exemplums = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:exemplum');
         if($exemplums->length > 0) {
             /** @var $exemplum \DOMNode */
             foreach($exemplums as $eKey => $exemplum) {
-                $documentation["exemplum"][] = $doc->saveXML($exemplum);
+                $paragraphes    = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:exemplum['.($eKey+1).']/tei:p');
+                $examples       = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:exemplum['.($eKey+1).']/example:egXML');
+
+                $paragraphe = null;
+                if($paragraphes->length > 0) {
+                    $paragraphe = $this->removeBreakLine($doc->saveXML($paragraphes[0]));
+                }
+
+                $example = null;
+                if($examples->length > 0) {
+                    $example = $this->removeBreakLine($doc->saveXML($examples[0]));
+                }
+
+                $documentation["exemplum"][] = [
+                    "source" => $paragraphe,
+                    "example" => $example];
             }
         }
 
@@ -74,7 +91,7 @@ class Model
         if($elements->length > 0) {
             /** @var $element \DOMNode */
             foreach ($elements as $element) {
-                $arrayElem[] = $element->getAttribute('key');
+                $arrayElem[] = $this->removeBreakLine($element->getAttribute('key'));
             }
         }
 
@@ -120,30 +137,30 @@ class Model
                 $valLists = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:valList');
                 $type = null;
                 if($valLists->length > 0) {
-                    $type = $valLists[0]->getAttribute('type');
+                    $type = $this->removeBreakLine($valLists[0]->getAttribute('type'));
                 }
 
                 $teiGloss = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:gloss');
                 $gloss = null;
                 if($teiGloss->length > 0) {
-                    $gloss = $teiGloss[0]->nodeValue;
+                    $gloss = $this->removeBreakLine($teiGloss[0]->nodeValue);
                 }
 
 
                 $teiDesc = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:desc');
                 $desc = null;
                 if($teiDesc->length > 0) {
-                    $desc = $teiDesc[0]->nodeValue;
+                    $desc = $this->removeBreakLine($teiDesc[0]->nodeValue);
                 }
                 $teiDescWill = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:desc[@type="wills-ui"]');
                 if($teiDescWill->length > 0) {
-                    $desc = $teiDescWill[0]->nodeValue;
+                    $desc = $this->removeBreakLine($teiDescWill[0]->nodeValue);
                 }
 
                 $teiValDesc = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:valDesc');
                 $valDesc = null;
                 if($teiValDesc->length > 0) {
-                    $valDesc = $teiValDesc[0]->nodeValue;
+                    $valDesc = $this->removeBreakLine($teiValDesc[0]->nodeValue);
                 }
 
                 $valItems = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:valList/tei:valItem');
@@ -153,7 +170,7 @@ class Model
                         $itemGloss = $xpath->query('//tei:elementSpec[@ident="'.$element_name.'"]/tei:attList/tei:attDef['.($key+1).']/tei:valList/tei:valItem['.($vIKey+1).']/tei:gloss');
                         $gloss = null;
                         if($itemGloss->length > 0) {
-                            $gloss = $itemGloss[0]->nodeValue;
+                            $gloss = $this->removeBreakLine($itemGloss[0]->nodeValue);
                         }
                         $valuesList[] = ["value" => $item->getAttribute('ident'), "label" => $gloss];
                     }
@@ -189,10 +206,17 @@ class Model
         if($elements->length > 0) {
             /** @var $element \DOMNode */
             foreach ($elements as $element) {
-                $arrayElems[] = $element->getAttribute('ident');
+                $arrayElems[] = $this->removeBreakLine($element->getAttribute('ident'));
             }
         }
 
         return $arrayElems;
+    }
+
+    private function removeBreakLine($string)
+    {
+        $string = str_replace('\n', " ", $string);
+        $string = preg_replace('/\s+/', ' ', $string);
+        return $string;
     }
 }

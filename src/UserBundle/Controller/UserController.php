@@ -405,7 +405,7 @@ class UserController extends FOSRestController
                 ->setFrom('testaments-de-poilus@huma-num.fr')
                 ->setTo($user->getEmail())
                 ->setBody($this->renderView(
-                    'UserBundle:SetRole:emailPromote.html.twig',
+                    'UserBundle:Remove:email.html.twig',
                     array('user' => $proviUser)));
             $this->get('mailer')->send($message);
         } else {

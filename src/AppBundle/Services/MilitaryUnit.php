@@ -22,7 +22,7 @@ class MilitaryUnit
     {
         /** @var $testator Testator */
         foreach($this->getTestators($regiment) as $testator) {
-            $testator->setRegiment(null);
+            $testator->setMilitaryUnitNormalized(null);
         }
 
         $this->em->remove($regiment);
@@ -34,6 +34,6 @@ class MilitaryUnit
      * @return array
      */
     public function getTestators($militaryUnit) {
-        return $this->em->getRepository('AppBundle:Testator')->findBy(array('militaryUnit' => $militaryUnit));
+        return $this->em->getRepository('AppBundle:Testator')->findBy(array('militaryUnitNormalized' => $militaryUnit));
     }
 }

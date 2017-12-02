@@ -511,4 +511,28 @@ class ReferenceItem
     {
         return $this->militaryUnit;
     }
+
+    /**
+     * Set freeReference
+     *
+     * @param string $freeReference
+     *
+     * @return ReferenceItem
+     */
+    public function setFreeReference($freeReference)
+    {
+        $this->freeReference = $freeReference;
+
+        return $this;
+    }
+
+    /**
+     * Get freeReference
+     *
+     * @return string
+     */
+    public function getFreeReference()
+    {
+        return $this->freeReference;
+    }
 }

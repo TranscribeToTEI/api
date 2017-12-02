@@ -95,6 +95,7 @@ class TranscriptLog
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(2)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Transcript")
      * @ORM\JoinColumn(nullable=false)
