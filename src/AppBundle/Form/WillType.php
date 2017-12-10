@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,14 +25,15 @@ class WillType extends AbstractType
             ->add('minuteLink',                 UrlType::class,                                         array("required" => false))
             ->add('title',                      TextType::class,                                        array("required" => false))
             ->add('minuteDateString',           TextareaType::class,                                    array("required" => true))
-            ->add('minuteDateNormalized',       DateType::class,                                        array("required" => true))
-            ->add('minuteDateEndNormalized',    DateType::class,                                        array("required" => false))
+            ->add('minuteDateNormalized',       DateType::class,                                        array("required" => true, 'widget' => 'single_text'))
+            ->add('minuteDateEndNormalized',    DateType::class,                                        array("required" => false, 'widget' => 'single_text'))
             ->add('minuteYear',                 TextType::class,                                        array("required" => true))
             ->add('willWritingDateString',      TextareaType::class,                                    array("required" => true))
-            ->add('willWritingDateNormalized',  DateType::class,                                        array("required" => true))
-            ->add('willWritingDateEndNormalized',DateType::class,                                       array("required" => false))
+            ->add('willWritingDateNormalized',  DateType::class,                                        array("required" => true, 'widget' => 'single_text'))
+            ->add('willWritingDateEndNormalized',DateType::class,                                       array("required" => false, 'widget' => 'single_text'))
             ->add('willWritingYear',            TextType::class,                                        array("required" => true))
-            ->add('willWritingPlace',           \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:Place'))
+            ->add('willWritingPlaceNormalized', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:Place'))
+            ->add('willWritingPlaceString',     TextareaType::class,                                    array("required" => false))
             ->add('entity',                     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:Entity'))
             ->add('testator',                   \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:Testator'))
             ->add('pagePhysDescSupport',        TextType::class,                                        array("required" => false))
@@ -52,6 +54,7 @@ class WillType extends AbstractType
             ->add('hostingOrganization',        \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => true, 'class' => 'AppBundle:HostingOrganization'))
             ->add('identificationUsers',        TextareaType::class,                                    array("required" => true))
             ->add('description',                TextareaType::class,                                    array("required" => false))
+            ->add('additionalComments',         TextareaType::class,                                    array("required" => false))
             ->add('isOfficialVersion',          TextType::class,                                        array("required" => false))
             ->add('updateComment',              TextType::class,                                        array("required" => false))
         ;

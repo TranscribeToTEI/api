@@ -139,21 +139,6 @@ class Will
     private $crpcenNumber;
 
     /**
-     * Link of the minute at the archives
-     *
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @var string
-     * @Assert\Url()
-     *
-     * @ORM\Column(name="minuteLink", type="text", nullable=true)
-     */
-    private $minuteLink;
-
-    /**
      * Title computed for the will, this is an automatic aggregation
      *
      * @Serializer\Since("0.1")
@@ -167,6 +152,21 @@ class Will
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
+
+    /**
+     * Link of the minute at the archives
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     * @Assert\Url()
+     *
+     * @ORM\Column(name="minuteLink", type="text", nullable=true)
+     */
+    private $minuteLink;
 
     /**
      * Full date of the minute (string)
@@ -253,7 +253,7 @@ class Will
      * @Gedmo\Versioned
      *
      * @var \DateTime
-     * @Assert\Date()
+     * @Assert\Date(message = "test")
      * @Assert\NotNull(message = "La date d'écriture normalisée du testament ne peut pas être vide")
      *
      * @ORM\Column(name="willWritingDateNormalized", type="date", nullable=false)

@@ -164,7 +164,6 @@ class Testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
      * @var string
@@ -340,7 +339,6 @@ class Testator
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="placeOfBirthString", type="text", nullable=true)
      */
@@ -416,10 +414,8 @@ class Testator
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
-     * @Assert\NotBlank()
-     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $placeOfDeathNormalized;
 
@@ -432,9 +428,8 @@ class Testator
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\NotBlank()
      *
-     * @ORM\Column(name="placeOfDeathString", type="text", nullable=false)
+     * @ORM\Column(name="placeOfDeathString", type="text", nullable=true)
      */
     private $placeOfDeathString;
 
@@ -444,12 +439,12 @@ class Testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
+     * @Assert\NotBlank()
      * @var string
      *
-     * @ORM\Column(name="deathMention", type="string", length=255)
+     * @ORM\Column(name="deathMention", type="string", length=255, nullable=false)
      */
     private $deathMention;
 
@@ -459,13 +454,12 @@ class Testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
-     * @Assert\NotBlank()
-     *
      * @Gedmo\Versioned
      *
+     * @Assert\NotBlank()
      * @var array
      *
-     * @ORM\Column(name="memoireDesHommes", type="array")
+     * @ORM\Column(name="memoireDesHommes", type="array", nullable=false)
      */
     private $memoireDesHommes;
 
