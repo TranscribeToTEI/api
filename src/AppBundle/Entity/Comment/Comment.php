@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
 use FOS\CommentBundle\Model\SignedCommentInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  *
@@ -16,6 +17,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Comment extends BaseComment implements SignedCommentInterface
 {
     /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -23,6 +28,10 @@ class Comment extends BaseComment implements SignedCommentInterface
     protected $id;
 
     /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
      * Thread of this comment
      *
      * @var Thread
@@ -32,6 +41,11 @@ class Comment extends BaseComment implements SignedCommentInterface
 
     /**
      * Author of the comment
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
@@ -55,6 +69,6 @@ class Comment extends BaseComment implements SignedCommentInterface
             return 'Anonymous';
         }
 
-        return $this->getAuthor()->getUsername();
+        return $this->getAuthor()->getName();
     }
 }

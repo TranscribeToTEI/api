@@ -38,7 +38,7 @@ class EntitySubscriber implements EventSubscriber
             /** @var $resource Resource */
 
             $testator = $args->getEntity();
-            $testator->setDeathMention('mort pour la France');
+            //$testator->setDeathMention('mort pour la France'); -> doit se faire à l'import
         }
 
         /* Will title management */

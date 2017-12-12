@@ -25,7 +25,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          absolute = true
  *      ),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "links"}
+ *          groups={"full", "place-links"}
  *     )
  * )
  * @Hateoas\Relation(
@@ -36,7 +36,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          absolute = true
  *      ),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "links"}
+ *          groups={"full", "place-links"}
  *     )
  * )
  * @Hateoas\Relation(
@@ -47,7 +47,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          absolute = true
  *      ),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "links"}
+ *          groups={"full", "place-links"}
  *     )
  * )
  * @Hateoas\Relation(
@@ -58,21 +58,22 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          absolute = true
  *      ),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "links"}
+ *          groups={"full", "place-links"}
  *     )
  * )
  * @Hateoas\Relation(
  *     "version",
  *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "versioning"}
+ *          groups={"full", "versioning", "place-versioning"}
  *     )
  * )
  * @Hateoas\Relation(
  *     "testators",
  *     embedded = @Hateoas\Embedded("expr(service('app.place').getTestators(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content"}
+ *          groups={"full", "content", "place-content"},
+ *          maxDepth = 2
  *     )
  * )
  */
@@ -81,7 +82,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id"})
+     * @Serializer\Groups({"full", "place-id"})
      *
      * @var int
      *
@@ -96,7 +97,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @Assert\NotBlank()
      * @Serializer\MaxDepth(2)
@@ -110,7 +111,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -122,7 +123,7 @@ class Place
      * Regions (relevant for France) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -134,7 +135,7 @@ class Place
      * Cities (relevant for places which are not city) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -146,7 +147,7 @@ class Place
      * Countries of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -158,7 +159,7 @@ class Place
      * Description of your place
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @var string
      *
@@ -173,7 +174,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @var string
      *
@@ -188,7 +189,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      *
      * @var string
      *
@@ -203,7 +204,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "place-content"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -215,7 +216,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "place-metadata"})
      * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
@@ -227,7 +228,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "place-metadata"})
      *
      * @var \DateTime
      *
@@ -239,7 +240,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "place-metadata"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
@@ -252,7 +253,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "place-metadata"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -265,7 +266,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "place-metadata"})
      * @Gedmo\Versioned
      *
      * @Assert\Type("string")

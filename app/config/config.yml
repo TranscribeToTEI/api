@@ -5,6 +5,7 @@ imports:
     - { resource: "@AppBundle/Resources/config/services.yml" }
     - { resource: "@UserBundle/Resources/config/services.yml" }
     - { resource: "@DownloadBundle/Resources/config/services.yml" }
+    - { resource: "@CommentBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -134,6 +135,7 @@ fos_rest:
     format_listener:
         rules:
             - { path: '^/', priorities: ['json'], fallback_format: 'json' }
+            - { path: '^/comments', priorities: ['json', 'html'], fallback_format: json }
     exception:
         enabled: true
     param_fetcher_listener: true

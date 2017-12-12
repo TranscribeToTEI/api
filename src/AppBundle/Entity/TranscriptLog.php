@@ -87,9 +87,9 @@ class TranscriptLog
      * @Assert\NotNull()
      * @Assert\Type("bool")
      *
-     * @ORM\Column(name="isOpened", type="boolean")
+     * @ORM\Column(name="isCurrentlyEdited", type="boolean")
      */
-    private $isOpened;
+    private $isCurrentlyEdited;
 
     /**
      * @Serializer\Since("0.1")
@@ -162,27 +162,27 @@ class TranscriptLog
     }
 
     /**
-     * Set isOpened
+     * Set isCurrentlyEdited
      *
-     * @param boolean $isOpened
+     * @param boolean $isCurrentlyEdited
      *
      * @return TranscriptLog
      */
-    public function setIsOpened($isOpened)
+    public function setIsCurrentlyEdited($isCurrentlyEdited)
     {
-        $this->isOpened = $isOpened;
+        $this->isCurrentlyEdited = $isCurrentlyEdited;
 
         return $this;
     }
 
     /**
-     * Get isOpened
+     * Get isCurrentlyEdited
      *
      * @return bool
      */
-    public function getIsOpened()
+    public function getIsCurrentlyEdited()
     {
-        return $this->isOpened;
+        return $this->isCurrentlyEdited;
     }
 
     /**

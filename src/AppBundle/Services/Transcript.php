@@ -41,10 +41,10 @@ class Transcript
      * @param $transcript \AppBundle\Entity\Transcript
      * @return bool
      */
-    public function isOpened($transcript)
+    public function isCurrentlyEdited($transcript)
     {
         /** @var $transcriptLog \AppBundle\Entity\TranscriptLog */
-        $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isOpened' => false));
+        $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isCurrentlyEdited' => true));
 
         if($transcriptLog !== null) {
             $datetimeLog = new \DateTime($transcriptLog->getUpdateDate()->format('y-M-d H:i:s'));
@@ -52,13 +52,13 @@ class Transcript
             $interval = $datetimeLog->diff($datetimeNow);
 
             if(intval($interval->format('%h')) > 1 or intval($interval->format('%d')) > 1 or intval($interval->format('%M')) > 1 or intval($interval->format('%y')) > 1) {
-                $transcriptLog->setIsOpened(false);
+                $transcriptLog->setIsCurrentlyEdited(false);
                 $this->em->flush();
                 $transcriptLog = null;
             }
         }
 
-        return ($transcriptLog !== null) ? false : true;
+        return ($transcriptLog !== null) ? true : false;
     }
 
     /**

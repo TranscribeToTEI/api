@@ -76,7 +76,7 @@ class Testator
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id"})
+     * @Serializer\Groups({"full", "id", "list"})
      *
      * @var int
      *
@@ -118,7 +118,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "list"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -250,7 +250,6 @@ class Testator
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="addressString", type="text", nullable=true)
      */

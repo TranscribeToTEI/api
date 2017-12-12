@@ -76,8 +76,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  * @Hateoas\Relation(
- *     "isOpened",
- *     embedded = @Hateoas\Embedded("expr(service('app.transcript').isOpened(object))"),
+ *     "isCurrentlyEdited",
+ *     embedded = @Hateoas\Embedded("expr(service('app.transcript').isCurrentlyEdited(object))"),
  *     exclusion = @Hateoas\Exclusion(
  *          groups={"full", "parent"}
  *     )

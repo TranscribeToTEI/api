@@ -15,8 +15,8 @@ class TranscriptLogType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('isOpened',       CheckboxType::class, array("required" => false))
-            ->add('transcript',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("class" => "AppBundle:Transcript", "required" => true))
+            ->add('isCurrentlyEdited',     CheckboxType::class, array("required" => false))
+            ->add('transcript',             \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("class" => "AppBundle:Transcript", "required" => true))
         ;
     }
     

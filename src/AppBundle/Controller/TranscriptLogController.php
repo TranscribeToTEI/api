@@ -26,7 +26,7 @@ class TranscriptLogController extends FOSRestController
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="transcript", nullable=true, description="Identifier of a specific transcript")
-     * @QueryParam(name="isOpened", nullable=true, requirements="true|false", description="Return boolean if the transcript is opened")
+     * @QueryParam(name="isCurrentlyEdited", nullable=true, requirements="true|false", description="Return boolean if the transcript is currently edited")
      *
      * @Doc\ApiDoc(
      *     section="TranscriptLogs",
@@ -34,7 +34,7 @@ class TranscriptLogController extends FOSRestController
      *     description="Get the list of all transcript logs",
      *     parameters={
      *         { "name"="transcript", "dataType"="string", "description"="Identifier of a specific transcript", "required"=false },
-     *         { "name"="isOpened", "dataType"="string", "description"="Return boolean if the transcript is opened", "required"=false },
+     *         { "name"="isCurrentlyEdited", "dataType"="string", "description"="Return boolean if the transcript is currently edited", "required"=false },
      *     },
      *     statusCodes={
      *         200="Returned when fetched",
@@ -45,15 +45,15 @@ class TranscriptLogController extends FOSRestController
     public function getTranscriptLogsAction(Request $request, ParamFetcher $paramFetcher)
     {
         $transcript = $paramFetcher->get('transcript');
-        $isOpened = boolval($paramFetcher->get('isOpened'));
+        $isCurrentlyEdited = boolval($paramFetcher->get('isCurrentlyEdited'));
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:TranscriptLog');
         /* @var $repository EntityRepository */
 
         if($transcript != '') {
             $array = ['transcript' => $transcript];
-            if($isOpened != '') {
-                $array['isOpened'] = $isOpened;
+            if($isCurrentlyEdited != '') {
+                $array['isCurrentlyEdited'] = $isCurrentlyEdited;
             }
 
             $transcriptLog = $repository->findOneBy($array);

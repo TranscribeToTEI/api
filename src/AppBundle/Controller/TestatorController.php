@@ -26,14 +26,16 @@ class TestatorController extends FOSRestController
      * @Rest\Get("/testators")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
-     * @QueryParam(name="search", nullable=true, description="Run a search query in the testators")
+     * @QueryParam(name="search",   nullable=true, description="Run a search query in the testators")
+     * @QueryParam(name="profile",  nullable=true, description="")
      *
      * @Doc\ApiDoc(
      *     section="Testators",
      *     resource=true,
      *     description="Get the list of all testators",
      *     parameters={
-     *         { "name"="search", "dataType"="string", "description"="Run a search query in the testators", "required"=false },
+     *         { "name"="search",   "dataType"="string", "description"="Run a search query in the testators", "required"=false },
+     *         { "name"="profile",  "dataType"="string", "description"="", "required"=false },
      *     },
      *     statusCodes={
      *         200="Returned when fetched",
@@ -44,6 +46,7 @@ class TestatorController extends FOSRestController
     public function getTestatorsAction(Request $request, ParamFetcher $paramFetcher)
     {
         $search = $paramFetcher->get('search');
+        $profile = $paramFetcher->get('profile');
 
         if($search != "") {
             $testators = $this->getDoctrine()->getManager()->getRepository('AppBundle:Testator')->findBy(array("name" => $search));

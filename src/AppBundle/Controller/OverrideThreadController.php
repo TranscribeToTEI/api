@@ -23,7 +23,7 @@ use FOS\RestBundle\Request\ParamFetcher;
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class ThreadController extends FOSRestController
+class OverrideThreadController extends FOSRestController
 {
     /**
      * @Rest\Get("/override-threads")

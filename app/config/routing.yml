@@ -1,3 +1,8 @@
+comment:
+    resource: "@CommentBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 download:
     resource: "@DownloadBundle/Controller/"
     type:     annotation
@@ -22,7 +27,7 @@ fos_user:
 
 fos_comment_api:
     type: rest
-    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    resource: "@CommentBundle/Resources/config/routing.yml"
     prefix: /
     defaults: { _format: html }
 
@@ -36,7 +41,7 @@ app-preferences:
 
 override-thread:
     type:     rest
-    resource: AppBundle\Controller\ThreadController
+    resource: AppBundle\Controller\OverrideThreadController
 
 entities:
     type:     rest

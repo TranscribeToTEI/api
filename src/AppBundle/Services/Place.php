@@ -55,6 +55,7 @@ class Place
         $qb = $repositoryTestators->createQueryBuilder('t')
                                   ->where('t.placeOfBirthNormalized = :place')
                                   ->orWhere('t.placeOfDeathNormalized = :place')
+                                  ->orWhere('t.addressCity = :place')
                                   ->setParameter('place', $place);
 
         return $qb->getQuery()->getResult();
