@@ -7,9 +7,11 @@ use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Place;
 
 use AppBundle\Form\PlaceType;
+use FOS\RestBundle\Context\Context;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +28,9 @@ class PlaceController extends FOSRestController
 {
     /**
      * @Rest\Get("/places")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="search", nullable=true, description="Run a search query in the places")
+     * @QueryParam(name="profile", nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="Places",
@@ -36,6 +38,7 @@ class PlaceController extends FOSRestController
      *     description="Get the list of all places",
      *     parameters={
      *         { "name"="search", "dataType"="string", "description"="Run a search query in the places", "required"=false },
+     *         { "name"="profile", "dataType"="string", "description"="Search profile to apply", "required"=false },
      *     },
      *     statusCodes={
      *         200="Returned when fetched",
@@ -62,7 +65,14 @@ class PlaceController extends FOSRestController
             /* @var $places Place[] */
         }
 
-        return $places;
+
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = $paramFetcher->get('profile');
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($places, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

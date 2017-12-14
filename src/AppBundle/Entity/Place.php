@@ -82,7 +82,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "place-id"})
+     * @Serializer\Groups({"full", "place-id", "id", "index"})
      *
      * @var int
      *
@@ -91,6 +91,20 @@ class Place
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * Place name
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content", "index"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="indexName", type="string", length=255, nullable=true)
+     */
+    private $indexName;
 
     /**
      * Names of the place > Related to PlaceName entities
@@ -695,5 +709,29 @@ class Place
     public function getIsOfficialVersion()
     {
         return $this->isOfficialVersion;
+    }
+
+    /**
+     * Set indexName
+     *
+     * @param string $indexName
+     *
+     * @return Place
+     */
+    public function setIndexName($indexName)
+    {
+        $this->indexName = $indexName;
+
+        return $this;
+    }
+
+    /**
+     * Get indexName
+     *
+     * @return string
+     */
+    public function getIndexName()
+    {
+        return $this->indexName;
     }
 }

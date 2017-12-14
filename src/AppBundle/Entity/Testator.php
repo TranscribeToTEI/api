@@ -76,7 +76,7 @@ class Testator
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id", "list"})
+     * @Serializer\Groups({"full", "id", "index"})
      *
      * @var int
      *
@@ -118,7 +118,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "list"})
+     * @Serializer\Groups({"full", "content", "index"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *

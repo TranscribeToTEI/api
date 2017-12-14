@@ -81,7 +81,7 @@ class MilitaryUnit
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id"})
+     * @Serializer\Groups({"full", "id", "index"})
      *
      * @var int
      *
@@ -96,7 +96,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "index"})
      *
      * @var string
      *

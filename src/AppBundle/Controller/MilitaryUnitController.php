@@ -10,6 +10,7 @@ use AppBundle\Form\MilitaryUnitType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +27,9 @@ class MilitaryUnitController extends FOSRestController
 {
     /**
      * @Rest\Get("/military-units")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
      * @QueryParam(name="search", nullable=true, description="Run a search query in the military units")
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="MilitaryUnits",
@@ -36,6 +37,7 @@ class MilitaryUnitController extends FOSRestController
      *     description="Get the list of all military units",
      *     parameters={
      *         { "name"="search", "dataType"="string", "description"="Run a search query in the military units", "required"=false },
+     *         { "name"="profile",  "dataType"="string", "description"="Search profile to apply", "required"=false },
      *     },
      *     statusCodes={
      *         200="Returned when fetched",
@@ -58,7 +60,13 @@ class MilitaryUnitController extends FOSRestController
             /* @var $militaryUnits MilitaryUnit[] */
         }
 
-        return $militaryUnits;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = $paramFetcher->get('profile');
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($militaryUnits, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

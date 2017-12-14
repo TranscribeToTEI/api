@@ -93,10 +93,10 @@ class ThreadController extends BaseController
 
         $newComments = [];
         foreach ($comments as $comment) {
-            $newComments[] = $this->get('jms_serializer')->serialize($comment, 'json', SerializationContext::create()->enableMaxDepthChecks());
+            $newComments[] = $comment;
         }
 
-        $view = View::create()
+        /*$view = View::create()
             ->setData(array(
                 'comments' => $newComments,
                 'displayDepth' => $displayDepth,
@@ -105,6 +105,7 @@ class ThreadController extends BaseController
                 'view' => $viewMode,
             ))
             ->setTemplate(new TemplateReference('FOSCommentBundle', 'Thread', 'comments'));
+        */
 
         // Register a special handler for RSS. Only available on this route.
         if ('rss' === $request->getRequestFormat()) {
@@ -117,7 +118,22 @@ class ThreadController extends BaseController
             $this->get('fos_rest.view_handler')->registerHandler('rss', $templatingHandler);
         }
 
-        return $this->getViewHandler()->handle($view);
+        //return $this->getViewHandler()->handle($view);
+
+        return new JsonResponse(
+            json_decode(
+                $this->get('jms_serializer')->serialize(
+                    array(
+                        'comments' => $newComments,
+                        'displayDepth' => $displayDepth,
+                        'sorter' => 'date',
+                        'thread' => $thread,
+                        'view' => $viewMode,
+                    ),
+                    'json',
+                    SerializationContext::create()->enableMaxDepthChecks())
+            )
+        );
     }
 
     /**

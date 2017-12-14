@@ -5,7 +5,7 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\commentLog;
 
-use AppBundle\Form\commentLogType;
+use AppBundle\Form\CommentLogType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
@@ -25,7 +25,9 @@ class CommentLogController extends FOSRestController
      * @Rest\Get("/comment-logs")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
-     * @QueryParam(name="private", nullable=true, description="Identifier of a specific comment")
+     * @QueryParam(name="private",      nullable=true, description="Identifier of a specific comment")
+     * @QueryParam(name="readByAdmin",  nullable=true, description="List of entities read or not by admin")
+     * @QueryParam(name="count",        nullable=true, description="Do you want a number of results?")
      *
      * @Doc\ApiDoc(
      *     section="CommentLogs",
@@ -40,18 +42,33 @@ class CommentLogController extends FOSRestController
     public function getCommentLogsAction(Request $request, ParamFetcher $paramFetcher)
     {
         $private = $paramFetcher->get('private');
+        $readByAdmin = $paramFetcher->get('readByAdmin');
+        $count = $paramFetcher->get('count');
+        if($readByAdmin != '') {
+            $readByAdmin = $paramFetcher->get('readByAdmin');
+        } else {$readByAdmin = null;}
+        if($count != '') {
+            $count = $paramFetcher->get('count');
+        } else {$count = null;}
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:CommentLog');
         /* @var $repository EntityRepository */
 
-        if($private == '') {
+        if($private != '') {
+            return new JsonResponse(null);
+        } elseif($readByAdmin != null) {
+            $commentLogs = $repository->findBy(array('isReadByAdmin' => $readByAdmin));
+            /* @var $commentLogs CommentLog[] */
+        } else {
             $commentLogs = $repository->findAll();
             /* @var $commentLogs CommentLog[] */
-            return $commentLogs;
-        } else {
-            return new JsonResponse(null);
         }
 
+        if($count == true) {
+            return new JsonResponse(count($commentLogs));
+        } else {
+            return $commentLogs;
+        }
     }
 
     /**

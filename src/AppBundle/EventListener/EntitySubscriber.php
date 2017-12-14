@@ -6,6 +6,7 @@ use AppBundle\Entity\Comment\Comment;
 use AppBundle\Entity\Comment\Thread;
 use AppBundle\Entity\CommentLog;
 use AppBundle\Entity\Entity;
+use AppBundle\Entity\Place;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\TaxonomyVersion;
 use AppBundle\Entity\Testator;
@@ -145,6 +146,36 @@ class EntitySubscriber implements EventSubscriber
             }
 
             $em->persist($taxonomyLog);
+            $em->flush();
+        }
+
+        /* Index name for Places */
+        if(get_class($entity) == "AppBundle\Entity\Place") {
+            /** @var $em EntityManager */
+            /** @var $entity Place */
+
+            $indexName = "";
+            if(count($entity->getNames()) > 0) {
+                $indexName .= $entity->getNames()[0]->getName();
+            }
+
+            $suffixName = "";
+            if(count($entity->getFrenchDepartements()) > 0) {
+                $suffixName .= $entity->getFrenchDepartements()[0]->getName();
+            } elseif(count($entity->getFrenchRegions()) > 0) {
+                if($suffixName != "") {$suffixName .= ", ";}
+                $suffixName .= $entity->getFrenchRegions()[0]->getName();
+            } elseif(count($entity->getCountries()) > 0) {
+                if($suffixName != "") {$suffixName .= ", ";}
+                $suffixName .= $entity->getCountries()[0]->getName();
+            }
+
+            if($suffixName != "") {
+                $indexName .= "(".$suffixName.")";
+            }
+
+            $entity->setIndexName($indexName);
+            $em->persist($entity);
             $em->flush();
         }
     }
