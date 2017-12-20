@@ -67,7 +67,7 @@ use AppBundle\Entity\Resource;
  *     "status",
  *     embedded = @Hateoas\Embedded("expr(service('app.entity').getStatus(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content"}
+ *          groups={"full", "content", "search"}
  *     )
  * )
  */
@@ -76,7 +76,7 @@ class Entity
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id"})
+     * @Serializer\Groups({"full", "id", "search"})
      *
      * @var int
      *
@@ -91,7 +91,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @Assert\NotBlank()
      *
@@ -104,7 +104,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
@@ -116,7 +116,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Resource", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
      */

@@ -8,12 +8,14 @@ use AppBundle\Entity\Resource;
 use AppBundle\Form\EntityType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -22,24 +24,34 @@ class EntityController extends FOSRestController
 {
     /**
      * @Rest\Get("/entities")
-     * @Rest\View(serializerGroups={"id", "content"}, serializerEnableMaxDepthChecks=true)
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="Entities",
      *     resource=true,
      *     description="Get the list of all entities",
+     *     parameters={
+     *         { "name"="profile",  "dataType"="string", "description"="Search profile to apply", "required"=false },
+     *     },
      *     statusCodes={
      *         200="Returned when fetched",
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
      */
-    public function getEntitiesAction(Request $request)
+    public function getEntitiesAction(Request $request, ParamFetcher $paramFetcher)
     {
         $entities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findAll();
         /* @var $entities \AppBundle\Entity\Entity[] */
 
-        return $entities;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = $paramFetcher->get('profile');
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($entities, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

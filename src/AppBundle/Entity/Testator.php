@@ -76,7 +76,7 @@ class Testator
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id", "index"})
+     * @Serializer\Groups({"full", "id", "index", "search"})
      *
      * @var int
      *
@@ -103,7 +103,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -320,7 +320,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -348,7 +348,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -394,7 +394,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @var string
      *
@@ -409,7 +409,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -423,7 +423,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      *
      * @var string

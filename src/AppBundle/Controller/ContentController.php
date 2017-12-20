@@ -10,6 +10,7 @@ use AppBundle\Form\ContentType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,13 +25,12 @@ class ContentController extends FOSRestController
 {
     /**
      * @Rest\Get("/contents")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      * @QueryParam(name="status", requirements="draft|public|private|notIndexed", nullable=true, description="Name of the status required")
      * @QueryParam(name="type", requirements="blogContent|helpContent|staticContent", nullable=true, description="Type of content")
      * @QueryParam(name="date", requirements="ASC|DESC", nullable=true, description="Sorting order")
      * @QueryParam(name="limit", requirements="\d*", nullable=true, description="Limit of results")
-     * @QueryParam(name="onhomepage", requirements="true|false", nullable=true, description="homepage contents")
      *
      * @Doc\ApiDoc(
      *     section="Contents",
@@ -55,7 +55,6 @@ class ContentController extends FOSRestController
         $type = $paramFetcher->get('type');
         $date = $paramFetcher->get('date');
         $limit = $paramFetcher->get('limit');
-        $onHomepage = $paramFetcher->get('onhomepage');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Content');
         /* @var $repository ContentRepository */
@@ -63,7 +62,6 @@ class ContentController extends FOSRestController
         $query = [];
         if($status != "") {$query["status"] = $status;}
         if($type != "") {$query["type"] = $type;}
-        if($onHomepage != "") {$query["onHomepage"] = $onHomepage;}
 
         $order = [];
         if($date == "ASC" or $date == "DESC") {$order["createDate"] = $date;}
@@ -73,12 +71,20 @@ class ContentController extends FOSRestController
         $contents = $repository->findBy($query, $order, $limit);
         /* @var $contents Content[] */
 
-        return $contents;
+
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = $paramFetcher->get('profile');
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($contents, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/contents/{id}")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="Contents",
      *     resource=true,
@@ -97,7 +103,7 @@ class ContentController extends FOSRestController
      *     }
      * )
      */
-    public function getContentAction(Request $request)
+    public function getContentAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $content = $em->getRepository('AppBundle:Content')->find($request->get('id'));
@@ -107,7 +113,13 @@ class ContentController extends FOSRestController
             return new JsonResponse(['message' => 'Content not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $content;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content", "metadata"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($content, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

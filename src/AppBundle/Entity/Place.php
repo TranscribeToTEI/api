@@ -82,7 +82,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "place-id", "id", "index"})
+     * @Serializer\Groups({"full", "place-id", "id", "index", "search"})
      *
      * @var int
      *
@@ -111,7 +111,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "place-content", "search"})
      *
      * @Assert\NotBlank()
      * @Serializer\MaxDepth(2)
@@ -203,7 +203,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "place-content", "search"})
      *
      * @var string
      *

@@ -71,7 +71,7 @@ class Will
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id"})
+     * @Serializer\Groups({"full", "id", "search"})
      *
      * @var int
      *
@@ -99,7 +99,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -158,7 +158,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -173,7 +173,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -219,7 +219,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @var string
      *
@@ -234,7 +234,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -280,7 +280,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @var string
      *
@@ -309,7 +309,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @var string
      * @Gedmo\Versioned
@@ -323,7 +323,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "testator"})
+     * @Serializer\Groups({"full", "content", "testator", "search"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(4)
      *
@@ -532,7 +532,7 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HostingOrganization")

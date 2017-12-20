@@ -166,30 +166,31 @@ class Content
     private $status;
 
     /**
-     * Is the content on homepage of your project ?
+     * The status of your content
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var bool
+     * @Assert\Choice({"helpHome", "discover", "about", "legalMentions", "credits", "userChart"})
      *
-     * @ORM\Column(name="onHomepage", type="boolean", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="staticCategory", type="string", length=255, nullable=true)
      */
-    private $onHomepage;
+    private $staticCategory;
 
     /**
-     * Tags of the content
-     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
      *
-     * @var array
+     * @var int
      *
-     * @ORM\Column(name="tags", type="array", nullable=true)
+     * @ORM\Column(name="staticOrder", type="integer", nullable=true)
      */
-    private $tags;
+    private $staticOrder;
 
     /**
      * Illustration of the content
@@ -526,54 +527,6 @@ class Content
     }
 
     /**
-     * Set onHomepage
-     *
-     * @param boolean $onHomepage
-     *
-     * @return Content
-     */
-    public function setOnHomepage($onHomepage)
-    {
-        $this->onHomepage = $onHomepage;
-
-        return $this;
-    }
-
-    /**
-     * Get onHomepage
-     *
-     * @return bool
-     */
-    public function getOnHomepage()
-    {
-        return $this->onHomepage;
-    }
-
-    /**
-     * Set tags
-     *
-     * @param array $tags
-     *
-     * @return Content
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return array
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-    /**
      * Set illustration
      *
      * @param string $illustration
@@ -643,5 +596,53 @@ class Content
     public function getEnableComments()
     {
         return $this->enableComments;
+    }
+
+    /**
+     * Set staticCategory
+     *
+     * @param string $staticCategory
+     *
+     * @return Content
+     */
+    public function setStaticCategory($staticCategory)
+    {
+        $this->staticCategory = $staticCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get staticCategory
+     *
+     * @return string
+     */
+    public function getStaticCategory()
+    {
+        return $this->staticCategory;
+    }
+
+    /**
+     * Set staticOrder
+     *
+     * @param integer $staticOrder
+     *
+     * @return Content
+     */
+    public function setStaticOrder($staticOrder)
+    {
+        $this->staticOrder = $staticOrder;
+
+        return $this;
+    }
+
+    /**
+     * Get staticOrder
+     *
+     * @return integer
+     */
+    public function getStaticOrder()
+    {
+        return $this->staticOrder;
     }
 }

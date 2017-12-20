@@ -188,7 +188,7 @@ fos_oauth_server:
     service:
         user_provider: fos_user.user_provider.username
         options:
-            access_token_lifetime: 15768000
+            access_token_lifetime: 31536000
 
 # JMS Serialize
 jms_serializer:

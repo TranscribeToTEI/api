@@ -26,17 +26,10 @@ class ContentType extends AbstractType
             ->add('abstract',       TextareaType::class,    array("required" => true))
             ->add('type',           TextType::class,        array("required" => true, "description" => "Allowed values: \"blogContent\", \"helpContent\", \"staticContent\""))
             ->add('status',         TextType::class,        array("required" => false))
-            ->add('onHomepage',     CheckboxType::class,    array("required" => false))
+            ->add('staticCategory', TextType::class,        array("required" => false, "description" => "Allowed values: \"helpHome\", \"discover\", \"about\", \"legalMentions\", \"credits\", \"userChart\""))
+            ->add('staticOrder',    IntegerType::class,     array("required" => false))
             ->add('enableComments', CheckboxType::class,    array("required" => false))
             ->add('updateComment',  TextType::class,        array("required" => true))
-            ->add('tags',           CollectionType::class,
-                array(
-                    'required' => false,
-                    'entry_type' => TextType::class,
-                    'allow_add' => true,
-                    'allow_delete' => true
-                )
-            )
             ->add('illustration',   TextType::class,        array("required" => false))
         ;
     }

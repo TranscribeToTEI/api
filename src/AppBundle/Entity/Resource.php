@@ -124,7 +124,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @Assert\NotBlank()
      * @Assert\Type("array")
