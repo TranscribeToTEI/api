@@ -99,7 +99,7 @@ class Resource
      * @Serializer\Groups({"full", "content"})
      *
      * @Assert\NotBlank()
-     * @Assert\Choice({"page", "envelop", "codicil"})
+     * @Assert\Choice({"page", "envelope", "codicil"})
      *
      * @var string
      *

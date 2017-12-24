@@ -144,6 +144,23 @@ class MilitaryUnit
     private $armyCorps;
 
     /**
+     * Regiment name of your military unit
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     *
+     * @Assert\Type("string")
+     *
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="regimentName", type="string", length=255, nullable=true)
+     */
+    private $regimentName;
+
+    /**
      * Regiment number of your military unit
      *
      * @Serializer\Since("0.1")
@@ -526,5 +543,29 @@ class MilitaryUnit
     public function getIsOfficialVersion()
     {
         return $this->isOfficialVersion;
+    }
+
+    /**
+     * Set regimentName
+     *
+     * @param string $regimentName
+     *
+     * @return MilitaryUnit
+     */
+    public function setRegimentName($regimentName)
+    {
+        $this->regimentName = $regimentName;
+
+        return $this;
+    }
+
+    /**
+     * Get regimentName
+     *
+     * @return string
+     */
+    public function getRegimentName()
+    {
+        return $this->regimentName;
     }
 }

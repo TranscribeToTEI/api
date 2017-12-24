@@ -50,14 +50,14 @@ class HostingOrganizationController extends FOSRestController
         /* @var $repository EntityRepository */
 
         if($search != "") {
-            $militaryUnits = $repository->findBy(array("name" => $search));
-            /* @var $militaryUnits HostingOrganization[] */
+            $hostingOrganizations = $repository->findBy(array("name" => $search));
+            /* @var $hostingOrganizations HostingOrganization[] */
         } else {
-            $militaryUnits = $repository->findAll();
-            /* @var $militaryUnits HostingOrganization[] */
+            $hostingOrganizations = $repository->findAll();
+            /* @var $hostingOrganizations HostingOrganization[] */
         }
 
-        return $militaryUnits;
+        return $hostingOrganizations;
     }
 
     /**

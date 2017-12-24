@@ -5,8 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\WillType;
 
 use AppBundle\Form\WillTypeType;
+use AppBundle\Repository\WillTypeRepository;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use FOS\RestBundle\Request\ParamFetcher;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +25,8 @@ class WillTypeController extends FOSRestController
      * @Rest\Get("/will-types")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
+     * @QueryParam(name="search", nullable=true, description="Run a search query in the will types")
+     *
      * @Doc\ApiDoc(
      *     section="Will types",
      *     resource=true,
@@ -30,10 +37,20 @@ class WillTypeController extends FOSRestController
      *     }
      * )
      */
-    public function getWillTypesAction(Request $request)
+    public function getWillTypesAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $willTypes = $this->getDoctrine()->getManager()->getRepository('AppBundle:WillType')->findAll();
-        /* @var $willTypes WillType[] */
+        $search = $paramFetcher->get('search');
+
+        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:WillType');
+        /* @var $repository WillTypeRepository */
+
+        if($search != "") {
+            $willTypes = $repository->findBy(array("name" => $search));
+            /* @var $willTypes WillType[] */
+        } else {
+            $willTypes = $repository->findAll();
+            /* @var $willTypes WillType[] */
+        }
 
         return $willTypes;
     }

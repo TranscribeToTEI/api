@@ -352,7 +352,6 @@ class Testator
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\NotBlank()
      *
      * @ORM\Column(name="dateOfDeathString", type="text", nullable=false)
      */
@@ -366,11 +365,10 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var \DateTime
-     * @Assert\Date()
+     * @var string
      * @Assert\NotNull(message = "La date de décès normalisée du testament ne peut pas être vide")
      *
-     * @ORM\Column(name="dateOfDeathNormalized", type="date", nullable=false)
+     * @ORM\Column(name="dateOfDeathNormalized", type="text", nullable=false)
      */
     private $dateOfDeathNormalized;
 
@@ -382,10 +380,9 @@ class Testator
      * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
-     * @var \DateTime
-     * @Assert\Date()
+     * @var string
      *
-     * @ORM\Column(name="dateOfDeathEndNormalized", type="date", nullable=true)
+     * @ORM\Column(name="dateOfDeathEndNormalized", type="text", nullable=true)
      */
     private $dateOfDeathEndNormalized;
 
@@ -489,6 +486,20 @@ class Testator
      * @ORM\Column(name="militaryUnitString", type="text", nullable=true)
      */
     private $militaryUnitString;
+
+    /**
+     * Deployment in the military unit of the testator (string)
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var string
+     * @Gedmo\Versioned
+     *
+     * @ORM\Column(name="militaryUnitDeploymentString", type="text", nullable=true)
+     */
+    private $militaryUnitDeploymentString;
 
     /**
      * Rank of the testator in his military unit
@@ -1030,7 +1041,7 @@ class Testator
     /**
      * Set dateOfDeathNormalized
      *
-     * @param \DateTime $dateOfDeathNormalized
+     * @param string $dateOfDeathNormalized
      *
      * @return Testator
      */
@@ -1044,7 +1055,7 @@ class Testator
     /**
      * Get dateOfDeathNormalized
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDateOfDeathNormalized()
     {
@@ -1054,7 +1065,7 @@ class Testator
     /**
      * Set dateOfDeathEndNormalized
      *
-     * @param \DateTime $dateOfDeathEndNormalized
+     * @param string $dateOfDeathEndNormalized
      *
      * @return Testator
      */
@@ -1068,7 +1079,7 @@ class Testator
     /**
      * Get dateOfDeathEndNormalized
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDateOfDeathEndNormalized()
     {
@@ -1539,5 +1550,29 @@ class Testator
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set militaryUnitDeploymentString
+     *
+     * @param string $militaryUnitDeploymentString
+     *
+     * @return Testator
+     */
+    public function setMilitaryUnitDeploymentString($militaryUnitDeploymentString)
+    {
+        $this->militaryUnitDeploymentString = $militaryUnitDeploymentString;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnitDeploymentString
+     *
+     * @return string
+     */
+    public function getMilitaryUnitDeploymentString()
+    {
+        return $this->militaryUnitDeploymentString;
     }
 }

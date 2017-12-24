@@ -17,7 +17,7 @@ class ResourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type',       TextType::class, array("required" => true, "description" => "Allowed values: \"page\", \"envelop\", \"codicil\""))
+            ->add('type',       TextType::class, array("required" => true, "description" => "Allowed values: \"page\", \"envelope\", \"codicil\""))
             ->add('orderInWill',TextType::class, array("required" => true))
             ->add('images',     CollectionType::class,
                 array(
