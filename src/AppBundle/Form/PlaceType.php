@@ -52,6 +52,7 @@ class PlaceType extends AbstractType
                 "delete_empty" => true,
                 'entry_type'   => PlaceNameType::class
             ))
+            ->add('indexName',                  TextType::class,        array("required" => false))
             ->add('description',                TextareaType::class,    array("required" => false))
             ->add('geonamesId',                 TextType::class,        array("required" => false))
             ->add('geographicalCoordinates',    TextType::class,        array("required" => false))

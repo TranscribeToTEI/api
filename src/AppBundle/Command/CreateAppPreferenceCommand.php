@@ -18,7 +18,7 @@ class CreateAppPreferenceCommand extends ContainerAwareCommand
     {
         $this
             // the name of the command (the part after "bin/console")
-            ->setName('app:preferences')
+                ->setName('app:preferences')
 
             // the short description shown while running "php bin/console list"
             ->setDescription('Setting up the app preferences')
@@ -50,6 +50,7 @@ class CreateAppPreferenceCommand extends ContainerAwareCommand
         }
         $appPreference->setProjectTitle($input->getArgument('title'));
         $appPreference->setSystemEmail($input->getArgument('systemEmail'));
+        $appPreference->setTaxonomyEditAccess("forbidden");
         $em->persist($appPreference);
         $em->flush();
 
