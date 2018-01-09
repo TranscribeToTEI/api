@@ -25,6 +25,7 @@ Debug::enable();
 $kernel = new AppKernel('dev', true);
 if (PHP_VERSION_ID < 70000) {
     $kernel->loadClassCache();
+    $kernel = new AppCache($kernel);
 }
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);

@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
@@ -46,6 +47,7 @@ class ModelController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Cache(expires="1 January 2020", public=true)
      */
     public function getModelAction(Request $request, ParamFetcher $paramFetcher)
     {
@@ -62,18 +64,18 @@ class ModelController extends FOSRestController
 
         /** @var $modelService Model */
         $modelService = $this->get('app.xml.model');
-        $response = null;
+        $data = null;
 
         if($element != null) {
-            $response = $this->getInfo($element, $info);
+            $data = $this->getInfo($element, $info);
         } elseif($elements == true) {
             $elementsList = $modelService->getAllElements();
             foreach ($elementsList as $element) {
-                $response[$element] = $this->getInfo($element, $info);
+                $data[$element] = $this->getInfo($element, $info);
             }
         }
 
-        return new JsonResponse(["data" => $response], Response::HTTP_OK);
+        return new JsonResponse(["data" => $data], Response::HTTP_OK);
     }
 
     /**

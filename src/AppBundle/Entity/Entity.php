@@ -127,7 +127,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search"})
      *
      * @Assert\NotNull()
      * @Assert\Type("bool")

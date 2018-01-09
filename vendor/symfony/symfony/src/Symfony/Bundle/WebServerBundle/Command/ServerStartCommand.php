@@ -19,6 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Runs a local web server in a background process.
@@ -29,6 +30,8 @@ class ServerStartCommand extends ServerCommand
 {
     private $documentRoot;
     private $environment;
+
+    protected static $defaultName = 'server:start';
 
     public function __construct($documentRoot = null, $environment = null)
     {
@@ -44,7 +47,6 @@ class ServerStartCommand extends ServerCommand
     protected function configure()
     {
         $this
-            ->setName('server:start')
             ->setDefinition(array(
                 new InputArgument('addressport', InputArgument::OPTIONAL, 'The address to listen to (can be address:port, address, or port)'),
                 new InputOption('docroot', 'd', InputOption::VALUE_REQUIRED, 'Document root'),
@@ -93,7 +95,7 @@ EOF
                 'You can either install it or use the "server:run" command instead.',
             ));
 
-            if ($io->ask('Do you want to execute <info>server:run</info> immediately? [yN] ', false)) {
+            if ($io->confirm('Do you want to execute <info>server:run</info> immediately?', false)) {
                 return $this->getApplication()->find('server:run')->run($input, $output);
             }
 
@@ -130,6 +132,10 @@ EOF
         if ('prod' === $env) {
             $io->error('Running this server in production environment is NOT recommended!');
         }
+
+        // replace event dispatcher with an empty one to prevent console.terminate from firing
+        // as container could have changed between start and stop
+        $this->getApplication()->setDispatcher(new EventDispatcher());
 
         try {
             $server = new WebServer();

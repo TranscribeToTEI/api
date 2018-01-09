@@ -343,20 +343,6 @@ class TrainingContent
     private $exerciseIsTaxonomy;
 
     /**
-     * Allowing bibliography mangement during the exercise
-     *
-     * @Serializer\Since("0.1")
-     * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
-     * @Gedmo\Versioned
-     *
-     * @var bool
-     *
-     * @ORM\Column(name="exerciseIsBibliography", type="boolean", nullable=true)
-     */
-    private $exerciseIsBibliography;
-
-    /**
      * Allowing notes management during the exercise
      *
      * @Serializer\Since("0.1")

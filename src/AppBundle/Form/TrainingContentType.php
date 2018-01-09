@@ -50,7 +50,6 @@ class TrainingContentType extends AbstractType
             ->add('exerciseIsHelp',                     CheckboxType::class,    array("required" => false))
             ->add('exerciseIsDocumentation',            CheckboxType::class,    array("required" => false))
             ->add('exerciseIsTaxonomy',                 CheckboxType::class,    array("required" => false))
-            ->add('exerciseIsBibliography',             CheckboxType::class,    array("required" => false))
             ->add('exerciseIsNotes',                    CheckboxType::class,    array("required" => false))
             ->add('exerciseIsVersioning',               CheckboxType::class,    array("required" => false))
             ->add('exerciseIsComplexFields',            CheckboxType::class,    array("required" => false))

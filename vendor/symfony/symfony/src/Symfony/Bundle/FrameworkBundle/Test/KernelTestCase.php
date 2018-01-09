@@ -39,9 +39,13 @@ abstract class KernelTestCase extends TestCase
      * @return string The directory where phpunit.xml(.dist) is stored
      *
      * @throws \RuntimeException
+     *
+     * @deprecated since 3.4 and will be removed in 4.0.
      */
     protected static function getPhpUnitXmlDir()
     {
+        @trigger_error(sprintf('The %s() method is deprecated since Symfony 3.4 and will be removed in 4.0.', __METHOD__), E_USER_DEPRECATED);
+
         if (!isset($_SERVER['argv']) || false === strpos($_SERVER['argv'][0], 'phpunit')) {
             throw new \RuntimeException('You must override the KernelTestCase::createKernel() method.');
         }
@@ -72,13 +76,17 @@ abstract class KernelTestCase extends TestCase
      * the last configuration argument.
      *
      * @return string The value of the PHPUnit CLI configuration option
+     *
+     * @deprecated since 3.4 and will be removed in 4.0.
      */
     private static function getPhpUnitCliConfigArgument()
     {
+        @trigger_error(sprintf('The %s() method is deprecated since Symfony 3.4 and will be removed in 4.0.', __METHOD__), E_USER_DEPRECATED);
+
         $dir = null;
         $reversedArgs = array_reverse($_SERVER['argv']);
         foreach ($reversedArgs as $argIndex => $testArg) {
-            if (preg_match('/^-[^ \-]*c$/', $testArg) || $testArg === '--configuration') {
+            if (preg_match('/^-[^ \-]*c$/', $testArg) || '--configuration' === $testArg) {
                 $dir = realpath($reversedArgs[$argIndex - 1]);
                 break;
             } elseif (0 === strpos($testArg, '--configuration=')) {
@@ -107,16 +115,18 @@ abstract class KernelTestCase extends TestCase
     protected static function getKernelClass()
     {
         if (isset($_SERVER['KERNEL_CLASS']) || isset($_ENV['KERNEL_CLASS'])) {
-            $class = isset($_SERVER['KERNEL_CLASS']) ? $_SERVER['KERNEL_CLASS'] : $_ENV['KERNEL_CLASS'];
+            $class = isset($_ENV['KERNEL_CLASS']) ? $_ENV['KERNEL_CLASS'] : $_SERVER['KERNEL_CLASS'];
             if (!class_exists($class)) {
                 throw new \RuntimeException(sprintf('Class "%s" doesn\'t exist or cannot be autoloaded. Check that the KERNEL_CLASS value in phpunit.xml matches the fully-qualified class name of your Kernel or override the %s::createKernel() method.', $class, static::class));
             }
 
             return $class;
+        } else {
+            @trigger_error(sprintf('Using the KERNEL_DIR environment variable or the automatic guessing based on the phpunit.xml / phpunit.xml.dist file location is deprecated since Symfony 3.4. Set the KERNEL_CLASS environment variable to the fully-qualified class name of your Kernel instead. Not setting the KERNEL_CLASS environment variable will throw an exception on 4.0 unless you override the %1$::createKernel() or %1$::getKernelClass() method.', static::class), E_USER_DEPRECATED);
         }
 
         if (isset($_SERVER['KERNEL_DIR']) || isset($_ENV['KERNEL_DIR'])) {
-            $dir = isset($_SERVER['KERNEL_DIR']) ? $_SERVER['KERNEL_DIR'] : $_ENV['KERNEL_DIR'];
+            $dir = isset($_ENV['KERNEL_DIR']) ? $_ENV['KERNEL_DIR'] : $_SERVER['KERNEL_DIR'];
 
             if (!is_dir($dir)) {
                 $phpUnitDir = static::getPhpUnitXmlDir();
@@ -146,8 +156,6 @@ abstract class KernelTestCase extends TestCase
     /**
      * Boots the Kernel for this test.
      *
-     * @param array $options
-     *
      * @return KernelInterface A KernelInterface instance
      */
     protected static function bootKernel(array $options = array())
@@ -168,8 +176,6 @@ abstract class KernelTestCase extends TestCase
      *  * environment
      *  * debug
      *
-     * @param array $options An array of options
-     *
      * @return KernelInterface A KernelInterface instance
      */
     protected static function createKernel(array $options = array())
@@ -178,10 +184,27 @@ abstract class KernelTestCase extends TestCase
             static::$class = static::getKernelClass();
         }
 
-        return new static::$class(
-            isset($options['environment']) ? $options['environment'] : 'test',
-            isset($options['debug']) ? $options['debug'] : true
-        );
+        if (isset($options['environment'])) {
+            $env = $options['environment'];
+        } elseif (isset($_ENV['APP_ENV'])) {
+            $env = $_ENV['APP_ENV'];
+        } elseif (isset($_SERVER['APP_ENV'])) {
+            $env = $_SERVER['APP_ENV'];
+        } else {
+            $env = 'test';
+        }
+
+        if (isset($options['debug'])) {
+            $debug = $options['debug'];
+        } elseif (isset($_ENV['APP_DEBUG'])) {
+            $debug = $_ENV['APP_DEBUG'];
+        } elseif (isset($_SERVER['APP_DEBUG'])) {
+            $debug = $_SERVER['APP_DEBUG'];
+        } else {
+            $debug = true;
+        }
+
+        return new static::$class($env, $debug);
     }
 
     /**

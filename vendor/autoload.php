@@ -4,4 +4,6 @@
 
 require_once __DIR__ . '/composer/autoload_real.php';
 
+//Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+
 return ComposerAutoloaderInitce32f360f39707201d89a619cd8d8bbb::getLoader();

@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the Symfony framework.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien@symfony.com>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Tests\Fixtures\FooBundle\Controller;
@@ -27,7 +27,7 @@ class InvokableContainerController extends Controller
 
     /**
      * @Route("/invokable/another-variable/container/{variable}/")
-     * @Template("FooBundle:InvokableContainer:variable.html.twig")
+     * @Template("@Foo/invokable_container/variable.html.twig")
      */
     public function anotherVariableAction($variable)
     {
@@ -38,7 +38,7 @@ class InvokableContainerController extends Controller
 
     /**
      * @Route("/invokable/variable/container/{variable}/{another_variable}/")
-     * @Template("FooBundle:InvokableContainer:another_variable.html.twig")
+     * @Template("@Foo/invokable_container/another_variable.html.twig")
      */
     public function doubleVariableAction($variable, $another_variable)
     {
@@ -50,7 +50,7 @@ class InvokableContainerController extends Controller
 
     /**
      * @Route("/invokable/predefined/container/")
-     * @Template("FooBundle:Invokable:predefined.html.twig")
+     * @Template("@Foo/invokable/predefined.html.twig")
      */
     public function __invoke()
     {

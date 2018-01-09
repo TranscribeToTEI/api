@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the Symfony framework.
+ * This file is part of the Symfony package.
  *
  * (c) Fabien Potencier <fabien@symfony.com>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace Tests\Fixtures\FooBundle\Controller;
@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route(service="test.invokable_class_level.predefined")
- * @Template("FooBundle:Invokable:predefined.html.twig")
+ * @Template("@Foo/invokable/predefined.html.twig")
  */
 class InvokableClassLevelController
 {

@@ -180,9 +180,6 @@ class JsonDescriptor extends Descriptor
     /**
      * Writes data as json.
      *
-     * @param array $data
-     * @param array $options
-     *
      * @return array|string
      */
     private function writeData(array $data, array $options)
@@ -192,8 +189,6 @@ class JsonDescriptor extends Descriptor
     }
 
     /**
-     * @param Route $route
-     *
      * @return array
      */
     protected function getRouteData(Route $route)
@@ -231,8 +226,11 @@ class JsonDescriptor extends Descriptor
             'autoconfigure' => $definition->isAutoconfigured(),
         );
 
-        foreach ($definition->getAutowiringTypes(false) as $autowiringType) {
-            $data['autowiring_types'][] = $autowiringType;
+        // forward compatibility with DependencyInjection component in version 4.0
+        if (method_exists($definition, 'getAutowiringTypes')) {
+            foreach ($definition->getAutowiringTypes(false) as $autowiringType) {
+                $data['autowiring_types'][] = $autowiringType;
+            }
         }
 
         if ($showArguments) {
@@ -277,8 +275,6 @@ class JsonDescriptor extends Descriptor
     }
 
     /**
-     * @param Alias $alias
-     *
      * @return array
      */
     private function getContainerAliasData(Alias $alias)

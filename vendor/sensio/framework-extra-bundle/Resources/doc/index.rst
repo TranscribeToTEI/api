@@ -27,23 +27,6 @@ Then, like for any other bundle, include it in your Kernel class::
         // ...
     }
 
-.. _release-cycle-note:
-
-.. note::
-
-    Since SensioFrameworkExtraBundle 3.0 its release cycle is out of sync
-    with Symfony's release cycle. This means that you can simply require
-    ``sensio/framework-extra-bundle: ~3.0`` in your ``composer.json`` file
-    and Composer will automatically pick the latest bundle version for you.
-    You have to use Symfony 2.3 or later for this workflow. Before Symfony
-    2.3, the required version of the SensioFrameworkExtraBundle should be
-    the same as your Symfony version.
-
-If you plan to use or create annotations for controllers, make sure to update
-your ``autoload.php`` by adding the following line::
-
-    Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
-
 Configuration
 -------------
 
@@ -130,6 +113,7 @@ This example shows all the available annotations in action::
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
     /**
@@ -155,6 +139,7 @@ This example shows all the available annotations in action::
          * @ParamConverter("post", class="SensioBlogBundle:Post")
          * @Template("SensioBlogBundle:Annot:show.html.twig", vars={"post"})
          * @Cache(smaxage="15", lastmodified="post.getUpdatedAt()", etag="'Post' ~ post.getId() ~ post.getUpdatedAt()")
+         * @IsGranted("ROLE_SPECIAL_USER")
          * @Security("has_role('ROLE_ADMIN') and is_granted('POST_SHOW', post)")
          */
         public function showAction(Post $post)
@@ -167,7 +152,8 @@ annotations::
 
     /**
      * @Route("/{id}")
-     * @Cache(smaxage="15", lastModified="post.getUpdatedAt()", ETag="'Post' ~ post.getId() ~ post.getUpdatedAt()")
+     * @Cache(smaxage="15", lastModified="post.getUpdatedAt()", Etag="'Post' ~ post.getId() ~ post.getUpdatedAt()")
+     * @IsGranted("ROLE_SPECIAL_USER")
      * @Security("has_role('ROLE_ADMIN') and is_granted('POST_SHOW', post)")
      */
     public function showAction(Post $post)

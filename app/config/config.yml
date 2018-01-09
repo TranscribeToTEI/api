@@ -198,6 +198,14 @@ jms_serializer:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "%kernel.root_dir%/serializer/FOSUserBundle"
 
+sensio_framework_extra:
+    router:      { annotations: true }
+    request:     { converters: true, auto_convert: true }
+    view:        { annotations: true }
+    cache:       { annotations: true }
+    security:    { annotations: true }
+    psr_message: { enabled: false } # Defaults to true if the PSR-7 bridge is installed
+
 # KNP Gaufrette
 #knp_gaufrette:
 #    adapters:

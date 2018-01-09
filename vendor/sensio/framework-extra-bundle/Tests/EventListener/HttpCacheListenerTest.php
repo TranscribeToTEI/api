@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\EventListener\HttpCacheListener;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -97,7 +98,7 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $this->listener->onKernelResponse($this->createEventMock($request, $this->response));
         $this->assertTrue($this->response->hasVary());
         $result = $this->response->getVary();
-        $this->assertFalse(empty($result), 'Existing vary headers should not be removed');
+        $this->assertNotEmpty($result, 'Existing vary headers should not be removed');
         $this->assertEquals($vary, $result, 'Vary header should not be changed');
     }
 
@@ -115,17 +116,20 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('null', $this->response->getMaxAge());
         $this->assertInternalType('null', $this->response->getExpires());
         $this->assertFalse($this->response->headers->hasCacheControlDirective('s-maxage'));
+        $this->assertFalse($this->response->headers->hasCacheControlDirective('max-stale'));
 
         $this->request->attributes->set('_cache', new Cache(array(
             'expires' => 'tomorrow',
             'smaxage' => '15',
             'maxage' => '15',
+            'maxstale' => '5',
         )));
 
         $this->listener->onKernelResponse($this->event);
 
         $this->assertEquals('15', $this->response->getMaxAge());
         $this->assertEquals('15', $this->response->headers->getCacheControlDirective('s-maxage'));
+        $this->assertEquals('5', $this->response->headers->getCacheControlDirective('max-stale'));
         $this->assertInstanceOf('DateTime', $this->response->getExpires());
     }
 
@@ -134,12 +138,14 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $this->request->attributes->set('_cache', new Cache(array(
             'smaxage' => '1 day',
             'maxage' => '1 day',
+            'maxstale' => '1 day',
         )));
 
         $this->listener->onKernelResponse($this->event);
 
         $this->assertEquals(60 * 60 * 24, $this->response->headers->getCacheControlDirective('s-maxage'));
         $this->assertEquals(60 * 60 * 24, $this->response->getMaxAge());
+        $this->assertEquals(60 * 60 * 24, $this->response->headers->getCacheControlDirective('max-stale'));
     }
 
     public function testLastModifiedNotModifiedResponse()
@@ -167,7 +173,7 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $controllerEvent = new FilterControllerEvent($this->getKernel(), function () { return new Response(); }, $request, null);
         $listener->onKernelController($controllerEvent);
 
-        $responseEvent = new FilterResponseEvent($this->getKernel(), $request, null, call_user_func($controllerEvent->getController()));
+        $responseEvent = new FilterResponseEvent($this->getKernel(), $request, HttpKernelInterface::MASTER_REQUEST, call_user_func($controllerEvent->getController()));
         $listener->onKernelResponse($responseEvent);
 
         $response = $responseEvent->getResponse();
@@ -177,7 +183,7 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Fri, 23 Aug 2013 00:00:00 GMT', $response->headers->get('Last-Modified'));
     }
 
-    public function testETagNotModifiedResponse()
+    public function testEtagNotModifiedResponse()
     {
         $request = $this->createRequest(new Cache(array('etag' => 'test.getId()')));
         $request->attributes->set('test', $entity = new TestEntity());
@@ -192,7 +198,7 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(304, $response->getStatusCode());
     }
 
-    public function testETagHeader()
+    public function testEtagHeader()
     {
         $request = $this->createRequest(new Cache(array('ETag' => 'test.getId()')));
         $request->attributes->set('test', $entity = new TestEntity());
@@ -202,7 +208,7 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $controllerEvent = new FilterControllerEvent($this->getKernel(), function () { return new Response(); }, $request, null);
         $listener->onKernelController($controllerEvent);
 
-        $responseEvent = new FilterResponseEvent($this->getKernel(), $request, null, call_user_func($controllerEvent->getController()));
+        $responseEvent = new FilterResponseEvent($this->getKernel(), $request, HttpKernelInterface::MASTER_REQUEST, call_user_func($controllerEvent->getController()));
         $listener->onKernelResponse($responseEvent);
 
         $response = $responseEvent->getResponse();
@@ -210,6 +216,37 @@ class HttpCacheListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertTrue($response->headers->has('ETag'));
         $this->assertContains(hash('sha256', $entity->getId()), $response->headers->get('ETag'));
+    }
+
+    public function testConfigurationDoesNotOverrideAlreadySetResponseHeaders()
+    {
+        $request = $this->createRequest(new Cache(array(
+            'ETag' => '"12345"',
+            'lastModified' => new \DateTime('Fri, 23 Aug 2013 00:00:00 GMT'),
+            'expires' => new \DateTime('Fri, 24 Aug 2013 00:00:00 GMT'),
+            'smaxage' => '15',
+            'maxage' => '15',
+            'vary' => array('foobar'),
+        )));
+
+        $response = new Response();
+        $response->setEtag('"54321"');
+        $response->setLastModified(new \DateTime('Fri, 23 Aug 2014 00:00:00 GMT'));
+        $response->setExpires(new \DateTime('Fri, 24 Aug 2014 00:00:00 GMT'));
+        $response->setSharedMaxAge(30);
+        $response->setMaxAge(30);
+        $response->setVary(array('foobaz'));
+
+        $listener = new HttpCacheListener();
+        $responseEvent = new FilterResponseEvent($this->getKernel(), $request, HttpKernelInterface::MASTER_REQUEST, $response);
+        $listener->onKernelResponse($responseEvent);
+
+        $this->assertEquals('"54321"', $response->getEtag());
+        $this->assertEquals(new \DateTime('Fri, 23 Aug 2014 00:00:00 GMT'), $response->getLastModified());
+        $this->assertEquals(new \DateTime('Fri, 24 Aug 2014 00:00:00 GMT'), $response->getExpires());
+        $this->assertEquals(30, $response->headers->getCacheControlDirective('s-maxage'));
+        $this->assertEquals(30, $response->getMaxAge());
+        $this->assertEquals(array('foobaz'), $response->getVary());
     }
 
     private function createRequest(Cache $cache = null)

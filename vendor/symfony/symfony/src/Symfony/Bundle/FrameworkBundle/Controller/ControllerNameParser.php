@@ -24,11 +24,6 @@ class ControllerNameParser
 {
     protected $kernel;
 
-    /**
-     * Constructor.
-     *
-     * @param KernelInterface $kernel A KernelInterface instance
-     */
     public function __construct(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
@@ -58,7 +53,7 @@ class ControllerNameParser
 
         try {
             // this throws an exception if there is no such bundle
-            $allBundles = $this->kernel->getBundle($bundle, false);
+            $allBundles = $this->kernel->getBundle($bundle, false, true);
         } catch (\InvalidArgumentException $e) {
             $message = sprintf(
                 'The "%s" (from the _controller value "%s") does not exist or is not enabled in your kernel!',
@@ -71,6 +66,11 @@ class ControllerNameParser
             }
 
             throw new \InvalidArgumentException($message, 0, $e);
+        }
+
+        if (!is_array($allBundles)) {
+            // happens when HttpKernel is version 4+
+            $allBundles = array($allBundles);
         }
 
         foreach ($allBundles as $b) {
@@ -141,7 +141,7 @@ class ControllerNameParser
             }
 
             $lev = levenshtein($nonExistentBundleName, $bundleName);
-            if ($lev <= strlen($nonExistentBundleName) / 3 && ($alternative === null || $lev < $shortest)) {
+            if ($lev <= strlen($nonExistentBundleName) / 3 && (null === $alternative || $lev < $shortest)) {
                 $alternative = $bundleName;
                 $shortest = $lev;
             }

@@ -26,24 +26,11 @@ use Symfony\Component\DependencyInjection\LazyProxy\PhpDumper\DumperInterface;
  */
 class ProxyDumper implements DumperInterface
 {
-    /**
-     * @var string
-     */
     private $salt;
-
-    /**
-     * @var LazyLoadingValueHolderGenerator
-     */
     private $proxyGenerator;
-
-    /**
-     * @var BaseGeneratorStrategy
-     */
     private $classGenerator;
 
     /**
-     * Constructor.
-     *
      * @param string $salt
      */
     public function __construct($salt = '')
@@ -64,7 +51,7 @@ class ProxyDumper implements DumperInterface
     /**
      * {@inheritdoc}
      */
-    public function getProxyFactoryCode(Definition $definition, $id, $methodName = null)
+    public function getProxyFactoryCode(Definition $definition, $id, $factoryCode = null)
     {
         $instantiation = 'return';
 
@@ -72,32 +59,30 @@ class ProxyDumper implements DumperInterface
             $instantiation .= " \$this->services['$id'] =";
         }
 
-        if (func_num_args() >= 3) {
-            $methodName = func_get_arg(2);
-        } else {
-            @trigger_error(sprintf('You must use the third argument of %s to define the method to call to construct your service since version 3.1, not using it won\'t be supported in 4.0.', __METHOD__), E_USER_DEPRECATED);
-            $methodName = 'get'.Container::camelize($id).'Service';
+        if (null === $factoryCode) {
+            @trigger_error(sprintf('The "%s()" method expects a third argument defining the code to execute to construct your service since Symfony 3.4, providing it will be required in 4.0.', __METHOD__), E_USER_DEPRECATED);
+            $factoryCode = '$this->get'.Container::camelize($id).'Service(false)';
+        } elseif (false === strpos($factoryCode, '(')) {
+            @trigger_error(sprintf('The "%s()" method expects its third argument to define the code to execute to construct your service since Symfony 3.4, providing it will be required in 4.0.', __METHOD__), E_USER_DEPRECATED);
+            $factoryCode = "\$this->$factoryCode(false)";
         }
         $proxyClass = $this->getProxyClassName($definition);
 
-        $generatedClass = $this->generateProxyClass($definition);
+        $hasStaticConstructor = $this->generateProxyClass($definition)->hasMethod('staticProxyConstructor');
 
-        $constructorCall = $generatedClass->hasMethod('staticProxyConstructor')
-            ? $proxyClass.'::staticProxyConstructor'
-            : 'new '.$proxyClass;
+        $constructorCall = sprintf($hasStaticConstructor ? '%s::staticProxyConstructor' : 'new %s', '\\'.$proxyClass);
 
         return <<<EOF
         if (\$lazyLoad) {
-
-            $instantiation $constructorCall(
-                function (&\$wrappedInstance, \ProxyManager\Proxy\LazyLoadingInterface \$proxy) {
-                    \$wrappedInstance = \$this->$methodName(false);
+            $instantiation \$this->createProxy('$proxyClass', function () {
+                return $constructorCall(function (&\$wrappedInstance, \ProxyManager\Proxy\LazyLoadingInterface \$proxy) {
+                    \$wrappedInstance = $factoryCode;
 
                     \$proxy->setProxyInitializer(null);
 
                     return true;
-                }
-            );
+                });
+            });
         }
 
 
@@ -109,19 +94,21 @@ EOF;
      */
     public function getProxyCode(Definition $definition)
     {
-        return $this->classGenerator->generate($this->generateProxyClass($definition));
+        return preg_replace(
+            '/(\$this->initializer[0-9a-f]++) && \1->__invoke\(\$this->(valueHolder[0-9a-f]++), (.*?), \1\);/',
+            '$1 && ($1->__invoke(\$$2, $3, $1) || 1) && $this->$2 = \$$2;',
+            $this->classGenerator->generate($this->generateProxyClass($definition))
+        );
     }
 
     /**
      * Produces the proxy class name for the given definition.
      *
-     * @param Definition $definition
-     *
      * @return string
      */
     private function getProxyClassName(Definition $definition)
     {
-        return str_replace('\\', '', $definition->getClass()).'_'.spl_object_hash($definition).$this->salt;
+        return preg_replace('/^.*\\\\/', '', $definition->getClass()).'_'.substr(hash('sha256', spl_object_hash($definition).$this->salt), -7);
     }
 
     /**
