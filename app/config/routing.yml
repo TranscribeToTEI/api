@@ -115,6 +115,10 @@ training-contents:
     type:     rest
     resource: AppBundle\Controller\TrainingContentController
 
+training-results:
+    type:     rest
+    resource: AppBundle\Controller\TrainingResultController
+
 media-contents:
     type:     rest
     resource: AppBundle\Controller\MediaContentController

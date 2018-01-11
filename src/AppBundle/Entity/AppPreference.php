@@ -323,6 +323,20 @@ class AppPreference
     private $taxonomyAskQuestion;
 
     /**
+     * The text will be displayed on training home page.
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="trainingHomeContent", type="text", nullable=true)
+     */
+    private $trainingHomeContent;
+
+    /**
      * The text will be displayed above your contact form (if enabled).
      *
      * @Serializer\Since("0.1")
@@ -916,5 +930,29 @@ class AppPreference
     public function getTaxonomyAccessProposal()
     {
         return $this->taxonomyAccessProposal;
+    }
+
+    /**
+     * Set trainingHomeContent
+     *
+     * @param string $trainingHomeContent
+     *
+     * @return AppPreference
+     */
+    public function setTrainingHomeContent($trainingHomeContent)
+    {
+        $this->trainingHomeContent = $trainingHomeContent;
+
+        return $this;
+    }
+
+    /**
+     * Get trainingHomeContent
+     *
+     * @return string
+     */
+    public function getTrainingHomeContent()
+    {
+        return $this->trainingHomeContent;
     }
 }

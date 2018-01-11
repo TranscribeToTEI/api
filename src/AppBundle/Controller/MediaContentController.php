@@ -56,7 +56,7 @@ class MediaContentController extends FOSRestController
         if($paramFetcher->get('id') != '') {
             return $this->postOnExistingEntity($paramFetcher->get('type'), intval($paramFetcher->get('id')), $paramFetcher->get('field'), $request);
         } else {
-            return $this->postOnNonExistingEntity($request);
+            return new JsonResponse($this->postOnNonExistingEntity($request));
         }
     }
 
@@ -74,19 +74,10 @@ class MediaContentController extends FOSRestController
         $entity = $em->getRepository('AppBundle:'.$type)->findOneById($id);
         if($entity === null) {throw new AccessDeniedException('This query does not have access to this section.');}
 
-        /* Upload logic */
-        $uploadedFile = $request->files->get('media');
-        $directory = __DIR__.'/../../../web/uploads/';
-        $uploadedFile->move($directory, $uploadedFile->getClientOriginalName());
-
-        $file = fopen($directory.$uploadedFile->getClientOriginalName(), 'r');
-        $fileName = uniqid();
-        $info = pathinfo($directory.$uploadedFile->getClientOriginalName());
-        rename($directory.$uploadedFile->getClientOriginalName(), $directory.$fileName.'.'.$info['extension']);
-        fclose($file);
+        $file = $this->postOnNonExistingEntity($request);
 
         /* User edition */
-        $entity->set($field, $fileName . '.' . $info['extension']);
+        $entity->set($field, $file);
         $em->flush();
 
         return $entity;
@@ -109,6 +100,6 @@ class MediaContentController extends FOSRestController
         rename($directory.$uploadedFile->getClientOriginalName(), $directory.$fileName.'.'.$info['extension']);
         fclose($file);
 
-        return new JsonResponse($fileName.'.'.$info['extension']);
+        return $fileName.'.'.$info['extension'];
     }
 }

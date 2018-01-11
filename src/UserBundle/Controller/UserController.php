@@ -351,6 +351,8 @@ class UserController extends FOSRestController
             foreach($em->getRepository('AppBundle:CommentLog')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:Entity')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:Entity')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:ManuscriptReference')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:ManuscriptReference')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:MilitaryUnit')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
@@ -374,14 +376,14 @@ class UserController extends FOSRestController
             foreach($em->getRepository('AppBundle:Testator')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:TrainingContent')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:TrainingContent')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:TrainingResult')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:TrainingResult')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:Transcript')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:Transcript')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:TranscriptLog')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:TranscriptLog')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:Will')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:Will')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
-            foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
-            foreach($em->getRepository('AppBundle:HostingOrganization')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:WillType')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:WillType')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
 

@@ -211,7 +211,7 @@ sensio_framework_extra:
 #    adapters:
 #        default:
 #            local:
-#                directory: %kernel.root_dir%/../web/images/uploads
+#                directory: %kernel.root_dir%/../../../web/uploads/
 #                create:     true
 #    filesystems:
 #        default:

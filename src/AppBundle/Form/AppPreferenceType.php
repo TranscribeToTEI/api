@@ -35,6 +35,7 @@ class AppPreferenceType extends AbstractType
             ->add('taxonomyEditAccess',         TextType::class,        array("required" => false, "description" => "Allowed values: \"selfAuthorization\", \"controlledAuthorization\", \"free\", \"forbidden\""))
             ->add('taxonomyAskQuestion',        TextareaType::class,    array("required" => false))
             ->add('taxonomyAccessProposal',     TextareaType::class,    array("required" => false))
+            ->add('trainingHomeContent',        TextareaType::class,    array("required" => false))
             ->add('infoContentEditTaxonomy',    TextareaType::class,    array("required" => false))
             ->add('infoContact',                TextareaType::class,    array("required" => false))
             ->add('updateComment',              TextareaType::class,    array("required" => false))
