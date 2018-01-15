@@ -38,6 +38,7 @@ return array(
     'Knp\\Bundle\\GaufretteBundle\\' => array($vendorDir . '/knplabs/knp-gaufrette-bundle'),
     'JMS\\SerializerBundle\\' => array($vendorDir . '/jms/serializer-bundle'),
     'Incenteev\\ParameterHandler\\' => array($vendorDir . '/incenteev/composer-parameter-handler'),
+    'IIIF\\' => array($vendorDir . '/yale-web-technologies/iiif-manifest-generator/src/IIIF'),
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),

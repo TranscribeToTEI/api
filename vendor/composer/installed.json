@@ -4452,5 +4452,34 @@
             "annotations",
             "controllers"
         ]
+    },
+    {
+        "name": "yale-web-technologies/iiif-manifest-generator",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator.git",
+            "reference": "cd04b37db9ee95247250bd290df5328387eeeb2c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/yale-web-technologies/IIIF-Manifest-Generator/zipball/cd04b37db9ee95247250bd290df5328387eeeb2c",
+            "reference": "cd04b37db9ee95247250bd290df5328387eeeb2c",
+            "shasum": ""
+        },
+        "time": "2017-11-27 16:02:35",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "IIIF\\": "src/IIIF/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0"
+        ],
+        "description": "This is a IIIF Manifest Generator written in PHP. It implements the IIIF API Specification. Currently this only supports the Presentation API."
     }
 ]

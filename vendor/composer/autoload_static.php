@@ -83,6 +83,7 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         'I' => 
         array (
             'Incenteev\\ParameterHandler\\' => 27,
+            'IIIF\\' => 5,
         ),
         'G' => 
         array (
@@ -246,6 +247,10 @@ class ComposerStaticInitce32f360f39707201d89a619cd8d8bbb
         'Incenteev\\ParameterHandler\\' => 
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
+        ),
+        'IIIF\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yale-web-technologies/iiif-manifest-generator/src/IIIF',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (

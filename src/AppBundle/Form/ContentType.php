@@ -31,6 +31,14 @@ class ContentType extends AbstractType
             ->add('enableComments', CheckboxType::class,    array("required" => false))
             ->add('updateComment',  TextType::class,        array("required" => true))
             ->add('illustration',   TextType::class,        array("required" => false))
+            ->add('editorialResponsibility',            CollectionType::class,  array(
+                'entry_type'   => \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,
+                'entry_options'  => array(
+                    'class' => 'UserBundle:User'
+                ),
+                'allow_add'  => true,
+                'allow_delete' => true,
+                "required" => false))
         ;
     }
     

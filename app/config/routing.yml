@@ -151,5 +151,9 @@ accesses:
     type:     rest
     resource: UserBundle\Controller\AccessController
 
+iiif-manifests:
+    type:     rest
+    resource: AppBundle\Controller\IIIFManifestController
+
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

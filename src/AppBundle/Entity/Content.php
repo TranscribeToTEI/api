@@ -220,6 +220,19 @@ class Content
     private $enableComments;
 
     /**
+     * You can define users who are responsable of this training content
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\MaxDepth(2)
+     *
+     * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $editorialResponsibility;
+
+    /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
@@ -644,5 +657,46 @@ class Content
     public function getStaticOrder()
     {
         return $this->staticOrder;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->editorialResponsibility = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add editorialResponsibility
+     *
+     * @param \UserBundle\Entity\User $editorialResponsibility
+     *
+     * @return Content
+     */
+    public function addEditorialResponsibility(\UserBundle\Entity\User $editorialResponsibility)
+    {
+        $this->editorialResponsibility[] = $editorialResponsibility;
+
+        return $this;
+    }
+
+    /**
+     * Remove editorialResponsibility
+     *
+     * @param \UserBundle\Entity\User $editorialResponsibility
+     */
+    public function removeEditorialResponsibility(\UserBundle\Entity\User $editorialResponsibility)
+    {
+        $this->editorialResponsibility->removeElement($editorialResponsibility);
+    }
+
+    /**
+     * Get editorialResponsibility
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEditorialResponsibility()
+    {
+        return $this->editorialResponsibility;
     }
 }

@@ -22,7 +22,7 @@ framework:
         strict_requirements: ~
     form: ~
     csrf_protection: false
-    validation: { enable_annotations: true }
+    validation: { enabled: true, enable_annotations: true }
     #serializer: { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -156,7 +156,7 @@ fos_user:
             enabled: true
             template:   UserBundle:Registration:email.txt.twig
         form:
-            type: UserBundle\Form\RegistrationType
+            type: UserBundle\Form\RegistrationFormType
             validation_groups: [UserRegistration]
     resetting:
         email:

@@ -39,14 +39,14 @@ class ChangePasswordListener implements EventSubscriberInterface
             ->setSubject('Votre mot de passe a été modifié - Testaments de Poilus')
             ->setFrom('testaments-de-poilus@huma-num.fr')
             ->setTo($email)
-            ->setBody($this->renderTemplate($email))
+            ->setBody($this->renderTemplate($email),'text/html')
         ;
         $this->mailer->send($message);
     }
 
     public function renderTemplate($email)
     {
-        return $this->twig->render(
+        return $this->renderView(
             'UserBundle:ChangePassword:mail.html.twig',
              array('email' => $email)
         );

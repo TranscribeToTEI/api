@@ -17,7 +17,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="users_email_unique",columns={"email"})})
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
- * @UniqueEntity("email")
+ * @UniqueEntity(fields="email", errorPath="email", message="fos_user.email.already_used")
  *
  * @Serializer\ExclusionPolicy("all")
  *

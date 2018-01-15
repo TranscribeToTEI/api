@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "19999ba1bc20788f328edaa6da811d9f",
-    "content-hash": "074239f137b299c12163b96563d4fd68",
+    "hash": "369c9af94559c225b8d88168ab8d9759",
+    "content-hash": "dc3e5be23d795930d93b091efd1c0912",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -4206,6 +4206,33 @@
                 "negotiation"
             ],
             "time": "2017-05-14 17:21:12"
+        },
+        {
+            "name": "yale-web-technologies/iiif-manifest-generator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yale-web-technologies/IIIF-Manifest-Generator.git",
+                "reference": "cd04b37db9ee95247250bd290df5328387eeeb2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yale-web-technologies/IIIF-Manifest-Generator/zipball/cd04b37db9ee95247250bd290df5328387eeeb2c",
+                "reference": "cd04b37db9ee95247250bd290df5328387eeeb2c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IIIF\\": "src/IIIF/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "description": "This is a IIIF Manifest Generator written in PHP. It implements the IIIF API Specification. Currently this only supports the Presentation API.",
+            "time": "2017-11-27 16:02:35"
         }
     ],
     "packages-dev": [
@@ -4330,7 +4357,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/comment-bundle": 20,
-        "friendsofsymfony/oauth-server-bundle": 20
+        "friendsofsymfony/oauth-server-bundle": 20,
+        "yale-web-technologies/iiif-manifest-generator": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
