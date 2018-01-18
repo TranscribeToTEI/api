@@ -143,7 +143,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
      * @Gedmo\Versioned
      *
      * @var string
