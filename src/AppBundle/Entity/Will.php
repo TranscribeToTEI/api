@@ -99,7 +99,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -143,7 +143,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEntity"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -158,7 +158,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -173,7 +173,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -188,7 +188,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -204,7 +204,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -219,7 +219,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      *
      * @var string
      *
@@ -234,7 +234,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -249,7 +249,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -265,7 +265,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -280,7 +280,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      *
      * @var string
      *
@@ -295,7 +295,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -309,7 +309,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      *
      * @var string
      * @Gedmo\Versioned
@@ -323,7 +323,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "testator", "search"})
+     * @Serializer\Groups({"full", "content", "testator", "search", "infoWill"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(4)
      *
@@ -339,7 +339,7 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      *
      * @var string
      *
@@ -352,7 +352,7 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      *
      * @var string
      *
@@ -364,7 +364,7 @@ class Will
      * Width of the pages of the will (in centimeters)
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      *
      * @var string
      *
@@ -377,7 +377,7 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      *
      * @var string
      *
@@ -390,7 +390,7 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      *
      * @var string
      *
@@ -532,7 +532,7 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "pageEdition", "pageEntity"})
      * @Serializer\MaxDepth(1)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HostingOrganization")

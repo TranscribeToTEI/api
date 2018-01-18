@@ -63,4 +63,25 @@ class Entity
 
         return $status;
     }
+
+    /**
+     * @param $entity \AppBundle\Entity\Entity
+     * @return mixed
+     */
+    public function getContributors($entity)
+    {
+        $arrayContributors = [];
+        foreach($entity->getResources() as $resource) {
+            $arrayResource = $this->resource->getContributors($resource);
+
+            foreach ($arrayResource as $id=>$contributions) {
+                if (array_key_exists($id, $arrayContributors)) {
+                    $arrayContributors[$id]["contributions"] = $arrayContributors[$id]["contributions"] + $contributions["contributions"];
+                } else {
+                    $arrayContributors[$id] = $contributions;
+                }
+            }
+        }
+        return $arrayContributors;
+    }
 }

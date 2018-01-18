@@ -79,7 +79,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "isCurrentlyEdited",
  *     embedded = @Hateoas\Embedded("expr(service('app.transcript').isCurrentlyEdited(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "parent"}
+ *          groups={"full", "parent", "pageEntity", "pageEdition"}
  *     )
  * )
  * @Hateoas\Relation(
@@ -110,7 +110,7 @@ class Transcript
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEdition"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -124,7 +124,7 @@ class Transcript
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()

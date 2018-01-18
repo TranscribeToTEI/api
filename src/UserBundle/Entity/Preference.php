@@ -149,6 +149,7 @@ class Preference
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\MaxDepth(2)
      */
     protected $user;
 

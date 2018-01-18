@@ -4,6 +4,7 @@ namespace UserBundle\Entity;
 
 use FOS\OAuthServerBundle\Entity\AccessToken as BaseAccessToken;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -27,6 +28,7 @@ class AccessToken extends BaseAccessToken
 
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @Serializer\MaxDepth(1)
      */
     protected $user;
 }

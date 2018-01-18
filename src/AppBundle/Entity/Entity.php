@@ -70,13 +70,20 @@ use AppBundle\Entity\Resource;
  *          groups={"full", "content", "search"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "contributors",
+ *     embedded = @Hateoas\Embedded("expr(service('app.entity').getContributors(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "pageEntity"}
+ *     )
+ * )
  */
 class Entity
 {
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id", "search"})
+     * @Serializer\Groups({"full", "id", "search", "pageEntity"})
      *
      * @var int
      *
@@ -91,7 +98,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
      *
      * @Assert\NotBlank()
      *
@@ -104,7 +111,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
@@ -116,7 +123,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity"})
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Resource", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -127,7 +134,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
      *
      * @Assert\NotNull()
      * @Assert\Type("bool")

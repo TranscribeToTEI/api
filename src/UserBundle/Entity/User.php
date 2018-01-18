@@ -104,7 +104,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
      *
      * @Assert\NotBlank()
      *

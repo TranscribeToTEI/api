@@ -63,6 +63,13 @@ use JMS\Serializer\Annotation as Serializer;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "contributors",
+ *     embedded = @Hateoas\Embedded("expr(service('app.resourcei').getContributors(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "pageEdition"}
+ *     )
+ * )
  */
 class Resource
 {
@@ -96,7 +103,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
      *
      * @Assert\NotBlank()
      * @Assert\Choice({"page", "envelope", "codicil"})
@@ -111,7 +118,7 @@ class Resource
      * The order of the resource in the will
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
      *
      * @var int
      *
@@ -124,7 +131,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
      *
      * @Assert\NotBlank()
      * @Assert\Type("array")
@@ -154,7 +161,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Transcript", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)

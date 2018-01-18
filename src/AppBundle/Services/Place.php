@@ -58,6 +58,18 @@ class Place
                                   ->orWhere('t.addressCity = :place')
                                   ->setParameter('place', $place);
 
-        return $qb->getQuery()->getResult();
+        $list = [];
+        foreach($qb->getQuery()->getResult() as $testator) {
+            /** @var $testator Testator */
+            if($testator->getAddressCity() === $place) {
+                $list[] = ['testator' => $testator, 'reason' => 'livedHere'];
+            } elseif($testator->getPlaceOfBirthNormalized() === $place) {
+                $list[] = ['testator' => $testator, 'reason' => 'bornHere'];
+            } elseif($testator->getPlaceOfDeathNormalized() === $place) {
+                $list[] = ['testator' => $testator, 'reason' => 'diedHere'];
+            }
+        }
+
+        return $list;
     }
 }

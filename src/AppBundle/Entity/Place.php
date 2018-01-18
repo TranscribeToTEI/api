@@ -82,7 +82,7 @@ class Place
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "place-id", "id", "index", "search"})
+     * @Serializer\Groups({"full", "place-id", "id", "index", "search", "infoWill"})
      *
      * @var int
      *
@@ -97,7 +97,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index"})
+     * @Serializer\Groups({"full", "content", "index", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -111,7 +111,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content", "search"})
+     * @Serializer\Groups({"full", "content", "place-content", "search", "infoWill"})
      *
      * @Assert\NotBlank()
      * @Serializer\MaxDepth(2)

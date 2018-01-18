@@ -103,7 +103,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -348,12 +348,12 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
      *
-     * @ORM\Column(name="dateOfDeathString", type="text", nullable=false)
+     * @ORM\Column(name="dateOfDeathString", type="text", nullable=true)
      */
     private $dateOfDeathString;
 
@@ -362,13 +362,12 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
-     * @Assert\NotNull(message = "La date de décès normalisée du testament ne peut pas être vide")
      *
-     * @ORM\Column(name="dateOfDeathNormalized", type="text", nullable=false)
+     * @ORM\Column(name="dateOfDeathNormalized", type="text", nullable=true)
      */
     private $dateOfDeathNormalized;
 
@@ -377,7 +376,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -391,7 +390,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      *
      * @var string
      *
@@ -406,7 +405,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -420,7 +419,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -434,7 +433,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -535,7 +534,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "infoWill"})
      * @Gedmo\Versioned
      *
      * @var string

@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ class ResourceController extends FOSRestController
     /**
      * @Rest\Get("/resources")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
-     *
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      * @QueryParam(name="transcript", nullable=true, description="Identifier of the transcript related to the resource.")
      *
      * @Doc\ApiDoc(
@@ -63,6 +64,7 @@ class ResourceController extends FOSRestController
     /**
      * @Rest\Get("/resources/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      * @Doc\ApiDoc(
      *     section="Resources",
      *     resource=true,
@@ -73,7 +75,7 @@ class ResourceController extends FOSRestController
      *     }
      * )
      */
-    public function getResourceAction(Request $request)
+    public function getResourceAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $resource = $em->getRepository('AppBundle:Resource')->find($request->get('id'));
@@ -83,7 +85,13 @@ class ResourceController extends FOSRestController
             return new JsonResponse(['message' => 'Resource not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $resource;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["full"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($resource, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

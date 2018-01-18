@@ -109,7 +109,6 @@ class TrainingResultController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_MODO')")
      */
     public function postTrainingResultsAction(Request $request)
     {
@@ -142,7 +141,6 @@ class TrainingResultController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_MODO')")
      */
     public function updateTrainingResultAction(Request $request)
     {
@@ -163,7 +161,6 @@ class TrainingResultController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
-     * @Security("is_granted('ROLE_MODO')")
      */
     public function patchTrainingResultAction(Request $request)
     {
