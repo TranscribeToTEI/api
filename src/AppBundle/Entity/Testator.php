@@ -70,6 +70,13 @@ use JMS\Serializer\Annotation as Serializer;
  *          groups={"full", "versioning"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "wills",
+ *     embedded = @Hateoas\Embedded("expr(service('app.testator').getWills(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "taxonomyView"}
+ *     )
+ * )
  */
 class Testator
 {
@@ -103,7 +110,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -118,7 +125,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index"})
+     * @Serializer\Groups({"full", "content", "index", "taxonomyView"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -133,7 +140,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -148,7 +155,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -163,7 +170,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -177,7 +184,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -190,7 +197,7 @@ class Testator
      * Address number of the testator
      *
      * @Serializer\Since("0.1")
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Serializer\Expose
      * @Gedmo\Versioned
      *
@@ -204,7 +211,7 @@ class Testator
      * Address street of the testator
      *
      * @Serializer\Since("0.1")
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Serializer\Expose
      * @Gedmo\Versioned
      *
@@ -218,7 +225,7 @@ class Testator
      * Address district of the testator
      *
      * @Serializer\Since("0.1")
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Serializer\Expose
      * @Gedmo\Versioned
      *
@@ -233,7 +240,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -246,7 +253,7 @@ class Testator
      * Full address of the testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -260,7 +267,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -274,7 +281,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -289,7 +296,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var \DateTime
@@ -305,7 +312,7 @@ class Testator
      * The field is used to index dates in search
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -320,7 +327,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "taxonomyView"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -334,7 +341,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -348,7 +355,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -362,7 +369,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "infoWill"})
+     * @Serializer\Groups({"full", "content", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -376,7 +383,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "infoWill"})
+     * @Serializer\Groups({"full", "content", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -390,7 +397,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      *
      * @var string
      *
@@ -405,7 +412,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(3)
      *
@@ -419,7 +426,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -433,7 +440,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -448,7 +455,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -463,7 +470,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
@@ -477,7 +484,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      * @Gedmo\Versioned
@@ -491,7 +498,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      * @Gedmo\Versioned
@@ -505,7 +512,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -519,7 +526,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -534,7 +541,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "infoWill"})
+     * @Serializer\Groups({"full", "content", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string

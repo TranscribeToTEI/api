@@ -7,16 +7,16 @@ FOS\UserBundle\Model\User:
             groups: [full, id]
         email:
             expose: true
-            groups: [full, content]
+            groups: [full, content, userEmail]
         roles:
             expose: true
-            groups: [full, content]
+            groups: [full, content, userProfile]
         name:
             expose: true
-            groups: [full, content]
+            groups: [full, content, userProfile]
         biography:
             expose: true
-            groups: [full, content]
+            groups: [full, content, userProfile]
         picture:
             expose: true
-            groups: [full, content]
+            groups: [full, content, userProfile]

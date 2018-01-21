@@ -57,7 +57,7 @@ class UserController extends FOSRestController
     {
         $token = $paramFetcher->get('token');
         $username = $paramFetcher->get('username');
-        $profile = $paramFetcher->get('profile');
+        $profile = explode(',', $paramFetcher->get('profile'));
 
         $em = $this->getDoctrine()->getManager();
 
@@ -91,7 +91,7 @@ class UserController extends FOSRestController
 
     /**
      * @Rest\Get("/users/{id}")
-     * @QueryParam(name="profile", requirements="short|full", nullable=true, description="Quantity of information returned about the user.")
+     * @QueryParam(name="profile", nullable=true, description="Quantity of information returned about the user.")
      *
      * @Doc\ApiDoc(
      *     section="Users",
@@ -113,7 +113,7 @@ class UserController extends FOSRestController
      */
     public function getUserAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $profile = $paramFetcher->get('profile');
+        $profile = explode(',', $paramFetcher->get('profile'));
 
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
@@ -123,9 +123,10 @@ class UserController extends FOSRestController
             return new JsonResponse(['message' => 'User not found'], Response::HTTP_NOT_FOUND);
         }
 
-        $groups = ['preferences', 'id', 'accesses', 'content'];
-        if($profile == 'full') {
-            $groups = ['full'];
+        if($paramFetcher->get('profile') == '') {
+            $groups = ['preferences', 'id', 'accesses', 'content'];
+        } else {
+            $groups = explode(',', $paramFetcher->get('profile'));
         }
 
         $view = $this->view($user, 200);

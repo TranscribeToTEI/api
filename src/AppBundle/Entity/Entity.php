@@ -98,7 +98,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif"})
      *
      * @Assert\NotBlank()
      *
@@ -111,7 +111,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
@@ -123,7 +123,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageTranscript", "iiif"})
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Resource", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -134,7 +134,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript"})
      *
      * @Assert\NotNull()
      * @Assert\Type("bool")

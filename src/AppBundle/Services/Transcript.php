@@ -5,14 +5,18 @@ namespace AppBundle\Services;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
+use Proxies\__CG__\Gedmo\Loggable\Entity\LogEntry;
+use UserBundle\Entity\User;
 
 class Transcript
 {
     private $em;
+    private $version;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Versioning $version)
     {
         $this->em = $em;
+        $this->version = $version;
     }
 
     /**
@@ -69,5 +73,35 @@ class Transcript
     {
         /** @var $resource \AppBundle\Entity\Resource */
         return $this->em->getRepository("AppBundle:TranscriptLog")->findBy(array("transcript" => $transcript));
+    }
+
+    /**
+     * @param $transcript \AppBundle\Entity\Transcript
+     * @return array
+     */
+    public function computeVersions($transcript)
+    {
+        $versions = $this->version->getVersions($transcript);
+        $computedVersions = array();
+
+        foreach ($versions as $version) {
+            /** @var $version LogEntry */
+            /** @var $user User */
+            $user = $this->em->getRepository("UserBundle:User")->findOneBy(array("username" => $version->getUsername()));
+
+
+            $computedVersions[] =
+                [
+                    "user" => ["id" => $user->getId(), 'name' => $user->getName()],
+                    "data" => $version->getData(),
+                    "loggedAt" => $version->getLoggedAt(),
+                    "id" => $version->getId(),
+                    "objectId" => $version->getObjectId(),
+                    "objectClass" => $version->getObjectClass(),
+                    "version" => $version->getVersion()
+                ];
+        }
+
+        return $computedVersions;
     }
 }

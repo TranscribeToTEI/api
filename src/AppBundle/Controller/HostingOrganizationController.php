@@ -9,6 +9,7 @@ use AppBundle\Form\HostingOrganizationType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +26,9 @@ class HostingOrganizationController extends FOSRestController
 {
     /**
      * @Rest\Get("/hosting-organizations")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      * @QueryParam(name="search", nullable=true, description="Run a search query in the hosting organizations")
      *
      * @Doc\ApiDoc(
@@ -57,12 +59,20 @@ class HostingOrganizationController extends FOSRestController
             /* @var $hostingOrganizations HostingOrganization[] */
         }
 
-        return $hostingOrganizations;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($hostingOrganizations, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/hosting-organizations/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="HostingOrganizations",
      *     resource=true,
@@ -81,17 +91,23 @@ class HostingOrganizationController extends FOSRestController
      *     }
      * )
      */
-    public function getHostingOrganizationAction(Request $request)
+    public function getHostingOrganizationAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
-        $militaryUnit = $em->getRepository('AppBundle:HostingOrganization')->find($request->get('id'));
-        /* @var $militaryUnit HostingOrganization */
+        $hostingOrganization = $em->getRepository('AppBundle:HostingOrganization')->find($request->get('id'));
+        /* @var $hostingOrganization HostingOrganization */
 
-        if (empty($militaryUnit)) {
+        if (empty($hostingOrganization)) {
             return new JsonResponse(['message' => 'HostingOrganization not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $militaryUnit;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($hostingOrganization, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

@@ -86,7 +86,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "iiif"})
      * @Serializer\MaxDepth(1)
      *
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\Entity", mappedBy="will")
@@ -143,7 +143,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -532,8 +532,8 @@ class Will
      * 
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "pageEdition", "pageEntity"})
-     * @Serializer\MaxDepth(1)
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "pageEdition", "pageEntity", "pageTranscript", "iiif", "pageInstitution"})
+     * @Serializer\MaxDepth(3)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\HostingOrganization")
      * @ORM\JoinColumn(nullable=true)

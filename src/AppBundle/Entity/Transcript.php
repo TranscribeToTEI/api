@@ -62,8 +62,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     )
  * )
  * @Hateoas\Relation(
- *     "version",
- *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
+ *     "versions",
+ *     embedded = @Hateoas\Embedded("expr(service('app.transcript').computeVersions(object))"),
  *     exclusion = @Hateoas\Exclusion(
  *          groups={"full", "versioning"}
  *     )
@@ -72,21 +72,21 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "resource",
  *     embedded = @Hateoas\Embedded("expr(service('app.transcript').getResource(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "parent"}
+ *          groups={"full", "parent", "pageTranscript"}
  *     )
  * )
  * @Hateoas\Relation(
  *     "isCurrentlyEdited",
  *     embedded = @Hateoas\Embedded("expr(service('app.transcript').isCurrentlyEdited(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "parent", "pageEntity", "pageEdition"}
+ *          groups={"full", "parent", "pageEntity", "pageEdition", "pageTranscript"}
  *     )
  * )
  * @Hateoas\Relation(
  *     "logs",
  *     embedded = @Hateoas\Embedded("expr(service('app.transcript').getLogs(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "parent"}
+ *          groups={"full", "parent", "pageTranscript"}
  *     )
  * )
  */
@@ -110,7 +110,7 @@ class Transcript
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "pageEdition", "pageTranscript"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -124,7 +124,7 @@ class Transcript
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -141,7 +141,7 @@ class Transcript
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageTranscript"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -155,7 +155,7 @@ class Transcript
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageTranscript"})
      * @Gedmo\Versioned
      *
      * @var bool

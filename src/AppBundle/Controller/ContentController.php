@@ -75,7 +75,7 @@ class ContentController extends FOSRestController
         if($paramFetcher->get('profile') == '') {
             $profile = ["id", "content"];
         } else {
-            $profile = $paramFetcher->get('profile');
+            $profile = explode(',', $paramFetcher->get('profile'));
         }
 
         return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($contents, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));

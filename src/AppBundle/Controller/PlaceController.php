@@ -69,7 +69,7 @@ class PlaceController extends FOSRestController
         if($paramFetcher->get('profile') == '') {
             $profile = ["id", "content"];
         } else {
-            $profile = $paramFetcher->get('profile');
+            $profile = explode(',', $paramFetcher->get('profile'));
         }
 
         return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($places, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
@@ -77,7 +77,7 @@ class PlaceController extends FOSRestController
 
     /**
      * @Rest\Get("/places/{id}")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile", nullable=true, description="Search profile to apply")
      * @Doc\ApiDoc(
      *     section="Places",
      *     resource=true,
@@ -96,7 +96,7 @@ class PlaceController extends FOSRestController
      *     }
      * )
      */
-    public function getPlaceAction(Request $request)
+    public function getPlaceAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $place = $em->getRepository('AppBundle:Place')->find($request->get('id'));
@@ -106,7 +106,13 @@ class PlaceController extends FOSRestController
             return new JsonResponse(['message' => 'Place not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $place;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($place, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

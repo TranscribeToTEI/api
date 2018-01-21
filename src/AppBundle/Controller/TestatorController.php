@@ -58,7 +58,7 @@ class TestatorController extends FOSRestController
         if($paramFetcher->get('profile') == '') {
             $profile = ["id", "content"];
         } else {
-            $profile = $paramFetcher->get('profile');
+            $profile = explode(',', $paramFetcher->get('profile'));
         }
 
         return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($testators, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
@@ -66,7 +66,7 @@ class TestatorController extends FOSRestController
 
     /**
      * @Rest\Get("/testators/{id}")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="Testators",
@@ -86,7 +86,7 @@ class TestatorController extends FOSRestController
      *     }
      * )
      */
-    public function getTestatorAction(Request $request)
+    public function getTestatorAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $testator = $em->getRepository('AppBundle:Testator')->find($request->get('id'));
@@ -96,7 +96,13 @@ class TestatorController extends FOSRestController
             return new JsonResponse(['message' => 'Testator not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $testator;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($testator, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

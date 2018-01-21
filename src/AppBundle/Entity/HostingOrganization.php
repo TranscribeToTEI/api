@@ -62,6 +62,13 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "entities",
+ *     embedded = @Hateoas\Embedded("expr(service('app.hostingOrganization').getEntities(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "pageInstitution"}
+ *     )
+ * )
  */
 class HostingOrganization
 {
@@ -83,7 +90,7 @@ class HostingOrganization
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "pageInstitution"})
      *
      * @var string
      * @Assert\NotBlank()
@@ -98,7 +105,7 @@ class HostingOrganization
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif", "pageInstitution"})
      *
      * @var string
      * @Assert\NotBlank()
@@ -113,7 +120,7 @@ class HostingOrganization
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageInstitution"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -127,7 +134,7 @@ class HostingOrganization
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageInstitution"})
      *
      * @var string
      * @Assert\Url()
@@ -142,7 +149,7 @@ class HostingOrganization
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "pageInstitution"})
      *
      * @var string
      *

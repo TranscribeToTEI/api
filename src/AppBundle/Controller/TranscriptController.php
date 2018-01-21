@@ -10,6 +10,7 @@ use AppBundle\Form\TranscriptType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class TranscriptController extends FOSRestController
 {
     /**
      * @Rest\Get("/transcripts")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @QueryParam(name="status", nullable=true, description="Name of the status required")
      *
@@ -54,12 +55,19 @@ class TranscriptController extends FOSRestController
         }
         /* @var $transcripts Transcript[] */
 
-        return $transcripts;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["full"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($transcripts, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/transcripts/{id}")
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="Transcripts",
      *     resource=true,
@@ -78,7 +86,7 @@ class TranscriptController extends FOSRestController
      *     }
      * )
      */
-    public function getTranscriptAction(Request $request)
+    public function getTranscriptAction(Request $request, ParamFetcher $paramFetcher)
     {
         //serializerGroups={"full"}
         $em = $this->getDoctrine()->getManager();
@@ -89,7 +97,13 @@ class TranscriptController extends FOSRestController
             return new JsonResponse(['message' => 'Transcript not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $transcript;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["full"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($transcript, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
@@ -126,8 +140,10 @@ class TranscriptController extends FOSRestController
     }
 
     /**
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Put("/transcripts/{id}")
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="Transcripts",
      *     resource=true,
@@ -140,14 +156,22 @@ class TranscriptController extends FOSRestController
      *     }
      * )
      */
-    public function updateTranscriptAction(Request $request)
+    public function updateTranscriptAction(Request $request, ParamFetcher $paramFetcher)
     {
-        return $this->updateTranscript($request, true);
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["full"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return $this->updateTranscript($request, true, $profile);
     }
 
     /**
-     * @Rest\View(serializerEnableMaxDepthChecks=true)
      * @Rest\Patch("/transcripts/{id}")
+     * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="Transcripts",
      *     resource=true,
@@ -160,12 +184,18 @@ class TranscriptController extends FOSRestController
      *     }
      * )
      */
-    public function patchTranscriptAction(Request $request)
+    public function patchTranscriptAction(Request $request, ParamFetcher $paramFetcher)
     {
-        return $this->updateTranscript($request, false);
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["full"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return $this->updateTranscript($request, false, $profile);
     }
 
-    private function updateTranscript(Request $request, $clearMissing)
+    private function updateTranscript(Request $request, $clearMissing, $profile)
     {
         $em = $this->getDoctrine()->getManager();
         $transcript = $em->getRepository('AppBundle:Transcript')->find($request->get('id'));
@@ -178,7 +208,7 @@ class TranscriptController extends FOSRestController
         if ($form->isValid()) {
             $em->merge($transcript);
             $em->flush();
-            return $transcript;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($transcript, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
         } else {
             return $form;
         }

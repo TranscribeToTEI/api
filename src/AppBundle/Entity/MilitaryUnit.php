@@ -72,7 +72,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "testators",
  *     embedded = @Hateoas\Embedded("expr(service('app.militaryUnit').getTestators(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content"}
+ *          groups={"full", "content", "taxonomyLinks", "index"}
  *     )
  * )
  */
@@ -96,7 +96,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index"})
+     * @Serializer\Groups({"full", "content", "index", "taxonomyView"})
      *
      * @var string
      *
@@ -114,7 +114,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -131,7 +131,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -148,7 +148,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -165,7 +165,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -182,7 +182,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *

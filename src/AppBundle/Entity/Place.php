@@ -65,14 +65,14 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "version",
  *     embedded = @Hateoas\Embedded("expr(service('app.versioning').getVersions(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "versioning", "place-versioning"}
+ *          groups={"full", "versioning"}
  *     )
  * )
  * @Hateoas\Relation(
  *     "testators",
  *     embedded = @Hateoas\Embedded("expr(service('app.place').getTestators(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content", "place-content"},
+ *          groups={"full", "content", "taxonomyLinks", "index"},
  *          maxDepth = 2
  *     )
  * )
@@ -97,7 +97,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "infoWill"})
+     * @Serializer\Groups({"full", "content", "index", "infoWill", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -111,7 +111,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
      *
      * @Assert\NotBlank()
      * @Serializer\MaxDepth(2)
@@ -125,7 +125,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -137,7 +137,7 @@ class Place
      * Regions (relevant for France) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -149,7 +149,7 @@ class Place
      * Cities (relevant for places which are not city) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -161,7 +161,7 @@ class Place
      * Countries of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -173,7 +173,7 @@ class Place
      * Description of your place
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -188,7 +188,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content", "taxonomyView"})
      *
      * @var string
      *
@@ -203,7 +203,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content", "search"})
+     * @Serializer\Groups({"full", "content", "search", "taxonomyView"})
      *
      * @var string
      *
@@ -218,7 +218,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "place-content"})
+     * @Serializer\Groups({"full", "content"})
      * @Gedmo\Versioned
      *
      * @var bool

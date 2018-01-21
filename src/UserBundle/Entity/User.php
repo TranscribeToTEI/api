@@ -83,7 +83,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *     "contributions",
  *     embedded = @Hateoas\Embedded("expr(service('user.user').getGroupedTranscriptions(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "contributions"}
+ *          groups={"full", "contributions", "search"}
  *     )
  * )
  */
@@ -104,7 +104,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "userProfile"})
      *
      * @Assert\NotBlank()
      *
@@ -115,7 +115,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userProfile"})
      *
      * @ORM\Column(name="biography", type="string", length=255, nullable=true)
      */
@@ -124,7 +124,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userProfile"})
      *
      * @var string
      *

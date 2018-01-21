@@ -91,7 +91,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "pageTranscript"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Entity", inversedBy="resources")
      * @ORM\JoinColumn(nullable=true)
@@ -103,7 +103,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript"})
      *
      * @Assert\NotBlank()
      * @Assert\Choice({"page", "envelope", "codicil"})
@@ -118,7 +118,7 @@ class Resource
      * The order of the resource in the will
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript"})
      *
      * @var int
      *
@@ -131,7 +131,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif"})
      *
      * @Assert\NotBlank()
      * @Assert\Type("array")

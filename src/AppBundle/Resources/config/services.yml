@@ -32,6 +32,17 @@ services:
         class: AppBundle\Services\Transcript
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@app.versioning'
+
+    app.testator:
+        class: AppBundle\Services\Testator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    app.hostingOrganization:
+        class: AppBundle\Services\HostingOrganization
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
     app.will:
         class: AppBundle\Services\Will
