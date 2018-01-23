@@ -9,6 +9,7 @@ use AppBundle\Form\CommentLogType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,9 +26,10 @@ class CommentLogController extends FOSRestController
      * @Rest\Get("/comment-logs")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
-     * @QueryParam(name="private",      nullable=true, description="Identifier of a specific comment")
+     * @QueryParam(name="private",      nullable=true, description="Identifier of a specific user")
      * @QueryParam(name="readByAdmin",  nullable=true, description="List of entities read or not by admin")
      * @QueryParam(name="count",        nullable=true, description="Do you want a number of results?")
+     * @QueryParam(name="profile",      nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="CommentLogs",
@@ -41,21 +43,44 @@ class CommentLogController extends FOSRestController
      */
     public function getCommentLogsAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $toReturn = null;
         $private = $paramFetcher->get('private');
         $readByAdmin = $paramFetcher->get('readByAdmin');
         $count = $paramFetcher->get('count');
-        if($readByAdmin != '') {
-            $readByAdmin = $paramFetcher->get('readByAdmin');
-        } else {$readByAdmin = null;}
-        if($count != '') {
-            $count = $paramFetcher->get('count');
-        } else {$count = null;}
+
+        if($readByAdmin == '')  {$readByAdmin = null;}
+        if($count == '') {$count = null;}
+        if($private == '') {$private = null;}
+
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:CommentLog');
         /* @var $repository EntityRepository */
 
-        if($private != '') {
-            return new JsonResponse(null);
+        if($private != null) {
+            $listComments = array();
+            $commentLogs = $repository->findBy(array(), array('id' => 'DESC'));
+            /* @var $commentLogs CommentLog[] */
+
+            foreach($commentLogs as $commentLog) {
+                $idString = explode('-', $commentLog->getThread()->getId());
+                if(count(explode('-', $private)) > 1) {
+                    $private = explode('-', $private);
+                    if($idString[0] == 'users' and (($idString[1] == $private[0] and $idString[2] == $private[1]) or ($idString[1] == $private[1] and $idString[2] == $private[0]))) {
+                        $listComments[] = $commentLog;
+                    }
+                } else {
+                    if($idString[0] == 'users' and ($idString[1] == $private or $idString[2] == $private)) {
+                        $listComments[] = $commentLog;
+                    }
+                }
+            }
+
+            $toReturn = $listComments;
         } elseif($readByAdmin != null) {
             $commentLogs = $repository->findBy(array('isReadByAdmin' => $readByAdmin));
             /* @var $commentLogs CommentLog[] */
@@ -65,10 +90,12 @@ class CommentLogController extends FOSRestController
         }
 
         if($count == true) {
-            return new JsonResponse(count($commentLogs));
-        } else {
-            return $commentLogs;
+            $toReturn = count($commentLogs);
+        } else if($private == null) {
+            $toReturn = $commentLogs;
         }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($toReturn, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
@@ -95,7 +122,7 @@ class CommentLogController extends FOSRestController
     public function getCommentLogAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $commentLog = $em->getRepository('AppBundle:commentLog')->find($request->get('id'));
+        $commentLog = $em->getRepository('AppBundle:CommentLog')->find($request->get('id'));
         /* @var $commentLog CommentLog */
 
         if (empty($commentLog)) {

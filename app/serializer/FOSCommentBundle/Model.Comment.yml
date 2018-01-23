@@ -1,0 +1,30 @@
+FOS\CommentBundle\Model\Comment:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [full, id]
+        parent:
+            expose: true
+            groups: [full, content]
+        author:
+            expose: true
+            groups: [full, content]
+        body:
+            expose: true
+            groups: [full, content]
+        depth:
+            expose: true
+            groups: [full, content]
+        createdAt:
+            expose: true
+            groups: [full, content]
+        state:
+            expose: true
+            groups: [full, content]
+        previousState:
+            expose: true
+            groups: [full, content]
+        thread:
+            expose: true
+            groups: [full, content]

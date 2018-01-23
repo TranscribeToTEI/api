@@ -1,0 +1,18 @@
+FOS\CommentBundle\Model\Thread:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            groups: [full, id]
+        isCommentable:
+            expose: true
+            groups: [full, content]
+        numComments:
+            expose: true
+            groups: [full, content]
+        lastCommentAt:
+            expose: true
+            groups: [full, content]
+        permalink:
+            expose: true
+            groups: [full, content]

@@ -92,7 +92,7 @@ services:
 
     # Commands
     app.command.test.email:
-            class: AppBundle\Command\TestEmailCommand
-            arguments:
-                - '%mailer_user%'
+        class: AppBundle\Command\TestEmailCommand
+        arguments:
+            - '%mailer_user%'
 

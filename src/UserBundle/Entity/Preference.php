@@ -78,7 +78,7 @@ class Preference
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userPreferences"})
      *
      * @Assert\Choice({"leftRead-centerHelp-rightImage", "leftRead-centerImage-rightHelp", "leftHelp-centerRead-rightImage", "leftHelp-centerImage-rightRead", "leftImage-centerHelp-rightRead", "leftImage-centerRead-rightHelp"})
      * @var string
@@ -90,7 +90,7 @@ class Preference
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userPreferences"})
      *
      * @Assert\NotBlank()
      * @Assert\Choice({"todo", "inProgress", "done", "notInterested"})
@@ -104,7 +104,7 @@ class Preference
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userPreferences"})
      *
      * @var int
      *
@@ -116,7 +116,7 @@ class Preference
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userPreferences"})
      *
      * @var bool
      *
@@ -127,7 +127,7 @@ class Preference
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userPreferences"})
      *
      * @var bool
      *
@@ -138,7 +138,7 @@ class Preference
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "userPreferences"})
      *
      * @var bool
      *

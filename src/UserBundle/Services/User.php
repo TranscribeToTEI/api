@@ -2,6 +2,7 @@
 
 namespace UserBundle\Services;
 
+use AppBundle\Entity\CommentLog;
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\Transcript;
@@ -132,5 +133,24 @@ class User
         }
 
         return $entities;
+    }
+
+    /**
+     * @param $user \UserBundle\Entity\User
+     * @return integer
+     */
+    public function getPrivateMessages($user) {
+        $nbUnread = 0;
+        $commentLogs = $this->em->getRepository('AppBundle:CommentLog')->findBy(array(), array('id' => 'DESC'));
+        /* @var $commentLogs CommentLog[] */
+
+        foreach($commentLogs as $commentLog) {
+            $idString = explode('-', $commentLog->getThread()->getId());
+            if($idString[0] == 'users' and ($idString[1] == $user->getId() or $idString[2] == $user->getId()) and $commentLog->getIsReadByRecipient() == false and $commentLog->getCreateUser() !== $user) {
+                $nbUnread++;
+            }
+        }
+
+        return $nbUnread;
     }
 }

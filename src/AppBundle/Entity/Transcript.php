@@ -86,7 +86,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "logs",
  *     embedded = @Hateoas\Embedded("expr(service('app.transcript').getLogs(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "parent", "pageTranscript"}
+ *          groups={"full", "parent", "pageTranscript", "pageEdition"}
  *     )
  * )
  */

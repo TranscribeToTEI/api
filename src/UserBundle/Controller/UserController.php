@@ -61,25 +61,27 @@ class UserController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
+        $groups = ['accesses', 'id', 'content'];
+        if($profile == 'full') {
+            $groups = ['full'];
+        }
+
         if($token != "") {
             $users = $em->getRepository('UserBundle:AccessToken')->findOneByToken($token)->getUser();
             /* @var $users User */
+            $groups[] = 'privateMessages';
+            $groups[] = 'userPreferences';
         } elseif($username != "") {
             $users = $em->getRepository('UserBundle:User')->findOneBy(array('username' => $username));
             /* @var $users User */
         } else {
-            if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
-                $users = $em->getRepository('UserBundle:User')->findAll();
-                /* @var $users User[] */
-            } else {
-                throw $this->createAccessDeniedException('Unable to access this page!');
+            $users = $em->getRepository('UserBundle:User')->findAll();
+            /* @var $users User[] */
+            if(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+                $groups = ['id','name'];
             }
         }
 
-        $groups = ['preferences', 'accesses', 'id', 'content'];
-        if($profile == 'full') {
-            $groups = ['full'];
-        }
 
         $view = $this->view($users, 200);
         $context = new Context();

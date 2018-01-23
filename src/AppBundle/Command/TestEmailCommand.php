@@ -27,7 +27,7 @@ class TestEmailCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('app:test:email')
+            ->setName('test:email')
             ->setDescription('It tests email sending.')
             ->setHelp('It tests email sending.')
             ->addArgument('recipient', InputArgument::REQUIRED, 'The email address where to send an email')

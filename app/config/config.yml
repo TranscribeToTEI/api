@@ -149,8 +149,8 @@ fos_user:
     firewall_name: api
     user_class: UserBundle\Entity\User
     from_email:
-        address: "testaments-de-poilus@karl-pineau.fr"
-        sender_name: "Karl Pineau"
+        address: "testaments-de-poilus.an@culture.gouv.fr"
+        sender_name: "L'équipe de Testaments de Poilus"
     registration:
         confirmation:
             enabled: true
@@ -197,6 +197,9 @@ jms_serializer:
             FOSUB:
                 namespace_prefix: "FOS\\UserBundle"
                 path: "%kernel.root_dir%/serializer/FOSUserBundle"
+            FOSCB:
+                namespace_prefix: "FOS\\CommentBundle"
+                path: "%kernel.root_dir%/serializer/FOSCommentBundle"
 
 sensio_framework_extra:
     router:      { annotations: true }

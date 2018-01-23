@@ -50,7 +50,7 @@ class Transcript
         /** @var $transcriptLog \AppBundle\Entity\TranscriptLog */
         $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isCurrentlyEdited' => true));
 
-        if($transcriptLog !== null) {
+        /*if($transcriptLog !== null) {
             $datetimeLog = new \DateTime($transcriptLog->getUpdateDate()->format('y-M-d H:i:s'));
             $datetimeNow = new \DateTime('now');
             $interval = $datetimeLog->diff($datetimeNow);
@@ -60,7 +60,7 @@ class Transcript
                 $this->em->flush();
                 $transcriptLog = null;
             }
-        }
+        }*/
 
         return ($transcriptLog !== null) ? true : false;
     }

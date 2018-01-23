@@ -4,6 +4,8 @@ namespace AppBundle\Entity\Comment;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Thread as BaseThread;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity
@@ -12,6 +14,10 @@ use FOS\CommentBundle\Entity\Thread as BaseThread;
 class Thread extends BaseThread
 {
     /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "id"})
+     *
      * @var string $id
      *
      * @ORM\Id

@@ -69,7 +69,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  *     "preferences",
  *     embedded = @Hateoas\Embedded("expr(service('user.user').getPreference(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "preferences"}
+ *          groups={"full", "userPreferences"}
  *     )
  * )
  * @Hateoas\Relation(
@@ -84,6 +84,13 @@ use FOS\UserBundle\Model\User as BaseUser;
  *     embedded = @Hateoas\Embedded("expr(service('user.user').getGroupedTranscriptions(object))"),
  *     exclusion = @Hateoas\Exclusion(
  *          groups={"full", "contributions", "search"}
+ *     )
+ * )
+ * @Hateoas\Relation(
+ *     "unreadMessages",
+ *     embedded = @Hateoas\Embedded("expr(service('user.user').getPrivateMessages(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "privateMessages"}
  *     )
  * )
  */
@@ -104,7 +111,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "userProfile"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "userProfile","name"})
      *
      * @Assert\NotBlank()
      *
