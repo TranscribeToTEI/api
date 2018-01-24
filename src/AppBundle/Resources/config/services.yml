@@ -33,6 +33,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.versioning'
+            - '@logger'
 
     app.testator:
         class: AppBundle\Services\Testator

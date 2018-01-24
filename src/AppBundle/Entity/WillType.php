@@ -83,7 +83,7 @@ class WillType
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "listEntities"})
      * @Gedmo\Versioned
      *
      * @var string

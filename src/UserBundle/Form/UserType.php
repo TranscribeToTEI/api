@@ -3,6 +3,7 @@
 namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,9 +19,10 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name',           TextType::class, array("required" => true))
-            ->add('biography',      TextType::class, array("required" => false))
-            ->add('picture',        UrlType::class, array("required" => false))
+            ->add('name',                   TextType::class,        array("required" => true))
+            ->add('biography',              TextType::class,        array("required" => false))
+            ->add('picture',                UrlType::class,         array("required" => false))
+            ->add('hasAcceptedConditions',  CheckboxType::class,    array("required" => false))
         ;
     }
     

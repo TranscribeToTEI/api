@@ -90,7 +90,7 @@ class HostingOrganization
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "pageInstitution"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "pageInstitution", "listEntities"})
      *
      * @var string
      * @Assert\NotBlank()

@@ -247,7 +247,7 @@ class Content
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "content"})
      *
      * @var \DateTime
      *

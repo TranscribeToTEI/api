@@ -139,6 +139,17 @@ class User extends BaseUser
      */
     private $picture;
 
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content", "userProfile"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="hasAcceptedConditions", type="boolean", options={"default" : false})
+     */
+    private $hasAcceptedConditions;
+
     public function __construct()
     {
         parent::__construct();
@@ -235,5 +246,29 @@ class User extends BaseUser
     public function getPicture()
     {
         return $this->picture;
+    }
+
+    /**
+     * Set hasAcceptedConditions
+     *
+     * @param boolean $hasAcceptedConditions
+     *
+     * @return User
+     */
+    public function setHasAcceptedConditions($hasAcceptedConditions)
+    {
+        $this->hasAcceptedConditions = $hasAcceptedConditions;
+
+        return $this;
+    }
+
+    /**
+     * Get hasAcceptedConditions
+     *
+     * @return boolean
+     */
+    public function getHasAcceptedConditions()
+    {
+        return $this->hasAcceptedConditions;
     }
 }

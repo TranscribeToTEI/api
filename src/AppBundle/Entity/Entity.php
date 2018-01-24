@@ -67,7 +67,7 @@ use AppBundle\Entity\Resource;
  *     "status",
  *     embedded = @Hateoas\Embedded("expr(service('app.entity').getStatus(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "content", "search"}
+ *          groups={"full", "content", "search", "listEntities"}
  *     )
  * )
  * @Hateoas\Relation(
@@ -98,7 +98,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif", "listEntities"})
      *
      * @Assert\NotBlank()
      *
@@ -111,7 +111,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "listEntities"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
@@ -123,7 +123,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageTranscript", "iiif"})
+     * @Serializer\Groups({"full", "content", "search", "pageEdition", "pageEntity", "pageTranscript", "iiif"})
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Resource", mappedBy="entity", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -134,7 +134,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "listEntities"})
      *
      * @Assert\NotNull()
      * @Assert\Type("bool")

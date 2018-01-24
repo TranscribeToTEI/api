@@ -6,21 +6,25 @@ use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
 use Proxies\__CG__\Gedmo\Loggable\Entity\LogEntry;
+use Psr\Log\LoggerInterface;
 use UserBundle\Entity\User;
 
 class Transcript
 {
     private $em;
     private $version;
+    private $logger;
 
-    public function __construct(EntityManager $em, Versioning $version)
+    public function __construct(EntityManager $em, Versioning $version, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->version = $version;
+        $this->logger = $logger;
     }
 
     /**
      * @param $transcript \AppBundle\Entity\Transcript
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function remove($transcript)
     {
@@ -43,26 +47,29 @@ class Transcript
 
     /**
      * @param $transcript \AppBundle\Entity\Transcript
-     * @return bool
+     * @return boolean
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function isCurrentlyEdited($transcript)
     {
         /** @var $transcriptLog \AppBundle\Entity\TranscriptLog */
-        $transcriptLog = $this->em->getRepository("AppBundle:TranscriptLog")->findOneBy(array("transcript" => $transcript, 'isCurrentlyEdited' => true));
+        $transcriptLogs = $this->em->getRepository("AppBundle:TranscriptLog")->findBy(array("transcript" => $transcript, 'isCurrentlyEdited' => true));
+        $isCurrentlyEdit = false;
 
-        /*if($transcriptLog !== null) {
-            $datetimeLog = new \DateTime($transcriptLog->getUpdateDate()->format('y-M-d H:i:s'));
+        foreach($transcriptLogs as $transcriptLog) {
+            $datetimeLog = new \DateTime($transcriptLog->getUpdateDate()->format('Y-m-d H:i:s'));
             $datetimeNow = new \DateTime('now');
             $interval = $datetimeLog->diff($datetimeNow);
 
             if(intval($interval->format('%h')) > 1 or intval($interval->format('%d')) > 1 or intval($interval->format('%M')) > 1 or intval($interval->format('%y')) > 1) {
                 $transcriptLog->setIsCurrentlyEdited(false);
-                $this->em->flush();
-                $transcriptLog = null;
+            } else {
+                $isCurrentlyEdit = true;
             }
-        }*/
+        }
+        $this->em->flush();
 
-        return ($transcriptLog !== null) ? true : false;
+        return $isCurrentlyEdit;
     }
 
     /**

@@ -13,6 +13,7 @@ class RegistrationFormType extends AbstractType
 
         $builder->remove('username');
         $builder->add('name');
+        $builder->add('hasAcceptedConditions');
     }
 
     public function getParent()

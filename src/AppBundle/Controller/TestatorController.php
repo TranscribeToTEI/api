@@ -133,7 +133,7 @@ class TestatorController extends FOSRestController
         if ($form->isValid()) {
             $em->persist($testator);
             $em->flush();
-            return $testator;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($testator, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }
@@ -195,7 +195,7 @@ class TestatorController extends FOSRestController
         if ($form->isValid()) {
             $em->merge($testator);
             $em->flush();
-            return $testator;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($testator, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }

@@ -163,7 +163,7 @@ class PlaceController extends FOSRestController
                 $placeName->setPlaceCountry($place);
             }
             $em->flush();
-            return $place;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($place, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }
@@ -224,7 +224,7 @@ class PlaceController extends FOSRestController
         if ($form->isValid()) {
             $em->merge($place);
             $em->flush();
-            return $place;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($place, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }

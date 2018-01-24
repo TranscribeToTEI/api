@@ -19,3 +19,6 @@ FOS\UserBundle\Model\User:
         picture:
             expose: true
             groups: [full, content, userProfile]
+        hasAcceptedConditions:
+            expose: true
+            groups: [full, content, userProfile]

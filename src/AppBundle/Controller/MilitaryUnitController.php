@@ -138,7 +138,7 @@ class MilitaryUnitController extends FOSRestController
         if ($form->isValid()) {
             $em->persist($militaryUnit);
             $em->flush();
-            return $militaryUnit;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($militaryUnit, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }
@@ -199,7 +199,7 @@ class MilitaryUnitController extends FOSRestController
         if ($form->isValid()) {
             $em->merge($militaryUnit);
             $em->flush();
-            return $militaryUnit;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($militaryUnit, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }

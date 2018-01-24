@@ -110,7 +110,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView", "listEntities"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *

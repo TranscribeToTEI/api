@@ -25,6 +25,7 @@ class EntityController extends FOSRestController
     /**
      * @Rest\Get("/entities")
      * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     * @QueryParam(name="search",   nullable=true, description="Run a search query in the entities")
      *
      * @Doc\ApiDoc(
      *     section="Entities",
@@ -41,8 +42,24 @@ class EntityController extends FOSRestController
      */
     public function getEntitiesAction(Request $request, ParamFetcher $paramFetcher)
     {
-        $entities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findAll();
-        /* @var $entities \AppBundle\Entity\Entity[] */
+        /* @var $entities Entity[] */
+        $search = $paramFetcher->get('search');
+
+        if($search != "") {
+            $searchInfo = explode(';', $search);
+            $repositoryEntities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity');
+
+            $qb = $repositoryEntities->createQueryBuilder('e')
+                ->join('e.will', 'w')
+                ->leftJoin('w.hostingOrganization', 'h')
+                ->where('e.willNumber = :willNumber')
+                ->andWhere('h.code = :code')
+                ->setParameters(array('willNumber' => $searchInfo[0], 'code' => $searchInfo[1]));
+
+            $entities = $qb->getQuery()->getResult();
+        } else {
+            $entities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findAll();
+        }
 
         if($paramFetcher->get('profile') == '') {
             $profile = ["id", "content"];
@@ -127,7 +144,7 @@ class EntityController extends FOSRestController
             }
             $entity->getWill()->setEntity($entity);
             $em->flush();
-            return $entity;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($entity, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }
