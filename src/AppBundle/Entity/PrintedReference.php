@@ -81,7 +81,7 @@ class PrintedReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -96,7 +96,7 @@ class PrintedReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -110,7 +110,7 @@ class PrintedReference
      * Title of the container (book, revue, etc) of the reference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -124,7 +124,7 @@ class PrintedReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @Assert\Choice({"Revue", "Monographie", "Ouvrage collectif"})
@@ -139,7 +139,7 @@ class PrintedReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -153,7 +153,7 @@ class PrintedReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string

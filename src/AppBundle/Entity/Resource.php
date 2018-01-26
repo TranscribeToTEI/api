@@ -103,7 +103,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript", "adminEntity"})
      *
      * @Assert\NotBlank()
      * @Assert\Choice({"page", "envelope", "codicil"})
@@ -118,7 +118,7 @@ class Resource
      * The order of the resource in the will
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript"})
+     * @Serializer\Groups({"full", "content", "pageEntity", "pageEdition", "pageTranscript", "adminEntity"})
      *
      * @var int
      *
@@ -131,7 +131,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif", "adminEntity"})
      *
      * @Assert\NotBlank()
      * @Assert\Type("array")
@@ -146,7 +146,7 @@ class Resource
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "adminEntity"})
      *
      * @Assert\Type("string")
      *
@@ -171,7 +171,7 @@ class Resource
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "adminEntity"})
      * @Serializer\MaxDepth(2)
      *
      * @Gedmo\Blameable(on="create")
@@ -183,7 +183,7 @@ class Resource
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "adminEntity"})
      *
      * @var \DateTime
      *

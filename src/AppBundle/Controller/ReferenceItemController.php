@@ -9,6 +9,7 @@ use AppBundle\Form\ReferenceItemType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,10 +27,11 @@ class ReferenceItemController extends FOSRestController
      * @Rest\Get("/reference-items")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
      *
-     * @QueryParam(name="entity", nullable=true, description="Gets all bibliographical elements for an entity")
-     * @QueryParam(name="testator", nullable=true, description="Gets all bibliographical elements for a testator")
-     * @QueryParam(name="place", nullable=true, description="Gets all bibliographical elements for a place")
-     * @QueryParam(name="military-unit", nullable=true, description="Gets all bibliographical elements for a military unit")
+     * @QueryParam(name="entity",           nullable=true, description="Gets all bibliographical elements for an entity")
+     * @QueryParam(name="testator",         nullable=true, description="Gets all bibliographical elements for a testator")
+     * @QueryParam(name="place",            nullable=true, description="Gets all bibliographical elements for a place")
+     * @QueryParam(name="military-unit",    nullable=true, description="Gets all bibliographical elements for a military unit")
+     * @QueryParam(name="profile",          nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
@@ -86,7 +88,13 @@ class ReferenceItemController extends FOSRestController
             /* @var $referenceItems ReferenceItem[] */
         }
 
-        return $referenceItems;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "content"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($referenceItems, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

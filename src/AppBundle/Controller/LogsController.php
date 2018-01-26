@@ -33,7 +33,8 @@ class LogsController extends FOSRestController
      * @QueryParam(name="getEntity",    nullable=true, description="Should the API return the entity of each log?")
      * @QueryParam(name="idEntity",     nullable=true, description="Returns logs of a specific entity by id")
      * @QueryParam(name="idLog",        nullable=true, description="Returns a specific log entry by id")
-     * @QueryParam(name="idVersion",        nullable=true, description="Returns a specific log entry by number of the version")
+     * @QueryParam(name="idVersion",    nullable=true, description="Returns a specific log entry by number of the version")
+     * @QueryParam(name="profile",      nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="Logs",
@@ -58,9 +59,10 @@ class LogsController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         $loggableEntities =     explode(',', $paramFetcher->get('entityTypes'));
         $getEntity =            $paramFetcher->get('getEntity');
-        $specificIdEntity =      $paramFetcher->get('idEntity');
+        $specificIdEntity =     $paramFetcher->get('idEntity');
         $specificIdLog =        $paramFetcher->get('idLog');
         $specificIdVersion =    $paramFetcher->get('idVersion');
+        $profile =              $paramFetcher->get('profile');
         $versions = array();
 
         foreach ($loggableEntities as $entityType) {
@@ -111,7 +113,7 @@ class LogsController extends FOSRestController
                         if ($getEntity == true) {
                             $versions[] = ['log' => $version, 'title' => $title, 'entity' => $entity, 'type' => $entityType];
                         } else {
-                            $versions[] = ['log' => $version, 'title' => $title, 'entity' => null, 'type' => $entityType];
+                            $versions[] = ['log' => null, 'logId' => $version->getId(), 'loggedAt' => $version->getLoggedAt(),'title' => $title, 'entity' => null, 'type' => $entityType];
                         }
 
                     }

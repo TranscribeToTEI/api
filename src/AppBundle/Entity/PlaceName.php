@@ -141,7 +141,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "adminEntity"})
      *
      * @var string
      * @Assert\NotBlank()

@@ -136,7 +136,7 @@ class ReferenceItem
      * The PrintedReference entity of the reference
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Serializer\MaxDepth(1)
      * @Gedmo\Versioned
      *
@@ -150,7 +150,7 @@ class ReferenceItem
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Serializer\MaxDepth(1)
      * @Gedmo\Versioned
      *
@@ -164,7 +164,7 @@ class ReferenceItem
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string

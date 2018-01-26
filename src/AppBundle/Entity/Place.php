@@ -97,7 +97,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "infoWill", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "index", "infoWill", "taxonomyView", "adminEntity"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -111,7 +111,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView", "adminEntity"})
      *
      * @Assert\NotBlank()
      * @Serializer\MaxDepth(2)

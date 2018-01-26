@@ -39,6 +39,7 @@ class TrainingContentType extends AbstractType
             ->add('videoContainer',                     TextareaType::class,    array("required" => false))
             ->add('exerciseHeader',                     TextareaType::class,    array("required" => false))
             ->add('exerciseImageToTranscribe',          TextType::class,        array("required" => false))
+            ->add('exercisePreloadText',                TextareaType::class,    array("required" => false))
             ->add('exerciseIsSmartTEI',                 CheckboxType::class,    array("required" => false))
             ->add('exerciseIsAttributesManagement',     CheckboxType::class,    array("required" => false))
             ->add('exerciseTagsList',                   CollectionType::class,  array(

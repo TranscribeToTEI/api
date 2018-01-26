@@ -245,6 +245,20 @@ class TrainingContent
     private $exerciseImageToTranscribe;
 
     /**
+     * This text will be preload in the transcript zone
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="exercisePreloadText", type="text", nullable=true)
+     */
+    private $exercisePreloadText;
+
+    /**
      * Allowing SmartTEI during the exercise
      *
      * @Serializer\Since("0.1")
@@ -1214,5 +1228,29 @@ class TrainingContent
     public function getEditorialResponsibility()
     {
         return $this->editorialResponsibility;
+    }
+
+    /**
+     * Set exercisePreloadText
+     *
+     * @param string $exercisePreloadText
+     *
+     * @return TrainingContent
+     */
+    public function setExercisePreloadText($exercisePreloadText)
+    {
+        $this->exercisePreloadText = $exercisePreloadText;
+
+        return $this;
+    }
+
+    /**
+     * Get exercisePreloadText
+     *
+     * @return string
+     */
+    public function getExercisePreloadText()
+    {
+        return $this->exercisePreloadText;
     }
 }

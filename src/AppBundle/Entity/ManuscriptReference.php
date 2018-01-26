@@ -81,7 +81,7 @@ class ManuscriptReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -95,7 +95,7 @@ class ManuscriptReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -110,7 +110,7 @@ class ManuscriptReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -124,7 +124,7 @@ class ManuscriptReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -139,7 +139,7 @@ class ManuscriptReference
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "bibliography"})
      * @Gedmo\Versioned
      *
      * @var string

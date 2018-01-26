@@ -208,7 +208,7 @@ class EntityController extends FOSRestController
             }
             $em->merge($entity);
             $em->flush();
-            return $entity;
+            return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($entity, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {
             return $form;
         }
