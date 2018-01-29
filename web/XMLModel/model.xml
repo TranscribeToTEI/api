@@ -49,7 +49,7 @@
         <moduleRef key="tei"/>
         <!-- required -->
         <moduleRef key="core"
-          except="analytic biblScope biblStruct binaryObject cit citedRange desc distinct divGen emph gb gloss headItem headLabel index l lg listBibl measure measureGrp media meeting mentioned milestone monogr name postBox postCode q quote relatedItem rs said soCalled sp speaker stage time"/>
+          except="analytic biblScope biblStruct binaryObject cit citedRange desc distinct divGen emph gb gloss headItem headLabel index l lg listBibl measure measureGrp media meeting mentioned milestone monogr name orig postBox postCode q quote reg relatedItem rs said soCalled sp speaker stage time"/>
         <!-- required -->
         <moduleRef key="analysis" except="cl m phr s spanGrp w"/>
         <moduleRef key="header"
@@ -151,13 +151,13 @@
                               </classes>-->
           <content xmlns:rng="http://relaxng.org/ns/structure/1.0">
             <alternate>
+              <elementRef key="div" minOccurs="1" maxOccurs="unbounded"/>
               <alternate>
                 <elementRef key="interpGrp" minOccurs="1" maxOccurs="unbounded"/>
                 <elementRef key="listPerson"/>
                 <elementRef key="listOrg"/>
                 <elementRef key="listPlace"/>
               </alternate>
-              <elementRef key="div" minOccurs="1" maxOccurs="unbounded"/>
             </alternate>
             <!--<sequence>
                                           <!-\- globals as usual -\->
@@ -365,10 +365,12 @@
             graphiques de cet espace et des zones rectangulaires intéressantes à l'intérieur de
             celui-ci.</desc>
           <desc type="wills-ui">L'élément <gi>surface</gi>concerne une des surfaces physiques du
-            testament (page, partie de page, recto ou verso d'une enveloppe). Il contient deux
+            testament (page, partie de page, recto ou verso d'une enveloppe). Il contient
+            <!--deux
             éléments <gi>graphic</gi>, un pour l'image au format JPEG, l'autre pour l'image au
-            format TIFF, reproduisant cette surface. Il a obligatoirement deux attributs,
-              <att>type</att> et <att>n</att>.</desc>
+            format TIFF,-->un
+            élément <gi>graphic</gi> pour l'image au format JPEG reproduisant cette surface. Il a
+            obligatoirement deux attributs, <att>type</att> et <att>n</att>.</desc>
           <classes><!-- <memberOf key="att.global"/>--><!-- <memberOf key="att.coordinated"/>
                                     <memberOf key="att.declaring"/>--><!-- <memberOf key="att.typed"/>--><!-- added by gen --></classes>
           <content>
@@ -392,7 +394,7 @@
                                                 
                                                 <classRef key="model.global" minOccurs="0" maxOccurs="unbounded"/>-->
               <elementRef key="graphic"/>
-              <elementRef key="graphic"/>
+              <!--   <elementRef key="graphic"/>-->
             </sequence>
             <!--</sequence>-->
           </content>
@@ -427,20 +429,22 @@
           </attList>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><surface type="will-page" n="01"
-                  ><graphic url="TIFF/FRAN_Poilus_t-0001_01.tif" xml:id="testament-0001_vue-01_jpg"
-                  /><graphic url="JPEG/FRAN_Poilus_t-0001_01.jpg" xml:id="testament-0001_vue-01_tif"
+                  ><!--<graphic url="TIFF/FRAN_Poilus_t-0001_01.tif" xml:id="testament-0001_vue-01_jpg"
+                  />--><graphic
+                  url="JPEG/FRAN_Poilus_t-0001_01.jpg" xml:id="testament-0001_vue-01_tif"
                 /></surface></egXML>
           </exemplum>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><surfaceGrp type="will-page" n="02"
                   ><surface type="will-page-part" n="02a"><graphic
                     url="JPEG/FRAN_Poilus_t-0001_02a.jpg" xml:id="testament-0001_vue-02a_jpg"
-                    > </graphic><graphic url="TIFF/FRAN_Poilus_t-1_02a.tif"
-                    xml:id="testament-0001_vue-02a_tif"/></surface><surface type="will-page-part"
-                  n="02b"><graphic url="JPEG/FRAN_Poilus_t-1_02b.jpg"
-                    xml:id="testament-0001_vue-02b_jpg"/><graphic
+                  > </graphic><!--<graphic url="TIFF/FRAN_Poilus_t-1_02a.tif"
+                    xml:id="testament-0001_vue-02a_tif"/>--></surface><surface
+                  type="will-page-part" n="02b"><graphic url="JPEG/FRAN_Poilus_t-1_02b.jpg"
+                    xml:id="testament-0001_vue-02b_jpg"
+                  /><!--<graphic
                     url="TIFF/FRAN_Poilus_t-0001_02b.jpg" xml:id="testament-0001_vue-02b_tif"
-                  /></surface></surfaceGrp></egXML>
+                  />--></surface></surfaceGrp></egXML>
           </exemplum>
         </elementSpec>
         <elementSpec ident="surfaceGrp" module="transcr" mode="replace">
@@ -508,11 +512,12 @@
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><surfaceGrp type="will-page" n="02"
                   ><surface type="will-page-part" n="02a"><graphic
                     url="JPEG/FRAN_Poilus_t-0001_02a.jpg" xml:id="t-0001_vue-02a_jpg"
-                    > </graphic><graphic url="TIFF/FRAN_Poilus_t-0001_02a.tif"
-                    xml:id="t-0001_vue-02a_tif"/></surface><surface type="will-page-part" n="02b"
-                    ><graphic url="JPEG/FRAN_Poilus_t-0001_02b.jpg" xml:id="t-0001_vue-02b_jpg"
-                    /><graphic url="TIFF/FRAN_Poilus_t-0001_02b.jpg" xml:id="t-0001_vue-02b_tif"
-                  /></surface></surfaceGrp></egXML>
+                  > </graphic><!--<graphic url="TIFF/FRAN_Poilus_t-0001_02a.tif"
+                    xml:id="t-0001_vue-02a_tif"/>--></surface><surface
+                  type="will-page-part" n="02b"><graphic url="JPEG/FRAN_Poilus_t-0001_02b.jpg"
+                    xml:id="t-0001_vue-02b_jpg"
+                  /><!--<graphic url="TIFF/FRAN_Poilus_t-0001_02b.jpg" xml:id="t-0001_vue-02b_tif"
+                  />--></surface></surfaceGrp></egXML>
           </exemplum>
         </elementSpec>
         <elementSpec ident="graphic" module="core" mode="replace">
@@ -553,8 +558,8 @@
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><surface type="will-page" n="01"
                   ><graphic url="TIFF/FRAN_Poilus_t-0001_01.tif" xml:id="t-0001_vue-01_jpg"
-                  /><graphic url="JPEG/FRAN_Poilus_t-0001_01.jpg" xml:id="t-0001_vue-01_tif"
-                /></surface></egXML>
+                /><!--<graphic url="JPEG/FRAN_Poilus_t-0001_01.jpg" xml:id="t-0001_vue-01_tif"
+                />--></surface></egXML>
           </exemplum>
           <!-- <content>
                                 <!-\-    <classRef key="model.descLike" minOccurs="0" maxOccurs="unbounded"/>   -\->
@@ -974,7 +979,7 @@
           </content>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><head>Ceci est mon
-                    testament<choice><reg>.</reg><orig> : </orig></choice></head></egXML>
+                    testament<choice><sic>.</sic><corr> : </corr></choice></head></egXML>
           </exemplum>
           <listRef>
             <!--    <ptr target="#COLI" type="div2"/>-->
@@ -1050,12 +1055,12 @@
           </attList>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><dateline rend="centered"
-                  ><placeName>Paris</placeName><choice><orig/><reg>,</reg></choice> le
-                      <date><choice><orig>trente et
-                      un</orig><reg>trente-et-un</reg></choice><choice><reg> juillet</reg><orig>
-                      Juillet</orig></choice><lb/><choice><orig>mil</orig><reg>mille</reg></choice>
+                  ><placeName>Paris</placeName><choice><sic/><corr>,</corr></choice> le
+                      <date><choice><sic>trente et
+                      un</sic><corr>trente-et-un</corr></choice><choice><sic> Juillet</sic><corr>
+                      juillet</corr></choice><lb/><choice><sic>mil</sic><corr>mille</corr></choice>
                   neuf cent quatorze<lb/> (31
-                    <choice><reg>juillet</reg><orig>Juillet</orig></choice>
+                    <choice><sic>Juillet</sic><corr>juillet</corr></choice>
               1914)</date></dateline></egXML>
           </exemplum>
           <listRef>
@@ -1182,8 +1187,8 @@
                 >
                 http://elec.enc.sorbonne.fr/testaments-de-poilus/testaments/testament-001.html</ref>.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Avant de partir à la guerre dont<lb/>
-                tant ne reviendront pas, je tiens à décider<lb/> ce qui suit<choice><orig> :
-                    </orig><reg>.</reg></choice></p></egXML>
+                tant ne reviendront pas, je tiens à décider<lb/> ce qui suit<choice><sic> :
+                    </sic><corr>.</corr></choice></p></egXML>
           </exemplum>
           <listRef>
             <ptr target="#COPA" type="div2"/>
@@ -1270,8 +1275,8 @@
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><signed rend="right"><seg
                   type="signature"><persName ref="#LDufriche"
                       ><forename>L.</forename><surname>Dufriche</surname></persName></seg><lb/> 8
-                      <choice><orig><hi rend="superscript-underlined"
-                  >bis</hi></orig><reg>bis</reg></choice> rue Sarrette </signed></egXML>
+                      <choice><sic><hi rend="superscript-underlined"
+                  >bis</hi></sic><corr>bis</corr></choice> rue Sarrette </signed></egXML>
           </exemplum>
           <listRef>
             <ptr target="#DSOC"/>
@@ -1422,9 +1427,9 @@
                 unit="lines"/><postscript><p>Pas de fleurs, ni de couronnes, un enterrement
                   simple<lb/> mais beaucoup de messes, en particulier les 33 messes grégoriennes<lb/>
                   <pb/> dites le plus tôt possible après mon
-                    décès<choice><orig/><reg>,</reg></choice> et des prières.<lb/> Je ne fais aucune
-                  recommandation spéciale par écrit, mon<lb/> vœu le plus cher est que mes enfants
-                  soient tous de <hi rend="underlined">bons chrétiens</hi><lb/>
+                    décès<choice><sic/><corr>,</corr></choice> et des prières.<lb/> Je ne fais
+                  aucune recommandation spéciale par écrit, mon<lb/> vœu le plus cher est que mes
+                  enfants soient tous de <hi rend="underlined">bons chrétiens</hi><lb/>
                   <!-- [...] -->
                 </p><signed rend="right"><seg type="signature"><persName ref="#LeConte">Louis
                       Charles Eugène <surname>Le
@@ -1965,8 +1970,8 @@
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><signed rend="right"><seg
                   type="signature"><persName ref="#LDufriche"
                       ><forename>L.</forename><surname>Dufriche</surname></persName></seg><lb/> 8
-                      <choice><orig><hi rend="superscript-underlined"
-                  >bis</hi></orig><reg>bis</reg></choice> rue Sarrette </signed></egXML>
+                      <choice><sic><hi rend="superscript-underlined"
+                  >bis</hi></sic><corr>bis</corr></choice> rue Sarrette </signed></egXML>
           </exemplum>
           <exemplum>
             <p>Extrait tiré de Nougaret (Christine), Clavaud (Florence) (dirs.), « Testament n° 33
@@ -1977,7 +1982,7 @@
                 >
                 http://elec.enc.sorbonne.fr/testaments-de-poilus/testaments/testament-033.html</ref>.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><postscript><p>J’ai des titres en dépôt
-                  à la<lb/> Société <choice><reg>générale</reg><orig>Générale</orig></choice> sur
+                  à la<lb/> Société <choice><sic>Générale</sic><corr>générale</corr></choice> sur
                   lesquels<lb/> j’ai fait un emprunt ; il<lb/> serait préférable de le
                   rembourser<lb/> et de vendre par la suite avec<lb/> bénéfice si
                     possible.</p><p><seg type="signature" rend="right"><persName ref="#HGe">H.
@@ -2082,9 +2087,10 @@
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="envelope"
                       ><pb/><p><address><addrLine>Monsieur
-                        Delafon<choice><orig/><reg>,</reg></choice>
-                        notaire<choice>v<reg>,</reg></choice></addrLine><addrLine>6 boulevard de
-                          Strasbourg<choice><orig/><reg>,</reg></choice></addrLine><addrLine>Paris</addrLine></address></p><!-- etc. --></div></egXML>
+                        Delafon<choice><sic/><corr>,</corr></choice>
+                          notaire<choice><sic/><reg>,</reg></choice></addrLine><addrLine>6 boulevard
+                      de
+                      Strasbourg<choice><sic/><corr>,</corr></choice></addrLine><addrLine>Paris</addrLine></address></p><!-- etc. --></div></egXML>
           </exemplum>
           <!-- <exemplum xml:lang="en">
             <egXML xmlns="http://www.tei-c.org/ns/Examples">
@@ -2163,18 +2169,25 @@
           <desc type="wills-ui">Cet élément regroupe, soit un élément <gi>abbr</gi> et un élément
               <gi>expan</gi> (pour transcrire une abréviation telle quelle et la forme développée de
             l'expression abrégée), soit un élément <gi>sic</gi> et un élément <gi>corr</gi> (pour
-            transcrire une faute de français et une proposition de correction de cette faute), soit
+            transcrire un mot ou une expression comportant une ou plusieurs fautes de français,
+            et/ou une ou plusieurs formes graphiques non normalisées, puis pour saisir une
+            proposition de correction de cette ou de ces
+            fautes.<!--, soit
             un élément <gi>orig</gi> et un élément <gi>reg</gi> (pour transcrire une graphie ou une
-            ponctuation ancienne et une proposition de graphie ou de ponctuation normalisée).</desc>
+            ponctuation ancienne et une proposition de graphie ou de ponctuation normalisée)-->.</desc>
           <desc type="wills-ui-complexTag-info"> L'élément <gi>choice</gi> doit contenir une des
-            trois configurations suivantes : <list><item>un mot contenant une abréviation (dans
-                l'élément <gi>abbr</gi>) et sa version développée (dans l'élément
-                <gi>expan</gi>)</item><item>un mot ou une expression contenant une ou plusieurs
-                faute(s) de français (dans l'élément <gi>sic</gi>) et sa version corrigée (dans
-                l'élément <gi>corr</gi>)</item><item>un mot ou une expression dont la forme ne
+            deux configurations suivantes : <list><item>un mot qui contient, dans le testament
+                transcrit, une abréviation (dans l'élément <gi>abbr</gi>) et sa version développée
+                (dans l'élément <gi>expan</gi>)</item><item>un mot ou une expression contenant, dans
+                le testament transcrit, une ou plusieurs faute(s) de français ou dont la forme ne
+                respecte pas les règles actuelles d'orthographe, d'utilisation des majuscules ou de
+                ponctuation (dans l'élément <gi>sic</gi>) et sa version corrigée (dans l'élément
+                  <gi>corr</gi>). Parfois (par exemple dans le cas où la ponctuation attendue en
+                français contemporain est absente dans le testament), l'élément <gi>sic</gi> est
+                vide.</item><!--<item>un mot ou une expression dont la forme ne
                 respecte pas les règles actuelles d'orthographe (dans l'élément <gi>orig</gi>) et sa
                 version normalisée selon les règles d'orthographe actuelles (dans l'élément
-                  <gi>reg</gi>)</item></list>
+                  <gi>reg</gi>)</item>--></list>
           </desc>
           <classes>
             <!-- <memberOf key="att.global"/>-->
@@ -2193,10 +2206,10 @@
                 <elementRef key="sic"/>
                 <elementRef key="corr"/>
               </sequence>
-              <sequence>
+              <!--  <sequence>
                 <elementRef key="orig"/>
                 <elementRef key="reg"/>
-              </sequence>
+              </sequence>-->
             </alternate>
           </content>
           <exemplum>
@@ -2206,15 +2219,15 @@
           </exemplum>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                  ><p><choice><orig>A</orig><reg>À</reg></choice> défaut de l’un et de l’autre<lb/>
+                  ><p><choice><sic>A</sic><corr>À</corr></choice> défaut de l’un et de l’autre<lb/>
                 des époux <!-- [...] --></p></egXML>
           </exemplum>
           <exemplum>
-            <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><choice><orig>-
-                  A</orig><reg>À</reg></choice> la veille de partir à la guerre<choice><orig> -
-                    </orig><reg>,</reg></choice> voici mes dernières<lb/>
-                <choice><sic>volonté</sic><corr>volontés</corr></choice> en cas de
-                    mort<choice><orig> - </orig><reg>.</reg></choice></p></egXML>
+            <egXML xmlns="http://www.tei-c.org/ns/Examples"><p><choice><sic>-
+                  A</sic><corr>À</corr></choice> la veille de partir à la guerre<choice><sic> -
+                    </sic><corr>,</corr></choice> voici mes dernières<lb/>
+                <choice><sic>volonté</sic><corr>volontés</corr></choice> en cas de mort<choice><sic>
+                    - </sic><corr>.</corr></choice></p></egXML>
           </exemplum>
           <listRef>
             <ptr target="#COED" type="div3"/>
@@ -2224,10 +2237,11 @@
           <gloss versionDate="2009-03-17">sic, du latin <gloss>ainsi</gloss></gloss>
           <desc versionDate="2009-01-06">contient du texte reproduit quoiqu'il est apparemment
             incorrect ou inexact</desc>
-          <desc type="wills-ui">L'élément <gi>sic</gi> contient la transcription, telle quelle,
-            d'une faute de français (orthographe ou syntaxe) dans le texte transcrit. Une
-            proposition de correction de cette faute doit suivre dans l'élément
-            <gi>corr</gi>.</desc>
+          <desc type="wills-ui">L'élément <gi>sic</gi> contient la transcription, telle quelle, d'un
+            mot ou d'une expression comportant une ou plusieurs faute(s) de français (orthographe ou
+            syntaxe) ou forme(s) non normalisée(s) (graphie ancienne, ponctuation ou emploi des
+            majuscules non conformes aux règles actuelles) dans le texte transcrit. Une proposition
+            de correction de cette faute doit suivre dans l'élément <gi>corr</gi>.</desc>
           <!--<classes>
                                     <memberOf key="att.global"/>
                                     <memberOf key="model.pPart.transcriptional"/>
@@ -2288,9 +2302,12 @@
           <gloss>correction</gloss>
           <desc versionDate="2007-06-12">contient la forme correcte d'un passage qui est considéré
             erroné dans la copie du texte.</desc>
-          <desc type="wills-ui">L'élément <gi>corr</gi> contient une proposition de correction d'une
-            faute d'orthogaphe ou de syntaxe dans le texte transcrit. La faute doit au préalable
-            avoir été encodée dans l'élément <gi>sic</gi>.</desc>
+          <desc type="wills-ui">L'élément <gi>corr</gi> contient une proposition de correction d'un
+            mot ou d'une expression comportant une ou plusieurs fautes d'orthogaphe ou de syntaxe,
+            ou forme(s) non normalisée(s) (graphie ancienne, ponctuation ou emploi des majuscules
+            non conformes aux règles actuelles) dans le texte transcrit. Le mot ou l'expression
+            ainsi corrigées doivent au préalable avoir été encodés dans l'élément
+            <gi>sic</gi>.</desc>
           <classes>
             <!-- <memberOf key="att.global"/>
                                     <memberOf key="model.pPart.transcriptional"/>-->
@@ -2449,7 +2466,7 @@
               <exemplum>
                 <egXML xmlns="http://www.tei-c.org/ns/Examples"><dateline rend="right"><choice><abbr
                         type="superscription">S.<hi rend="sup">t</hi>
-                          Mandé</abbr><expan>S<ex>ain</ex>t-Mandé</expan></choice><choice><reg>,</reg><orig/></choice>
+                          Mandé</abbr><expan>S<ex>ain</ex>t-Mandé</expan></choice><choice><sic/><corr>,</corr></choice>
                     le deux août 1914.</dateline></egXML>
               </exemplum>
               <!--   <remarks xml:lang="fr" versionDate="2007-06-12">
@@ -2539,7 +2556,7 @@
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><dateline rend="right"><choice><abbr
                     type="superscription">S.<hi rend="superscript">t</hi>
-                      Mandé</abbr><expan>S<ex>ain</ex>t-Mandé</expan></choice><choice><reg>,</reg><orig/></choice>
+                      Mandé</abbr><expan>S<ex>ain</ex>t-Mandé</expan></choice><choice><sic/><corr>,</corr></choice>
                 le deux août 1914.</dateline></egXML>
           </exemplum>
           <!-- <remarks>
@@ -2552,7 +2569,7 @@
             <ptr target="#CONAAB" type="div3"/>
           </listRef>
         </elementSpec>
-        <elementSpec module="core" ident="orig" mode="replace">
+        <!--<elementSpec module="core" ident="orig" mode="replace">
           <gloss versionDate="2009-01-06">forme originale</gloss>
           <desc versionDate="2009-01-06">contient une partie notée comme étant fidèle à l'original
             et non pas normalisée ou corrigée.</desc>
@@ -2563,28 +2580,28 @@
             syntaxiquement correcte mais ancienne). Une proposition de forme normalisée du mot ou de
             l'expression concernés doit suivre dans l'élément <gi>reg</gi>.</desc>
           <classes>
-            <!-- <memberOf key="att.global"/>
-                                    <memberOf key="model.pPart.transcriptional"/>-->
+            <!-\- <memberOf key="att.global"/>
+                                    <memberOf key="model.pPart.transcriptional"/>-\->
             <memberOf key="model.choicePart"/>
           </classes>
-          <!-- <content>
-                                    <!-\-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-            name="macro.phraseSeq"/>-\->
+          <!-\- <content>
+                                    <!-\\-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+            name="macro.phraseSeq"/>-\\->
                                     <macroRef key="macro.paraContent"/>
-                              </content>-->
+                              </content>-\->
           <content>
-            <!--<macroRef key="macro.paraContent"/>-->
+            <!-\-<macroRef key="macro.paraContent"/>-\->
             <alternate minOccurs="0" maxOccurs="unbounded">
               <textNode/>
-              <!--<classRef key="model.gLike"/>
+              <!-\-<classRef key="model.gLike"/>
                                           <classRef key="model.phrase"/>
                                           <classRef key="model.global"/>
-                                          <elementRef key="docDate"/>-->
+                                          <elementRef key="docDate"/>-\->
               <elementRef key="lb"/>
               <elementRef key="pb"/>
               <elementRef key="pc"/>
-              <!--  <elementRef key="choice"/>
-                                          <elementRef key="app"/>-->
+              <!-\-  <elementRef key="choice"/>
+                                          <elementRef key="app"/>-\->
               <elementRef key="hi"/>
               <elementRef key="damage"/>
               <elementRef key="unclear"/>
@@ -2592,9 +2609,9 @@
               <elementRef key="gap"/>
               <elementRef key="foreign"/>
               <elementRef key="seg"/>
-              <!-- <classRef key="model.pPart.transcriptional"/>-->
-              <!--  <elementRef key="placeName"/>
-                                          <elementRef key="date"/>-->
+              <!-\- <classRef key="model.pPart.transcriptional"/>-\->
+              <!-\-  <elementRef key="placeName"/>
+                                          <elementRef key="date"/>-\->
             </alternate>
           </content>
           <constraintSpec ident="ifOrigThenReg" scheme="schematron">
@@ -2621,8 +2638,8 @@
             <ptr target="#COEDREG" type="div2"/>
             <ptr target="#TC" type="div1"/>
           </listRef>
-        </elementSpec>
-        <elementSpec module="core" ident="reg" mode="replace">
+        </elementSpec>-->
+        <!--<elementSpec module="core" ident="reg" mode="replace">
           <gloss versionDate="2009-01-06">régularisation</gloss>
           <desc versionDate="2009-01-06">contient une partie (de texte) qui a été régularisée ou
             normalisée de façon quelconque</desc>
@@ -2631,35 +2648,35 @@
             La forme du mot telle que trouvée dans le texte du testament doit précéder, dans
             l'élément <gi>orig</gi>.</desc>
           <classes>
-            <!-- <memberOf key="att.global"/>
-                                    <memberOf key="model.pPart.transcriptional"/>-->
+            <!-\- <memberOf key="att.global"/>
+                                    <memberOf key="model.pPart.transcriptional"/>-\->
             <memberOf key="model.choicePart"/>
-            <!-- <memberOf key="att.editLike"/>
-                                    <memberOf key="att.typed"/>-->
+            <!-\- <memberOf key="att.editLike"/>
+                                    <memberOf key="att.typed"/>-\->
           </classes>
-          <!-- <content>
-                                    <!-\-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
-            name="macro.phraseSeq"/> -\->
+          <!-\- <content>
+                                    <!-\\-    <rng:ref xmlns:rng="http://relaxng.org/ns/structure/1.0"
+            name="macro.phraseSeq"/> -\\->
                                     <macroRef key="macro.paraContent"/>
-                              </content>-->
+                              </content>-\->
           <content>
-            <!--<macroRef key="macro.paraContent"/>-->
+            <!-\-<macroRef key="macro.paraContent"/>-\->
             <alternate minOccurs="0" maxOccurs="unbounded">
               <textNode/>
-              <!--<classRef key="model.gLike"/>
+              <!-\-<classRef key="model.gLike"/>
                                           <classRef key="model.phrase"/>
                                           <classRef key="model.global"/>
-                                          <elementRef key="docDate"/>-->
+                                          <elementRef key="docDate"/>-\->
               <elementRef key="lb"/>
               <elementRef key="pb"/>
               <elementRef key="hi"/>
               <elementRef key="foreign"/>
               <elementRef key="seg"/>
-              <!--  <elementRef key="choice"/>
-                                          <elementRef key="app"/>-->
-              <!-- <classRef key="model.pPart.transcriptional"/>-->
-              <!--  <elementRef key="placeName"/>
-                                          <elementRef key="date"/>-->
+              <!-\-  <elementRef key="choice"/>
+                                          <elementRef key="app"/>-\->
+              <!-\- <classRef key="model.pPart.transcriptional"/>-\->
+              <!-\-  <elementRef key="placeName"/>
+                                          <elementRef key="date"/>-\->
             </alternate>
           </content>
           <constraintSpec ident="ifRegThenOrig" scheme="schematron">
@@ -2669,7 +2686,7 @@
                   testament, doit être encodée dans l'élément
               orig</sch:assert></sch:rule></constraint>
           </constraintSpec>
-          <!-- <constraintSpec ident="ifAttrRespOnRegThenInternalPointer"
+          <!-\- <constraintSpec ident="ifAttrRespOnRegThenInternalPointer"
                                     scheme="schematron">
                                     <constraint><sch:rule context="tei:reg/@resp"><sch:assert
                                                   test="starts-with(tokenize(., ' '), '#')">Taper
@@ -2679,7 +2696,7 @@
                                                   S'il y a plusieurs contributeurs, taper une espace
                                                   entre chaque
                                           référence.</sch:assert></sch:rule></constraint>
-                              </constraintSpec>-->
+                              </constraintSpec>-\->
           <attList>
             <attDef ident="resp" usage="rec">
               <gloss versionDate="2008-03-30">responsable</gloss>
@@ -2700,7 +2717,7 @@
             <ptr target="#COEDREG" type="div1"/>
             <ptr target="#TC" type="div1"/>
           </listRef>
-        </elementSpec>
+        </elementSpec>-->
         <elementSpec module="transcr" ident="damage" mode="replace">
           <gloss versionDate="2007-06-12">dommage</gloss>
           <desc versionDate="2007-06-12">sert à encoder une zone qui a subi des dommages dans le
@@ -3470,9 +3487,9 @@
           </attList>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><dateline rend="right">Fait à
-                    Paris<choice><orig/><reg>,</reg></choice> en pleine <add place="inline"
-                  >connaissance</add><choice><orig/><reg>,</reg></choice><lb/> le <choice><orig>Dix
-                    Janvier</orig><reg>dix janvier</reg></choice> 1916.</dateline></egXML>
+                    Paris<choice><sic/><corr>,</corr></choice> en pleine <add place="inline"
+                  >connaissance</add><choice><sic/><corr>,</corr></choice><lb/> le <choice><sic>Dix
+                    Janvier</sic><corr>dix janvier</corr></choice> 1916.</dateline></egXML>
           </exemplum>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>En cas d’existence d’enfants ou de
@@ -3835,11 +3852,11 @@
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><body>
                 <div type="will">
                   <pb facs="#testament-0001_vue-01_jpg"/>
-                  <dateline rend="centered">Paris<choice><orig/><reg>,</reg></choice> le
-                        <choice><orig>trente et un</orig><reg>trente-et-un</reg></choice>
-                    <choice><orig> Juillet</orig><reg> juillet</reg></choice><lb/>
-                    <choice><orig>mil</orig><reg>mille</reg></choice> neuf cent quatorze<lb/> (31
-                        <choice><orig>Juillet</orig><reg>juillet</reg></choice> 1914)</dateline>
+                  <dateline rend="centered">Paris<choice><sic/><corr>,</corr></choice> le
+                        <choice><sic>trente et un</sic><corr>trente-et-un</corr></choice>
+                    <choice><sic> Juillet</sic><corr> juillet</corr></choice><lb/>
+                    <choice><sic>mil</sic><corr>mille</corr></choice> neuf cent quatorze<lb/> (31
+                        <choice><sic>Juillet</sic><corr>juillet</corr></choice> 1914)</dateline>
                   <!-- [... etc. ] -->
                 </div>
               </body></egXML>
@@ -3936,9 +3953,9 @@
                 >
                 http://elec.enc.sorbonne.fr/testaments-de-poilus/testaments/testament-006.html</ref>.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"
-                    ><dateline>Paris<choice><orig/><reg>,</reg></choice> le 1<hi
+                    ><dateline>Paris<choice><sic/><corr>,</corr></choice> le 1<hi
                   rend="superscript-underlined">er</hi>
-                <choice><reg>août</reg><orig>Août</orig></choice> 1914</dateline><space
+                <choice><sic>août</sic><corr>Août</corr></choice> 1914</dateline><space
                 dim="vertical" quantity="4" unit="lines"/><p>Je soussigné <persName ref="#JBernel"
                   >Joseph <surname>Bernel</surname></persName><lb/> déclare donner tout ce que
                 je<lb/> possède à ma femme Madame<lb/>
@@ -4350,10 +4367,10 @@
                 >
                 http://elec.enc.sorbonne.fr/testaments-de-poilus/testaments/testament-002.html</ref>.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Je soussigné <persName
-                  ref="#EAGorand">Émile Gorand</persName><choice><orig/><reg>,</reg></choice><lb/>
-                né le 4 <choice><orig>Août</orig><reg>août</reg></choice> 1883 à Paris 10<hi
+                  ref="#EAGorand">Émile Gorand</persName><choice><sic/><corr>,</corr></choice><lb/>
+                né le 4 <choice><sic>Août</sic><corr>août</corr></choice> 1883 à Paris 10<hi
                   rend="superscript-underlined">e</hi>, lègue à ma femme<lb/> chérie Émilie Gorand
-                (née Bastien) tout ce que je possède<choice><orig/><reg>,</reg></choice><lb/>
+                (née Bastien) tout ce que je possède<choice><sic/><corr>,</corr></choice><lb/>
                 titres, bijoux, argent, meubles et immeubles, en cas<lb/> de décès dans cette
                 guerre.</p></egXML>
           </exemplum>
@@ -4526,10 +4543,10 @@
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>Je soussigné <persName
                   ref="#PFeugere">Paul Louis
-                    <surname>Feugère</surname></persName><choice><orig/><reg>,</reg></choice><lb/>
+                    <surname>Feugère</surname></persName><choice><sic/><corr>,</corr></choice><lb/>
                 soldat au <orgName type="regiment">150<hi rend="superscript">e</hi> régiment
-                      <choice><orig>d’Infanterie</orig><reg>d’infanterie</reg></choice></orgName><lb/>
-                en garnison à <choice><orig>Saint Mihiel</orig><reg>Saint-Mihiel</reg></choice>
+                      <choice><sic>d’Infanterie</sic><corr>d’infanterie</corr></choice></orgName><lb/>
+                en garnison à <choice><sic>Saint Mihiel</sic><corr>Saint-Mihiel</corr></choice>
                 (Meuse)<!-- [...]--></p></egXML>
           </exemplum>
           <exemplum>
@@ -4957,7 +4974,7 @@
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>[...]Les valeurs et argent se
                 trouvent au<lb/> Crédit lyonnais, <foreign xml:lang="en">Cockspur
-                    Street</foreign><choice><orig/><reg>,</reg></choice> Londres [...]</p></egXML>
+                    Street</foreign><choice><sic/><corr>,</corr></choice> Londres [...]</p></egXML>
           </exemplum>
           <!--<remarks versionDate="2008-02-01" xml:lang="en">
             <p>The global <att>xml:lang</att> attribute should be supplied for this element to
@@ -5120,10 +5137,10 @@
                               </constraintSpec>-->
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><item>3°
-                    <choice><orig>à</orig><reg>À</reg></choice> mon frère Paul Chatin de Chastaing
+                    <choice><sic>à</sic><corr>À</corr></choice> mon frère Paul Chatin de Chastaing
                   <ref xml:id="will-001-001" target="#will-001-footnote001" type="internal"/><lb/>
                 une somme de cinq mille francs et<lb/> ma montre à
-                    sonnerie<choice><orig/><reg>.</reg></choice></item></egXML>
+                    sonnerie<choice><sic/><corr>.</corr></choice></item></egXML>
           </exemplum>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="notes"><note
@@ -5294,12 +5311,12 @@
           <exemplum>
             <p>Une note d'apparat critique</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><item>5°
-                    <choice><orig>à</orig><reg>À</reg></choice> mon vieil ami Morel mon fusil<lb/>
+                    <choice><sic>à</sic><corr>À</corr></choice> mon vieil ami Morel mon fusil<lb/>
                 calibre 12 percussion centrale <app><lem> (de Warn<supplied reason="hidden"
                       resp="#MDurand">er</supplied>)</lem><note resp="#MDurand">Tache d’encre à la
                     fin du mot.</note></app>
-                <choice><orig/><reg>.</reg></choice><lb/> Mon ami Morel habite 2
-                    <choice><orig>Rue</orig><reg>rue</reg></choice> Lénac<lb/> à
+                <choice><sic/><corr>.</corr></choice><lb/> Mon ami Morel habite 2
+                    <choice><sic>Rue</sic><corr>rue</corr></choice> Lénac<lb/> à
               Marseille.</item></egXML>
           </exemplum>
           <exemplum>
@@ -5314,8 +5331,8 @@
               suppression de deux mots. Cette note est accompagnée d'une note d'apparat critique de
               l'éditeur.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><p>En cas d’existence<lb/> d’enfants,
-                          <app><lem><choice><orig><del>je le</del><add place="marginLeft"><note>rayé
-                            deux mots nuls J. V.</note></add></orig><reg/></choice></lem><note
+                          <app><lem><choice><sic><del>je le</del><add place="marginLeft"><note>rayé
+                            deux mots nuls J. V.</note></add></sic><corr/></choice></lem><note
                     resp="#FClavaud">"rayé deux mots nuls J.V." inscrit dans la marge.</note></app>
                 ce<lb/> legs sera réduit à la<lb/> plus forte quotité<lb/> disponible permise
                 entre<lb/> époux tant en toute<lb/> propriété qu’en usufruit<lb/> et cette quotité
@@ -5498,7 +5515,7 @@ encoding method is used.  It supplies a  string containing a canonical reference
           </attList>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><item>5°
-                    <choice><orig>à</orig><reg>À</reg></choice> mon vieil ami Morel mon fusil<lb/>
+                    <choice><sic>à</sic><corr>À</corr></choice> mon vieil ami Morel mon fusil<lb/>
                 calibre 12 percussion centrale <app><lem> (de Warn<supplied reason="hidden"
                       resp="#MDurand">er</supplied>)</lem><note resp="#MDurand">Tache d’encre à la
                     fin du mot.</note></app>
@@ -5600,8 +5617,8 @@ reading groups, each associated with witness specifications.</p>
                 >
                 http://elec.enc.sorbonne.fr/testaments-de-poilus/testaments/testament-056.html</ref>.</p>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><postscript><p><app><lem>Ayant fait de
-                      mauvaises affaires<choice><orig/><reg>,</reg></choice> ma fortune en<lb/>
-                      valeurs est presque disparue<choice><orig> - ma</orig><reg>. Ma</reg></choice>
+                      mauvaises affaires<choice><sic/><corr>,</corr></choice> ma fortune en<lb/>
+                      valeurs est presque disparue<choice><sic> - ma</sic><corr>. Ma</corr></choice>
                       combinaison pour<lb/> mon coffre est le numéro 173.<lb/><seg type="signature"
                         rend="centered"><persName ref="#LBrivois">L.B.</persName></seg></lem><note
                       resp="#SDurand">Écrit
@@ -7958,7 +7975,7 @@ epistemology, methodology and history of
                 <elementRef key="lb" maxOccurs="1" minOccurs="0"/>
                 <elementRef key="pb" maxOccurs="1" minOccurs="0"/>
               </sequence>-->
-              <alternate minOccurs="0" maxOccurs="unbounded">
+              <alternate minOccurs="1" maxOccurs="unbounded">
                 <!--<elementRef key="pb"/>-->
                 <!-- <elementRef key="lb"/>-->
                 <elementRef key="addrLine"/>
@@ -8003,9 +8020,10 @@ epistemology, methodology and history of
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><div type="envelope"
                       ><pb/><p><address><addrLine>Monsieur
-                        Delafon<choice><orig/><reg>,</reg></choice>
-                        notaire<choice>v<reg>,</reg></choice></addrLine><addrLine>6 boulevard de
-                          Strasbourg<choice><orig/><reg>,</reg></choice></addrLine><addrLine>Paris</addrLine></address></p><!-- etc. --></div></egXML>
+                        Delafon<choice><sic/><corr>,</corr></choice>
+                          notaire<choice><sic/><corr>,</corr></choice></addrLine><addrLine>6
+                      boulevard de
+                      Strasbourg<choice><sic/><corr>,</corr></choice></addrLine><addrLine>Paris</addrLine></address></p><!-- etc. --></div></egXML>
           </exemplum>
           <exemplum>
             <egXML xmlns="http://www.tei-c.org/ns/Examples"><residence>Domicilié à <placeName

@@ -16,7 +16,7 @@ class TranscriptLogType extends AbstractType
     {
         $builder
             ->add('isCurrentlyEdited',     CheckboxType::class, array("required" => false))
-            ->add('transcript',             \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("class" => "AppBundle:Transcript", "required" => true))
+            ->add('transcript',            \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array("class" => "AppBundle:Transcript", "required" => true))
         ;
     }
     

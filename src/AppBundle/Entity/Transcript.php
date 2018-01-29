@@ -146,7 +146,7 @@ class Transcript
      *
      * @var bool
      *
-     * @ORM\Column(name="continueBefore", type="boolean", options={"default" : false})
+     * @ORM\Column(name="continueBefore", type="boolean", nullable=true)
      */
     private $continueBefore;
 
@@ -160,7 +160,7 @@ class Transcript
      *
      * @var bool
      *
-     * @ORM\Column(name="continueAfter", type="boolean", options={"default" : false})
+     * @ORM\Column(name="continueAfter", type="boolean", nullable=true)
      */
     private $continueAfter;
 

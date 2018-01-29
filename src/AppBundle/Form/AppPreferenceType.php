@@ -20,10 +20,11 @@ class AppPreferenceType extends AbstractType
         $builder
             ->add('projectTitle',               TextType::class,        array("required" => true))
             ->add('helpHomeContent',            TextType::class,        array("required" => false))
-            ->add('helpInsideHomeContent',      TextType::class,        array("required" => false))
+            ->add('helpInsideHomeContent',      TextareaType::class,    array("required" => false))
             ->add('discoverHomeContent',        TextType::class,        array("required" => false))
             ->add('aboutContent',               TextType::class,        array("required" => false))
             ->add('legalNoticesContent',        TextType::class,        array("required" => false))
+            ->add('charteContent',              TextType::class,        array("required" => false))
             ->add('creditsContent',             TextType::class,        array("required" => false))
             ->add('facebookPageId',             TextType::class,        array("required" => false))
             ->add('twitterId',                  TextType::class,        array("required" => false))

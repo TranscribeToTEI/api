@@ -106,15 +106,16 @@ class AppPreference
     private $helpHomeContent;
 
     /**
-     * The content which is the Help Home Content in the transcription interface of your application.
+     * The content which will be display inside the internal help of transcription interface.
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content"})
+     * @Gedmo\Versioned
      *
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="helpInsideHomeContent", type="integer", nullable=true, unique=true)
+     * @ORM\Column(name="helpInsideHomeContent", type="text", nullable=true)
      */
     private $helpInsideHomeContent;
 
@@ -156,6 +157,19 @@ class AppPreference
      * @ORM\Column(name="legalNoticesContent", type="integer", nullable=true, unique=true)
      */
     private $legalNoticesContent;
+
+    /**
+     * The content which is the Charte Content in your application.
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content"})
+     *
+     * @var int
+     *
+     * @ORM\Column(name="charteContent", type="integer", nullable=true, unique=true)
+     */
+    private $charteContent;
 
     /**
      * The content which is the Credits Content in your application.
@@ -405,54 +419,6 @@ class AppPreference
     }
 
     /**
-     * Set helpHomeContent
-     *
-     * @param integer $helpHomeContent
-     *
-     * @return AppPreference
-     */
-    public function setHelpHomeContent($helpHomeContent)
-    {
-        $this->helpHomeContent = $helpHomeContent;
-
-        return $this;
-    }
-
-    /**
-     * Get helpHomeContent
-     *
-     * @return int
-     */
-    public function getHelpHomeContent()
-    {
-        return $this->helpHomeContent;
-    }
-
-    /**
-     * Set discoverHomeContent
-     *
-     * @param integer $discoverHomeContent
-     *
-     * @return AppPreference
-     */
-    public function setDiscoverHomeContent($discoverHomeContent)
-    {
-        $this->discoverHomeContent = $discoverHomeContent;
-
-        return $this;
-    }
-
-    /**
-     * Get discoverHomeContent
-     *
-     * @return int
-     */
-    public function getDiscoverHomeContent()
-    {
-        return $this->discoverHomeContent;
-    }
-
-    /**
      * Set projectTitle
      *
      * @param string $projectTitle
@@ -477,9 +443,33 @@ class AppPreference
     }
 
     /**
+     * Set helpHomeContent
+     *
+     * @param integer $helpHomeContent
+     *
+     * @return AppPreference
+     */
+    public function setHelpHomeContent($helpHomeContent)
+    {
+        $this->helpHomeContent = $helpHomeContent;
+
+        return $this;
+    }
+
+    /**
+     * Get helpHomeContent
+     *
+     * @return integer
+     */
+    public function getHelpHomeContent()
+    {
+        return $this->helpHomeContent;
+    }
+
+    /**
      * Set helpInsideHomeContent
      *
-     * @param integer $helpInsideHomeContent
+     * @param string $helpInsideHomeContent
      *
      * @return AppPreference
      */
@@ -493,11 +483,35 @@ class AppPreference
     /**
      * Get helpInsideHomeContent
      *
-     * @return integer
+     * @return string
      */
     public function getHelpInsideHomeContent()
     {
         return $this->helpInsideHomeContent;
+    }
+
+    /**
+     * Set discoverHomeContent
+     *
+     * @param integer $discoverHomeContent
+     *
+     * @return AppPreference
+     */
+    public function setDiscoverHomeContent($discoverHomeContent)
+    {
+        $this->discoverHomeContent = $discoverHomeContent;
+
+        return $this;
+    }
+
+    /**
+     * Get discoverHomeContent
+     *
+     * @return integer
+     */
+    public function getDiscoverHomeContent()
+    {
+        return $this->discoverHomeContent;
     }
 
     /**
@@ -546,6 +560,30 @@ class AppPreference
     public function getLegalNoticesContent()
     {
         return $this->legalNoticesContent;
+    }
+
+    /**
+     * Set charteContent
+     *
+     * @param integer $charteContent
+     *
+     * @return AppPreference
+     */
+    public function setCharteContent($charteContent)
+    {
+        $this->charteContent = $charteContent;
+
+        return $this;
+    }
+
+    /**
+     * Get charteContent
+     *
+     * @return integer
+     */
+    public function getCharteContent()
+    {
+        return $this->charteContent;
     }
 
     /**
@@ -789,6 +827,102 @@ class AppPreference
     }
 
     /**
+     * Set taxonomyAccessProposal
+     *
+     * @param string $taxonomyAccessProposal
+     *
+     * @return AppPreference
+     */
+    public function setTaxonomyAccessProposal($taxonomyAccessProposal)
+    {
+        $this->taxonomyAccessProposal = $taxonomyAccessProposal;
+
+        return $this;
+    }
+
+    /**
+     * Get taxonomyAccessProposal
+     *
+     * @return string
+     */
+    public function getTaxonomyAccessProposal()
+    {
+        return $this->taxonomyAccessProposal;
+    }
+
+    /**
+     * Set taxonomyAskQuestion
+     *
+     * @param string $taxonomyAskQuestion
+     *
+     * @return AppPreference
+     */
+    public function setTaxonomyAskQuestion($taxonomyAskQuestion)
+    {
+        $this->taxonomyAskQuestion = $taxonomyAskQuestion;
+
+        return $this;
+    }
+
+    /**
+     * Get taxonomyAskQuestion
+     *
+     * @return string
+     */
+    public function getTaxonomyAskQuestion()
+    {
+        return $this->taxonomyAskQuestion;
+    }
+
+    /**
+     * Set trainingHomeContent
+     *
+     * @param string $trainingHomeContent
+     *
+     * @return AppPreference
+     */
+    public function setTrainingHomeContent($trainingHomeContent)
+    {
+        $this->trainingHomeContent = $trainingHomeContent;
+
+        return $this;
+    }
+
+    /**
+     * Get trainingHomeContent
+     *
+     * @return string
+     */
+    public function getTrainingHomeContent()
+    {
+        return $this->trainingHomeContent;
+    }
+
+    /**
+     * Set infoContact
+     *
+     * @param string $infoContact
+     *
+     * @return AppPreference
+     */
+    public function setInfoContact($infoContact)
+    {
+        $this->infoContact = $infoContact;
+
+        return $this;
+    }
+
+    /**
+     * Get infoContact
+     *
+     * @return string
+     */
+    public function getInfoContact()
+    {
+        return $this->infoContact;
+    }
+
+    /**
      * Set updateDate
      *
      * @param \DateTime $updateDate
@@ -858,101 +992,5 @@ class AppPreference
     public function getUpdateUser()
     {
         return $this->updateUser;
-    }
-
-    /**
-     * Set infoContact
-     *
-     * @param string $infoContact
-     *
-     * @return AppPreference
-     */
-    public function setInfoContact($infoContact)
-    {
-        $this->infoContact = $infoContact;
-
-        return $this;
-    }
-
-    /**
-     * Get infoContact
-     *
-     * @return string
-     */
-    public function getInfoContact()
-    {
-        return $this->infoContact;
-    }
-
-    /**
-     * Set taxonomyAskQuestion
-     *
-     * @param string $taxonomyAskQuestion
-     *
-     * @return AppPreference
-     */
-    public function setTaxonomyAskQuestion($taxonomyAskQuestion)
-    {
-        $this->taxonomyAskQuestion = $taxonomyAskQuestion;
-
-        return $this;
-    }
-
-    /**
-     * Get taxonomyAskQuestion
-     *
-     * @return string
-     */
-    public function getTaxonomyAskQuestion()
-    {
-        return $this->taxonomyAskQuestion;
-    }
-
-    /**
-     * Set taxonomyAccessProposal
-     *
-     * @param string $taxonomyAccessProposal
-     *
-     * @return AppPreference
-     */
-    public function setTaxonomyAccessProposal($taxonomyAccessProposal)
-    {
-        $this->taxonomyAccessProposal = $taxonomyAccessProposal;
-
-        return $this;
-    }
-
-    /**
-     * Get taxonomyAccessProposal
-     *
-     * @return string
-     */
-    public function getTaxonomyAccessProposal()
-    {
-        return $this->taxonomyAccessProposal;
-    }
-
-    /**
-     * Set trainingHomeContent
-     *
-     * @param string $trainingHomeContent
-     *
-     * @return AppPreference
-     */
-    public function setTrainingHomeContent($trainingHomeContent)
-    {
-        $this->trainingHomeContent = $trainingHomeContent;
-
-        return $this;
-    }
-
-    /**
-     * Get trainingHomeContent
-     *
-     * @return string
-     */
-    public function getTrainingHomeContent()
-    {
-        return $this->trainingHomeContent;
     }
 }

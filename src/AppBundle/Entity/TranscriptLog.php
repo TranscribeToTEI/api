@@ -260,11 +260,11 @@ class TranscriptLog
     /**
      * Set createUser
      *
-     * @param \UserBundle\Entity\User $createUser
+     * @param null|\UserBundle\Entity\User $createUser
      *
      * @return TranscriptLog
      */
-    public function setCreateUser(\UserBundle\Entity\User $createUser)
+    public function setCreateUser($createUser)
     {
         $this->createUser = $createUser;
 

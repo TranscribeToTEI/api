@@ -88,7 +88,7 @@ class Content
      * The title of your content. Should be simple and easy to understand.
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "summary"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -104,7 +104,7 @@ class Content
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "summary"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -184,7 +184,7 @@ class Content
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "summary"})
      *
      * @var int
      *
@@ -197,7 +197,7 @@ class Content
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "summary"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -247,7 +247,7 @@ class Content
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata", "content"})
+     * @Serializer\Groups({"full", "metadata", "content", "summary"})
      *
      * @var \DateTime
      *

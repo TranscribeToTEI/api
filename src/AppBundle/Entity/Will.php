@@ -234,7 +234,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "listEntities", "adminEntity"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "listEntities", "adminEntity", "taxonomyView"})
      * @Gedmo\Versioned
      *
      * @var string

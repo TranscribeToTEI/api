@@ -29,7 +29,8 @@ class ContentController extends FOSRestController
      * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      * @QueryParam(name="status", requirements="draft|public|private|notIndexed", nullable=true, description="Name of the status required")
      * @QueryParam(name="type", requirements="blogContent|helpContent|staticContent", nullable=true, description="Type of content")
-     * @QueryParam(name="date", requirements="ASC|DESC", nullable=true, description="Sorting order")
+     * @QueryParam(name="date", requirements="ASC|DESC", nullable=true, description="Sorting by date")
+     * @QueryParam(name="order", requirements="ASC|DESC", nullable=true, description="Sorting by order")
      * @QueryParam(name="limit", requirements="\d*", nullable=true, description="Limit of results")
      *
      * @Doc\ApiDoc(
@@ -39,9 +40,10 @@ class ContentController extends FOSRestController
      *     parameters={
      *         { "name"="status", "dataType"="string", "description"="Name of the status required", "required"=false },
      *         { "name"="type", "dataType"="string", "description"="Type of content", "required"=false },
-     *         { "name"="date", "dataType"="string", "description"="Sorting order", "required"=false },
+     *         { "name"="date", "dataType"="string", "description"="Sorting by date", "required"=false },
+     *         { "name"="order", "dataType"="string", "description"="Sorting by order", "required"=false },
      *         { "name"="limit", "dataType"="integer", "description"="Limit of results", "required"=false },
-     *         { "name"="onhomepage", "dataType"="bool", "description"="homepage contents", "required"=false },
+     *         { "name"="profile", "dataType"="string", "description"="Search profile to apply", "required"=false },
      *     },
      *     statusCodes={
      *         200="Returned when fetched",
@@ -54,6 +56,7 @@ class ContentController extends FOSRestController
         $status = $paramFetcher->get('status');
         $type = $paramFetcher->get('type');
         $date = $paramFetcher->get('date');
+        $orderContent = $paramFetcher->get('order');
         $limit = $paramFetcher->get('limit');
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Content');
@@ -65,6 +68,7 @@ class ContentController extends FOSRestController
 
         $order = [];
         if($date == "ASC" or $date == "DESC") {$order["createDate"] = $date;}
+        if($orderContent == "ASC" or $orderContent == "DESC") {$order["staticOrder"] = $orderContent;}
 
         if($limit == "" or $limit == null) {$limit = 100;}
 
