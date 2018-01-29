@@ -125,7 +125,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "taxonomyView", "adminEntity"})
+     * @Serializer\Groups({"full", "content", "index", "taxonomyView", "adminEntity", "taxonomyList"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -184,7 +184,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -253,7 +253,7 @@ class Testator
      * Full address of the testator
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -312,7 +312,7 @@ class Testator
      * The field is used to index dates in search
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      *
      * @var string
      *
@@ -341,7 +341,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -397,7 +397,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView", "taxonomyList"})
      *
      * @var string
      *
@@ -426,7 +426,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView", "taxonomyList"})
      * @Gedmo\Versioned
      *
      * @var string

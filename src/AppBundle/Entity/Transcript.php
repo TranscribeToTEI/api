@@ -72,7 +72,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "resource",
  *     embedded = @Hateoas\Embedded("expr(service('app.transcript').getResource(object))"),
  *     exclusion = @Hateoas\Exclusion(
- *          groups={"full", "parent", "pageTranscript"}
+ *          groups={"full", "parent", "pageTranscript", "adminValidation"}
  *     )
  * )
  * @Hateoas\Relation(

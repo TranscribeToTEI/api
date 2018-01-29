@@ -97,7 +97,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "infoWill", "taxonomyView", "adminEntity"})
+     * @Serializer\Groups({"full", "content", "index", "infoWill", "taxonomyView", "adminEntity", "taxonomyList"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -125,7 +125,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -137,7 +137,7 @@ class Place
      * Regions (relevant for France) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -149,7 +149,7 @@ class Place
      * Cities (relevant for places which are not city) of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -161,7 +161,7 @@ class Place
      * Countries of your place > Related to PlaceName entities
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      *
      * @Serializer\MaxDepth(2)
      *
@@ -188,7 +188,7 @@ class Place
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
      *
      * @var string
      *

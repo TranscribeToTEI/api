@@ -96,7 +96,7 @@ class MilitaryUnit
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "taxonomyView"})
+     * @Serializer\Groups({"full", "content", "index", "taxonomyView", "taxonomyList"})
      *
      * @var string
      *

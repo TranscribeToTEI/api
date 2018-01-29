@@ -111,7 +111,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "listEntities", "adminEntity"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "listEntities", "adminEntity", "adminValidation"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Will", inversedBy="entity", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
