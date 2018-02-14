@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 use JMS\Serializer\SerializationContext;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +54,7 @@ class CommentLogController extends FOSRestController
         if($private == '') {$private = null;}
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["id", "content"];
+            $profile = ["id", "commentLog", "name"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -62,30 +63,40 @@ class CommentLogController extends FOSRestController
         /* @var $repository EntityRepository */
 
         if($private != null) {
-            $listComments = array();
-            $commentLogs = $repository->findBy(array(), array('id' => 'DESC'));
-            /* @var $commentLogs CommentLog[] */
-
-            foreach($commentLogs as $commentLog) {
-                $idString = explode('-', $commentLog->getThread()->getId());
-                if(count(explode('-', $private)) > 1) {
-                    $private = explode('-', $private);
-                    if($idString[0] == 'users' and (($idString[1] == $private[0] and $idString[2] == $private[1]) or ($idString[1] == $private[1] and $idString[2] == $private[0]))) {
-                        $listComments[] = $commentLog;
-                    }
-                } else {
-                    if($idString[0] == 'users' and ($idString[1] == $private or $idString[2] == $private)) {
-                        $listComments[] = $commentLog;
-                    }
-                }
+            if(count(explode('-', $private)) > 1) {
+                $listUsers = explode('-', $private);
+            } else {
+                $listUsers = [$private];
             }
 
-            $toReturn = $listComments;
+            if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or ($this->get('security.authorization_checker')->isGranted('ROLE_USER') and in_array($this->getUser()->getId(), $listUsers))) {
+                $listComments = array();
+                $commentLogs = $repository->findBy(array(), array('id' => 'DESC'));
+                /* @var $commentLogs CommentLog[] */
+
+                foreach($commentLogs as $commentLog) {
+                    $idString = explode('-', $commentLog->getThread()->getId());
+                    if(count(explode('-', $private)) > 1) {
+                        $private = explode('-', $private);
+                        if($idString[0] == 'users' and (($idString[1] == $private[0] and $idString[2] == $private[1]) or ($idString[1] == $private[1] and $idString[2] == $private[0]))) {
+                            $listComments[] = $commentLog;
+                        }
+                    } else {
+                        if($idString[0] == 'users' and ($idString[1] == $private or $idString[2] == $private)) {
+                            $listComments[] = $commentLog;
+                        }
+                    }
+                }
+
+                $toReturn = $listComments;
+            } else {
+                return new JsonResponse(['message' => 'not allowed']);
+            }
         } elseif($readByAdmin != null) {
             $commentLogs = $repository->findBy(array('isReadByAdmin' => $readByAdmin));
             /* @var $commentLogs CommentLog[] */
         } else {
-            $commentLogs = $repository->findAll();
+            $commentLogs = $repository->findBy(array('isPrivateThread' => false));
             /* @var $commentLogs CommentLog[] */
         }
 

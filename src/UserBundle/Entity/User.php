@@ -142,7 +142,7 @@ class User extends BaseUser
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "userProfile"})
+     * @Serializer\Groups({"full", "content"})
      *
      * @var bool
      *

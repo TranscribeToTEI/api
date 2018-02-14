@@ -20,6 +20,7 @@ class Entity
 
     /**
      * @param $entity \AppBundle\Entity\Entity
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function remove($entity)
     {
@@ -37,28 +38,32 @@ class Entity
     /**
      * @param $entity \AppBundle\Entity\Entity
      * @return string
+     * @var $resource Resource
      */
     public function getStatus($entity) {
         $status = null;
-        $arrayStatus = [1 => "todo", 2 => "transcription", 3 => "validation", 4 => "validated"];
+        $listStatus = ["todo" => 0, "transcription" => 0, "validation" => 0, "validated" => 0];
 
-        /** @var $resource Resource */
         foreach($entity->getResources() as $resource) {
             if($resource->getTranscript() != null) {
-                $transcriptStatus = $resource->getTranscript()->getStatus();
-
-                if($status == null) {
-                    $status = $transcriptStatus;
-                } else {
-                    if ($transcriptStatus == "validation" and ($status == "validation" or $status == "validated")) {
-                        $status = $transcriptStatus;
-                    } elseif (($transcriptStatus == "transcription" and $status == "todo") or ($transcriptStatus == "todo" and $status == "transcription")) {
-                        $status = "transcription";
-                    } else {
-                        $status = $transcriptStatus;
-                    }
-                }
+                $listStatus[$resource->getTranscript()->getStatus()] = $listStatus[$resource->getTranscript()->getStatus()]+1;
             }
+        }
+
+        if( ($listStatus['transcription'] > 0) or
+            ($listStatus['todo'] > 0 and $listStatus['transcription'] == 0 and ($listStatus['validation'] > 0 or $listStatus['validated'] > 0))
+        ) {
+            $status = "transcription";
+        } elseif($listStatus['todo'] > 0 and $listStatus['transcription'] == 0 and $listStatus['validation'] == 0 and $listStatus['validated'] == 0) {
+            $status = "todo";
+        } elseif($listStatus['todo'] == 0 and $listStatus['transcription'] == 0 and ($listStatus['validation'] > 0 or $listStatus['validated'] > 0)) {
+            if($listStatus['validation'] > 0) {
+                $status = "validation";
+            } elseif($listStatus['validated'] > 0) {
+                $status = "validated";
+            }
+        } else {
+            $status = "transcription";
         }
 
         return $status;

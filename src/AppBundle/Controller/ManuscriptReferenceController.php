@@ -9,11 +9,13 @@ use AppBundle\Form\ManuscriptReferenceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
@@ -24,6 +26,7 @@ class ManuscriptReferenceController extends FOSRestController
     /**
      * @Rest\Get("/manuscript-references")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="ManuscriptReferences",
@@ -35,7 +38,7 @@ class ManuscriptReferenceController extends FOSRestController
      *     }
      * )
      */
-    public function getManuscriptReferencesAction(Request $request)
+    public function getManuscriptReferencesAction(Request $request, ParamFetcher $paramFetcher)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:ManuscriptReference');
         /* @var $repository EntityRepository */
@@ -43,12 +46,20 @@ class ManuscriptReferenceController extends FOSRestController
         $manuscriptReferences = $repository->findAll();
         /* @var $manuscriptReferences ManuscriptReference[] */
 
-        return $manuscriptReferences;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "bibliography", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($manuscriptReferences, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/manuscript-references/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="ManuscriptReferences",
      *     resource=true,
@@ -67,7 +78,7 @@ class ManuscriptReferenceController extends FOSRestController
      *     }
      * )
      */
-    public function getManuscriptReferenceAction(Request $request)
+    public function getManuscriptReferenceAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $manuscriptReference = $em->getRepository('AppBundle:ManuscriptReference')->find($request->get('id'));
@@ -77,7 +88,13 @@ class ManuscriptReferenceController extends FOSRestController
             return new JsonResponse(['message' => 'ManuscriptReference not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $manuscriptReference;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "bibliography", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($manuscriptReference, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
@@ -85,7 +102,7 @@ class ManuscriptReferenceController extends FOSRestController
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerEnableMaxDepthChecks=true)
      *
      * @Doc\ApiDoc(
-     *     section="Manuscript-references",
+     *     section="ManuscriptReferences",
      *     resource=true,
      *     description="Create a new manuscript reference",
      *     input="AppBundle\Form\ManuscriptReferenceType",

@@ -55,10 +55,18 @@ class ResourceController extends FOSRestController
         if($transcript_id != "") {
             $transcript = $this->getDoctrine()->getManager()->getRepository('AppBundle:Transcript')->find($transcript_id);
             /* @var $transcript Transcript */
-            return $repository->findOneBy(array("transcript" => $transcript));
+            $resources = $repository->findOneBy(array("transcript" => $transcript));
         } else {
-            return $repository->findAll();
+            $resources = $repository->findAll();
         }
+
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "pageEdition"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($resources, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
@@ -86,7 +94,7 @@ class ResourceController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["full"];
+            $profile = ["id", "pageEdition", "metadata", "userProfile"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }

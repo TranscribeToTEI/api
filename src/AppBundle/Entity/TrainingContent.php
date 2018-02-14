@@ -82,7 +82,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -100,7 +100,7 @@ class TrainingContent
      * You can explain here the goal of your training content. This text will be only display to other admins.
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -117,7 +117,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -133,7 +133,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -150,7 +150,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @Assert\NotBlank()
@@ -167,7 +167,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -181,7 +181,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -195,7 +195,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      *
      * @var int
      *
@@ -208,7 +208,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "trainingContent"})
      * @Serializer\MaxDepth(2)
      *
      * @ORM\ManyToMany(targetEntity="UserBundle\Entity\User")
@@ -221,7 +221,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -235,7 +235,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -249,7 +249,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -263,7 +263,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -277,7 +277,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -291,7 +291,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var array
@@ -305,7 +305,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -319,7 +319,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -333,7 +333,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -347,7 +347,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -361,7 +361,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -375,7 +375,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -389,7 +389,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var bool
@@ -403,7 +403,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string
@@ -417,7 +417,7 @@ class TrainingContent
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingContent"})
      * @Gedmo\Versioned
      *
      * @var string

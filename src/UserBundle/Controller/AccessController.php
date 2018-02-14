@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use JMS\Serializer\SerializationContext;
 use UserBundle\Entity\Access;
 
 use UserBundle\Form\AccessType;
@@ -54,7 +55,7 @@ class AccessController extends FOSRestController
                 throw $this->createAccessDeniedException('Unable to access this page!');
             }
         }
-        return $access;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($access, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id','accessProperties']))));
     }
 
     /**
@@ -88,7 +89,11 @@ class AccessController extends FOSRestController
             return new JsonResponse(['message' => 'Access not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $access;
+        /*if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $access->getUser()) {
+            throw $this->createAccessDeniedException('Unable to access this page!');
+        }*/
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($access, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id','accessProperties']))));
     }
 
     /**

@@ -8,17 +8,24 @@ use AppBundle\Form\WillType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use FOS\RestBundle\Request\ParamFetcher;
+
 use Nelmio\ApiDocBundle\Annotation as Doc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class WillController extends FOSRestController
 {
     /**
      * @Rest\Get("/wills")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="Wills",
@@ -30,17 +37,25 @@ class WillController extends FOSRestController
      *     }
      * )
      */
-    public function getWillsAction(Request $request)
+    public function getWillsAction(Request $request, ParamFetcher $paramFetcher)
     {
         $wills = $this->getDoctrine()->getManager()->getRepository('AppBundle:Will')->findAll();
         /* @var $wills Will[] */
 
-        return $wills;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "infoWill"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($wills, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/wills/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="Wills",
      *     resource=true,
@@ -59,7 +74,7 @@ class WillController extends FOSRestController
      *     }
      * )
      */
-    public function getWillAction(Request $request)
+    public function getWillAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $will = $em->getRepository('AppBundle:Will')->find($request->get('id'));
@@ -69,7 +84,13 @@ class WillController extends FOSRestController
             return new JsonResponse(['message' => 'Will not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $will;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "infoWill", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($will, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
@@ -87,6 +108,7 @@ class WillController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function postWillsAction(Request $request)
     {
@@ -119,6 +141,7 @@ class WillController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function updateWillAction(Request $request)
     {
@@ -139,6 +162,7 @@ class WillController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function patchWillAction(Request $request)
     {
@@ -185,6 +209,7 @@ class WillController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function removeWillAction(Request $request)
     {

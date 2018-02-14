@@ -56,7 +56,7 @@ class TestatorController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["id", "content"];
+            $profile = ["id", "taxonomyView"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -97,7 +97,7 @@ class TestatorController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["id", "content"];
+            $profile = ["id", "taxonomyView", "metadata", "userProfile"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }

@@ -49,6 +49,8 @@ class MediaContentController extends FOSRestController
      * @param ParamFetcher $paramFetcher
      * @return mixed
      *
+     * @Security("is_granted('ROLE_USER')")
+     *
      * WARNING > Each entity using this method need an agnostic SETTER in its methods
      */
     public function postMediaContentAction(Request $request, ParamFetcher $paramFetcher)

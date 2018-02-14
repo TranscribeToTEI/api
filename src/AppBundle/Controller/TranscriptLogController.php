@@ -9,6 +9,7 @@ use AppBundle\Form\TranscriptLogType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,15 +60,16 @@ class TranscriptLogController extends FOSRestController
             $transcriptLog = $repository->findOneBy($array);
             /* @var $transcriptLog TranscriptLog */
             if($transcriptLog != null) {
-                return $transcriptLog;
+                $transcriptLogs = $transcriptLog;
             } else {
                 return new JsonResponse(false);
             }
         } else {
             $transcriptLogs = $repository->findAll();
             /* @var $transcriptLogs TranscriptLog[] */
-            return $transcriptLogs;
         }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($transcriptLogs, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', "transcriptLogContent"]))));
 
     }
 
@@ -96,7 +98,7 @@ class TranscriptLogController extends FOSRestController
             return new JsonResponse(['message' => 'TranscriptLog not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $transcriptLog;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($transcriptLog, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', "transcriptLogContent", "metadata", "userProfile"]))));
     }
 
     /**

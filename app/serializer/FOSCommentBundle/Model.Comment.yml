@@ -3,28 +3,28 @@ FOS\CommentBundle\Model\Comment:
     properties:
         id:
             expose: true
-            groups: [full, id]
+            groups: [full, id, commentLog]
         parent:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         author:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         body:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         depth:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         createdAt:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         state:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         previousState:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         thread:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]

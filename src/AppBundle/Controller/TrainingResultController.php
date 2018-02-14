@@ -9,6 +9,7 @@ use AppBundle\Form\TrainingResultType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +58,7 @@ class TrainingResultController extends FOSRestController
         $trainingResults = $repository->findBy($query, array('createDate' => 'DESC'));
         /* @var $trainingResults TrainingResult[] */
 
-        return $trainingResults;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($trainingResults, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', "trainingResultContent", "metadata"]))));
     }
 
     /**
@@ -91,7 +92,7 @@ class TrainingResultController extends FOSRestController
             return new JsonResponse(['message' => 'TrainingResult not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $trainingResult;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($trainingResult, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', "trainingResultContent", "trainingContent", "metadata", "userProfile"]))));
     }
 
     /**
@@ -109,6 +110,7 @@ class TrainingResultController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postTrainingResultsAction(Request $request)
     {
@@ -141,6 +143,7 @@ class TrainingResultController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updateTrainingResultAction(Request $request)
     {
@@ -161,6 +164,7 @@ class TrainingResultController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchTrainingResultAction(Request $request)
     {

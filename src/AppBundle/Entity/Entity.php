@@ -98,7 +98,7 @@ class Entity
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif", "listEntities", "adminEntity"})
+     * @Serializer\Groups({"full", "content", "search", "pageEntity", "pageEdition", "pageTranscript", "iiif", "listEntities", "adminEntity", "adminValidation"})
      *
      * @Assert\NotBlank()
      *

@@ -20,13 +20,13 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class TranscriptController extends FOSRestController
 {
     /**
      * @Rest\Get("/transcripts")
      * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
-     *
      * @QueryParam(name="status", nullable=true, description="Name of the status required")
      *
      * @Doc\ApiDoc(
@@ -56,7 +56,7 @@ class TranscriptController extends FOSRestController
         /* @var $transcripts Transcript[] */
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["full"];
+            $profile = ["id", "pageTranscript"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -98,7 +98,7 @@ class TranscriptController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["full"];
+            $profile = ["id", "pageTranscript", "metadata", "userProfile"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -121,6 +121,7 @@ class TranscriptController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function postTranscriptsAction(Request $request)
     {
@@ -155,6 +156,7 @@ class TranscriptController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updateTranscriptAction(Request $request, ParamFetcher $paramFetcher)
     {
@@ -183,6 +185,7 @@ class TranscriptController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchTranscriptAction(Request $request, ParamFetcher $paramFetcher)
     {
@@ -228,6 +231,7 @@ class TranscriptController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function removeTranscriptAction(Request $request)
     {

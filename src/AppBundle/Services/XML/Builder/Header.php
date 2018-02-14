@@ -1,84 +1,18 @@
 <?php
 
-namespace AppBundle\Services\XML;
+namespace AppBundle\Services\XML\Builder;
 
-use AppBundle\Entity\Entity;
-use AppBundle\Entity\Resource;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class Builder
+class Header
 {
     private $em;
+    private $functions;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Functions $functions)
     {
         $this->em = $em;
-    }
-
-    /**
-     * @param $entity \AppBundle\Entity\Entity
-     * @param $transcript \AppBundle\Entity\Transcript|null
-     * @param $generate boolean
-     * @return boolean|string|\DOMDocument
-     */
-    public function build($entity, $transcript, $generate)
-    {
-        if($transcript != null) {
-            $content = $transcript->getContent();
-        } else {
-            $content = $this->buildContent($entity);
-        }
-
-        /* -- Definition of DOMDocument -- */
-        /** @var $doc \DOMDocument */
-        $doc = new \DOMDocument('1.0');
-        $doc->encoding = 'UTF-8';
-        $doc->formatOutput = true;
-
-        /* -- Definition of the root element: TEI -- */
-        $TEI = $doc->createElement('TEI');
-        $TEI->setAttribute('xmlns', 'http://www.tei-c.org/ns/1.0');
-        $TEI = $doc->appendChild($TEI);
-
-        /* -- Building teiHeader -- */
-        $teiHeader = $this->buildTeiHeader($doc, $entity);
-        $teiHeader = $TEI->appendChild($teiHeader);
-
-        /* -- Building facsimile -- */
-        $facsimile = $doc->createElement('facsimile');
-        $facsimile->setAttribute('xml:base', 'https://testaments-de-poilus.huma-num.fr/api/web/images/data/testament_'.$this->getIntIdToStrId($entity->getWillNumber(), 4).'/');
-        $facsimile = $TEI->appendChild($facsimile);
-        foreach($this->buildFacsimile($doc, $entity) as $elem) {
-            $facsimile->appendChild($elem);
-        }
-
-        /* -- Building text -- */
-        $text = $doc->createElement('text');
-        $text->setAttribute('xml:id', 'will-'.$this->getIntIdToStrId($entity->getWillNumber(), 4));
-        $text = $TEI->appendChild($text);
-
-        $body = $doc->createElement('body');
-        $body = $text->appendChild($body);
-
-        /* -- Conversion of the content into XML -- */
-        $encodeContent = simplexml_load_string($content);
-        $dom_content = dom_import_simplexml($encodeContent);
-        if (!$dom_content) {
-            echo 'Erreur lors de la conversion du XML';
-            return false;
-        }
-        $dom_content = $doc->importNode($dom_content, true);
-        $body->appendChild($dom_content);
-
-        if($generate == true) {
-            /* -- File generation -- */
-            $filename = "testament-FR".$entity->getWill()->getHostingOrganization()->getCode()."_".$this->getIntIdToStrId($entity->getWillNumber(), 4).".xml";
-            $doc->save("download/".$filename);
-            return $filename;
-        } else {
-            return $doc;
-        }
+        $this->functions = $functions;
     }
 
     /**
@@ -86,7 +20,7 @@ class Builder
      * @param $entity \AppBundle\Entity\Entity
      * @return \DOMElement
      */
-    private function buildTeiHeader($doc, $entity)
+    public function build($doc, $entity)
     {
         /*
          * Generated structure:
@@ -197,6 +131,8 @@ class Builder
         return $titleStmt;
     }
 
+
+
     /**
      * @param $doc \DOMDocument
      * @param $entity \AppBundle\Entity\Entity
@@ -219,7 +155,7 @@ class Builder
             case "identification":
                 $respText = new \DOMText("Identification du testament");
                 $persNameText = new \DOMText($entity->getWill()->getIdentificationUsers());
-                $persNameId = $this->getIdFromName($entity->getWill()->getIdentificationUsers());
+                $persNameId = $this->functions->getIdFromName($entity->getWill()->getIdentificationUsers());
                 break;
             default:
                 $respText = new \DOMText('Error');
@@ -422,6 +358,8 @@ class Builder
         return $sourceDesc;
     }
 
+
+
     /**
      * @param $doc \DOMDocument
      * @param $entity \AppBundle\Entity\Entity
@@ -519,14 +457,14 @@ class Builder
             $elements[] = new \DOMText(", mort");
         }
 
-        if($entity->getWill()->getTestator()->getPlaceOfDeath() != null) {
+        if($entity->getWill()->getTestator()->getPlaceOfDeathNormalized() != null) {
             $elements[] = new \DOMText(" à ");
             $placeName = $doc->createElement('placeName');
-            $placeName->setAttribute('ref', '#pl-'.$entity->getWill()->getTestator()->getPlaceOfDeath()->getId());
-            $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeath()->getNames()[0]->getName()));
+            $placeName->setAttribute('ref', '#pl-'.$entity->getWill()->getTestator()->getPlaceOfDeathNormalized()->getId());
+            $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeathNormalized()->getNames()[0]->getName()));
             $elements[] = $placeName;
         }
-        if($entity->getWill()->getTestator()->getPlaceOfDeath() != null && $entity->getWill()->getTestator()->getDateOfDeathString() != null) {
+        if($entity->getWill()->getTestator()->getPlaceOfDeathNormalized() != null && $entity->getWill()->getTestator()->getDateOfDeathString() != null) {
             $elements[] = new \DOMText(", ");
         }
         if($entity->getWill()->getTestator()->getDateOfDeathString() != null) {
@@ -541,133 +479,6 @@ class Builder
         $elements[] = new \DOMText(".");
 
         return $elements;
-    }
-
-    /**
-     * @param $entity \AppBundle\Entity\Entity
-     * @return string
-     */
-    private function buildContent($entity) {
-        $text = "<div type=\"will\">";
-
-        foreach($entity->getResources() as $resource) {
-            /** @var $resource \AppBundle\Entity\Resource */
-            $text .= "<pb facs=\"#testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$this->getIntIdToStrId($resource->getOrderInWill(), 2)."_jpg\"/>";
-            if($resource->getTranscript()->getContent() != null) {
-                $text .= $resource->getTranscript()->getContent();
-            }
-        }
-
-        $text .= "</div>";
-        return $text;
-    }
-
-    /**
-     * @param $doc \DOMDocument
-     * @param $entity \AppBundle\Entity\Entity
-     * @return array
-     */
-    private function buildFacsimile($doc, $entity) {
-        $listSurfaces = array();
-        foreach ($entity->getResources() as $resource) {
-            /** @var $resource \AppBundle\Entity\Resource */
-
-            if(count($resource->getImages()) > 1) {
-                $surfaceGrp = $doc->createElement('surfaceGrp');
-                $surfaceGrp->setAttribute('type', $this->getResourceTypeFormat($resource));
-                $surfaceGrp->setAttribute('n', $this->getIntIdToStrId($resource->getOrderInWill(), 2));
-
-                foreach ($resource->getImages() as $image) {
-                    $surface = $doc->createElement('surface');
-                    $surface->setAttribute('type', $this->getResourceTypeFormat($resource));
-                    $surface->setAttribute('n', $image);
-                    $surface = $surfaceGrp->appendChild($surface);
-
-                    $graphic = $doc->createElement('graphic');
-                    $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()->getCode()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$image."_L.jpg");
-                    $graphic->setAttribute('xml:id', "testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$image."_jpg");
-                    $surface->appendChild($graphic);
-                }
-
-                $listSurfaces[] = $surfaceGrp;
-            } else {
-                $surface = $doc->createElement('surface');
-                $surface->setAttribute('type', $this->getResourceTypeFormat($resource));
-                $surface->setAttribute('n', $resource->getImages()[0]);
-
-                $graphic = $doc->createElement('graphic');
-                $graphic->setAttribute('url', "JPEG/FR".$entity->getWill()->getHostingOrganization()->getCode()."_Poilus_t-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_".$resource->getImages()[0]."_L.jpg");
-                $graphic->setAttribute('xml:id', "testament-".$this->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$resource->getImages()[0]."_jpg");
-                $surface->appendChild($graphic);
-
-                $listSurfaces[] = $surface;
-            }
-
-        }
-
-        return $listSurfaces;
-    }
-
-    /**
-     * @param $name string
-     * @return string
-     */
-    private function getIdFromName($name) {
-        $id = '';
-        $elements = explode(' ', $name);
-
-        $surname = $elements[count($elements)-1];
-        unset($elements[count($elements)-1]);
-
-        foreach($elements as $element) {
-            $detach = explode('-', $element);
-            foreach($detach as $firstname) {
-                $id .= $firstname[0];
-            }
-        }
-
-        $id .= str_replace("-", "", $surname);
-
-        return $id;
-    }
-
-    /**
-     * @param $intId int
-     * @param $length int
-     * @return string
-     */
-    private function getIntIdToStrId($intId, $length) {
-        $strId = "";
-        $strIdConvert = strval($intId);
-
-        if(strlen($strIdConvert) < $length) {
-            for($i = strlen($strIdConvert); $i < $length; $i++) {
-                $strId .= "0";
-            }
-            $strId .= $strIdConvert;
-        } else {
-            $strId = $strIdConvert;
-        }
-
-        return $strId;
-    }
-
-    /**
-     * @param $resource \AppBundle\Entity\Resource
-     * @return string
-     */
-    private function getResourceTypeFormat($resource) {
-        $formatType = null;
-
-        if(count($resource->getImages()) == 1 && $resource->getType() == "page") {
-            $formatType = "will-page";
-        } elseif(count($resource->getImages()) > 1 && $resource->getType() == "page") {
-            $formatType = "will-page-part";
-        } else {
-            $formatType = "unknown";
-        }
-
-        return $formatType;
     }
 
 }

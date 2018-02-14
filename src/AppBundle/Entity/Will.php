@@ -323,7 +323,7 @@ class Will
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "testator", "search", "infoWill", "listEntities", "adminEntity"})
+     * @Serializer\Groups({"full", "content", "testator", "search", "infoWill", "listEntities", "adminEntity", "adminValidation"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(4)
      *

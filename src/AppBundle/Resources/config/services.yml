@@ -28,6 +28,11 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+    app.commentLog:
+        class: AppBundle\Services\CommentLog
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     app.transcript:
         class: AppBundle\Services\Transcript
         arguments:
@@ -62,16 +67,40 @@ services:
             - '@mailer'
 
     # XML Management
-    app.xml.builder:
-        class: AppBundle\Services\XML\Builder
+    app.xml.builder.core:
+        class: AppBundle\Services\XML\Builder\Core
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@app.xml.builder.header'
+            - '@app.xml.builder.content'
+            - '@app.xml.builder.functions'
+            - '%iiifServer%'
+
+    app.xml.builder.header:
+        class: AppBundle\Services\XML\Builder\Header
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@app.xml.builder.functions'
+
+    app.xml.builder.content:
+        class: AppBundle\Services\XML\Builder\Content
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@app.xml.builder.functions'
+            - '%iiifServer%'
+
+    app.xml.builder.functions:
+        class: AppBundle\Services\XML\Builder\Functions
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     app.xml.validator:
         class: AppBundle\Services\XML\Validator
         arguments:
             - '@doctrine.orm.entity_manager'
-            - '@app.xml.builder'
+            - '@app.xml.builder.core'
             - '%validatorRelaxNG%'
+
     app.xml.model:
         class: AppBundle\Services\XML\Model
         arguments:

@@ -9,11 +9,13 @@ use AppBundle\Form\PrintedReferenceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
@@ -24,6 +26,7 @@ class PrintedReferenceController extends FOSRestController
     /**
      * @Rest\Get("/printed-references")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="PrintedReferences",
@@ -35,7 +38,7 @@ class PrintedReferenceController extends FOSRestController
      *     }
      * )
      */
-    public function getPrintedReferencesAction(Request $request)
+    public function getPrintedReferencesAction(Request $request, ParamFetcher $paramFetcher)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:PrintedReference');
         /* @var $repository EntityRepository */
@@ -43,12 +46,20 @@ class PrintedReferenceController extends FOSRestController
         $printedReferences = $repository->findAll();
         /* @var $printedReferences PrintedReference[] */
 
-        return $printedReferences;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "bibliography", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($printedReferences, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/printed-references/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="PrintedReferences",
      *     resource=true,
@@ -67,7 +78,7 @@ class PrintedReferenceController extends FOSRestController
      *     }
      * )
      */
-    public function getPrintedReferenceAction(Request $request)
+    public function getPrintedReferenceAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $printedReference = $em->getRepository('AppBundle:PrintedReference')->find($request->get('id'));
@@ -77,7 +88,13 @@ class PrintedReferenceController extends FOSRestController
             return new JsonResponse(['message' => 'PrintedReference not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $printedReference;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "bibliography", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($printedReference, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

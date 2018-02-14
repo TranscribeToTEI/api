@@ -81,7 +81,7 @@ class TranscriptLog
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id"})
+     * @Serializer\Groups({"full", "content", "transcriptLogContent", "pageEdition"})
      *
      * @var bool
      * @Assert\NotNull()
@@ -94,7 +94,7 @@ class TranscriptLog
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "transcriptLogContent"})
      * @Serializer\MaxDepth(2)
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Transcript")

@@ -31,10 +31,6 @@ fos_comment_api:
     prefix: /
     defaults: { _format: html }
 
-data-interface:
-    type:     rest
-    resource: AppBundle\Controller\DataInterfaceController
-
 app-preferences:
     type:     rest
     resource: AppBundle\Controller\AppPreferenceController
@@ -131,10 +127,6 @@ XML:
     type:     rest
     resource: AppBundle\Controller\XMLController
 
-logs:
-    type:     rest
-    resource: AppBundle\Controller\LogsController
-
 model:
     type:     rest
     resource: AppBundle\Controller\ModelController
@@ -150,10 +142,6 @@ preferences:
 accesses:
     type:     rest
     resource: UserBundle\Controller\AccessController
-
-iiif-manifests:
-    type:     rest
-    resource: AppBundle\Controller\IIIFManifestController
 
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"

@@ -24,3 +24,4 @@ parameters:
     validatorRelaxNG: ~
     modelXML: ~
     downloadFolder: ~
+    iiifServer: 'https://testaments-de-poilus.huma-num.fr/iiif/2/'

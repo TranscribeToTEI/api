@@ -71,8 +71,14 @@ class EntitySubscriber implements EventSubscriber
             $commentLog->setThread($comment->getThread());
             $commentLog->setComment($comment);
             $commentLog->setIsReadByAdmin(false);
-            $commentLog->setIsPrivateThread(false);
             $commentLog->setIsReadByRecipient(false);
+
+            if(strpos($comment->getThread()->getId(), 'users-') !== false) {
+                $commentLog->setIsPrivateThread(true);
+            } else {
+                $commentLog->setIsPrivateThread(false);
+            }
+
             $args->getEntityManager()->persist($commentLog);
         }
 

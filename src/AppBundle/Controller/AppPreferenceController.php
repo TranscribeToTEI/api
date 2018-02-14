@@ -9,6 +9,7 @@ use AppBundle\Form\AppPreferenceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class AppPreferenceController extends FOSRestController
         $appPreferences = $repository->findAll();
         /* @var $appPreferences AppPreference[] */
 
-        return $appPreferences;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($appPreferences, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', 'content']))));
     }
 
     /**
@@ -77,7 +78,7 @@ class AppPreferenceController extends FOSRestController
             return new JsonResponse(['message' => 'AppPreference not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $appPreference;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($appPreference, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', 'content']))));
     }
 
     /**

@@ -82,7 +82,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "placeNameContent"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="names")
      * @ORM\JoinColumn(nullable=true)
@@ -93,7 +93,7 @@ class PlaceName
      * Related departement
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "placeNameContent"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchDepartements")
      * @ORM\JoinColumn(nullable=true)
@@ -105,7 +105,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "placeNameContent"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="frenchRegions")
      * @ORM\JoinColumn(nullable=true)
@@ -117,7 +117,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "placeNameContent"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="cities")
      * @ORM\JoinColumn(nullable=true)
@@ -129,7 +129,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "parent"})
+     * @Serializer\Groups({"full", "parent", "placeNameContent"})
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Place", inversedBy="countries")
      * @ORM\JoinColumn(nullable=true)
@@ -141,7 +141,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "search", "infoWill", "adminEntity", "taxonomyList"})
+     * @Serializer\Groups({"full", "content", "search", "infoWill", "adminEntity", "taxonomyList", "placeNameContent"})
      *
      * @var string
      * @Assert\NotBlank()
@@ -156,7 +156,7 @@ class PlaceName
      * Using starting date of this name
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "placeNameContent"})
      *
      * @var string
      *
@@ -172,7 +172,7 @@ class PlaceName
      * The field is used to index dates in search
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "placeNameContent"})
      *
      * @var string
      *
@@ -187,7 +187,7 @@ class PlaceName
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "placeNameContent"})
      *
      * @var string
      *

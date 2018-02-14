@@ -3,16 +3,16 @@ FOS\CommentBundle\Model\Thread:
     properties:
         id:
             expose: true
-            groups: [full, id]
+            groups: [full, id, commentLog]
         isCommentable:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         numComments:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         lastCommentAt:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]
         permalink:
             expose: true
-            groups: [full, content]
+            groups: [full, content, commentLog]

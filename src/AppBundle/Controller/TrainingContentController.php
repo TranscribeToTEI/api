@@ -9,6 +9,7 @@ use AppBundle\Form\TrainingContentType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,7 +68,7 @@ class TrainingContentController extends FOSRestController
         $trainingContents = $repository->findBy($query, $order);
         /* @var $trainingContents TrainingContent[] */
 
-        return $trainingContents;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($trainingContents, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', "trainingContent", "metadata", "userProfile"]))));
     }
 
     /**
@@ -101,7 +102,7 @@ class TrainingContentController extends FOSRestController
             return new JsonResponse(['message' => 'TrainingContent not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $trainingContent;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($trainingContent, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', "trainingContent", "metadata", "userProfile"]))));
     }
 
     /**

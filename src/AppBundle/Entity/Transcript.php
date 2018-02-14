@@ -191,7 +191,7 @@ class Transcript
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "adminValidation"})
      * @Gedmo\Versioned
      * @Serializer\MaxDepth(1)
      *
@@ -204,7 +204,7 @@ class Transcript
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "adminValidation"})
      * @Gedmo\Versioned
      *
      * @var \DateTime

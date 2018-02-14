@@ -62,7 +62,7 @@ class EntityController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["id", "content"];
+            $profile = ["id", "pageEntity"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -103,7 +103,7 @@ class EntityController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["full"];
+            $profile = ["id", "pageEntity"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -164,6 +164,7 @@ class EntityController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function updateEntityAction(Request $request)
     {
@@ -184,6 +185,7 @@ class EntityController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function patchEntityAction(Request $request)
     {
@@ -234,6 +236,8 @@ class EntityController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @throws \Doctrine\ORM\OptimisticLockException
+     * @Security("is_granted('ROLE_MODO')")
      */
     public function removeEntityAction(Request $request)
     {

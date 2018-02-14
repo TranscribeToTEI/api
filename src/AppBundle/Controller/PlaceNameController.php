@@ -10,12 +10,15 @@ use AppBundle\Form\PlaceNameType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
+
 
 use Nelmio\ApiDocBundle\Annotation as Doc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -25,6 +28,7 @@ class PlaceNameController extends FOSRestController
     /**
      * @Rest\Get("/place-names")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile", nullable=true, description="Search profile to apply")
      *
      * @Doc\ApiDoc(
      *     section="PlaceNames",
@@ -44,12 +48,20 @@ class PlaceNameController extends FOSRestController
        $placeNames = $repository->findAll();
         /* @var $placeNames PlaceName[] */
 
-        return $placeNames;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "placeNameContent", "indexName"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($placeNames, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**
      * @Rest\Get("/place-names/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile", nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="PlaceNames",
      *     resource=true,
@@ -68,7 +80,7 @@ class PlaceNameController extends FOSRestController
      *     }
      * )
      */
-    public function getPlaceNameAction(Request $request)
+    public function getPlaceNameAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $placeName = $em->getRepository('AppBundle:PlaceName')->find($request->get('id'));
@@ -78,7 +90,13 @@ class PlaceNameController extends FOSRestController
             return new JsonResponse(['message' => 'PlaceName not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $placeName;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "placeNameContent", "indexName", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($placeName, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

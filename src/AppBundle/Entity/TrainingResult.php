@@ -76,7 +76,7 @@ class TrainingResult
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingResultContent"})
      * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
@@ -88,7 +88,7 @@ class TrainingResult
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "trainingResultContent"})
      * @Gedmo\Versioned
      *
      * @var string

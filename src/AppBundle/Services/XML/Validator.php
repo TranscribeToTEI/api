@@ -2,6 +2,7 @@
 
 namespace AppBundle\Services\XML;
 
+use AppBundle\Services\XML\Builder\Core;
 use Doctrine\ORM\EntityManager;
 
 class Validator
@@ -10,7 +11,7 @@ class Validator
     private $builder;
     private $relaxNGFile;
 
-    public function __construct(EntityManager $em, Builder $builder, $relaxNGFile)
+    public function __construct(EntityManager $em, Core $builder, $relaxNGFile)
     {
         $this->em = $em;
         $this->builder = $builder;
@@ -19,13 +20,12 @@ class Validator
 
     /**
      * @param $entity \AppBundle\Entity\Entity
-     * @param $transcript \AppBundle\Entity\Transcript|null
      * @return array
      */
     public function validate($entity, $transcript)
     {
         /** @var $doc \DOMDocument */
-        $doc = $this->builder->build($entity, $transcript, false);
+        $doc = $this->builder->build($entity, false);
         $result = $doc->relaxNGValidate($this->relaxNGFile);
         #$doc = new \DOMDocument('1.0');
         #$doc->load('http://localhost:8888/TestamentsDePoilus/api/web/XMLModel/testWill.xml');

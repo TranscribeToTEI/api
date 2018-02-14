@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Request\ParamFetcher;
 
+use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +53,7 @@ class WillTypeController extends FOSRestController
             /* @var $willTypes WillType[] */
         }
 
-        return $willTypes;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($willTypes, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', 'content']))));
     }
 
     /**
@@ -86,7 +87,7 @@ class WillTypeController extends FOSRestController
             return new JsonResponse(['message' => 'WillType not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $willType;
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($willType, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id', 'content']))));
     }
 
     /**

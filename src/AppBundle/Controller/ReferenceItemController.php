@@ -89,7 +89,7 @@ class ReferenceItemController extends FOSRestController
         }
 
         if($paramFetcher->get('profile') == '') {
-            $profile = ["id", "content"];
+            $profile = ["id", "bibliography", "bibliographySubject"];
         } else {
             $profile = explode(',', $paramFetcher->get('profile'));
         }
@@ -100,6 +100,8 @@ class ReferenceItemController extends FOSRestController
     /**
      * @Rest\Get("/reference-items/{id}")
      * @Rest\View(serializerEnableMaxDepthChecks=true)
+     * @QueryParam(name="profile",          nullable=true, description="Search profile to apply")
+     *
      * @Doc\ApiDoc(
      *     section="ReferenceItems",
      *     resource=true,
@@ -118,7 +120,7 @@ class ReferenceItemController extends FOSRestController
      *     }
      * )
      */
-    public function getReferenceItemAction(Request $request)
+    public function getReferenceItemAction(Request $request, ParamFetcher $paramFetcher)
     {
         $em = $this->getDoctrine()->getManager();
         $referenceItem = $em->getRepository('AppBundle:ReferenceItem')->find($request->get('id'));
@@ -128,7 +130,13 @@ class ReferenceItemController extends FOSRestController
             return new JsonResponse(['message' => 'ReferenceItem not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $referenceItem;
+        if($paramFetcher->get('profile') == '') {
+            $profile = ["id", "bibliography", "bibliographySubject", "metadata", "userProfile"];
+        } else {
+            $profile = explode(',', $paramFetcher->get('profile'));
+        }
+
+        return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($referenceItem, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
     }
 
     /**

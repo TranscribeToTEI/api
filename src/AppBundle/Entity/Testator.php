@@ -125,7 +125,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "taxonomyView", "adminEntity", "taxonomyList"})
+     * @Serializer\Groups({"full", "content", "index", "taxonomyView", "adminEntity", "taxonomyList", "adminValidation"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *

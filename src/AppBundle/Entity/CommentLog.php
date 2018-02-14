@@ -62,6 +62,13 @@ use JMS\Serializer\Annotation as Serializer;
  *          groups={"full", "links"}
  *     )
  * )
+ * @Hateoas\Relation(
+ *     "content",
+ *     embedded = @Hateoas\Embedded("expr(service('app.commentLog').getContentInfo(object))"),
+ *     exclusion = @Hateoas\Exclusion(
+ *          groups={"full", "commentLog"}
+ *     )
+ * )
  */
 class CommentLog
 {
@@ -83,7 +90,7 @@ class CommentLog
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "commentLog"})
      *
      * @var bool
      * @Assert\NotNull()
@@ -98,7 +105,7 @@ class CommentLog
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "commentLog"})
      *
      * @var bool
      * @Assert\NotNull()
@@ -112,7 +119,7 @@ class CommentLog
      * If the comment is part of a private thread, has it been read by the recipient?
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "commentLog"})
      *
      * @var bool
      * @Assert\NotNull()
@@ -127,7 +134,7 @@ class CommentLog
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "commentLog"})
      * @Serializer\MaxDepth(1)
      *
      * @var string
@@ -142,7 +149,7 @@ class CommentLog
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content"})
+     * @Serializer\Groups({"full", "content", "commentLog"})
      * @Serializer\MaxDepth(1)
      *
      * @var string
@@ -155,7 +162,7 @@ class CommentLog
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata", "content"})
+     * @Serializer\Groups({"full", "metadata", "content", "commentLog"})
      * @Serializer\MaxDepth(1)
      *
      * @Gedmo\Blameable(on="create")
@@ -167,7 +174,7 @@ class CommentLog
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "metadata"})
+     * @Serializer\Groups({"full", "metadata", "commentLog"})
      *
      * @var \DateTime
      *

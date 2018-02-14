@@ -75,6 +75,9 @@ class ModelController extends FOSRestController
             }
         }
 
+        $data = str_replace("<egXML xmlns=\"http://www.tei-c.org/ns/Examples\">", "", $data);
+        $data = str_replace("</egXML>", "", $data);
+
         return new JsonResponse(["data" => $data], Response::HTTP_OK);
     }
 

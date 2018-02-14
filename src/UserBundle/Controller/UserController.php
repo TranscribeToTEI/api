@@ -41,7 +41,7 @@ class UserController extends FOSRestController
      * @Rest\Get("/users")
      * @QueryParam(name="token", description="User's token")
      * @QueryParam(name="username", nullable=true, description="Username of an user")
-     * @QueryParam(name="profile", requirements="short|full", nullable=true, description="Quantity of information returned about the user.")
+     * @QueryParam(name="profile", nullable=true, description="Quantity of information returned about the user.")
      *
      * @Doc\ApiDoc(
      *     section="Users",
@@ -66,17 +66,21 @@ class UserController extends FOSRestController
             $groups = ['full'];
         }
 
-        if($token != "") {
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') and in_array('email', $profile) == true) {
+            $users = $em->getRepository('UserBundle:User')->findAll();
+            /** @var $users User */
+            $groups = ['userEmail'];
+        } elseif($token != "") {
             $users = $em->getRepository('UserBundle:AccessToken')->findOneByToken($token)->getUser();
-            /* @var $users User */
+            /** @var $users User */
             $groups[] = 'privateMessages';
             $groups[] = 'userPreferences';
         } elseif($username != "") {
             $users = $em->getRepository('UserBundle:User')->findOneBy(array('username' => $username));
-            /* @var $users User */
+            /** @var $users User */
         } else {
             $users = $em->getRepository('UserBundle:User')->findAll();
-            /* @var $users User[] */
+            /** @var $users User[] */
             if(!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 $groups = ['id','name'];
             }
@@ -239,6 +243,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function updateUserAction(Request $request)
     {
@@ -271,6 +276,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function patchUserAction(Request $request)
     {
@@ -333,6 +339,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function removeUserAction(Request $request)
     {
@@ -720,6 +727,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function setRoleAction(Request $request)
     {
@@ -735,6 +743,10 @@ class UserController extends FOSRestController
         $access = $em->getRepository('UserBundle:Access')->findOneBy(array('user' => $iUser));
         $setTaxoTrue = false;
         $emailNotification = false;
+
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $iUser) {
+            throw $this->createAccessDeniedException('Unable to access this page!');
+        }
 
         $allowedRoles = ['ROLE_USER', 'ROLE_MODO', 'ROLE_TAXONOMY_EDIT'];
         if($action == "set") {
@@ -800,6 +812,7 @@ class UserController extends FOSRestController
      *         400="Returned when a violation is raised by validation"
      *     }
      * )
+     * @Security("is_granted('ROLE_USER')")
      */
     public function postAvatarsAction(Request $request, ParamFetcher $paramFetcher)
     {
@@ -810,6 +823,10 @@ class UserController extends FOSRestController
         $user = $em->getRepository('UserBundle:User')->findOneById($id);
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
+        }
+
+        if(!$this->get('security.authorization_checker')->isGranted('ROLE_MODO') and $this->get('security.token_storage')->getToken()->getUser() != $user) {
+            throw $this->createAccessDeniedException('Unable to access this page!');
         }
 
         /* Upload logic */
