@@ -1,0 +1,14 @@
+<p>Bonjour {{ transcript.submitUser.name }},<br />
+<br />
+Un membre de l'équipe Testaments de Poilus vient {% if transcript.status == 'validated' %}d'accepter{% else %}de remettre au pot commun{% endif %} votre transcription du {{ entity.will.title }}.</p>
+
+{% if transcript.validationText != null %}
+    <p>Il vous laisse le message suivant :</p>
+    {{ transcript.validationText | raw }}
+{% endif %}
+
+<p>Bonne journée,<br />
+L'équipe de Testaments de Poilus<br />
+https://testaments-de-poilus.huma-num.fr<br />
+<br />
+<small>Si vous ne souhaitez plus recevoir ces messages, rendez-vous dans la section "Préférences" de votre compte utilisateur.</small></p>

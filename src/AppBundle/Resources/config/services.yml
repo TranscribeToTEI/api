@@ -117,6 +117,8 @@ services:
 
     app.listener.entity:
         class: AppBundle\EventListener\EntitySubscriber
+        arguments:
+            - '@monolog.logger'
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 

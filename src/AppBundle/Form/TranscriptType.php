@@ -22,6 +22,9 @@ class TranscriptType extends AbstractType
             ->add('updateComment',              TextType::class,                                        array("required" => false))
             ->add('continueBefore',             CheckboxType::class,                                    array("required" => false))
             ->add('continueAfter',              CheckboxType::class,                                    array("required" => false))
+            ->add('submitUser',                 \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'UserBundle:User'))
+            ->add('validationText',             TextareaType::class,                                    array("required" => false))
+            ->add('sendNotification',           CheckboxType::class,                                    array("required" => false, "mapped" => false))
         ;
     }
     

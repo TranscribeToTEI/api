@@ -22,6 +22,7 @@ class PreferenceType extends AbstractType
             ->add('smartTEI',                   CheckboxType::class,    array('required' => false))
             ->add('showComplexEntry',           CheckboxType::class,    array('required' => false))
             ->add('creditActions',              CheckboxType::class,    array('required' => false))
+            ->add('notificationTranscription',  CheckboxType::class,    array('required' => false))
             ->add('tutorialStatus',             TextType::class,        array('required' => false))
             ->add('tutorialProgress',           IntegerType::class,     array('required' => false))
         ;

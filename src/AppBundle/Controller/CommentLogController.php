@@ -93,10 +93,10 @@ class CommentLogController extends FOSRestController
                 return new JsonResponse(['message' => 'not allowed']);
             }
         } elseif($readByAdmin != null) {
-            $commentLogs = $repository->findBy(array('isReadByAdmin' => $readByAdmin));
+            $commentLogs = $repository->findBy(array('isReadByAdmin' => $readByAdmin), array('createDate' => "DESC"));
             /* @var $commentLogs CommentLog[] */
         } else {
-            $commentLogs = $repository->findBy(array('isPrivateThread' => false));
+            $commentLogs = $repository->findBy(array('isPrivateThread' => false), array('createDate' => "DESC"));
             /* @var $commentLogs CommentLog[] */
         }
 

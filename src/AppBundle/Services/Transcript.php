@@ -96,10 +96,16 @@ class Transcript
             /** @var $user User */
             $user = $this->em->getRepository("UserBundle:User")->findOneBy(array("username" => $version->getUsername()));
 
+            if($user != null) {
+                $userContent = ["id" => $user->getId(), 'name' => $user->getName()];
+            } else {
+                $userContent = null;
+            }
+
 
             $computedVersions[] =
                 [
-                    "user" => ["id" => $user->getId(), 'name' => $user->getName()],
+                    "user" => $userContent,
                     "data" => $version->getData(),
                     "loggedAt" => $version->getLoggedAt(),
                     "id" => $version->getId(),

@@ -211,6 +211,20 @@ class TranscriptController extends FOSRestController
         if ($form->isValid()) {
             $em->merge($transcript);
             $em->flush();
+
+            if($form->get('sendNotification')->getData() == true and $transcript->getSubmitUser() != null and $this->get('user.user')->getPreference($transcript->getSubmitUser())->getNotificationTranscription() == true) {
+                $entity = $this->get('app.transcript')->getResource($transcript)->getEntity();
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Notification de traitement d\'une transcription - Testaments de Poilus')
+                    ->setFrom('testaments-de-poilus@huma-num.fr')
+                    ->setTo($transcript->getSubmitUser()->getEmail())
+                    ->setBody($this->renderView(
+                        'AppBundle:Transcript:notification.html.twig',
+                        array('transcript' => $transcript, 'entity' => $entity)), 'text/html');
+                $this->get('mailer')->send($message);
+            }
+
+
             return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($transcript, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups($profile))));
         } else {
             return $form;

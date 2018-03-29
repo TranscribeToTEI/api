@@ -18,9 +18,19 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PreFlushEventArgs;
+use Psr\Log\LoggerInterface;
 
 class EntitySubscriber implements EventSubscriber
 {
+
+    private $logger;
+
+    public function __construct(
+        LoggerInterface $logger
+    ) {
+        $this->logger = $logger;
+    }
+
     public function getSubscribedEvents()
     {
         return array(
@@ -73,9 +83,9 @@ class EntitySubscriber implements EventSubscriber
             $commentLog->setIsReadByAdmin(false);
             $commentLog->setIsReadByRecipient(false);
 
-            if(strpos($comment->getThread()->getId(), 'users-') !== false) {
+            if(strpos($comment->getThread()->getId(), 'users') === 0) {
                 $commentLog->setIsPrivateThread(true);
-            } else {
+            } elseif(strpos($comment->getThread()->getId(), 'users') === false) {
                 $commentLog->setIsPrivateThread(false);
             }
 
@@ -111,15 +121,6 @@ class EntitySubscriber implements EventSubscriber
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        /*$em = $args->getEntityManager();
-        $uow = $em->getUnitOfWork();
-        $updatedEntities = $uow->getScheduledEntityUpdates();
-
-        foreach($updatedEntities as $entity) {
-            if (get_class($entity) == "AppBundle\Entity\Testator" or get_class($entity) == "AppBundle\Entity\Place" or get_class($entity) == "AppBundle\Entity\MilitaryUnit") {
-                $this->postTaxonomyVersion($em, $entity);
-            }
-        }*/
         $this->postTaxonomyVersion($args->getEntityManager(), $args->getEntity());
     }
 

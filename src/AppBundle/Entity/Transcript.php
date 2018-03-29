@@ -167,6 +167,31 @@ class Transcript
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
+     * @Serializer\Groups({"full", "pageTranscript"})
+     * @Serializer\MaxDepth(1)
+     *
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $submitUser;
+
+    /**
+     * This is the content of your transcription
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "pageTranscript"})
+     * @Gedmo\Versioned
+     *
+     * @var string
+     *
+     * @ORM\Column(name="validationText", type="text", nullable=true)
+     */
+    private $validationText;
+
+    /**
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
      * @Serializer\Groups({"full", "metadata"})
      * @Serializer\MaxDepth(1)
      *
@@ -453,5 +478,53 @@ class Transcript
     public function getContinueAfter()
     {
         return $this->continueAfter;
+    }
+
+    /**
+     * Set submitUser
+     *
+     * @param \UserBundle\Entity\User $submitUser
+     *
+     * @return Transcript
+     */
+    public function setSubmitUser(\UserBundle\Entity\User $submitUser = null)
+    {
+        $this->submitUser = $submitUser;
+
+        return $this;
+    }
+
+    /**
+     * Get submitUser
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getSubmitUser()
+    {
+        return $this->submitUser;
+    }
+
+    /**
+     * Set validationText
+     *
+     * @param string $validationText
+     *
+     * @return Transcript
+     */
+    public function setValidationText($validationText)
+    {
+        $this->validationText = $validationText;
+
+        return $this;
+    }
+
+    /**
+     * Get validationText
+     *
+     * @return string
+     */
+    public function getValidationText()
+    {
+        return $this->validationText;
     }
 }

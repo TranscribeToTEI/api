@@ -46,6 +46,7 @@ class User
         $preference->setSmartTEI(true);
         $preference->setShowComplexEntry(true);
         $preference->setCreditActions(true);
+        $preference->setNotificationTranscription(true);
         $this->em->persist($preference);
         $this->em->flush();
         return $preference;

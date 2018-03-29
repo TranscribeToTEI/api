@@ -147,6 +147,19 @@ class Preference
     private $creditActions;
 
     /**
+     * Receive notifications for transcription events
+     *
+     * @Serializer\Since("0.1")
+     * @Serializer\Expose
+     * @Serializer\Groups({"full", "content", "userPreferences"})
+     *
+     * @var bool
+     *
+     * @ORM\Column(name="notificationTranscription", type="boolean", nullable=true)
+     */
+    private $notificationTranscription;
+
+    /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      * @Serializer\MaxDepth(2)
@@ -330,5 +343,29 @@ class Preference
     public function getCreditActions()
     {
         return $this->creditActions;
+    }
+
+    /**
+     * Set notificationTranscription
+     *
+     * @param boolean $notificationTranscription
+     *
+     * @return Preference
+     */
+    public function setNotificationTranscription($notificationTranscription)
+    {
+        $this->notificationTranscription = $notificationTranscription;
+
+        return $this;
+    }
+
+    /**
+     * Get notificationTranscription
+     *
+     * @return boolean
+     */
+    public function getNotificationTranscription()
+    {
+        return $this->notificationTranscription;
     }
 }
