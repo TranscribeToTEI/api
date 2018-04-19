@@ -125,7 +125,7 @@ class Testator
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "content", "index", "taxonomyView", "adminEntity", "taxonomyList", "adminValidation"})
+     * @Serializer\Groups({"full", "content", "index", "search", "taxonomyView", "adminEntity", "taxonomyList", "adminValidation"})
      * @Assert\NotBlank()
      * @Gedmo\Versioned
      *
@@ -318,7 +318,7 @@ class Testator
      *
      * @Gedmo\Versioned
      *
-     * @ORM\Column(name="yearOfBirth", type="string", length=5)
+     * @ORM\Column(name="yearOfBirth", type="string", length=5, nullable=true)
      */
     private $yearOfBirth;
 
@@ -403,7 +403,7 @@ class Testator
      *
      * @Gedmo\Versioned
      *
-     * @ORM\Column(name="yearOfDeath", type="string", length=5)
+     * @ORM\Column(name="yearOfDeath", type="string", length=5, nullable=true)
      */
     private $yearOfDeath;
 

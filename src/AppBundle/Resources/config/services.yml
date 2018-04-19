@@ -39,6 +39,10 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@app.versioning'
             - '@logger'
+            - '@user.user'
+            - '@mailer'
+            - '@templating'
+            - '%siteURL%'
 
     app.testator:
         class: AppBundle\Services\Testator

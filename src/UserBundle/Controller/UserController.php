@@ -322,6 +322,7 @@ class UserController extends FOSRestController
     /**
      * @Rest\Delete("/users/{id}")
      * @Rest\View(statusCode=Response::HTTP_NO_CONTENT)
+     * @QueryParam(name="silent", nullable=true, description="Do you want to send a notification to the deleted user?")
      * @Doc\ApiDoc(
      *     section="Users",
      *     resource=true,
@@ -341,8 +342,9 @@ class UserController extends FOSRestController
      * )
      * @Security("is_granted('ROLE_USER')")
      */
-    public function removeUserAction(Request $request)
+    public function removeUserAction(Request $request, ParamFetcher $paramFetcher)
     {
+        $silent = filter_var($paramFetcher->get('silent'), FILTER_VALIDATE_BOOLEAN);;
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('UserBundle:User')->find($request->get('id'));
         /* @var $user User */
@@ -355,6 +357,8 @@ class UserController extends FOSRestController
             foreach($em->getRepository('UserBundle:AccessToken')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
             foreach($em->getRepository('UserBundle:RefreshToken')->findBy(array('user' => $user)) as $item) {$em->remove($item);}
 
+            foreach($em->getRepository('AppBundle:Content')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
+            foreach($em->getRepository('AppBundle:Content')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:Comment\Comment')->findBy(array('author' => $user)) as $item) {$item->setAuthor(null);}
             foreach($em->getRepository('AppBundle:AppPreference')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:CommentLog')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
@@ -390,14 +394,13 @@ class UserController extends FOSRestController
             foreach($em->getRepository('AppBundle:TrainingResult')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:Transcript')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:Transcript')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
+            foreach($em->getRepository('AppBundle:Transcript')->findBy(array('submitUser' => $user)) as $item) {$item->setSubmitUser(null);}
             foreach($em->getRepository('AppBundle:TranscriptLog')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:TranscriptLog')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:Will')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:Will')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
             foreach($em->getRepository('AppBundle:WillType')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null);}
             foreach($em->getRepository('AppBundle:WillType')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null);}
-
-
 
             foreach($em->getRepository('AppBundle:TrainingContent')->findAll() as $item) {
                 foreach($item->getEditorialResponsibility() as $iUser) {
@@ -406,20 +409,27 @@ class UserController extends FOSRestController
                     }
                 }
             }
-
-
+            foreach($em->getRepository('AppBundle:Content')->findAll() as $item) {
+                foreach($item->getEditorialResponsibility() as $iUser) {
+                    if($iUser === $user) {
+                        $item->removeEditorialResponsibility($user);
+                    }
+                }
+            }
 
             $em->remove($user);
             $em->flush();
 
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Suppression de compte - Testaments de Poilus')
-                ->setFrom('testaments-de-poilus@huma-num.fr')
-                ->setTo($user->getEmail())
-                ->setBody($this->renderView(
-                    'UserBundle:Remove:email.txt.twig',
-                    array('user' => $proviUser)));
-            $this->get('mailer')->send($message);
+            if($silent == false) {
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Suppression de compte - Testaments de Poilus')
+                    ->setFrom('testaments-de-poilus@huma-num.fr')
+                    ->setTo($user->getEmail())
+                    ->setBody($this->renderView(
+                        'UserBundle:Remove:email.txt.twig',
+                        array('user' => $proviUser)));
+                $this->get('mailer')->send($message);
+            }
         } else {
             // User need to be the user requested or an admin
             throw $this->createAccessDeniedException('Unable to access this page!');

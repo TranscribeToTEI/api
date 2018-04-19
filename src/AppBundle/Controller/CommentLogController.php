@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\CommentLogRepository;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\commentLog;
 
@@ -60,7 +61,7 @@ class CommentLogController extends FOSRestController
         }
 
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:CommentLog');
-        /* @var $repository EntityRepository */
+        /* @var $repository CommentLogRepository */
 
         if($private != null) {
             if(count(explode('-', $private)) > 1) {
@@ -70,25 +71,10 @@ class CommentLogController extends FOSRestController
             }
 
             if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') or ($this->get('security.authorization_checker')->isGranted('ROLE_USER') and in_array($this->getUser()->getId(), $listUsers))) {
-                $listComments = array();
-                $commentLogs = $repository->findBy(array(), array('id' => 'DESC'));
+                $threadType = "users";
+                $commentLogs = $repository->getCommentsByThreadId($threadType, $listUsers);
                 /* @var $commentLogs CommentLog[] */
-
-                foreach($commentLogs as $commentLog) {
-                    $idString = explode('-', $commentLog->getThread()->getId());
-                    if(count(explode('-', $private)) > 1) {
-                        $private = explode('-', $private);
-                        if($idString[0] == 'users' and (($idString[1] == $private[0] and $idString[2] == $private[1]) or ($idString[1] == $private[1] and $idString[2] == $private[0]))) {
-                            $listComments[] = $commentLog;
-                        }
-                    } else {
-                        if($idString[0] == 'users' and ($idString[1] == $private or $idString[2] == $private)) {
-                            $listComments[] = $commentLog;
-                        }
-                    }
-                }
-
-                $toReturn = $listComments;
+                $toReturn = $commentLogs;
             } else {
                 return new JsonResponse(['message' => 'not allowed']);
             }

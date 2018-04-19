@@ -54,6 +54,9 @@ class Comment extends BaseComment implements SignedCommentInterface
      */
     protected $author;
 
+    /**
+     * @param UserInterface $author
+     */
     public function setAuthor(UserInterface $author)
     {
         $this->author = $author;

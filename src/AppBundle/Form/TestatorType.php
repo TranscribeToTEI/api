@@ -40,7 +40,7 @@ class TestatorType extends AbstractType
             ->add('dateOfDeathString',          TextareaType::class,                                    array("required" => false))
             ->add('dateOfDeathNormalized',      TextareaType::class,                                    array("required" => false))
             ->add('dateOfDeathEndNormalized',   TextareaType::class,                                    array("required" => false))
-            ->add('yearOfDeath',                TextType::class,                                        array("required" => true))
+            ->add('yearOfDeath',                TextType::class,                                        array("required" => false))
             ->add('placeOfDeathNormalized',     \Symfony\Bridge\Doctrine\Form\Type\EntityType::class,   array("required" => false, 'class' => 'AppBundle:Place'))
             ->add('placeOfDeathString',         TextareaType::class,                                    array("required" => false))
             ->add('deathMention',               TextType::class,                                        array("required" => true))
