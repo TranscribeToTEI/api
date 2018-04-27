@@ -17,42 +17,12 @@ class PlaceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('names',                       CollectionType::class, array(
-                "required" => true,
-                "allow_add" => true,
-                "allow_delete" => true,
-                "delete_empty" => true,
-                'entry_type'   => PlaceNameType::class
-            ))
-            ->add('frenchDepartements',                       CollectionType::class, array(
-                "required" => false,
-                "allow_add" => true,
-                "allow_delete" => true,
-                "delete_empty" => true,
-                'entry_type'   => PlaceNameType::class
-            ))
-            ->add('frenchRegions',                       CollectionType::class, array(
-                "required" => false,
-                "allow_add" => true,
-                "allow_delete" => true,
-                "delete_empty" => true,
-                'entry_type'   => PlaceNameType::class
-            ))
-            ->add('cities',                       CollectionType::class, array(
-                "required" => false,
-                "allow_add" => true,
-                "allow_delete" => true,
-                "delete_empty" => true,
-                'entry_type'   => PlaceNameType::class
-            ))
-            ->add('countries',                       CollectionType::class, array(
-                "required" => false,
-                "allow_add" => true,
-                "allow_delete" => true,
-                "delete_empty" => true,
-                'entry_type'   => PlaceNameType::class
-            ))
             ->add('indexName',                  TextType::class,        array("required" => false))
+            ->add('name',                       TextType::class,        array("required" => false))
+            ->add('frenchDepartement',          TextType::class,        array("required" => false))
+            ->add('frenchRegion',               TextType::class,        array("required" => false))
+            ->add('city',                       TextType::class,        array("required" => false))
+            ->add('country',                    TextType::class,        array("required" => false))
             ->add('description',                TextareaType::class,    array("required" => false))
             ->add('geonamesId',                 TextType::class,        array("required" => false))
             ->add('geographicalCoordinates',    TextType::class,        array("required" => false))

@@ -291,7 +291,7 @@ class Header
 
             if($entity->getWill()->getWillWritingPlaceNormalized() != null) {
                 $placeName = $doc->createElement('placeName');
-                $placeName->appendChild(new \DOMText($entity->getWill()->getWillWritingPlaceNormalized()->getNames()[0]->getName()));
+                $placeName->appendChild(new \DOMText($entity->getWill()->getWillWritingPlaceNormalized()->getName()));
                 $pDate->appendChild($placeName);
                 $pDate->appendChild(new \DOMText("."));
             }
@@ -461,7 +461,7 @@ class Header
             $elements[] = new \DOMText(" à ");
             $placeName = $doc->createElement('placeName');
             $placeName->setAttribute('ref', '#pl-'.$entity->getWill()->getTestator()->getPlaceOfDeathNormalized()->getId());
-            $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeathNormalized()->getNames()[0]->getName()));
+            $placeName->appendChild(new \DOMText($entity->getWill()->getTestator()->getPlaceOfDeathNormalized()->getName()));
             $elements[] = $placeName;
         }
         if($entity->getWill()->getTestator()->getPlaceOfDeathNormalized() != null && $entity->getWill()->getTestator()->getDateOfDeathString() != null) {

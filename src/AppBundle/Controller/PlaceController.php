@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\PlaceName;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Place;
 
@@ -56,8 +55,7 @@ class PlaceController extends FOSRestController
         if($search != "") {
             /* @var $places Place[] */
             $qb = $repository->createQueryBuilder('a')
-                        ->Join('a.names', 'n')
-                        ->andwhere('n.name =:name')
+                        ->where('a.name = :name')
                         ->setParameter('name', $search);
             $places = $qb->getQuery()->getResult();
         } else {
@@ -142,26 +140,6 @@ class PlaceController extends FOSRestController
 
         if ($form->isValid()) {
             $em->persist($place);
-            foreach($place->getNames() as $placeName) {
-                /** @var $placeName PlaceName */
-                $placeName->setPlaceName($place);
-            }
-            foreach($place->getFrenchDepartements() as $placeName) {
-                /** @var $placeName PlaceName */
-                $placeName->setPlaceDepartement($place);
-            }
-            foreach($place->getFrenchRegions() as $placeName) {
-                /** @var $placeName PlaceName */
-                $placeName->setPlaceRegion($place);
-            }
-            foreach($place->getCities() as $placeName) {
-                /** @var $placeName PlaceName */
-                $placeName->setPlaceCity($place);
-            }
-            foreach($place->getCountries() as $placeName) {
-                /** @var $placeName PlaceName */
-                $placeName->setPlaceCountry($place);
-            }
             $em->flush();
             return new JsonResponse(json_decode($this->get('jms_serializer')->serialize($place, 'json', SerializationContext::create()->enableMaxDepthChecks()->setGroups(['id']))));
         } else {

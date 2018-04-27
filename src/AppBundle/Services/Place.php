@@ -2,7 +2,6 @@
 
 namespace AppBundle\Services;
 
-use AppBundle\Entity\PlaceName;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
@@ -18,16 +17,7 @@ class Place
 
     /**
      * @param $place \AppBundle\Entity\Place
-     * @param $property string
-     * @return PlaceName[]
-     */
-    public function getNames($place, $property)
-    {
-        return $this->em->getRepository("AppBundle:PlaceName")->findBy(array($property => $place), array("createDate" => "DESC"));
-    }
-
-    /**
-     * @param $place \AppBundle\Entity\Place
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function remove($place)
     {
@@ -71,5 +61,19 @@ class Place
         }
 
         return $list;
+    }
+
+    /**
+     * @param $place \AppBundle\Entity\Place
+     * @return array
+     */
+    public function getWills($place) {
+        $repositoryWills = $this->em->getRepository('AppBundle:Will');
+
+        $qb = $repositoryWills->createQueryBuilder('w')
+            ->where('w.willWritingPlaceNormalized = :place')
+            ->setParameter('place', $place);
+
+        return $qb->getQuery()->getResult();
     }
 }

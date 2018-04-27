@@ -107,67 +107,74 @@ class Place
     private $indexName;
 
     /**
-     * Names of the place > Related to PlaceName entities
+     * Place name
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "search", "infoWill", "taxonomyView", "adminEntity"})
+     * @Gedmo\Versioned
      *
-     * @Assert\NotBlank()
-     * @Serializer\MaxDepth(2)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeName", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
      */
-    private $names;
+    private $name;
 
     /**
-     * Departements (relevant for France) of your place > Related to PlaceName entities
+     * Place name
      *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
+     * @Gedmo\Versioned
      *
-     * @Serializer\MaxDepth(2)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeDepartement", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Column(name="frenchDepartement", type="string", length=255, nullable=true)
      */
-    private $frenchDepartements;
+    private $frenchDepartement;
 
     /**
-     * Regions (relevant for France) of your place > Related to PlaceName entities
+     * Place name
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
+     * @Gedmo\Versioned
      *
-     * @Serializer\MaxDepth(2)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeRegion", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Column(name="frenchRegion", type="string", length=255, nullable=true)
      */
-    private $frenchRegions;
+    private $frenchRegion;
 
     /**
-     * Cities (relevant for places which are not city) of your place > Related to PlaceName entities
+     * Place name
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
+     * @Gedmo\Versioned
      *
-     * @Serializer\MaxDepth(2)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeCity", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
-    private $cities;
+    private $city;
 
     /**
-     * Countries of your place > Related to PlaceName entities
+     * Place name
+     *
      * @Serializer\Since("0.1")
      * @Serializer\Expose
      * @Serializer\Groups({"full", "content", "taxonomyView", "taxonomyList"})
+     * @Gedmo\Versioned
      *
-     * @Serializer\MaxDepth(2)
+     * @var string
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlaceName", mappedBy="placeCountry", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\Column(name="country", type="string", length=255, nullable=true)
      */
-    private $countries;
+    private $country;
 
     /**
      * Description of your place
@@ -306,11 +313,7 @@ class Place
      */
     public function __construct()
     {
-        $this->names = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->frenchDepartements = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->frenchRegions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->cities = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->countries = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function set($property, $value) {
@@ -470,176 +473,6 @@ class Place
     }
 
     /**
-     * Add name
-     *
-     * @param \AppBundle\Entity\PlaceName $name
-     *
-     * @return Place
-     */
-    public function addName(\AppBundle\Entity\PlaceName $name)
-    {
-        $this->names[] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Remove name
-     *
-     * @param \AppBundle\Entity\PlaceName $name
-     */
-    public function removeName(\AppBundle\Entity\PlaceName $name)
-    {
-        $this->names->removeElement($name);
-    }
-
-    /**
-     * Get names
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getNames()
-    {
-        return $this->names;
-    }
-
-    /**
-     * Add frenchDepartement
-     *
-     * @param \AppBundle\Entity\PlaceName $frenchDepartement
-     *
-     * @return Place
-     */
-    public function addFrenchDepartement(\AppBundle\Entity\PlaceName $frenchDepartement)
-    {
-        $this->frenchDepartements[] = $frenchDepartement;
-
-        return $this;
-    }
-
-    /**
-     * Remove frenchDepartement
-     *
-     * @param \AppBundle\Entity\PlaceName $frenchDepartement
-     */
-    public function removeFrenchDepartement(\AppBundle\Entity\PlaceName $frenchDepartement)
-    {
-        $this->frenchDepartements->removeElement($frenchDepartement);
-    }
-
-    /**
-     * Get frenchDepartements
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFrenchDepartements()
-    {
-        return $this->frenchDepartements;
-    }
-
-    /**
-     * Add frenchRegion
-     *
-     * @param \AppBundle\Entity\PlaceName $frenchRegion
-     *
-     * @return Place
-     */
-    public function addFrenchRegion(\AppBundle\Entity\PlaceName $frenchRegion)
-    {
-        $this->frenchRegions[] = $frenchRegion;
-
-        return $this;
-    }
-
-    /**
-     * Remove frenchRegion
-     *
-     * @param \AppBundle\Entity\PlaceName $frenchRegion
-     */
-    public function removeFrenchRegion(\AppBundle\Entity\PlaceName $frenchRegion)
-    {
-        $this->frenchRegions->removeElement($frenchRegion);
-    }
-
-    /**
-     * Get frenchRegions
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getFrenchRegions()
-    {
-        return $this->frenchRegions;
-    }
-
-    /**
-     * Add city
-     *
-     * @param \AppBundle\Entity\PlaceName $city
-     *
-     * @return Place
-     */
-    public function addCity(\AppBundle\Entity\PlaceName $city)
-    {
-        $this->cities[] = $city;
-
-        return $this;
-    }
-
-    /**
-     * Remove city
-     *
-     * @param \AppBundle\Entity\PlaceName $city
-     */
-    public function removeCity(\AppBundle\Entity\PlaceName $city)
-    {
-        $this->cities->removeElement($city);
-    }
-
-    /**
-     * Get cities
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCities()
-    {
-        return $this->cities;
-    }
-
-    /**
-     * Add country
-     *
-     * @param \AppBundle\Entity\PlaceName $country
-     *
-     * @return Place
-     */
-    public function addCountry(\AppBundle\Entity\PlaceName $country)
-    {
-        $this->countries[] = $country;
-
-        return $this;
-    }
-
-    /**
-     * Remove country
-     *
-     * @param \AppBundle\Entity\PlaceName $country
-     */
-    public function removeCountry(\AppBundle\Entity\PlaceName $country)
-    {
-        $this->countries->removeElement($country);
-    }
-
-    /**
-     * Get countries
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCountries()
-    {
-        return $this->countries;
-    }
-
-    /**
      * Set createUser
      *
      * @param \UserBundle\Entity\User $createUser
@@ -733,5 +566,125 @@ class Place
     public function getIndexName()
     {
         return $this->indexName;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Place
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set frenchDepartement
+     *
+     * @param string $frenchDepartement
+     *
+     * @return Place
+     */
+    public function setFrenchDepartement($frenchDepartement)
+    {
+        $this->frenchDepartement = $frenchDepartement;
+
+        return $this;
+    }
+
+    /**
+     * Get frenchDepartement
+     *
+     * @return string
+     */
+    public function getFrenchDepartement()
+    {
+        return $this->frenchDepartement;
+    }
+
+    /**
+     * Set frenchRegion
+     *
+     * @param string $frenchRegion
+     *
+     * @return Place
+     */
+    public function setFrenchRegion($frenchRegion)
+    {
+        $this->frenchRegion = $frenchRegion;
+
+        return $this;
+    }
+
+    /**
+     * Get frenchRegion
+     *
+     * @return string
+     */
+    public function getFrenchRegion()
+    {
+        return $this->frenchRegion;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return Place
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return Place
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }

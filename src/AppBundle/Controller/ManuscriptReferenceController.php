@@ -221,6 +221,8 @@ class ManuscriptReferenceController extends FOSRestController
         /* @var $manuscriptReference ManuscriptReference */
 
         if ($manuscriptReference) {
+            $referenceItem = $this->get('app.reference')->getReferenceItem('manuscriptReference', $manuscriptReference);
+            $em->remove($referenceItem);
             $em->remove($manuscriptReference);
             $em->flush();
         }

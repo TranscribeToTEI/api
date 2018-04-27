@@ -64,6 +64,11 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+    app.reference:
+        class: AppBundle\Services\Reference
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
     # Mailing
     app.contact:
         class: AppBundle\Services\Contact
@@ -131,4 +136,11 @@ services:
         class: AppBundle\Command\TestEmailCommand
         arguments:
             - '%mailer_user%'
+
+    app.command.cleanEntities:
+        class: AppBundle\Command\CleanEntitiesCommand
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@app.place'
+            - '@app.militaryUnit'
 

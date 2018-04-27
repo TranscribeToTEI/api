@@ -58,12 +58,12 @@ class Model
 
                 $paragraphe = null;
                 if($paragraphes->length > 0) {
-                    $paragraphe = $this->removeBreakLine($doc->saveXML($paragraphes[0]));
+                    $paragraphe = $this->convertToHTML($this->removeBreakLine($doc->saveXML($paragraphes[0])));
                 }
 
                 $example = null;
                 if($examples->length > 0) {
-                    $example = $this->removeBreakLine($doc->saveXML($examples[0]));
+                    $example = $this->removePatterns($this->removeBreakLine($doc->saveXML($examples[0])), ['<egXML xmlns="http://www.tei-c.org/ns/Examples">', '</egXML>']);
                 }
 
                 $documentation["exemplum"][] = [
@@ -217,6 +217,24 @@ class Model
     {
         $string = str_replace('\n', " ", $string);
         $string = preg_replace('/\s+/', ' ', $string);
+        return $string;
+    }
+
+    private function removePatterns($string, $patterns) {
+        foreach($patterns as $pattern) {
+            $string = str_replace($pattern, '', $string);
+        }
+
+        return $string;
+    }
+
+    private function convertToHTML($string) {
+        $patterns = ['target=' => 'href=', '<ref' => '<a target="_blank"', '</ref>' => '</a>', '<graphic' => '<img class="img-fluid"', 'url=' => 'src=', 'figDesc' => 'figcaption'];
+
+        foreach($patterns as $pattern => $replace) {
+            $string = str_replace($pattern, $replace, $string);
+        }
+
         return $string;
     }
 }

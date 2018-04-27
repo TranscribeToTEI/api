@@ -116,4 +116,4 @@ Vous obtiendrez une réponse du type :
 ## Obtenir la liste des requêtes possibles :
 En vous rendant à https://testaments-de-poilus.huma-num.fr/api/web/doc, vous obtiendrez la liste complète et à jour des requêtes possibles auprès de l'API.
 
-Certaines requêtes spécifiques (concernant les utilisateurs notamment), la [liste des requêtes spécifiques est disponible ici](queries.md)
+Certaines requêtes spécifiques (concernant les utilisateurs notamment), la [liste des requêtes spécifiques est disponible ici](apiInterrogationQueries.md)

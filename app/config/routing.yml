@@ -35,6 +35,10 @@ app-preferences:
     type:     rest
     resource: AppBundle\Controller\AppPreferenceController
 
+contributor:
+    type:     rest
+    resource: AppBundle\Controller\ContributorController
+
 override-thread:
     type:     rest
     resource: AppBundle\Controller\OverrideThreadController
@@ -62,10 +66,6 @@ testators:
 places:
     type:     rest
     resource: AppBundle\Controller\PlaceController
-
-place-names:
-    type:     rest
-    resource: AppBundle\Controller\PlaceNameController
 
 military-units:
     type:     rest

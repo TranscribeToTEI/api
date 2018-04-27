@@ -221,6 +221,8 @@ class PrintedReferenceController extends FOSRestController
         /* @var $printedReference PrintedReference */
 
         if ($printedReference) {
+            $referenceItem = $this->get('app.reference')->getReferenceItem('printedReference', $printedReference);
+            $em->remove($referenceItem);
             $em->remove($printedReference);
             $em->flush();
         }

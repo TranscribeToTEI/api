@@ -161,27 +161,28 @@ class EntitySubscriber implements EventSubscriber
             /** @var $em EntityManager */
             /** @var $entity Place */
 
-            $indexName = "";
-            if(count($entity->getNames()) > 0) {
-                $indexName .= $entity->getNames()[0]->getName();
-            }
-
             $suffixName = "";
-            if(count($entity->getFrenchDepartements()) > 0) {
-                $suffixName .= $entity->getFrenchDepartements()[0]->getName();
-            } elseif(count($entity->getFrenchRegions()) > 0) {
-                if($suffixName != "") {$suffixName .= ", ";}
-                $suffixName .= $entity->getFrenchRegions()[0]->getName();
-            } elseif(count($entity->getCountries()) > 0) {
-                if($suffixName != "") {$suffixName .= ", ";}
-                $suffixName .= $entity->getCountries()[0]->getName();
+            if($entity->getCity() != null) {
+                $suffixName .= $entity->getCity();
+            }
+            if($entity->getFrenchDepartement() != null) {
+                if(!empty($suffixName)) { $suffixName .= ", "; }
+                $suffixName .= $entity->getFrenchDepartement();
+            }
+            if($entity->getFrenchRegion() != null) {
+                if(!empty($suffixName)) { $suffixName .= ", "; }
+                $suffixName .= $entity->getFrenchRegion();
+            }
+            if($entity->getCountry() != null) {
+                if(!empty($suffixName)) { $suffixName .= ", "; }
+                $suffixName .= $entity->getCountry();
             }
 
-            if($suffixName != "") {
-                $indexName .= "(".$suffixName.")";
+            if(!empty($suffixName)) {
+                $entity->setIndexName($entity->getName()." (".$suffixName.")");
+            } else {
+                $entity->setIndexName($entity->getName());
             }
-
-            $entity->setIndexName($indexName);
             $em->persist($entity);
             $em->flush();
         }
