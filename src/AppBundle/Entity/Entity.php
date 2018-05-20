@@ -83,7 +83,7 @@ class Entity
     /**
      * @Serializer\Since("0.1")
      * @Serializer\Expose
-     * @Serializer\Groups({"full", "id", "search", "pageEntity"})
+     * @Serializer\Groups({"full", "id", "search", "pageEntity", "pageTranscript"})
      *
      * @var int
      *
