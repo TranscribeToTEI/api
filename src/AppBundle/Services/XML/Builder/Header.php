@@ -66,6 +66,17 @@ class Header
         $publisher->appendChild(new \DOMText("Project Testaments de Poilus"));
         $publicationStmt->appendChild($publisher);
 
+        /* CI-DESSUS, METTRE A JOUR AVEC :
+            <publisher><orgName>Université de Cergy-Pontoise</orgName></publisher>
+            <publisher><orgName>Archives nationales</orgName></publisher>
+            <publisher><orgName>Archives départementales des Yvelines</orgName></publisher>
+            <publisher><orgName>École nationale des chartes</orgName></publisher>
+            <date when="2017-10"><!-- ici, pour ce fichier,  il faudrait stocker la date de l'export TEI--></date>
+            <availability>
+               <licence>Licence CC-BY (à revoir)</licence>
+            </availability>
+         * */
+
         $pubPlace = $doc->createElement('pubPlace');
         $pubPlace->appendChild(new \DOMText("Paris"));
         $publicationStmt->appendChild($pubPlace);
@@ -79,6 +90,23 @@ class Header
         /* -- Source Description -- */
         $fileDesc->appendChild($this->buildSourceDesc($doc, $entity));
         /* -- END = Source Description -- */
+
+
+        /* Ici il faut ajouter :
+         <profileDesc>
+             <creation>Fichier produit à partir des données saisies avant import initial dans la
+                plate-forme, et de la transcription du testament qui a été produite directement dans la
+                plate-forme, converties automatiquement en TEI</creation>
+             <langUsage>
+                <language ident="fre">français</language>
+             </langUsage>
+          </profileDesc>
+         *
+         * */
+
+        /* Il faut aussi ajouter :
+         * encodingDesc
+         * */
 
         /* -- Revision Description -- */
         $teiHeader->appendChild($this->buildRevisionDesc($doc, $entity));
@@ -145,6 +173,10 @@ class Header
          *   <resp>identification du testament</resp>
          *   <persName xml:id="tata">Serge Machin</persName>
          * </respStmt>
+         *
+         *
+         * À FAIRE ICI -> IL FAUT FAIRE UNE BOUCLE CAR IL Y A TOUJOURS PLUSIEURS MENTIONS DE RESPONSABILITE
+         * POUR LES MENTIONS DE VALIDATION, IL FAUT SE BASER SUR LES ROLE_ADMIN POUR SAVOIR QUI A VALIDER DANS LA LISTE DES CONTRIBUTEURS
          */
 
         $statement = $doc->createElement('respStmt');
@@ -208,39 +240,62 @@ class Header
         /*
          * <!-- description du document édité -->
          * <sourceDesc>
-         *     <msDesc>
-         *        <msIdentifier>
-         *           <institution>Archives nationales</institution>
-         *           <collection>Minutier central des notaires de Paris</collection>
-         *           <idno>MC/ET/XLVIII/1820, minute du 20 janvier 1921 (dépôt du testament de Fernand
-         *              Lucien Jules Melchior Chatin)</idno>
-         *           <msName>Testament de Fernand Lucien Jules Melchior Chatin (31 juillet
-         *              1914)</msName>
-         *        </msIdentifier>
-         *        <msContents>
-         *           <summary>
-         *              <p><date when="1914-07-31" type="willDate">1914, 31 juillet</date>. <placeName
-         *                    type="willPlace">Paris</placeName>.</p>
-         *
-         *              <bibl/>
-         *           </summary>
-         *        </msContents>
-         *        <physDesc>
-         *           <objectDesc>
-         *              <supportDesc>
-         *                 <support>papier à lettre de deuil avec adresse imprimée</support>
-         *                 <extent>4 pages, <dimensions unit="cm">
-         *                       <height>17,2</height>
-         *                       <width>11,2</width>
-         *                    </dimensions></extent>
-         *              </supportDesc>
-         *           </objectDesc>
-         *           <handDesc>
-         *              <p>encre</p>
-         *           </handDesc>
-         *        </physDesc>
-         *     </msDesc>
-         * </sourceDesc>
+            <!-- description du document édité -->
+            <msDesc>
+
+               <msIdentifier>
+                  <!-- TODO voir AD 78 pour l'alternative AD78 -->
+                  <institution>Archives nationales</institution>
+                  <collection>Minutier central des notaires de Paris</collection>
+
+                  <idno>MC/ET/XLVIII/1820, minute du 20 janvier 1921 (dépôt du testament de Fernand
+                     Lucien Jules Melchior Chatin)</idno>
+                  <msName>Testament de Fernand Lucien Jules Melchior Chatin (31 juillet
+                     1914)</msName>
+
+               </msIdentifier>
+               <msContents>
+                  <summary>
+                     <p><date when="1914-07-31" type="willDate">1914, 31 juillet</date>. <placeName type="willPlace">Paris</placeName>.</p>
+                     <p><term type="willType">testament olographe</term> de <persName ref="FirstWorldWarWills-ListOfPersons.xml#p-0001"><forename>Fernand</forename>
+                           <forename>Lucien</forename>
+                           <forename>Jules</forename>
+                           <forename>Melchior</forename>
+                           <surname>Chatin</surname></persName>, mort pour la France à <placeName ref="FirstWorldWarWills-ListOfPlaces#pl-0056" type="willAuthorDeathPlace">Maroeuil (Pas-de-Calais)</placeName>, le <date when="1915-01-10" type="willAuthorDeathDate">10 janvier 1915</date>.</p>
+                  </summary>
+
+
+               </msContents>
+
+               <!-- <physDesc><p>Papier à lettre de deuil avec adresse imprimée, 4 pages, dim. 17,2 x 11,2 cm,
+                 encre.</p></physDesc>-->
+               <physDesc>
+
+                  <objectDesc>
+                     <supportDesc>
+                        <support>Testament : papier à lettre de deuil avec adresse imprimée. Enveloppe : blbalba</support>
+                        <extent>4 pages, <dimensions unit="cm">
+                              <height>17,2</height>
+                              <width>11,2</width>
+                           </dimensions></extent>
+                     </supportDesc>
+
+                  </objectDesc>
+                  <handDesc>
+                     <p>Testament: Encre. Enveloppe: Crayon.</p>
+                  </handDesc>
+               </physDesc>
+               <history>
+                  <provenance><orgName>étude notariale CCX (CRPCEN 75123)</orgName></provenance> -> CHAMP PAS OBLIGATOIRE, IL N'EST PAS LA POUR LES AD78
+                    -> Puis il y a les infos sur l'étude à rajouter (notaryNumber)
+               </history>
+            </msDesc>
+            </sourceDesc>
+
+
+            POUR LES INFO SUR TESTATEUR : AFFICHER LES MEMES INFORMATIONS QUE LE BLOC DANS L'APPLI DE TRANSCRIPTION
+            POUR LES DESCRIPTIONS PHYSIQUE : ON REPETE LES INFOS DE L'ENVELOPPE DANS EXTENT. ET POUR LE HANDDESC : ON ECRIT: "ENVELOPPE: CRAYON. TESTAMENT: ENCRE"
+
          */
 
         $sourceDesc = $doc->createElement('sourceDesc');
@@ -257,7 +312,7 @@ class Header
             $collection->appendChild(new \DOMText('Minutier central des notaires de Paris'));
         } elseif($entity->getWill()->getHostingOrganization()->getCode() == "AD78") {
             $institution->appendChild(new \DOMText('Archives départementales des Yvelines'));
-            $collection->appendChild(new \DOMText('TO DEFINE'));
+            $collection->appendChild(new \DOMText('Archives notariales'));
         } else {
             $institution->appendChild(new \DOMText('Institution inconnue'));
             $collection->appendChild(new \DOMText('Collection inconnue'));

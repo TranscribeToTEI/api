@@ -72,6 +72,9 @@ class Functions
         } elseif(count($resource->getImages()) > 1 && $resource->getType() == "page") {
             $formatType = "will-page-part";
         } elseif(count($resource->getImages()) > 1 && $resource->getType() == "envelope") {
+            // TODO : Ici, il faut faire attention si on a 2 enveloppes : il faut récupérer la liste de toutes les ressources
+            // TODO : pour vérifier : 1: qu'il n'y a qu'une seule enveloppe, et 2: l'ordre des enveloppes pour pouvoir la qualifier
+            // TODO : de recto ou de verso.
             $formatType = "will-envelope-recto";
         } else {
             $formatType = "unknown";

@@ -48,7 +48,7 @@ class Core
 
         /* -- Building facsimile -- */
         $facsimile = $doc->createElement('facsimile');
-        $facsimile->setAttribute('xml:base', $this->iiifServer.'testament_'.$entity->getWill()->getHostingOrganization()->getCode()."_".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4).'/');
+        $facsimile->setAttribute('xml:base', $this->iiifServer);
         $facsimile = $TEI->appendChild($facsimile);
         foreach($this->content->facsimile($doc, $entity) as $elem) {
             $facsimile->appendChild($elem);
@@ -56,7 +56,7 @@ class Core
 
         /* -- Building text -- */
         $text = $doc->createElement('text');
-        $text->setAttribute('xml:id', 'testament_'.$entity->getWill()->getHostingOrganization()->getCode()."_".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4));
+        $text->setAttribute('xml:id', 'will_'.$entity->getWill()->getHostingOrganization()->getCode()."_".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4));
         $text = $TEI->appendChild($text);
 
         $body = $doc->createElement('body');
@@ -74,6 +74,8 @@ class Core
         $body->appendChild($dom_content);
 
         if($generate == true) {
+            // TODO : Versionner l'export avec le datetime
+
             /* -- File generation -- */
             $filename = "testament_".$entity->getWill()->getHostingOrganization()->getCode()."_".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4).".xml";
             $doc->save("download/".$filename);
