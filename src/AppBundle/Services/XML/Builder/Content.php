@@ -26,26 +26,46 @@ class Content
      */
     public function build($entity) {
 
+        $count = 1;
+        $prevTypeOfDiv = null;
         foreach($entity->getResources() as $resource) {
-
-            /* On lance la boucle :
-                    1. On regarde le type de la première ressource et on ouvre un <div type="TYPE DE LA RESSOURCE">
-                    2. On génère le <pb facs /> qui correspond à la ressource
-                    3. On ajoute le texte de la transcription qui correspond à cette ressource
-                    4. On vérifie qu'il ne faut pas enlever la première et la dernière balise
-                    5. À la prochaine boucle, on vérifie que le type de la ressource est toujours le même et si ce n'est pas le cas, on le ferme et on en génère un nouveau.
-             *
-             * */
-
-
-            $text = "<div type=\"will\">";
-            /** @var $resource \AppBundle\Entity\Resource */
-            $text .= "<pb facs=\"#testament-".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4)."_vue-".$this->functions->getIntIdToStrId($resource->getOrderInWill(), 2)."_jpg\"/>"; // TODO : ici l'attribut facs correspond à XML-ID du facsimilé
-            if($resource->getTranscript()->getContent() != null) {
-                $text .= $resource->getTranscript()->getContent();
+            $typeOfDiv = "will";
+            switch ($resource->getType()) {
+                case "page":
+                    $typeOfDiv = "will";
+                    break;
+                case "envelope":
+                    $typeOfDiv = "envelope";
+                    break;
+                case "codicil":
+                    $typeOfDiv = "codicil";
+                    break;
             }
 
-            $text .= "</div>";
+            $text = "";
+
+            if($count == 1) {
+                $text .= '<div type="'.$typeOfDiv.'">';
+            } elseif($count > 1 and $prevTypeOfDiv != null and $prevTypeOfDiv != $typeOfDiv) {
+                $text .= "</div>";
+                $text .= '<div type="'.$typeOfDiv.'">';
+            }
+
+            /** @var $resource \AppBundle\Entity\Resource */
+            $text .= '<pb facs=\"#'.$resource->getImages()[0].'\"/>';
+
+            if($resource->getTranscript()->getContent() != null) {
+                $text .= $resource->getTranscript()->getContent(); // TODO : Supprimer la première ou la dernière balise si besoin
+            }
+
+
+
+            if(count($entity->getResources()) == $count) {
+                $text .= "</div>";
+            } else{
+                $prevTypeOfDiv = $typeOfDiv;
+                $count++;
+            }
         }
 
         return $text;

@@ -90,6 +90,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.xml.builder.functions'
+            - '@app.entity'
 
     app.xml.builder.content:
         class: AppBundle\Services\XML\Builder\Content
