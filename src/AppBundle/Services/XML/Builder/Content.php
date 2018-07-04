@@ -5,6 +5,7 @@ namespace AppBundle\Services\XML\Builder;
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Resource;
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class Content
@@ -12,12 +13,14 @@ class Content
     private $em;
     private $functions;
     private $iiifServer;
+    private $logger;
 
-    public function __construct(EntityManager $em, Functions $functions, $iiifServer)
+    public function __construct(EntityManager $em, Functions $functions, $iiifServer, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->functions = $functions;
         $this->iiifServer = $iiifServer;
+        $this->logger = $logger;
     }
 
     /**
@@ -28,6 +31,8 @@ class Content
 
         $count = 1;
         $prevTypeOfDiv = null;
+        $text = "";
+
         foreach($entity->getResources() as $resource) {
             $typeOfDiv = "will";
             switch ($resource->getType()) {
@@ -42,7 +47,6 @@ class Content
                     break;
             }
 
-            $text = "";
 
             if($count == 1) {
                 $text .= '<div type="'.$typeOfDiv.'">';
@@ -52,23 +56,37 @@ class Content
             }
 
             /** @var $resource \AppBundle\Entity\Resource */
-            $text .= '<pb facs=\"#'.$resource->getImages()[0].'\"/>';
+            $text .= '<pb facs="#'.$resource->getImages()[0].'" />';
 
             if($resource->getTranscript()->getContent() != null) {
-                $text .= $resource->getTranscript()->getContent(); // TODO : Supprimer la première ou la dernière balise si besoin
+                $content = $resource->getTranscript()->getContent();
+                if($resource->getTranscript()->getContinueBefore() == true) {
+                    $content = $this->str_replace_first($content);
+                }
+                if($resource->getTranscript()->getContinueAfter() == true) {
+                    $content = $this->str_lreplace($content);
+                }
+                $text .=  $content;
             }
 
-
-
-            if(count($entity->getResources()) == $count) {
-                $text .= "</div>";
-            } else{
-                $prevTypeOfDiv = $typeOfDiv;
-                $count++;
-            }
+            $prevTypeOfDiv = $typeOfDiv;
+            $count++;
         }
 
+        $text .= "</div>";
+        $this->logger->error('!!!!!!!!!!!');
+        $this->logger->error($text);
         return $text;
+    }
+
+    private function str_lreplace($content)
+    {
+        return substr($content, 0, strrpos($content, '</'));
+    }
+
+    private function str_replace_first($content)
+    {
+        return preg_replace('/<[^>]*>/', '', $content, 1);
     }
 
     /**

@@ -6,18 +6,23 @@ use AppBundle\Services\Entity;
 use AppBundle\Services\ResourceI;
 use AppBundle\Services\Versioning;
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use UserBundle\Entity\User;
 
 class Header
 {
     private $em;
     private $functions;
     private $entity;
+    private $logger;
 
-    public function __construct(EntityManager $em, Functions $functions, Entity $entity)
+    public function __construct(EntityManager $em, Functions $functions, Entity $entity, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->functions = $functions;
         $this->entity = $entity;
+        $this->logger = $logger;
     }
 
     /**
@@ -94,7 +99,7 @@ class Header
         $publicationStmt->appendChild($pubPlace);
 
         $date = $doc->createElement('date');
-        $date->setAttribute("when", date("Y-m-d"));
+        //$date->setAttribute("when", date("Y-m-d"));
         $date->setAttribute("type", "otherDate");
         $publicationStmt->appendChild($date);
 
@@ -292,39 +297,18 @@ class Header
      * @return \DOMNode
      */
     private function buildRespStmts($doc, $entity, $titleStmt) {
-        /*
-         * <respStmt>
-         *   <resp>identification du testament</resp>
-         *   <persName xml:id="tata">Serge Machin</persName>
-         * </respStmt>
-         * <!-- <respStmt>
-         *    <!-\- généré autoamtiquement -\->
-         *    <resp>numérisation</resp>
-         *    <orgName>labo photo des AN</orgName>
-         * </respStmt>-->
-         * <respStmt>
-         *    <resp>transcription</resp>
-         *    <persName xml:id="toto"
-         *       ><!--<surname>Dupont</surname><forename>Lily</forename>-->toto</persName>
-         *    <persName xml:id="MDurand"
-         *       ><surname>Durand</surname><forename>Michel</forename></persName>
-         * </respStmt>
-         * <respStmt>
-         *    <resp>annotation</resp>
-         *    <persName corresp="#MDurand">
-         *       <surname>Durand</surname><forename>Michel</forename>
-         *    </persName>
-         * </respStmt>
-         * <respStmt>
-         *    <resp>validation</resp>
-         *    <persName xml:id="FClavaud"
-         *       ><surname>Clavaud</surname><forename>Florence</forename></persName>
-         * </respStmt>
-         */
+        $identificationUsersString = $entity->getWill()->getIdentificationUsers();
 
+        if(strpos("|", $identificationUsersString) == false) {
+            $identificationUsers = explode("|", $identificationUsersString);
+        } else {
+            $identificationUsers = [$identificationUsersString];
+        }
 
-        $respStmtIdentifier = $this->buildRespStmt($doc, $entity, "identification");
-        $titleStmt->appendChild($respStmtIdentifier);
+        foreach($identificationUsers as $identificationUser) {
+            $respStmtIdentifier = $this->buildRespStmt($doc, trim($identificationUser));
+            $titleStmt->appendChild($respStmtIdentifier);
+        }
 
         return $titleStmt;
     }
@@ -333,44 +317,21 @@ class Header
 
     /**
      * @param $doc \DOMDocument
-     * @param $entity \AppBundle\Entity\Entity
-     * @param $context string
+     * @param $identificationUser string
      * @return \DOMNode
      */
-    private function buildRespStmt($doc, $entity, $context) {
-        /*
-         * <respStmt>
-         *   <resp>identification du testament</resp>
-         *   <persName xml:id="tata">Serge Machin</persName>
-         * </respStmt>
-         *
-         *
-         * À FAIRE ICI -> IL FAUT FAIRE UNE BOUCLE CAR IL Y A TOUJOURS PLUSIEURS MENTIONS DE RESPONSABILITE
-         * POUR LES MENTIONS DE VALIDATION, IL FAUT SE BASER SUR LES ROLE_ADMIN POUR SAVOIR QUI A VALIDER DANS LA LISTE DES CONTRIBUTEURS
-         */
-
+    private function buildRespStmt($doc, $identificationUser) {
         $statement = $doc->createElement('respStmt');
+
         $resp = $doc->createElement('resp');
-        $persName = $doc->createElement('persName');
-
-        switch ($context) {
-            case "identification":
-                $respText = new \DOMText("Identification du testament");
-                $persNameText = new \DOMText($entity->getWill()->getIdentificationUsers());
-                $persNameId = $this->functions->getIdFromName($entity->getWill()->getIdentificationUsers());
-                break;
-            default:
-                $respText = new \DOMText('Error');
-                $persNameText = new \DOMText('Error');
-                $persNameId = "Error";
-        }
-
-        $resp->appendChild($respText);
-        $persName->appendChild($persNameText);
-        $persName->setAttribute("xml:id", $persNameId);
-
+        $resp->appendChild(new \DOMText("Identification du testament"));
         $statement->appendChild($resp);
+
+        $persName = $doc->createElement('persName');
+        $persName->appendChild(new \DOMText($identificationUser));
+        $persName->setAttribute("xml:id", $this->functions->getIdFromName($identificationUser));
         $statement->appendChild($persName);
+
         return $statement;
     }
 
@@ -392,40 +353,80 @@ class Header
         $whoValidator = "";
         $whoTranscription = "";
 
+        $datesValidator = [];
+        $datesTranscription = [];
         $firstWhenValidator = "";
         $lastWhenValidator = "";
         $firstWhenTranscription = "";
         $lastWhenTranscription = "";
 
         foreach($this->entity->getContributors($entity) as $contributor) {
-            if(in_array("ROLE_ADMIN", $contributor['user']['role'])) {
-
+            /** @var User $user */ $user = $contributor['user'];
+            if(in_array("ROLE_ADMIN", $user->getRoles())) {
+                if($whoValidator != "") { $whoValidator .= " "; }
+                $whoValidator .= "#".$this->functions->getIdFromName($user->getName());
+                $datesValidator = array_merge($datesValidator, $contributor["dates"]);
             } else {
-
+                if($whoTranscription != "") { $whoTranscription .= " "; }
+                $whoTranscription .= "#".$this->functions->getIdFromName($user->getName());
+                $datesTranscription = array_merge($datesTranscription, $contributor["dates"]);
             }
         }
 
-        $change1 = $doc->createElement('change');
-        if($firstWhenValidator == $lastWhenValidator) {
-            $change1->setAttribute('when', $firstWhenValidator);
-        } else {
-            $change1->setAttribute('when-iso', $firstWhenValidator."/".$lastWhenValidator);
-        }
-        $change1->setAttribute('who', $whoTranscription);
-        $change1->appendChild(new \DOMText('transcription'));
-        $revisionDesc->appendChild($change1);
+        usort($datesValidator, array($this, "cmp"));
+        usort($datesTranscription, array($this, "cmp"));
 
-        $change2 = $doc->createElement('change');
-        if($firstWhenTranscription == $lastWhenTranscription) {
-            $change1->setAttribute('when', $firstWhenTranscription);
-        } else {
-            $change1->setAttribute('when-iso', $firstWhenValidator."/".$lastWhenTranscription);
+        if(count($datesTranscription) > 0) {
+            $firstWhenValidator = $datesValidator[0]->format('Y-m-d');
+            if (count($datesValidator) > 1) {
+                $lastWhenValidator = $datesValidator[count($datesValidator) - 1]->format('Y-m-d');
+            } else {
+                $lastWhenValidator = $datesValidator[0]->format('Y-m-d');
+            }
         }
-        $change2->setAttribute('who', $whoValidator);
-        $change2->appendChild(new \DOMText('validation'));
-        $revisionDesc->appendChild($change2);
+
+        if(count($datesTranscription) > 0) {
+            $firstWhenTranscription = $datesTranscription[0]->format('Y-m-d');
+            if (count($datesValidator) > 1) {
+                $lastWhenTranscription = $datesTranscription[count($datesTranscription) - 1]->format('Y-m-d');
+            } else {
+                $lastWhenTranscription = $datesTranscription[0]->format('Y-m-d');
+            }
+        }
+
+        if($whoTranscription != "") {
+            $change1 = $doc->createElement('change');
+            if ($firstWhenValidator == $lastWhenValidator) {
+                $change1->setAttribute('when', $firstWhenValidator);
+            } else {
+                $change1->setAttribute('when-iso', $firstWhenValidator . "/" . $lastWhenValidator);
+            }
+            $change1->setAttribute('who', $whoTranscription);
+            $change1->appendChild(new \DOMText('transcription'));
+            $revisionDesc->appendChild($change1);
+        }
+
+        if($whoValidator != "") {
+            $change2 = $doc->createElement('change');
+            if ($firstWhenTranscription == $lastWhenTranscription) {
+                $change2->setAttribute('when', $firstWhenTranscription);
+            } else {
+                $change2->setAttribute('when-iso', $firstWhenValidator . "/" . $lastWhenTranscription);
+            }
+            $change2->setAttribute('who', $whoValidator);
+            $change2->appendChild(new \DOMText('validation'));
+            $revisionDesc->appendChild($change2);
+        }
 
         return $revisionDesc;
+    }
+
+    function cmp($a, $b)
+    {
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a < $b) ? -1 : 1;
     }
 
     /**
