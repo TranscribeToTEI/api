@@ -86,7 +86,7 @@ class Core
 
         if($generate == true) {
             /* -- File generation -- */
-            $filename = "will_".$entity->getWill()->getHostingOrganization()->getCode()."_".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4)."_".date('Y-m-d_h-i-s', time()).".xml";
+            $filename = "will_".$entity->getId()."_".$entity->getWill()->getHostingOrganization()->getCode()."_".$this->functions->getIntIdToStrId($entity->getWillNumber(), 4)."_".date('Y-m-d_h-i-s', time()).".xml";
             $doc->save("download/".$filename);
             return $filename;
         } else {
