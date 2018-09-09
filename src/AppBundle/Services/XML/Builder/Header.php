@@ -387,7 +387,7 @@ class Header
 
         if(count($datesTranscription) > 0) {
             $firstWhenTranscription = $datesTranscription[0]->format('Y-m-d');
-            if (count($datesValidator) > 1) {
+            if (count($datesTranscription) > 1) {
                 $lastWhenTranscription = $datesTranscription[count($datesTranscription) - 1]->format('Y-m-d');
             } else {
                 $lastWhenTranscription = $datesTranscription[0]->format('Y-m-d');
