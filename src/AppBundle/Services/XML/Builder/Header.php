@@ -376,7 +376,7 @@ class Header
         usort($datesValidator, array($this, "cmp"));
         usort($datesTranscription, array($this, "cmp"));
 
-        if(count($datesTranscription) > 0) {
+        if(count($datesValidator) > 0) {
             $firstWhenValidator = $datesValidator[0]->format('Y-m-d');
             if (count($datesValidator) > 1) {
                 $lastWhenValidator = $datesValidator[count($datesValidator) - 1]->format('Y-m-d');
@@ -387,7 +387,7 @@ class Header
 
         if(count($datesTranscription) > 0) {
             $firstWhenTranscription = $datesTranscription[0]->format('Y-m-d');
-            if (count($datesValidator) > 1) {
+            if (count($datesTranscription) > 1) {
                 $lastWhenTranscription = $datesTranscription[count($datesTranscription) - 1]->format('Y-m-d');
             } else {
                 $lastWhenTranscription = $datesTranscription[0]->format('Y-m-d');

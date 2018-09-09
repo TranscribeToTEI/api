@@ -74,8 +74,6 @@ class Content
         }
 
         $text .= "</div>";
-        $this->logger->error('!!!!!!!!!!!');
-        $this->logger->error($text);
         return $text;
     }
 
