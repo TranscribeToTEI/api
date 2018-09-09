@@ -94,7 +94,7 @@ class Header
         $publicationStmt->appendChild($pubPlace);
 
         $date = $doc->createElement('date');
-        $date->setAttribute("when", date("Y-m-d"));
+        //$date->setAttribute("when", date("Y-m-d"));
         $date->setAttribute("type", "otherDate");
         $publicationStmt->appendChild($date);
 
@@ -389,7 +389,7 @@ class Header
 
         $revisionDesc = $doc->createElement('revisionDesc');
 
-        $whoValidator = "";
+        /*$whoValidator = "";
         $whoTranscription = "";
 
         $firstWhenValidator = "";
@@ -398,7 +398,7 @@ class Header
         $lastWhenTranscription = "";
 
         foreach($this->entity->getContributors($entity) as $contributor) {
-            if(in_array("ROLE_ADMIN", $contributor['user']['role'])) {
+            if(in_array("ROLE_ADMIN", $contributor['user']->getRoles())) {
 
             } else {
 
@@ -423,7 +423,7 @@ class Header
         }
         $change2->setAttribute('who', $whoValidator);
         $change2->appendChild(new \DOMText('validation'));
-        $revisionDesc->appendChild($change2);
+        $revisionDesc->appendChild($change2);*/
 
         return $revisionDesc;
     }

@@ -28,6 +28,8 @@ class Content
 
         $count = 1;
         $prevTypeOfDiv = null;
+        $text = "";
+
         foreach($entity->getResources() as $resource) {
             $typeOfDiv = "will";
             switch ($resource->getType()) {
@@ -42,7 +44,6 @@ class Content
                     break;
             }
 
-            $text = "";
 
             if($count == 1) {
                 $text .= '<div type="'.$typeOfDiv.'">';
@@ -52,22 +53,19 @@ class Content
             }
 
             /** @var $resource \AppBundle\Entity\Resource */
-            $text .= '<pb facs=\"#'.$resource->getImages()[0].'\"/>';
+            $text .= '<pb facs="#'.$resource->getImages()[0].'" />';
 
             if($resource->getTranscript()->getContent() != null) {
                 $text .= $resource->getTranscript()->getContent(); // TODO : Supprimer la première ou la dernière balise si besoin
             }
 
 
+            $prevTypeOfDiv = $typeOfDiv;
+            $count++;
 
-            if(count($entity->getResources()) == $count) {
-                $text .= "</div>";
-            } else{
-                $prevTypeOfDiv = $typeOfDiv;
-                $count++;
-            }
         }
 
+        $text .= "</div>";
         return $text;
     }
 

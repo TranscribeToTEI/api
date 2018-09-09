@@ -44,7 +44,7 @@ class Core
 
         /* -- Building teiHeader -- */
         $teiHeader = $this->header->build($doc, $entity);
-        $teiHeader = $TEI->appendChild($teiHeader);
+        $TEI->appendChild($teiHeader);
 
         /* -- Building facsimile -- */
         $facsimile = $doc->createElement('facsimile');

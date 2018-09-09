@@ -71,11 +71,27 @@ class Functions
             $formatType = "will-page";
         } elseif(count($resource->getImages()) > 1 && $resource->getType() == "page") {
             $formatType = "will-page-part";
-        } elseif(count($resource->getImages()) > 1 && $resource->getType() == "envelope") {
-            // TODO : Ici, il faut faire attention si on a 2 enveloppes : il faut récupérer la liste de toutes les ressources
-            // TODO : pour vérifier : 1: qu'il n'y a qu'une seule enveloppe, et 2: l'ordre des enveloppes pour pouvoir la qualifier
-            // TODO : de recto ou de verso.
-            $formatType = "will-envelope-recto";
+        } elseif($resource->getType() == "envelope") {
+            /** @var Resource[] $resourcesEnvelopes */
+            $resourcesEnvelopes = $this->em->getRepository('App:Resource')->findBy(array('type' => 'envelope', 'entity' => $resource->getEntity()));
+
+            if(count($resourcesEnvelopes) > 1) {
+                $arrayId = array();
+                foreach($resourcesEnvelopes as $resourceI) {
+                    $arrayId[] = $resourceI->getId();
+                }
+                sort($arrayId);
+
+                if(array_search($resource->getId(), $arrayId) != false && array_search($resource->getId(), $arrayId) % 2 == 0) {
+                    $formatType = "will-envelope-recto";
+                } else {
+                    $formatType = "will-envelope-verso";
+                }
+            } else {
+                $formatType = "will-envelope-recto";
+            }
+        } elseif($resource->getType() == "codicil") {
+            $formatType = "codicil-page";
         } else {
             $formatType = "unknown";
         }
