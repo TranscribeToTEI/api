@@ -5,6 +5,7 @@ namespace AppBundle\Services;
 use AppBundle\Entity\Resource;
 use AppBundle\Entity\Testator;
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 use UserBundle\Entity\Preference;
 use UserBundle\Entity\User;
 
@@ -13,12 +14,14 @@ class ResourceI
     private $em;
     private $transcript;
     private $version;
+    private $logger;
 
-    public function __construct(EntityManager $em, Transcript $transcript, Versioning $version)
+    public function __construct(EntityManager $em, Transcript $transcript, Versioning $version, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->transcript = $transcript;
         $this->version = $version;
+        $this->logger = $logger;
     }
 
     /**
@@ -60,6 +63,7 @@ class ResourceI
             }
 
         }
+
         return $arrayContributors;
     }
 }

@@ -361,7 +361,8 @@ class Header
         $lastWhenTranscription = "";
 
         foreach($this->entity->getContributors($entity) as $contributor) {
-            /** @var User $user */ $user = $contributor['user'];
+            /** @var User $user */
+            $user = $contributor['user'];
             if(in_array("ROLE_ADMIN", $user->getRoles())) {
                 if($whoValidator != "") { $whoValidator .= " "; }
                 $whoValidator .= "#".$this->functions->getIdFromName($user->getName());

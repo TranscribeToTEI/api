@@ -5,6 +5,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@app.will'
             - '@app.resourcei'
+            - '@logger'
 
     app.resourcei:
         class: AppBundle\Services\ResourceI
@@ -12,6 +13,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@app.transcript'
             - '@app.versioning'
+            - '@logger'
 
     app.testator:
         class: AppBundle\Services\Testator

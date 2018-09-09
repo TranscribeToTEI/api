@@ -4,18 +4,21 @@ namespace AppBundle\Services;
 
 use AppBundle\Entity\Resource;
 use Doctrine\ORM\EntityManager;
+use Psr\Log\LoggerInterface;
 
 class Entity
 {
     private $em;
     private $will;
     private $resource;
+    private $logger;
 
-    public function __construct(EntityManager $em, Will $will, ResourceI $resource)
+    public function __construct(EntityManager $em, Will $will, ResourceI $resource, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->will = $will;
         $this->resource = $resource;
+        $this->logger = $logger;
     }
 
     /**
@@ -82,12 +85,13 @@ class Entity
             foreach ($arrayResource as $id=>$contributions) {
                 if (array_key_exists($id, $arrayContributors)) {
                     $arrayContributors[$id]["contributions"] = $arrayContributors[$id]["contributions"] + $contributions["contributions"];
-                    $arrayContributors[$id]["dates"] = array_merge ($arrayContributors[$id]["dates"], $contributions["dates"]);
+                    $arrayContributors[$id]["dates"] = array_merge($arrayContributors[$id]["dates"], $contributions["dates"]);
                 } else {
                     $arrayContributors[$id] = $contributions;
                 }
             }
         }
+
         return $arrayContributors;
     }
 }
