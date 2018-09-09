@@ -91,7 +91,7 @@ class Header
         $publisher4 = $doc->createElement('publisher');
         $publiOrgName4 = $doc->createElement('orgName');
         $publiOrgName4->appendChild(new \DOMText("École nationale des chartes"));
-        $publisher1->appendChild($publiOrgName4);
+        $publisher4->appendChild($publiOrgName4);
         $publicationStmt->appendChild($publisher4);
 
         $pubPlace = $doc->createElement('pubPlace');
