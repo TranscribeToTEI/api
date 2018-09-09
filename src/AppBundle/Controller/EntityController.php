@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Entity;
 
 use AppBundle\Entity\Resource;
+use AppBundle\Entity\Will;
 use AppBundle\Form\EntityType;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -24,8 +25,10 @@ class EntityController extends FOSRestController
 {
     /**
      * @Rest\Get("/entities")
-     * @QueryParam(name="profile",  nullable=true, description="Search profile to apply")
-     * @QueryParam(name="search",   nullable=true, description="Run a search query in the entities")
+     * @QueryParam(name="profile",              nullable=true, description="Search profile to apply")
+     * @QueryParam(name="search",               nullable=true, description="Run a search query in the entities")
+     * @QueryParam(name="status",               nullable=true, description="Get the list of entities according to their status")
+     * @QueryParam(name="hosting-organization", nullable=true, description="Get the list of entities according to their organization (use the code of the organization)")
      *
      * @Doc\ApiDoc(
      *     section="Entities",
@@ -44,10 +47,12 @@ class EntityController extends FOSRestController
     {
         /* @var $entities Entity[] */
         $search = $paramFetcher->get('search');
+        $status = $paramFetcher->get('status');
+        $hostingOrganizationCode = $paramFetcher->get('hosting-organization');
+        $repositoryEntities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity');
 
-        if($search != "") {
+        if($search != "" and $status == "" and $hostingOrganizationCode == "") {
             $searchInfo = explode(';', $search);
-            $repositoryEntities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity');
 
             $qb = $repositoryEntities->createQueryBuilder('e')
                 ->join('e.will', 'w')
@@ -57,8 +62,23 @@ class EntityController extends FOSRestController
                 ->setParameters(array('willNumber' => $searchInfo[0], 'code' => $searchInfo[1]));
 
             $entities = $qb->getQuery()->getResult();
+        } elseif($status != "" and $search == "" and $hostingOrganizationCode == "") {
+            /** @var $entitiesProvi Entity[] */ $entitiesProvi = $repositoryEntities->findAll();
+            $entities = [];
+            foreach ($entitiesProvi as $entity) {
+                if($this->get('app.entity')->getStatus($entity) == $status) {
+                    $entities[] = $entity;
+                }
+            }
+        } elseif($hostingOrganizationCode != "" and $search == "" and $status == "") {
+            $hostingOrganization = $this->getDoctrine()->getManager()->getRepository('AppBundle:HostingOrganization')->findOneByCode($hostingOrganizationCode);
+            /** @var $wills Will[] */ $wills = $this->getDoctrine()->getManager()->getRepository('AppBundle:Will')->findBy(array('hostingOrganization' => $hostingOrganization));
+            $entities = [];
+            foreach ($wills as $will) {
+                $entities[] = $will->getEntity();
+            }
         } else {
-            $entities = $this->getDoctrine()->getManager()->getRepository('AppBundle:Entity')->findAll();
+            $entities = $repositoryEntities->findAll();
         }
 
         if($paramFetcher->get('profile') == '') {

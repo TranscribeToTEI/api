@@ -84,6 +84,7 @@ services:
             - '@app.xml.builder.content'
             - '@app.xml.builder.functions'
             - '%iiifServer%'
+            - '@monolog.logger'
 
     app.xml.builder.header:
         class: AppBundle\Services\XML\Builder\Header
@@ -91,6 +92,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@app.xml.builder.functions'
             - '@app.entity'
+            - '@monolog.logger'
 
     app.xml.builder.content:
         class: AppBundle\Services\XML\Builder\Content
@@ -98,6 +100,7 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@app.xml.builder.functions'
             - '%iiifServer%'
+            - '@monolog.logger'
 
     app.xml.builder.functions:
         class: AppBundle\Services\XML\Builder\Functions

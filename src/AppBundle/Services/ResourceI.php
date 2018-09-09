@@ -52,8 +52,9 @@ class ResourceI
                 if($preference->getCreditActions() == true) {
                     if (array_key_exists($user->getId(), $arrayContributors)) {
                         $arrayContributors[$user->getId()]["contributions"] = $arrayContributors[$user->getId()]["contributions"] + 1;
+                        $arrayContributors[$user->getId()]["dates"][] = $version->getLoggedAt();
                     } else {
-                        $arrayContributors[$user->getId()] = ["contributions" => 1, "user" => $user];
+                        $arrayContributors[$user->getId()] = ["contributions" => 1, "user" => $user, "dates" => [$version->getLoggedAt()]];
                     }
                 }
             }

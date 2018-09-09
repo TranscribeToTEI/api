@@ -82,6 +82,7 @@ class Entity
             foreach ($arrayResource as $id=>$contributions) {
                 if (array_key_exists($id, $arrayContributors)) {
                     $arrayContributors[$id]["contributions"] = $arrayContributors[$id]["contributions"] + $contributions["contributions"];
+                    $arrayContributors[$id]["dates"] = array_merge ($arrayContributors[$id]["dates"], $contributions["dates"]);
                 } else {
                     $arrayContributors[$id] = $contributions;
                 }
