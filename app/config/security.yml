@@ -7,7 +7,8 @@ security:
             id: fos_user.user_provider.username_email
 
     role_hierarchy:
-        ROLE_TAXONOMY_EDIT:  ROLE_USER
+        ROLE_VALIDATION:      ROLE_USER
+        ROLE_TAXONOMY_EDIT:   ROLE_USER
         ROLE_MODO:            ROLE_USER, ROLE_TAXONOMY_EDIT
         ROLE_ADMIN:           ROLE_MODO, ROLE_TAXONOMY_EDIT
         ROLE_SUPER_ADMIN:     ROLE_ADMIN, ROLE_MODO, ROLE_TAXONOMY_EDIT
