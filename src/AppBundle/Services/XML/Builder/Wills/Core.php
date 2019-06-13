@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Services\XML\Builder;
+namespace AppBundle\Services\XML\Builder\Wills;
 
 use AppBundle\Entity\Entity;
 use AppBundle\Entity\Resource;

@@ -15,11 +15,6 @@ services:
             - '@app.versioning'
             - '@logger'
 
-    app.testator:
-        class: AppBundle\Services\Testator
-        arguments:
-            - '@doctrine.orm.entity_manager'
-
     app.place:
         class: AppBundle\Services\Place
         arguments:
@@ -79,7 +74,7 @@ services:
 
     # XML Management
     app.xml.builder.core:
-        class: AppBundle\Services\XML\Builder\Core
+        class: AppBundle\Services\XML\Builder\Wills\Core
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.xml.builder.header'
@@ -89,7 +84,7 @@ services:
             - '@monolog.logger'
 
     app.xml.builder.header:
-        class: AppBundle\Services\XML\Builder\Header
+        class: AppBundle\Services\XML\Builder\Wills\Header
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.xml.builder.functions'
@@ -97,7 +92,7 @@ services:
             - '@monolog.logger'
 
     app.xml.builder.content:
-        class: AppBundle\Services\XML\Builder\Content
+        class: AppBundle\Services\XML\Builder\Wills\Content
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@app.xml.builder.functions'
@@ -105,9 +100,19 @@ services:
             - '@monolog.logger'
 
     app.xml.builder.functions:
-        class: AppBundle\Services\XML\Builder\Functions
+        class: AppBundle\Services\XML\Builder\Wills\Functions
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    app.xml.builder.contextual.core:
+        class: AppBundle\Services\XML\Builder\ContextualEntities\Core
+        arguments:
+        - '@doctrine.orm.entity_manager'
+        - '@app.xml.builder.header'
+        - '@app.xml.builder.content'
+        - '@app.xml.builder.functions'
+        - '%iiifServer%'
+        - '@monolog.logger'
 
     app.xml.validator:
         class: AppBundle\Services\XML\Validator
