@@ -59,7 +59,6 @@ class XMLController extends FOSRestController
      * @Rest\Get("/contextual-xml")
      * @Rest\View()
      *
-     * @QueryParam(name="id", nullable=false, requirements="\d+", description="Id of the object to submit")
      * @QueryParam(name="type", nullable=false, description="Type of the object to submit")
      *
      * @Doc\ApiDoc(
@@ -67,7 +66,6 @@ class XMLController extends FOSRestController
      *     resource=true,
      *     description="Validate or export transcripts from the API",
      *     parameters={
-     *         { "name"="id", "dataType"="integer", "description"="Id of the object to submit", "required"=true },
      *         { "name"="type", "dataType"="string", "description"="Type of the object to submit", "required"=true },
      *     },
      *     statusCodes={
@@ -82,25 +80,24 @@ class XMLController extends FOSRestController
         $em = $this->getDoctrine()->getManager();
         set_time_limit(0);
 
-        $id_contextualEntity = $paramFetcher->get('id');
         $type_contextualEntity = $paramFetcher->get('type');
 
-        $entity = null;
+        $entities = null;
         switch ($type_contextualEntity) {
             case "place":
-                $entity = $em->getRepository('AppBundle:Place')->find($id_contextualEntity);
+                $entities = $em->getRepository('AppBundle:Place')->findAll();
                 break;
             case "militaryUnit":
-                $entity = $em->getRepository('AppBundle:MilitaryUnit')->find($id_contextualEntity);
+                $entities = $em->getRepository('AppBundle:MilitaryUnit')->findAll();
                 break;
-            case "testator":
-                $entity = $em->getRepository('AppBundle:Testator')->find($id_contextualEntity);
+            case "person":
+                $entities = $em->getRepository('AppBundle:Testator')->findAll();
                 break;
         }
 
-        if($entity == null) {return new JsonResponse(['message' => 'Invalid entity'], Response::HTTP_NOT_FOUND);}
+        if($entities == null) {return new JsonResponse(['message' => 'No result'], Response::HTTP_NOT_FOUND);}
 
-        $result = $this->get('app.xml.builder.contextual.core')->build($entity, true);
+        $result = $this->get('app.xml.builder.contextual.core')->build($type_contextualEntity, $entities, true);
         return new JsonResponse(['link' => $this->generateUrl('download_export', array('filename' => $result))], Response::HTTP_CREATED);
     }
 }

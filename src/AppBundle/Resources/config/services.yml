@@ -108,10 +108,16 @@ services:
         class: AppBundle\Services\XML\Builder\ContextualEntities\Core
         arguments:
         - '@doctrine.orm.entity_manager'
-        - '@app.xml.builder.header'
-        - '@app.xml.builder.content'
+        - '@app.xml.builder.contextual.header'
         - '@app.xml.builder.functions'
         - '%iiifServer%'
+        - '@monolog.logger'
+
+    app.xml.builder.contextual.header:
+        class: AppBundle\Services\XML\Builder\ContextualEntities\Header
+        arguments:
+        - '@doctrine.orm.entity_manager'
+        - '@app.xml.builder.functions'
         - '@monolog.logger'
 
     app.xml.validator:
